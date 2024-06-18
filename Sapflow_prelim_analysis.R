@@ -4,7 +4,7 @@
 
 #Conversion of sapflow voltage difference to sap flux density (Fd) via Granier (1985) equation
 #Average values of Fd for last two weeks of April 2024 from 9-10 AM calculated and plotted
-#2-way ANOVA test for statistical signficance between treatments and plots conducted
+#2-way ANOVA test for statistical significance between treatments and plots conducted
 
 #load in packages
 library(tidyr)
@@ -102,4 +102,4 @@ sapflow_aov <- aov(Fd ~ Species + Plot.y, data = sfd_data)
 
 summary(sapflow_aov)
 #The p-value is <<0.05. 
-#The differences in Fd between species and treatments are statistically signficant. 
+#The differences in Fd between species and treatments are statistically significant. 
