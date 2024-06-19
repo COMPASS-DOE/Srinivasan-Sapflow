@@ -1,5 +1,12 @@
 # Sapflow Initial Analysis
 
+#load in packages(there's probably a way to do this all at once)
+library(readr) 
+library(dplyr) 
+library(tidyr) 
+library(ggplot2)
+library(lubridate)
+
 #load in sapflow data (already bound into single csv from 
 #create-time-series.R script) 
 

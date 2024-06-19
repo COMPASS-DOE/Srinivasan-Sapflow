@@ -32,3 +32,4 @@ dat <- do.call("rbind", dat)
 var_full <- dat
 
 #saveRDS(var_full, file = "sapflow_abiotic_complete.rds")
+
