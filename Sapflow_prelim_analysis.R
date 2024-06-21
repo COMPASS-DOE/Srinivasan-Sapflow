@@ -19,29 +19,28 @@ library(stringr)
 readRDS("sapflow.rds") -> sapflow_data
 
 #start and end times for data
-DATA_BEGIN <- as_datetime("2024-04-17 00:00:00", tz = "EST")
-DATA_END <- as_datetime("2024-04-30 23:59:59", tz = "EST")
+DATA_BEGIN <- as_datetime("2024-04-17 00:00:00")
+DATA_END <- as_datetime("2024-04-30 23:59:59")
 
 #These values are from 2022's TEMPEST day 1 event
 #Edit if needed to highlight any specific timeframe of data
-#EVENT_START <- as_datetime("2022-06-22 05:30:00", tz = "EST")
-#EVENT_STOP <- as_datetime("2022-06-22 14:30:00", tz = "EST")
+#EVENT_START <- as_datetime("2022-06-22 05:30:00")
+#EVENT_STOP <- as_datetime("2022-06-22 14:30:00")
 
 #Tidy up data
-#(Steph you're a genius for grepl I was doing it the long way!!)
 sapflow_data <- sapflow_data %>% 
   mutate(Value = as.numeric(Value),
          Date = date(TIMESTAMP),
          Hour = hour(TIMESTAMP)) %>% 
   filter(TIMESTAMP >= DATA_BEGIN, TIMESTAMP <= DATA_END, 
-         Value > 0.02, Value <2, !grepl("D", ID)) 
+         Value >= 0.01, Value <=1, !grepl("D", Sensor_ID)) 
 
 #Add species column to sapflow_data
 #Create new dataframe 
 sapflow_data <- merge(species, sapflow_data, by.x = "ID", by.y = "Sensor_ID", all.x = TRUE)
 
 sapflow_data %>% 
-  drop_na(ID) %>%
+  drop_na(Value) %>%
   select(TIMESTAMP, Date, Hour, ID, Species, Plot.y, Location, Value) -> sf_dat
 
 #Ignore this lol
@@ -54,9 +53,12 @@ sapflow_data %>%
 # (1) Be between the hours of midnight and 5am
 # (2) Be the maximum sapflow value
 
+#Seems like using 12-5 am results in a fair amount of NA values
+#There are times during the day with high dT values, so we'll just use the overall dTmax
+
 #Filter accordingly: 
 sf_dat %>% 
-  filter(Hour >= 0, Hour <= 5) %>% 
+  #filter(Hour >= 0, Hour <= 5) %>% 
   group_by(Date, Plot.y, Species, ID) %>% 
   summarise(dTmax = max(Value, na.rm = TRUE), dTmax_Timestamp = TIMESTAMP[which.max(Value)]) -> sapflow_dtmax
 
@@ -70,7 +72,7 @@ sf_dat %>%
 #dTmax values are on the peaks of the daily values so looks good!
 
 #Granier 1985 equation + convert to g/m^2/hour
-#Fd is sap flux density 
+#Fd is sap flux density (m^3/m^2 * s)
 sf_dat %>% 
   left_join(sapflow_dtmax, by = c("Date", "Plot.y", "Species", "ID")) %>% 
   mutate(Fd = 360000 * (0.00011899) * (((dTmax / Value) - 1)^1.231)) %>%
@@ -87,7 +89,7 @@ ggplot(data = filter(sfd_data), aes(x = TIMESTAMP, y = (Fd), group = Species, co
 #Note: This is an average every 15 minutes from 9-10 AM, if you just wanted an average for the hour as a whole lmk!
 sfd_data %>% 
   filter(Hour <=10, Hour >= 9) %>% 
-  group_by(Plot.y, Species, TIMESTAMP) %>% 
+  group_by(Plot.y, TIMESTAMP, Species) %>% 
   summarise(Fd_avg = mean(Fd, na.rm = TRUE)) %>% 
   mutate(Fd_avg = round(Fd_avg, digits = 3)) -> sfd_plot_avg
 
