@@ -37,6 +37,7 @@ sapflow_data <- sapflow_data %>%
 
 #Add species column to sapflow_data
 #Create new dataframe 
+species <- read.csv("TEMPEST_TreeChamberInstallation_11272023.csv")
 sapflow_data <- merge(species, sapflow_data, by.x = "ID", by.y = "Sensor_ID", all.x = TRUE)
 
 sapflow_data %>% 
@@ -69,7 +70,9 @@ sf_dat %>%
   geom_line() + 
   geom_point(data = filter(sapflow_dtmax, Plot.y == "C"), aes(x = dTmax_Timestamp, y = dTmax), color = "black") +
   facet_wrap(ID~Plot.y, scales = "free") 
+#dTmax should be the max Value for the 24 hour day
 #dTmax values are on the peaks of the daily values so looks good!
+
 
 #Granier 1985 equation + convert to g/m^2/hour
 #Fd is sap flux density (m^3/m^2 * s)
@@ -83,7 +86,10 @@ ggplot(data = filter(sfd_data), aes(x = TIMESTAMP, y = (Fd), group = Species, co
   geom_line() + 
   geom_point(data = sapflow_dtmax, aes(x = dTmax_Timestamp, y = dTmax), color = "black") +
   facet_wrap(~Plot.y, ncol = 1) 
-#Looks good! Because voltage difference and flow rate are inversely proportional, dTmax should be at the valleys of Fd.
+#Looks good! 
+#Voltage difference and flow rate are inversely proportional; dtMax is defined as the lowest Fd for
+#a 24 hr period. 
+
 
 #Hours 9-10 AM for last two weeks of April averaged by plot and species
 #Note: This is an average every 15 minutes from 9-10 AM, if you just wanted an average for the hour as a whole lmk!
@@ -99,6 +105,9 @@ ggplot(sfd_plot_avg) +
   scale_x_continuous(breaks = pretty(sfd_data$TIMESTAMP, n = 10))
 
 #ANOVA test to determine if difference in Fd of different treatments and species are statistically significant) 
+
+sfd_data %>%
+  filter (Hour <= 10, Hour >= 9) -> sfd_data
 
 sapflow_aov <- aov(Fd ~ Species + Plot.y, data = sfd_data)
 
