@@ -16,7 +16,7 @@ library(stringr)
 #load in sapflow data (already bound into single csv from 
 #create-time-series.R script) 
 
-readRDS("sapflow.rds") -> sapflow_data
+readRDS("sapflow_abiotic_complete.rds") -> sapflow_data
 
 #start and end times for data
 DATA_BEGIN <- as_datetime("2024-04-17 00:00:00")
@@ -37,11 +37,14 @@ sapflow_data <- sapflow_data %>%
 
 #Add species column to sapflow_data
 #Create new dataframe 
+species <- read.csv("TEMPEST_TreeChamberInstallation_11272023.csv")
 sapflow_data <- merge(species, sapflow_data, by.x = "ID", by.y = "Sensor_ID", all.x = TRUE)
 
+#Creating just one plot column for simplicity
 sapflow_data %>% 
   drop_na(Value) %>%
-  select(TIMESTAMP, Date, Hour, ID, Species, Plot.y, Location, Value) -> sf_dat
+  mutate(Plot = Plot.y) %>%
+  select(TIMESTAMP, Date, Hour, ID, Species, Plot, Location, Value) -> sf_dat
 
 #Ignore this lol
   #mutate(plot = substr(ID,1,1),
@@ -59,48 +62,56 @@ sapflow_data %>%
 #Filter accordingly: 
 sf_dat %>% 
   #filter(Hour >= 0, Hour <= 5) %>% 
-  group_by(Date, Plot.y, Species, ID) %>% 
+  group_by(Date, Plot, Species, ID) %>% 
   summarise(dTmax = max(Value, na.rm = TRUE), dTmax_Timestamp = TIMESTAMP[which.max(Value)]) -> sapflow_dtmax
 
 #Graph sapflow data with dtmax calculation to double check correct calculation: 
 sf_dat %>% 
-  filter(Plot.y == "C") %>% 
+  filter(Plot == "C") %>% 
   ggplot(aes(x = TIMESTAMP, y = Value, group = Species, color= as.factor(Species))) + 
   geom_line() + 
-  geom_point(data = filter(sapflow_dtmax, Plot.y == "C"), aes(x = dTmax_Timestamp, y = dTmax), color = "black") +
-  facet_wrap(ID~Plot.y, scales = "free") 
+  geom_point(data = filter(sapflow_dtmax, Plot == "C"), aes(x = dTmax_Timestamp, y = dTmax), color = "black") +
+  facet_wrap(ID~Plot, scales = "free") 
+#dTmax should be the max Value for the 24 hour day
 #dTmax values are on the peaks of the daily values so looks good!
+
 
 #Granier 1985 equation + convert to g/m^2/hour
 #Fd is sap flux density (m^3/m^2 * s)
 sf_dat %>% 
-  left_join(sapflow_dtmax, by = c("Date", "Plot.y", "Species", "ID")) %>% 
+  left_join(sapflow_dtmax, by = c("Date", "Plot", "Species", "ID")) %>% 
   mutate(Fd = 360000 * (0.00011899) * (((dTmax / Value) - 1)^1.231)) %>%
-  drop_na(Plot.y) -> sfd_data
+  drop_na(Plot) -> sfd_data
 
 #Graph to double check:
 ggplot(data = filter(sfd_data), aes(x = TIMESTAMP, y = (Fd), group = Species, color = as.factor(Species))) + 
   geom_line() + 
   geom_point(data = sapflow_dtmax, aes(x = dTmax_Timestamp, y = dTmax), color = "black") +
-  facet_wrap(~Plot.y, ncol = 1) 
-#Looks good! Because voltage difference and flow rate are inversely proportional, dTmax should be at the valleys of Fd.
+  facet_wrap(~Plot, ncol = 1) 
+#Looks good! 
+#Voltage difference and flow rate are inversely proportional; dtMax is defined as the lowest Fd for
+#a 24 hr period. 
+
 
 #Hours 9-10 AM for last two weeks of April averaged by plot and species
 #Note: This is an average every 15 minutes from 9-10 AM, if you just wanted an average for the hour as a whole lmk!
 sfd_data %>% 
   filter(Hour <=10, Hour >= 9) %>% 
-  group_by(Plot.y, TIMESTAMP, Species) %>% 
+  group_by(Plot, TIMESTAMP, Species) %>% 
   summarise(Fd_avg = mean(Fd, na.rm = TRUE)) %>% 
   mutate(Fd_avg = round(Fd_avg, digits = 3)) -> sfd_plot_avg
 
 ggplot(sfd_plot_avg) + 
   geom_line(aes (x = TIMESTAMP, y = Fd_avg, color = Species)) + 
-  facet_wrap(~Plot.y, ncol = 1) +
+  facet_wrap(~Plot, ncol = 1) +
   scale_x_continuous(breaks = pretty(sfd_data$TIMESTAMP, n = 10))
 
 #ANOVA test to determine if difference in Fd of different treatments and species are statistically significant) 
 
-sapflow_aov <- aov(Fd ~ Species + Plot.y, data = sfd_data)
+sfd_data %>%
+  filter (Hour <= 10, Hour >= 9) -> sfd_data
+
+sapflow_aov <- aov(Fd ~ Species + Plot, data = sfd_data)
 
 summary(sapflow_aov)
 #The p-value is <<0.05. 
