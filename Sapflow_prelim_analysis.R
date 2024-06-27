@@ -32,7 +32,7 @@ sapflow_data <- sapflow_data %>%
   mutate(Value = as.numeric(Value),
          Date = date(TIMESTAMP),
          Hour = hour(TIMESTAMP)) %>% 
-  filter(TIMESTAMP >= DATA_BEGIN, TIMESTAMP <= DATA_END, 
+  filter(#TIMESTAMP >= DATA_BEGIN, TIMESTAMP <= DATA_END, 
          Value >= 0.01, Value <=1, !grepl("D", Sensor_ID)) 
 
 #Add species column to sapflow_data
@@ -63,13 +63,14 @@ sapflow_data %>%
 sf_dat %>% 
   #filter(Hour >= 0, Hour <= 5) %>% 
   group_by(Date, Plot, Species, ID) %>% 
-  summarise(dTmax = max(Value, na.rm = TRUE), dTmax_Timestamp = TIMESTAMP[which.max(Value)]) -> sapflow_dtmax
+  summarise(dTmax = max(Value, na.rm = TRUE),
+            dTmax_Timestamp = TIMESTAMP[which.max(Value)]) -> sapflow_dtmax
 
 #Graph sapflow data with dtmax calculation to double check correct calculation: 
 sf_dat %>% 
   filter(Plot == "C") %>% 
   ggplot(aes(x = TIMESTAMP, y = Value, group = Species, color= as.factor(Species))) + 
-  geom_line() + 
+  geom_line() + ggtitle("dTmax should maximum value each day") +
   geom_point(data = filter(sapflow_dtmax, Plot == "C"), aes(x = dTmax_Timestamp, y = dTmax), color = "black") +
   facet_wrap(ID~Plot, scales = "free") 
 #dTmax should be the max Value for the 24 hour day
@@ -80,12 +81,11 @@ sf_dat %>%
 #Fd is sap flux density (m^3/m^2 * s)
 sf_dat %>% 
   left_join(sapflow_dtmax, by = c("Date", "Plot", "Species", "ID")) %>% 
-  mutate(Fd = 360000 * (0.00011899) * (((dTmax / Value) - 1)^1.231)) %>%
-  drop_na(Plot) -> sfd_data
+  mutate(Fd = 360000 * (0.00011899) * (((dTmax / Value) - 1)^1.231)) -> sfd_data
 
 #Graph to double check:
-ggplot(data = filter(sfd_data), aes(x = TIMESTAMP, y = (Fd), group = Species, color = as.factor(Species))) + 
-  geom_line() + 
+ggplot(data = sfd_data, aes(x = TIMESTAMP, y = (Fd), group = Species, color = as.factor(Species))) + 
+  geom_line() + ggtitle("dTmax should now be minimum value each day") +
   geom_point(data = sapflow_dtmax, aes(x = dTmax_Timestamp, y = dTmax), color = "black") +
   facet_wrap(~Plot, ncol = 1) 
 #Looks good! 
@@ -93,26 +93,52 @@ ggplot(data = filter(sfd_data), aes(x = TIMESTAMP, y = (Fd), group = Species, co
 #a 24 hr period. 
 
 
-#Hours 9-10 AM for last two weeks of April averaged by plot and species
-#Note: This is an average every 15 minutes from 9-10 AM, if you just wanted an average for the hour as a whole lmk!
+#when is max Fd?
 sfd_data %>% 
-  filter(Hour <=10, Hour >= 9) %>% 
-  group_by(Plot, TIMESTAMP, Species) %>% 
-  summarise(Fd_avg = mean(Fd, na.rm = TRUE)) %>% 
-  mutate(Fd_avg = round(Fd_avg, digits = 3)) -> sfd_plot_avg
+  group_by(Date, Plot, Species, ID) %>% 
+  summarise(Fdmax = max(Fd, na.rm = TRUE),
+            Fdmax_time = TIMESTAMP[which.max(Fd)]) -> maxFd_time
 
-ggplot(sfd_plot_avg) + 
-  geom_line(aes (x = TIMESTAMP, y = Fd_avg, color = Species)) + 
-  facet_wrap(~Plot, ncol = 1) +
-  scale_x_continuous(breaks = pretty(sfd_data$TIMESTAMP, n = 10))
+hist(hour(maxFd_time$Fdmax_time))
+
+#Does it vary seasonally?
+ggplot(maxFd_time, aes(x = hour(Fdmax_time), fill = Species)) +
+  geom_histogram() + ggtitle("Monthly Max Fd Time")+
+  facet_wrap(.~month(Fdmax_time))
+#not a lot
+
+#Hours 12-1 PM for most recent data averaged by plot and species
+#Note: This is an average every 15 minutes from 12-1 PM, if you just wanted an average for the hour as a whole lmk!
+sfd_data %>% 
+  filter(Hour <=13, Hour >= 12) %>% 
+  group_by(Plot, Date, Species) %>% 
+  summarise(Fd_avg = mean(Fd, na.rm = TRUE),
+            Fd_error = sd(Fd, na.rm = TRUE)) %>% 
+  mutate(Fd_avg = round(Fd_avg, digits = 3),
+         Fd_error = round(Fd_error, digits = 3)) -> sfd_plot_avg
+
+ggplot(sfd_plot_avg[sfd_plot_avg$Date >= "2024-04-24",]) + 
+  geom_line(aes (x = Date, y = Fd_avg, color = Species)) +
+  geom_errorbar(aes(ymin = Fd_avg - Fd_error, ymax = Fd_avg + Fd_error,
+                    x = Date, color = Species)) +
+  facet_wrap(~Plot, ncol = 1) #+
+  #scale_x_continuous(breaks = pretty(sfd_data$TIMESTAMP, n = 10))
 
 #ANOVA test to determine if difference in Fd of different treatments and species are statistically significant) 
 
 sfd_data %>%
-  filter (Hour <= 10, Hour >= 9) -> sfd_data
+  filter(Hour <= 13, Hour >= 12,
+         Date >= "2024-04-24") -> sfd_data_pm
 
-sapflow_aov <- aov(Fd ~ Species + Plot, data = sfd_data)
+sapflow_aov <- aov(Fd ~ Species * Plot, data = sfd_data_pm)
 
 summary(sapflow_aov)
 #The p-value is <<0.05. 
 #The differences in Fd between species and treatments are statistically significant. 
+
+ggplot(sfd_data_pm) + 
+  geom_boxplot(aes (x = Plot, y = Fd, fill = Species)) +
+  scale_x_discrete(labels = c("C" = "Control",
+                              "F" = "Freshwater",
+                              "S" = "Saltwater")) +
+  theme_light()
