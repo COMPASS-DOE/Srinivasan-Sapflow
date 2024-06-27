@@ -107,10 +107,10 @@ ggplot(maxFd_time, aes(x = hour(Fdmax_time), fill = Species)) +
   facet_wrap(.~month(Fdmax_time))
 #not a lot
 
-#Hours 12-1 PM for most recent data averaged by plot and species
-#Note: This is an average every 15 minutes from 12-1 PM, if you just wanted an average for the hour as a whole lmk!
+#Hours 11-12 PM for most recent data averaged by plot and species
+#Note: This is an average every 15 minutes from 11-12 PM, if you just wanted an average for the hour as a whole lmk!
 sfd_data %>% 
-  filter(Hour <=13, Hour >= 12) %>% 
+  filter(Hour <=12, Hour >= 11) %>% 
   group_by(Plot, Date, Species) %>% 
   summarise(Fd_avg = mean(Fd, na.rm = TRUE),
             Fd_error = sd(Fd, na.rm = TRUE)) %>% 
@@ -127,7 +127,7 @@ ggplot(sfd_plot_avg[sfd_plot_avg$Date >= "2024-04-24",]) +
 #ANOVA test to determine if difference in Fd of different treatments and species are statistically significant) 
 
 sfd_data %>%
-  filter(Hour <= 13, Hour >= 12,
+  filter(Hour <= 12, Hour >= 11,
          Date >= "2024-04-24") -> sfd_data_pm
 
 sapflow_aov <- aov(Fd ~ Species * Plot, data = sfd_data_pm)
