@@ -187,7 +187,8 @@ ggplot(scaled_plot_avg) +
   facet_wrap(~Plot, ncol = 1)
   ggsave("Ftot_weeklyplot.jpeg")
   
-``'
+```
+
 And we can use this pipeline for any time frame!  
 
 ANOVA test to determine if difference in Fd of different treatments and species are statistically significant and a summarizing box plot (We can assume species and plot are correlated with each other, as different species likely vary under different treatments):

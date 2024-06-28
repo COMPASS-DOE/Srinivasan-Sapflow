@@ -15,7 +15,7 @@ pat <- paste0("^", site, ".*csv$")
 
 # Get the names of the files we need. Note this assumes that your
 # working directory is the main directory of the L1 data
-files <- list.files("./TMP_2024/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files <- list.files("C:/Users/srin662/OneDrive - PNNL/Documents/R/TMP_2024/", pattern = pat, recursive = TRUE, full.names = TRUE)
 
 #Function to read files and only include variables in the above vector
 f <- function(f) {
