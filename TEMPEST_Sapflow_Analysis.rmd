@@ -151,19 +151,44 @@ scaled %>%
   mutate(F_tot = Fd * SA_2024) -> scaled
 ```
 
-Graph whole tree flux for 9-10 AM over the last two weeks of April, averaged by plot and species. 
-Note: These are averaged values for every 15 minutes from 9-10 AM. 
+Find hourly period of maximum Fd: 
 ```{r}
 scaled %>% 
-  filter(Hour >= 9, Hour <= 10) %>% 
-  group_by(Plot, TIMESTAMP, Species) %>% 
-  summarise(Ftot_avg = mean(F_tot, na.rm = TRUE)) -> scaled_plot_avg
+  group_by(Date, Plot, Species, ID) %>% 
+  summarise(Fdmax = max(Fd, na.rm = TRUE),
+            Fdmax_time = TIMESTAMP[which.max(Fd)]) -> maxFd_time
+
+hist(hour(maxFd_time$Fdmax_time))
+```
+Peak hours seem to be between 11 AM and 12 PM. Let's double check if it varies seasonally: 
+```{r}
+ggplot(maxFd_time, aes(x = hour(Fdmax_time), fill = Species)) +
+  geom_histogram() + ggtitle("Monthly Max Fd Time")+
+  facet_wrap(.~month(Fdmax_time))
+```
+Not much seasonal variation. 
+
+Graph whole tree flux for 11-12 AM over the last two weeks of April, averaged by plot and species. 
+Note: These are averaged values for every 15 minutes from 11-12 AM. 
+```{r}
+
+scaled %>% 
+  filter(Hour >= 11, Hour <= 12) %>% 
+  group_by(Plot, Date, Species) %>% 
+  summarise(Ftot_avg = mean(F_tot, na.rm = TRUE),
+            Ftot_error = sd(F_tot, na.rm = TRUE)) %>%
+  mutate(Ftot_avg = round(Ftot_avg, digits = 3),
+         Ftot_error = round(Ftot_error, digits = 3)) -> scaled_plot_avg
 
 ggplot(scaled_plot_avg) + 
-  geom_line(aes (x = TIMESTAMP, y = Ftot_avg, color = Species)) + 
+  geom_line(aes (x = Date, y = Ftot_avg, color = Species)) + 
+  geom_errorbar(aes(ymin = Ftot_avg - Ftot_error, ymax = Ftot_avg + Ftot_error,
+                    x = Date, color = Species)) + 
   facet_wrap(~Plot, ncol = 1)
-  ggsave("weeklyplot.jpeg")
+  ggsave("Ftot_weeklyplot.jpeg")
+  
 ```
+<<<<<<< Updated upstream
 
 
 #Hours 9-10 AM for last two weeks of April averaged by plot and species
@@ -182,19 +207,30 @@ ggplot(scaled_plot_avg) +
 #   #scale_x_continuous(breaks = pretty(sfd_data$TIMESTAMP, n = 10))
 ```
 
+=======
+>>>>>>> Stashed changes
 And we can use this pipeline for any time frame!  
 
-ANOVA test to determine if difference in Fd of different treatments and species are statistically significant:
+ANOVA test to determine if difference in Fd of different treatments and species are statistically significant and a summarizing box plot (We can assume species and plot are correlated with each other, as different species likely vary under different treatments):
 ```{r}
-sfd_data %>%
-  filter(Hour <= 10, Hour >= 10) -> sfd_data
-sapflow_aov <- aov(Fd ~ Species + Plot, data = sfd_data)
+scaled %>%
+  filter(Hour <= 12, Hour >= 11, Date >= "2024-04-24") -> scaled_pm
+
+sapflow_aov <- aov(F_tot ~ Species * Plot, data = scaled_pm)
 
 summary(sapflow_aov)
+
+ggplot(scaled_pm) + 
+  geom_boxplot(aes (x = Plot, y = F_tot, fill = Species)) +
+  scale_x_discrete(labels = c("C" = "Control",
+                              "F" = "Freshwater",
+                              "S" = "Saltwater")) +
+  theme_light()
+
 ```
 
-#The p-value is <<0.05. 
-#The differences in Fd between species and treatments are statistically significant. 
+The p-value is <<0.05; the differences in Fd between species and treatments are statistically significant. 
+We can see variation between species and within treatments, as well as between treatments for beech and tulip poplar. Red maple seems fairly consistent in mean and variance between treatments. 
 
 
 
