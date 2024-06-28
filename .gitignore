@@ -1,5 +1,6 @@
-
+*.html
 *.rds
 *.csv
 *.Rproj.user
 *.Rhistory
+*.jpeg
