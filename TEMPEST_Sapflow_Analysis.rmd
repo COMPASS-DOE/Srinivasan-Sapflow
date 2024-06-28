@@ -187,28 +187,7 @@ ggplot(scaled_plot_avg) +
   facet_wrap(~Plot, ncol = 1)
   ggsave("Ftot_weeklyplot.jpeg")
   
-```
-<<<<<<< Updated upstream
-
-
-#Hours 9-10 AM for last two weeks of April averaged by plot and species
-#Note: This is an average every 15 minutes from 9-10 AM, if you just wanted an average for the hour as a whole lmk!
-```{r}
-# sfd_data %>% 
-#   filter(Hour <=10, Hour >= 9) %>% 
-#   group_by(Plot, TIMESTAMP, Species) %>% 
-#   summarise(Fd_avg = mean(Fd, na.rm = TRUE)) %>% 
-#   mutate(Fd_avg = round(Fd_avg, digits = 3)) -> sfd_plot_avg
-# 
-# ggplot(sfd_plot_avg) + 
-#   geom_point(aes (x = factor(TIMESTAMP), y = Fd_avg, color = Species)) + 
-#   facet_wrap(~Plot, ncol = 1) +
-#   scale_x_discrete(breaks = levels(TIMESTAMP)[c(T, rep(F, 9))])
-#   #scale_x_continuous(breaks = pretty(sfd_data$TIMESTAMP, n = 10))
-```
-
-=======
->>>>>>> Stashed changes
+``'
 And we can use this pipeline for any time frame!  
 
 ANOVA test to determine if difference in Fd of different treatments and species are statistically significant and a summarizing box plot (We can assume species and plot are correlated with each other, as different species likely vary under different treatments):
