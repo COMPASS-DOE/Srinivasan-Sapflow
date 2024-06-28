@@ -1,4 +1,5 @@
 
 *.rds
 *.csv
-.Rhistory
+*.Rproj.user
+*.Rhistory
