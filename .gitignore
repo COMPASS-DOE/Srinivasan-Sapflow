@@ -2,4 +2,10 @@
 *.rds
 *.csv
 *.Rproj.user
+<<<<<<< Updated upstream
 *.Rhistory
+=======
+*.Rhistory
+*.jpeg
+.Rproj.user
+>>>>>>> Stashed changes
