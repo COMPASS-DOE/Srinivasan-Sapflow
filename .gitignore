@@ -4,3 +4,11 @@
 *.Rproj.user
 *.Rhistory
 *.jpeg
+.Rhistory
+*.html
+TEMPEST_Sapflow_Analysis.rmd
+TEMPEST_Sapflow_Analysis.log
+TEMPEST_Sapflow_Analysis.rmd
+.Rhistory
+.Rhistory
+TEMPEST_Sapflow_Analysis.rmd
