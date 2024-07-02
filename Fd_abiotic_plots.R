@@ -63,7 +63,6 @@ ggplot(aes(x = avg_par, y = avg_fd,
 #A linear model doesn't look great for this data, any other suggestions? 
 
 
-
 #Fd vs temp (with Plot or Species faceted) 
 full_data %>%
   group_by(TIMESTAMP, Species, Plot) %>% 
