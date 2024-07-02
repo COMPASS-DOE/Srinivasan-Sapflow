@@ -3,7 +3,13 @@
 #From Jan-May 2024 (Timescale can be modified as needed)
 
 library(readr)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(stringr)
 
+#Note: only sapflow and soil vwc are actually included in this dataset
 site <- "TMP"
 variables <- c("sapflow_2.5cm", "sapflow_5cm", 
                "soil_vwc_5cm", "soil_vwc_10cm", "soil_vwc_15cm", "soil_vwc_30cm", 
@@ -33,54 +39,64 @@ var_full <- dat
 
 #saveRDS(var_full, file = "sapflow_abiotic_complete.rds")
 
----
-  data <- readRDS("sapflow_abiotic_complete.rds")
+#------ using that rds:
+data <- readRDS("sapflow_abiotic_complete.rds")
 species <- read.csv("TEMPEST_TreeChamberInstallation_11272023.csv")
 
 
-DATA_BEGIN <- as_datetime("2024-04-24 00:00:00", tz = "EST")
+DATA_BEGIN <- as_datetime("2024-04-24 00:00:00")
 #DATA_END is implied as end of dataset
 
+#Filter timestamp and edit plot names to match across datasets
 data %>%
   mutate(Plot = substr(Plot,1,1),
          Plot = case_when(Plot == "C" ~ "Control",
                           Plot == "F" ~ "Freshwater",
                           Plot == "S" ~ "Saltwater", )) %>%
-  filter(TIMESTAMP >= DATA_BEGIN) -> data
+  filter(TIMESTAMP >= DATA_BEGIN)-> data
+
+species %>%
+  mutate(Plot = ifelse(Plot == "Seawater", "Saltwater", Plot)) -> species
 
 #create sapflow dataframe only 
 sapflow <- data %>% 
   filter(Instrument == "Sapflow",
          Value >= 0.01, Value <=1, !grepl("D", Sensor_ID)) 
 
-species %>%
-  mutate(Plot = ifelse(Plot == "Seawater", "Saltwater", Plot)) -> species
-
+#Merge species and sapflow dataframe
 sapflow_sp <- 
   merge(species, sapflow, by.x = c("ID", "Plot"), by.y = c("Sensor_ID", "Plot"), all.x = TRUE)
 
+#Filter to necessary columns 
 sapflow_sp %>%
   mutate(Date = date(TIMESTAMP)) %>%
   drop_na(Value) %>%
   select(TIMESTAMP, ID, Species, Plot, Value, Grid.Cell, Date) -> sapflow_sp
 
+#Calculate dTmax
 sapflow_sp %>% 
   group_by(Date, Plot, Species, ID) %>% 
   summarise(dTmax = max(Value, na.rm = TRUE), 
             dTmax_time = TIMESTAMP[which.max(Value)])-> sapflow_dtmax
 
+#Calculate Fd
 sapflow_sp %>% 
   left_join(sapflow_dtmax, by = c("Date", "Plot", "Species", "ID")) %>% 
   mutate(Fd = 360000 * (0.00011899) * (((dTmax / Value) - 1)^1.231)) %>%
   drop_na(Plot) -> sfd_data
 
+#-----
+#Scale Fd measurements to tree dbh
 inventory <- readRDS("dbh.rds")
 
+#Filter (for now) to 2024
 inventory %>%
-  select(Tag, Tree_Code, Species, 
+  select(Tag, Tree_Code, Species, DBH_2024) -> dbh
          #DBH_2019, DBH_2020, DBH_2021, DBH_2022, DBH_2023, 
-         DBH_2024) -> dbh
 
+
+#Using allometric equations, scale Fd measurements
+#NOte: C19, C8, and F12 are currently being problematic to scale. They'll be filtered out for now 
 dbh %>%
   mutate(Species = substr(Species,1,4),
          Species = case_when(Species == "ACRU" ~ "Red Maple",
@@ -98,17 +114,22 @@ scaled %>%
   mutate(F_tot = Fd * SA_2024) -> sapflow_scaled
 #---
 
+#Create soil vwc dataframe
+#Take average value of all soil vwc measurements in each plot 
 swc_15 <- data %>%
   filter(research_name == "soil_vwc_15cm") %>%
-  mutate(soil_vwc_15cm = Value) %>%
-  select(TIMESTAMP, Location, Plot, soil_vwc_15cm) %>%
-  drop_na(soil_vwc_15cm)
+  group_by(TIMESTAMP, Plot) %>%
+  drop_na(Value) %>%
+  summarize(soil_vwc_15cm = mean(Value)) 
 
 #merge sapflow, species, and swc data 
 tmp_data <- 
-  merge(sapflow_scaled, swc_15, by.x = c("Grid.Cell", "TIMESTAMP", "Plot"), 
-        by.y = c("Location", "TIMESTAMP", "Plot"), all.y = TRUE)
-drop_na(tmp_data, Value) -> tmp_data
+  merge(sapflow_scaled, swc_15, by.x = c("Plot", "TIMESTAMP"), 
+        by.y = c("Plot", "TIMESTAMP"), all.x = TRUE)
+
+tmp_data %>%
+  drop_na(F_tot) %>%
+  select(Plot, TIMESTAMP, ID, Species, F_tot, soil_vwc_15cm) -> tmp_data
 
 #now import gcrew data 
 library(readr)
@@ -146,27 +167,30 @@ gcw %>%
                           Plot == "TR" ~ "Saltwater", )) %>%
   filter(TIMESTAMP >= DATA_BEGIN) %>%
   select(Plot, TIMESTAMP, Value, research_name) -> gcw
-#It looks like we only have these measurements for freshwater
-#not sure if these variables can be extrapolated to the other two plots? For now we'll just focus on freshwater
+#It looks like we only have these measurements for freshwater, but we can extrapolate these
+#measurements to the other plots 
 
-#It also looks like vapor pressure deficit only has 0 values, so let's ignore that as well: 
+#It also looks like vapor pressure deficit only has 0 values, so let's ignore that for now: 
 gcw %>%
   filter(research_name != "wx_vappress15") -> gcw
 
 gcw %>%
   filter(research_name == "wx_par_den15") %>%
   mutate(PAR = Value) %>% 
-  select(Plot, TIMESTAMP, PAR) -> par
+  select(TIMESTAMP, PAR) -> par
 
 gcw %>%
   filter(research_name == "wx_tempavg15") %>%
   mutate(TEMP = Value) %>% 
-  select(Plot, TIMESTAMP, TEMP) -> temp
+  select(TIMESTAMP, TEMP) -> temp
 
 full_data <- 
-  merge(tmp_data, par, by.x = c("TIMESTAMP", "Plot"), 
-        by.y = c("TIMESTAMP", "Plot"), all.x = TRUE)
+  merge(tmp_data, par, by.x = c("TIMESTAMP"), 
+        by.y = c("TIMESTAMP"), all.x = TRUE)
 
 full_data <- 
-  merge(full_data, temp, by.x = c("TIMESTAMP", "Plot"), 
-        by.y = c("TIMESTAMP", "Plot"), all.x = TRUE) 
+  merge(full_data, temp, by.x = c("TIMESTAMP"), 
+        by.y = c("TIMESTAMP"), all.x = TRUE) 
+#Now we have a full time series for the last 2 weeks of 2024 data!
+
+saveRDS(full_data, "Full_042424_050224.rds")
