@@ -7,8 +7,8 @@ library(dplyr)
 library(stringr)
 
 #Load dataframes
-sapflow_inventory <- read.csv("sapflow_inventory.csv")
-dbh_inventory <- read.csv("inventory.csv")
+sapflow_inventory <- read.csv("C:/Users/srin662/OneDrive - PNNL/Documents/R/sapflow_inventory.csv")
+dbh_inventory <- read.csv("C:/Users/srin662/OneDrive - PNNL/Documents/R/inventory.csv")
 
 inventory <- merge(sapflow_inventory, dbh_inventory, 
                    by.x = "Tag", by.y = "Tag", all.x = TRUE, all.y = FALSE)
