@@ -55,9 +55,10 @@ dat <- lapply(files_G,  f)
 dat <- do.call("rbind", dat)
 
 gcw_full <- dat
+saveRDS(gcw_full, "gcw_full.rds")
 
 #Combining it all: editing dataframes for variables to match 
-species <- read.csv("TEMPEST_TreeChamberInstallation_11272023.csv")
+species <- read.csv("sapflow_inventory.csv")
 
 tmp_full %>%
   mutate(Plot = substr(Plot,1,1),
@@ -65,8 +66,15 @@ tmp_full %>%
                           Plot == "F" ~ "Freshwater",
                           Plot == "S" ~ "Saltwater", )) -> tmp_full
 species %>%
-  mutate(Plot = ifelse(Plot == "Seawater", "Saltwater", Plot)) %>%
-  select(Plot, ID, Species) -> species
+  mutate(Plot = ifelse(Plot == "SW", "Saltwater", Plot)) %>%
+  mutate(Plot = ifelse(Plot == "FW", "Freshwater", Plot)) %>%
+  mutate(Species = spp) %>%
+  mutate(Species = substr(Species,1,4),
+         Species = case_when(Species == "ACRU" ~ "Red Maple",
+                             Species == "LITU" ~ "Tulip Poplar",
+                             Species == "FAGR" ~ "Beech")) %>%
+  select(Plot, Sapflux_ID, Species) %>%
+  filter(!grepl("D", Sapflux_ID)) -> species
 
 #Because different variables are at different spatial resolutions, we have to
 #separate variables into dataframes then merge again by timestamp
@@ -80,8 +88,13 @@ sapflow <- tmp_full %>%
   mutate(Date = date(TIMESTAMP))
 
 #Merge sapflow and species dataframe
+#For some reason, including plot in the group_by messes with the ID matching, so we're leaving it out for now
 sapflow_sp <- 
-  merge(species, sapflow, by.x = c("ID", "Plot"), by.y = c("Sensor_ID", "Plot"), all.y = TRUE)
+  merge(species, sapflow, by.x = c("Sapflux_ID"), by.y = c("Sensor_ID"), all.x = TRUE, all.y = TRUE)
+
+sapflow_sp %>%
+  mutate(ID = Sapflux_ID) %>%
+  mutate(Plot = Plot.x) -> sapflow_sp
 
 #Calculate dTmax
 sapflow_sp %>% 
@@ -91,14 +104,15 @@ sapflow_sp %>%
             dTmax_time = TIMESTAMP[which.max(Value)])-> sapflow_dtmax
 
 #Calculate Fd
+
 sapflow_sp %>% 
-  left_join(sapflow_dtmax, by = c("Date", "Plot", "Species", "ID")) %>% 
+  left_join(sapflow_dtmax, by = c("Plot", "Species", "ID", "Date")) %>% 
   mutate(Fd = 360000 * (0.00011899) * (((dTmax / Value) - 1)^1.231)) -> sfd_data
 
 #Load in dbh data (for scaling) 
 inventory <- readRDS("dbh.rds")
 inventory %>%
-  select(Tag, Tree_Code, Species, DBH_2024, DBH_2022, DBH_2023) -> dbh
+  select(Tree_ID, Sapflux_ID, spp, DBH_2024, DBH_2022, DBH_2023) -> dbh
 
 
 #Using allometric equations, scale Fd measurements
@@ -106,18 +120,104 @@ inventory %>%
 SA <- function(Species, DBH) {
   case_when(
     Species == "Red Maple" ~ (0.5973*(DBH)^2.0743),
-    Species == "Tulip Poplar" ~ (0.8086*(DBH)^1.8331 ),
+    Species == "Tulip Poplar" ~ (0.8086*(DBH)^1.8331),
     Species == "Beech" ~ (0.8198*(DBH)^1.8635))
 }
 
-dbh <- dbh %>%
+dbh %>%
+  mutate(Species = spp) %>%
   mutate(Species = substr(Species,1,4),
          Species = case_when(Species == "ACRU" ~ "Red Maple",
                              Species == "LITU" ~ "Tulip Poplar",
                              Species == "FAGR" ~ "Beech")) %>%
-  mutate(across(starts_with("DBH_"), ~SA(Species, .), .names = "SA_{str_extract(.col, '[0-9]{4}')}"))
+  mutate(across(starts_with("DBH_"), ~SA(Species, .), .names = "SA_{str_extract(.col, '[0-9]{4}')}")) -> sa
 
-scaled <- merge(sfd_data, dbh, by.x = c("ID", "Species"), by.y = c("Tree_Code", "Species"), all.x = TRUE)
 
+sa %>% 
+  pivot_longer(cols = starts_with("SA_"),
+               names_to = "Year",
+               names_prefix = "SA_",
+               values_to = "SA") %>%
+  mutate(Year = as.numeric(Year)) -> sa_long
+
+mutate(sfd_data, Year = year(TIMESTAMP)) -> sfd_data
+
+scaled <- merge(sfd_data, sa_long, by.x = c("ID", "Year", "Species"), 
+                by.y = c("Sapflux_ID", "Year", "Species"), all.x = TRUE)
+
+scaled %>%
+  select(ID, Year, Species, Plot, TIMESTAMP, Fd, SA) %>%
+  mutate(F = SA * Fd) -> sf_scaled
+
+#Now let's make some plots to double check 
+#Filtering out outliers F<2500
+
+sf_scaled %>% 
+  mutate(Hour = hour(TIMESTAMP)) %>%
+  mutate(Date = date(TIMESTAMP)) %>%
+  mutate(monthyr = floor_date(TIMESTAMP, unit = "week")) %>%
+  filter(Hour >= 11, Hour <= 12) %>% 
+  filter(F <= 17500, F > 0) %>%
+  group_by(Plot, Species, Date) %>% 
+  summarise(F_avg = mean(F, na.rm = TRUE)) %>%
+  mutate(F_avg = round(F_avg, digits = 3)) -> sf_plot_avg
+
+ggplot(sf_plot_avg) + 
+  geom_point(aes (x = Date, y = F_avg, color = Species)) + 
+  #geom_errorbar(aes(ymin = F_avg - F_error, ymax = F_avg + F_error,
+                    #x = Month, color = Species)) + 
+  facet_wrap(~Plot, ncol = 1, scales = "fixed") + 
+  labs(y = "Avg Sap Flux Density", x = "Date", title = "Sap Flux Density Averaged Daily, 11 AM - 12 PM")
+  
+  ggsave("Full_sapflow.jpeg")
+
+#Let's also save this new complete sap flux data as an rds:
+  saveRDS(scaled, "Sapflow_22_24.rds")
+
+#Now we add in our abiotic data
+  #Create soil vwc dataframe
+  #Take average value of all soil vwc measurements in each plot 
+swc_15 <- tmp_full %>%
+    filter(research_name == "soil_vwc_15cm") %>%
+    group_by(TIMESTAMP, Plot) %>%
+    drop_na(Value) %>%
+    summarize(soil_vwc_15cm = mean(Value)) 
+
+#Once again, merging by plot is proving problematic.
+tmp_data <- 
+  left_join(sf_scaled, swc_15, by = c("Plot", "TIMESTAMP"))  
+
+#Now use gcrew data 
+#Note: only freshwater (wetland) will have these variables, but we can extrapolate to other plots
+#All vapor pressure values are currently 0, so filter out for now
+
+gcw_full %>%
+  mutate(Plot = substr(Plot,1,2),
+         Plot = case_when(Plot == "W" ~ "Freshwater",)) %>%
+  select(Plot, TIMESTAMP, Value, research_name) %>%
+  filter(research_name != "wx_vappress15") -> gcw
+
+
+gcw %>%
+  filter(research_name == "wx_par_den15") %>%
+  mutate(PAR = Value) %>% 
+  select(TIMESTAMP, PAR) -> par
+
+gcw %>%
+  filter(research_name == "wx_tempavg15") %>%
+  mutate(TEMP = Value) %>% 
+  select(TIMESTAMP, TEMP) -> temp
+
+full_data <- 
+  merge(tmp_data, par, by.x = c("TIMESTAMP"), 
+        by.y = c("TIMESTAMP"), all.x = TRUE)
+
+full_data <- 
+  merge(full_data, temp, by.x = c("TIMESTAMP"), 
+        by.y = c("TIMESTAMP"), all.x = TRUE) 
+
+#Now we have a full time series for 2022-2024!
+
+saveRDS(full_data,"Full_22_24.rds")
 
 

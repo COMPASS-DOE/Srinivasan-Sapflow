@@ -194,3 +194,5 @@ full_data <-
 #Now we have a full time series for the last 2 weeks of 2024 data!
 
 saveRDS(full_data,"Full_042424_050224.rds")
+
+
