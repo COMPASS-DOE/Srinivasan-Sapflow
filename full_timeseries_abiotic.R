@@ -21,7 +21,7 @@ files_T <- c(files_T24, files_T23, files_T22)
 f <- function(f) {
   message("Reading ", basename(f))
   x <- read_csv(f, col_types = "ccTccccdccii")
-  x[x$research_name %in% variables,]
+  x[x$research_name %in% variables | x$Sensor_ID == "F19D",]
 }
 
 #Bind together all files 
@@ -29,6 +29,12 @@ dat <- lapply(files_T,  f)
 dat <- do.call("rbind", dat)
 
 tmp_full <- dat
+
+tmp_full %>%
+  drop_na(Sensor_ID) %>%
+  mutate(Sensor_ID = ifelse(Sensor_ID == "F19D", "F19", Sensor_ID)) -> tmp_full
+
+saveRDS(tmp_full, "tmp_full.rds")
 
 #GCREW data from 2022-24
 #Note: vappress is all 0 for now until we get that sorted out 
@@ -58,7 +64,7 @@ gcw_full <- dat
 saveRDS(gcw_full, "gcw_full.rds")
 
 #Combining it all: editing dataframes for variables to match 
-species <- read.csv("sapflow_inventory.csv")
+species <- readRDS("dbh.rds")
 
 tmp_full %>%
   mutate(Plot = substr(Plot,1,1),
@@ -66,13 +72,10 @@ tmp_full %>%
                           Plot == "F" ~ "Freshwater",
                           Plot == "S" ~ "Saltwater", )) -> tmp_full
 species %>%
-  mutate(Plot = ifelse(Plot == "SW", "Saltwater", Plot)) %>%
-  mutate(Plot = ifelse(Plot == "FW", "Freshwater", Plot)) %>%
-  mutate(Species = spp) %>%
-  mutate(Species = substr(Species,1,4),
-         Species = case_when(Species == "ACRU" ~ "Red Maple",
-                             Species == "LITU" ~ "Tulip Poplar",
-                             Species == "FAGR" ~ "Beech")) %>%
+  mutate(Species = substr(spp,1,4),
+         Species = case_when(spp == "ACRU" ~ "Red Maple",
+                             spp == "LITU" ~ "Tulip Poplar",
+                             spp == "FAGR" ~ "Beech")) %>%
   select(Plot, Sapflux_ID, Species) %>%
   filter(!grepl("D", Sapflux_ID)) -> species
 
@@ -81,20 +84,17 @@ species %>%
 
 #Create sapflow-only dataframe with scaled Fd
 sapflow <- tmp_full %>% 
-  filter(research_name == "sapflow_2.5cm",
+  filter(Instrument == "Sapflow",
          Value >= 0.01, Value <=1) %>%
   select(Plot, TIMESTAMP, Sensor_ID, Value) %>%
   mutate(sapflow_2.5cm = Value) %>% 
   mutate(Date = date(TIMESTAMP))
 
 #Merge sapflow and species dataframe
-#For some reason, including plot in the group_by messes with the ID matching, so we're leaving it out for now
 sapflow_sp <- 
-  merge(species, sapflow, by.x = c("Sapflux_ID"), by.y = c("Sensor_ID"), all.x = TRUE, all.y = TRUE)
+  merge(species, sapflow, by.x = c("Sapflux_ID", "Plot"), by.y = c("Sensor_ID", "Plot"), all.x = TRUE, all.y = TRUE)
 
-sapflow_sp %>%
-  mutate(ID = Sapflux_ID) %>%
-  mutate(Plot = Plot.x) -> sapflow_sp
+mutate(sapflow_sp, ID = Sapflux_ID) -> sapflow_sp
 
 #Calculate dTmax
 sapflow_sp %>% 
@@ -183,7 +183,6 @@ swc_15 <- tmp_full %>%
     drop_na(Value) %>%
     summarize(soil_vwc_15cm = mean(Value)) 
 
-#Once again, merging by plot is proving problematic.
 tmp_data <- 
   left_join(sf_scaled, swc_15, by = c("Plot", "TIMESTAMP"))  
 
