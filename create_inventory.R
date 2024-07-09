@@ -7,13 +7,22 @@ library(dplyr)
 library(stringr)
 
 #Load dataframes
-sapflow_inventory <- read.csv("sapflow_inventory.csv")
-dbh_inventory <- read.csv("inventory.csv")
+sapflow_inventory <- read.csv("C:/Users/srin662/OneDrive - PNNL/Documents/R/TEMPEST-SULI-2024/sapflow_inventory.csv")
+dbh_inventory <- read.csv("C:/Users/srin662/OneDrive - PNNL/Documents/R/inventory.csv")
 
+#Edit format to match dataframes
+#Remove trailing white spaces 
+sapflow_inventory %>%
+  mutate(Plot = ifelse(Plot == "SW", "Saltwater", Plot)) %>%
+  mutate(Plot = ifelse(Plot == "FW", "Freshwater", Plot)) %>%
+  mutate(Plot = trimws(Plot, which = "right")) -> sapflow_inventory
+
+#Merge dataframes and remove deep sapflow sensors
 inventory <- merge(sapflow_inventory, dbh_inventory, 
-                   by.x = "Tag", by.y = "Tag", all.x = TRUE, all.y = FALSE)
+                   by.x = c("Tree_ID", "Plot"), by.y = c("Tag", "Plot"), all.x = TRUE)
 inventory %>%
-  drop_na(Grid_Square) %>%
-  filter(!grepl("D", Tree_Code)) -> inventory
+  filter(!grepl("D", Sapflux_ID)) -> inventory
 
+#Save as RDS
 saveRDS(inventory, file = "dbh.rds")
+      

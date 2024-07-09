@@ -2,18 +2,31 @@
 title: "TEMPEST Sapflow Initial Analysis"
 author: "Radha Srinivasan"
 date: "2024-06-18"
-output: html_document
+output: 
+  html_document:
+    toc: true 
+    toc_float: true 
+    code_folding: hide
 ---
+
+## Background 
+
 [Some background about TEMPEST, sapflow measurements]
 
-This code currently calculates and graphs whole-tree sap flux density both hourly and daily for the last two weeks of April 2024, but could easily be altered for any time frame. 
+### Sap Flux Density Calculations 
 
-Note: Raw sap flow measurements are recorded in terms of difference in voltage between the two probes. Due to the nature of the equations used (Granier 1985) voltage difference can be thought of as interchangeable with temperature difference. 
+This code currently calculates and graphs whole-tree sap flux density both hourly and daily for the last two weeks of April 2024, but could easily be altered for any time frame.
 
-Also a note: I think ~technically~ sap flow velocity would be the term to describe the point/unscaled sap flow measurement, and sap flux density would describe the whole tree measurement. I'm not sure if there's a convention for this so I've just used sap flux density for both here. 
+Note: Raw sap flow measurements are recorded in terms of difference in voltage between the two probes. Due to the nature of the equations used (Granier 1985) voltage difference can be thought of as interchangeable with temperature difference.
+
+#### Notes on vernacular: 
+
+Sap flow velocity would be the term to describe the point/unscaled sap flow measurement, and sap flux density would describe sap flow over a certain area (in this case, sapwood area of the tree).
+
+## Data Wrangling 
 
 Load in our packages:
-```{r}
+```{r message = FALSE}
 library(tidyr)
 library(dplyr)
 library(ggplot2)
@@ -22,22 +35,23 @@ library(stringr)
 ```
 
 Load in our data: 
-1) Sapflow (mV), soil water content(m^3/M^3), VPD (Pa), PAR (umol/m^2/s)
+
+1) Sapflow (mV), soil water content(m^3 / m^3), VPD (Pa), PAR (umol/m\^2/s) 
 2) Species ID
+
 ```{r}
 sapflow_data <- readRDS("sapflow_abiotic_complete.rds")
 species <- read.csv("TEMPEST_TreeChamberInstallation_11272023.csv")
 ```
 
-Specify start and end times for data (here, we focus on the last two weeks of April 2024):
-Note: Have used EST to avoid defaulting to UTC, not sure if it is appropriate time zone. 
+Specify start and end times for data (here, we focus on the last two weeks of April 2024): Note: Have used EST to avoid defaulting to UTC, not sure if it is appropriate time zone.
+
 ```{r}
 DATA_BEGIN <- as_datetime("2024-04-17 00:00:00", tz = "EST")
 DATA_END <- as_datetime("2024-04-30 23:59:59", tz = "EST")
 ```
 
-
-Tidy up data- filter to specified time frame, remove outliers (sapflow voltage differences should be between 0.01 and 1), and (for now) only include values from shallow sapflow sensors. 
+Tidy up data- filter to specified time frame, remove outliers (sapflow voltage differences should be between 0.01 and 1), and (for now) only include values from shallow sapflow sensors.
 
 ```{r}
 sapflow_data <- sapflow_data %>% 
@@ -49,8 +63,7 @@ sapflow_data <- sapflow_data %>%
          Value >= 0.01, Value <=1, !grepl("D", Sensor_ID)) 
 ```
 
-
-Match species name with sapflow measurements and ID, create new dataframe with select variables: 
+Match species name with sapflow measurements and ID, create new dataframe with select variables:
 
 ```{r}
 sapflow_data %>% 
@@ -69,10 +82,12 @@ sapflow_data %>%
 
 ```
 
-Calculate dTmax (the maximum difference in voltage, i.e. the minimum sapflow) over a 24 hour period. 
-Note: This value was initially calculated between the hours of midnight and 5 am, but this failed to account for instances of low sapflow during the day. Perhaps averaging this value over a 7-10 day period would be more accurate? 
 
-```{r}
+## dTmax Calculations
+
+Calculate dTmax (the maximum difference in voltage, i.e. the minimum sapflow) over a 24 hour period. Note: This value was initially calculated between the hours of midnight and 5 am, but this failed to account for instances of low sapflow during the day. Perhaps averaging this value over a 7-10 day period would be more accurate?
+
+```{r message = FALSE}
 sf_dat %>% 
   #filter(Hour >= 0, Hour <= 5) %>% 
   group_by(Date, Plot, Species, ID) %>% 
@@ -80,9 +95,9 @@ sf_dat %>%
             dTmax_time = TIMESTAMP[which.max(Value)])-> sapflow_dtmax
 ```
 
-Double check that our calculated dTmax values indeed match the value of lowest sapflow during the day. 
-Graph voltage difference and dTmax on the y-axis and timestamp on the x-axis (in one treatment for simplicity):
-```{r}
+Double check that our calculated dTmax values indeed match the value of lowest sapflow during the day. Graph voltage difference and dTmax on the y-axis and timestamp on the x-axis (in one treatment for simplicity):
+
+```{r message = FALSE}
 sf_dat %>% 
   filter(Plot == "Control") %>% 
   ggplot(aes(x = TIMESTAMP, y = Value, group = Species, color= as.factor(Species))) + 
@@ -91,11 +106,18 @@ sf_dat %>%
   facet_wrap(ID~Plot, scales = "free") 
 ggsave("daily_dTmax.jpeg")
 ```
+
 We should expect to see dTmax values on the peaks of the voltage differences for each day. Looks good!
 
+## F_d Calculations
 
-Convert voltage difference to sap flux density (Fd, m^3/m^2*s) using Granier 1985 equation, then convert to g/m^2/hr. 
-[Insert equation in LaTex format]
+Convert voltage difference to sap flux density ($F_d$,$m^3/m^2 \cdot s$) using Granier 1985 equation, then convert to $g/m^2 \cdot hr$.
+
+$$ F_{d}  = \alpha K^{b} $$ Constants alpha and b were experimentally determined by Granier and depend on the power of the heat probe (0.2 W).
+
+$$ F_{d}  = 118.99 \cdot 10^{-6} \cdot (\frac{\Delta T_{max}}{\Delta T}- 1)^{1.231}$$ Scale to get to g/m2/s, $$ F_{d}  =  360,000 \cdot F_{d}$$ 
+
+Implement in dataframe:
 
 ```{r}
 
@@ -105,8 +127,8 @@ sf_dat %>%
   drop_na(Plot) -> sfd_data
 ```
 
-
 Graph newly calculated values of sap flux density with dTmax to check our calculations:
+
 ```{r}
 ggplot(data = filter(sfd_data), aes(x = TIMESTAMP, y = (Fd), group = Species, color = as.factor(Species))) + 
   geom_line() + 
@@ -116,11 +138,12 @@ ggplot(data = filter(sfd_data), aes(x = TIMESTAMP, y = (Fd), group = Species, co
 
 dTmax is the highest voltage difference (i.e. the lowest sap flux density), so we should see our dTmax points at the lowest points of the Fd values. Looks good!
 
-Scale our Fd values to be representative of the whole tree using area of sapwood (active sap-conducting xylem) based on Lu 2004 equation. 
+## Allometric Equations
 
-First, estimate sapwood area for each tree using species-specific allometric equations from Brantley 2016. 
-Equations follow the format y = a* D^b, with experimentally determined coefficients for each species. 
-Note: Brantley did not include coefficients specific to American Beech, so an equation for diffuse-porous trees is used. Find a beech-specific equation if this isn't sufficient?
+Scale our Fd values to be representative of the whole tree using area of sapwood (active sap-conducting xylem) based on Lu 2004 equation.
+
+First, estimate sapwood area for each tree using species-specific allometric equations from Brantley 2016. Equations follow the format y = a\* D\^b, with experimentally determined coefficients for each species. Note: Brantley did not include coefficients specific to American Beech, so an equation for diffuse-porous trees is used. Find a beech-specific equation if this isn't sufficient?
+
 ```{r}
 inventory <- readRDS("dbh.rds")
 
@@ -142,8 +165,8 @@ dbh %>%
 
 ```
 
-Use sapwood areas to scale Fd to whole tree using Lu 2004 equation:
-F_tot = Fd * SA 
+Use sapwood areas to scale Fd to whole tree using Lu 2004 equation: $$ F_{tot} = F_{d} / SA $$
+
 ```{r}
 scaled <- merge(sfd_data, dbh, by.x = c("ID", "Species"), by.y = c("Tree_Code", "Species"), all.x = TRUE)
 
@@ -151,26 +174,33 @@ scaled %>%
   mutate(F_tot = Fd * SA_2024) -> scaled
 ```
 
-Find hourly period of maximum Fd: 
-```{r}
+Find hourly period of maximum Fd:
+
+```{r message = FALSE}
 scaled %>% 
   group_by(Date, Plot, Species, ID) %>% 
   summarise(Fdmax = max(Fd, na.rm = TRUE),
             Fdmax_time = TIMESTAMP[which.max(Fd)]) -> maxFd_time
 
-hist(hour(maxFd_time$Fdmax_time))
+ggplot(maxFd_time, aes(x = Fdmax_time)) + 
+  geom_histogram() + 
+  labs(x = "Hour", y = "Frequency", title = "Maximum Fd per hour")
+ 
 ```
-Peak hours seem to be between 11 AM and 12 PM. Let's double check if it varies seasonally: 
-```{r}
+
+Peak hours seem to be between 11 AM and 12 PM. Let's double check if it varies seasonally:
+
+```{r message = FALSE}
 ggplot(maxFd_time, aes(x = hour(Fdmax_time), fill = Species)) +
   geom_histogram() + ggtitle("Monthly Max Fd Time")+
   facet_wrap(.~month(Fdmax_time))
 ```
-Not much seasonal variation. 
 
-Graph whole tree flux for 11-12 AM over the last two weeks of April, averaged by plot and species. 
-Note: These are averaged values for every 15 minutes from 11-12 AM. 
-```{r}
+Not much seasonal variation.
+
+Graph whole tree flux for 11-12 AM over the last two weeks of April, averaged by plot and species. Note: These are averaged values for every 15 minutes from 11-12 AM.
+
+```{r message = FALSE}
 
 scaled %>% 
   filter(Hour >= 11, Hour <= 12) %>% 
@@ -187,10 +217,12 @@ ggplot(scaled_plot_avg) +
   facet_wrap(~Plot, ncol = 1)
   ggsave("Ftot_weeklyplot.jpeg")
   
-``'
-And we can use this pipeline for any time frame!  
+```
+
+And we can use this pipeline for any time frame!
 
 ANOVA test to determine if difference in Fd of different treatments and species are statistically significant and a summarizing box plot (We can assume species and plot are correlated with each other, as different species likely vary under different treatments):
+
 ```{r}
 scaled %>%
   filter(Hour <= 12, Hour >= 11, Date >= "2024-04-24") -> scaled_pm
@@ -208,8 +240,6 @@ ggplot(scaled_pm) +
 
 ```
 
-The p-value is <<0.05; the differences in Fd between species and treatments are statistically significant. 
-We can see variation between species and within treatments, as well as between treatments for beech and tulip poplar. Red maple seems fairly consistent in mean and variance between treatments. 
+The p-value is \<\<0.05; the differences in Fd between species and treatments are statistically significant. We can see variation between species and within treatments, as well as between treatments for beech and tulip poplar. Red maple seems fairly consistent in mean and variance between treatments.
 
-
-
+## Abiotic 
