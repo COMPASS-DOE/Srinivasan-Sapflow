@@ -11,17 +11,18 @@ sapflow_inventory <- read.csv("C:/Users/srin662/OneDrive - PNNL/Documents/R/TEMP
 dbh_inventory <- read.csv("C:/Users/srin662/OneDrive - PNNL/Documents/R/inventory.csv")
 
 #Edit format to match dataframes
+#Remove trailing white spaces 
 sapflow_inventory %>%
   mutate(Plot = ifelse(Plot == "SW", "Saltwater", Plot)) %>%
-  mutate(Plot = ifelse(Plot == "FW", "Freshwater", Plot)) -> sapflow_inventory
+  mutate(Plot = ifelse(Plot == "FW", "Freshwater", Plot)) %>%
+  mutate(Plot = trimws(Plot, which = "right")) -> sapflow_inventory
 
-#For some reason, merging by Plot as well caused lots of matching issues. 
+#Merge dataframes and remove deep sapflow sensors
 inventory <- merge(sapflow_inventory, dbh_inventory, 
-                   by.x = c("Tree_ID"), 
-                   by.y = c("Tag"), all.x = TRUE, all.y = TRUE)
+                   by.x = c("Tree_ID", "Plot"), by.y = c("Tag", "Plot"), all.x = TRUE)
 inventory %>%
-  mutate(Plot = Plot.x) %>%
-  drop_na(Sapflux_ID) %>%
   filter(!grepl("D", Sapflux_ID)) -> inventory
 
+#Save as RDS
 saveRDS(inventory, file = "dbh.rds")
+      
