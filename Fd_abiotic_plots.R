@@ -10,7 +10,7 @@ library(ggpmisc)
 
 #Reading in data from timeseries_abiotic.R 
 #Note this is only April 24- May 2 2024 and doesn't include vapor pressure yet.
-full_data <- readRDS("Full_042424_050224.rds")
+full_data <- readRDS("full_042424_050224.rds")
 
 full_data %>%
   mutate(Hour = hour(TIMESTAMP)) %>%
@@ -80,9 +80,10 @@ full_data %>%
   stat_poly_eq(aes(label = paste(format(..p.value.label.., digits = 3))),
                formula = y ~ x, parse = TRUE, label.x = "center", label.y = "top") + 
   labs(x = "Average Temperature (C)", 
-       y = "Average Sap Flux Density (m^3/m^2/s)") +
+       y = "Average Sap Flux Density (m^3/s)",
+       title = "Temperature vs Sap Flux Density, Last 2 Weeks of 2024") +
   theme_light()
 
 #Save as image 
-ggsave("Fd_temp_2024_spfacet.jpeg", scale = 2)
+ggsave("Fd_temp_2024_spfacet.jpeg", scale = 1)
 

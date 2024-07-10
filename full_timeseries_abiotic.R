@@ -150,7 +150,7 @@ scaled %>%
   mutate(F = SA * Fd) -> sf_scaled
 
 #Now let's make some plots to double check 
-#Filtering out outliers F<2500
+#Filtering out outliers F<17500
 
 sf_scaled %>% 
   mutate(Hour = hour(TIMESTAMP)) %>%
@@ -189,6 +189,7 @@ tmp_data <-
 #Now use gcrew data 
 #Note: only freshwater (wetland) will have these variables, but we can extrapolate to other plots
 #All vapor pressure values are currently 0, so filter out for now
+#Note: first few months of 2022 don't have PAR or temp values, look into this later 
 
 gcw_full %>%
   mutate(Plot = substr(Plot,1,2),
@@ -209,7 +210,7 @@ gcw %>%
 
 full_data <- 
   merge(tmp_data, par, by.x = c("TIMESTAMP"), 
-        by.y = c("TIMESTAMP"), all.x = TRUE)
+        by.y = c("TIMESTAMP"), all = TRUE)
 
 full_data <- 
   merge(full_data, temp, by.x = c("TIMESTAMP"), 
