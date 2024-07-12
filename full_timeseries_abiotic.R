@@ -35,6 +35,7 @@ tmp_full %>%
   mutate(Sensor_ID = ifelse(Sensor_ID == "F19D", "F19", Sensor_ID)) -> tmp_full
 
 saveRDS(tmp_full, "tmp_full.rds")
+tmp_full <- readRDS("tmp_full.rds")
 
 #GCREW data from 2022-24
 #Note: vappress is all 0 for now until we get that sorted out 
@@ -62,6 +63,7 @@ dat <- do.call("rbind", dat)
 
 gcw_full <- dat
 saveRDS(gcw_full, "gcw_full.rds")
+gcw_full <- readRDS("gcw_full.rds")
 
 #Combining it all: editing dataframes for variables to match 
 species <- readRDS("dbh.rds")

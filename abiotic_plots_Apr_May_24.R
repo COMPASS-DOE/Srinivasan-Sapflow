@@ -14,7 +14,7 @@ full_data <- readRDS("full_042424_050224.rds")
 
 full_data %>%
   mutate(Hour = hour(TIMESTAMP)) %>%
-  filter(Hour >= 11, Hour <= 12) -> full_data
+  filter(Hour >= 11, Hour <= 12)  -> full_data
 
 #Plot of Fd vs soil vwc 
 full_data %>%
@@ -85,5 +85,5 @@ full_data %>%
   theme_light()
 
 #Save as image 
-ggsave("Fd_temp_2024_spfacet.jpeg", scale = 1)
+ggsave("Fd_par_2024_spfacet.jpeg", scale = 1)
 
