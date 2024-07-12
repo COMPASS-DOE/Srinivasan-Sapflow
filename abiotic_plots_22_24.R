@@ -44,15 +44,23 @@ gs_data %>%
   ggplot(aes(x = Date, y = avg_f, color = Species)) + 
   geom_point() +
   facet_wrap(~Year, nrow = 1, scales = "free_x") +
-  labs(x = "Month", y = "Average Sap Flux Density", title = "Avg Sap Flux Density for mid April-May in Control Plot")
+  labs(x = "Month", y = "Average Sap Flux Density", title = "Avg Sap Flux Density for Growing Season in Control Plot")
 
 #Freshwater Plot
 gs_data %>%
-  filter(Plot == "Control") %>%
+  filter(Plot == "Freshwater") %>%
   ggplot(aes(x = Date, y = avg_f, color = Species)) + 
   geom_point() +
-  facet_wrap(~Year, nrow = 1, scales = "free_x") +
-  labs(x = "Month", y = "Average Sap Flux Density", title = "Avg Sap Flux Density for mid April-May in Control Plot")
+  facet_wrap(Species~Year, nrow = 3, scales = "free_x") +
+  labs(x = "Month", y = "Average Sap Flux Density", title = "Avg Sap Flux Density for mid Growing Season in Freshwater Plot")
+
+#Saltwater Plot
+gs_data %>%
+  filter(Plot == "Saltwater") %>%
+  ggplot(aes(x = Date, y = avg_f, color = Species)) + 
+  geom_point() +
+  facet_wrap(Species~Year, nrow = 3, scales = "free_x") +
+  labs(x = "Month", y = "Average Sap Flux Density", title = "Avg Sap Flux Density for mid Growing Season in Saltwater Plot")
 
 #Boxplot of sapflux by treatments and species, same mid Apr-may timeframe
 
