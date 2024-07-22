@@ -21,7 +21,10 @@ full_data %>%
          Month >= 5, Month <= 9,
          F <= 17500, F >= 0) %>%
   group_by(Date, Species) %>%
-  mutate(avg_f = mean(F)) -> gs_data
+  mutate(avg_f = mean(F),
+         avg_vwc = mean(soil_vwc_15cm), 
+         avg_par = mean(PAR),
+         avg_temp = mean(TEMP))-> gs_data
 
 #Isolate for available growing season data from 2024:
 full_data %>%
@@ -94,7 +97,7 @@ full_data%>%
           avg_par = mean(PAR), 
           avg_temp = mean(TEMP)) -> ab_data
 
-ab_data%>%
+gs_data%>%
   ggplot(aes(x = avg_vwc, y = avg_f, 
              #color = Plot, group = Plot)) + 
              color = Species, group = Species)) +
@@ -113,7 +116,7 @@ ab_data%>%
 
 #Photosynthetically active radiation: 
 
-ab_data %>%
+gs_data %>%
   ggplot(aes(x = avg_par, y = avg_f, 
              #color = Plot, group = Plot)) + 
              color = Species, group = Species)) +
@@ -131,7 +134,7 @@ ab_data %>%
 
 #Air temperature: 
 
-ab_data %>%
+gs_data %>%
   ggplot(aes(x = avg_temp, y = avg_f, 
              #color = Plot, group = Plot)) + 
              color = Species, group = Species)) +

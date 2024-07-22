@@ -1,3 +1,7 @@
+#This code compiles a complete time series of sapflow data and GcREW data from 2021-2024
+#Sapflow, soil vwc at 15 cm, average air temp over 15 mins, photosynthetically active radiation
+#Note: only sapflow and soilvwc data are available for 2021
+
 library(readr)
 library(tidyr)
 library(dplyr)
@@ -15,8 +19,9 @@ pat <- paste0("^", site, ".*csv$")
 files_T24 <- list.files("C:/Users/srin662/OneDrive - PNNL/Documents/R/TMP_2024/", pattern = pat, recursive = TRUE, full.names = TRUE)
 files_T23 <- list.files("C:/Users/srin662/OneDrive - PNNL/Documents/R/TMP_2023/", pattern = pat, recursive = TRUE, full.names = TRUE)
 files_T22 <- list.files("C:/Users/srin662/OneDrive - PNNL/Documents/R/TMP_2022/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_T21 <- list.files("C:/Users/srin662/OneDrive - PNNL/Documents/R/TMP_2021/", pattern = pat, recursive = TRUE, full.names = TRUE)
 
-files_T <- c(files_T24, files_T23, files_T22)
+files_T <- c(files_T24, files_T23, files_T22, files_T21)
 
 f <- function(f) {
   message("Reading ", basename(f))
@@ -30,6 +35,7 @@ dat <- do.call("rbind", dat)
 
 tmp_full <- dat
 
+#Correction for F19 being mislabeled as F19D in L1 data
 tmp_full %>%
   drop_na(Sensor_ID) %>%
   mutate(Sensor_ID = ifelse(Sensor_ID == "F19D", "F19", Sensor_ID)) -> tmp_full
@@ -114,7 +120,7 @@ sapflow_sp %>%
 #Load in dbh data (for scaling) 
 inventory <- readRDS("dbh.rds")
 inventory %>%
-  select(Tree_ID, Sapflux_ID, spp, DBH_2024, DBH_2022, DBH_2023) -> dbh
+  select(Tree_ID, Sapflux_ID, spp, DBH_2024, DBH_2022, DBH_2023, DBH_2021) -> dbh
 
 
 #Using allometric equations, scale Fd measurements
@@ -174,7 +180,7 @@ ggplot(sf_plot_avg) +
   ggsave("Full_sapflow.jpeg")
 
 #Let's also save this new complete sap flux data as an rds:
-  saveRDS(scaled, "Sapflow_22_24.rds")
+  saveRDS(scaled, "Sapflow_21_24.rds")
 
 #Now we add in our abiotic data
   #Create soil vwc dataframe
@@ -187,6 +193,7 @@ swc_15 <- tmp_full %>%
 
 tmp_data <- 
   left_join(sf_scaled, swc_15, by = c("Plot", "TIMESTAMP"))  
+
 
 #Now use gcrew data 
 #Note: only freshwater (wetland) will have these variables, but we can extrapolate to other plots
@@ -218,8 +225,8 @@ full_data <-
   merge(full_data, temp, by.x = c("TIMESTAMP"), 
         by.y = c("TIMESTAMP"), all.x = TRUE) 
 
-#Now we have a full time series for 2022-2024!
+#Now we have a full time series for 2021-2024!
 
-saveRDS(full_data,"Full_22_24.rds")
+saveRDS(full_data,"Full_21_24.rds")
 
 
