@@ -57,8 +57,8 @@ ggplot(aes(x = avg_par, y = avg_fd,
                formula = y ~ x, label.x = 0.05, label.y = 0.99) +
   stat_poly_eq(aes(label = paste(format(..p.value.label.., digits = 3))),
                formula = y ~ x, label.x = 0.9, label.y = 0.985) +
-  labs(x = "Average Photosynthetically Active Radiaiton (PAR) (umol/m^2/s)", 
-       y = "Average Sap Flux Density (m^3/m^2/s)",
+  labs(x = "Average Photosynthetically Active Radiation (PAR) (umol/m^2/s)", 
+       y = "Average Sap Flux Density (m^3/s)",
        title = "PAR vs Sap Flux Density for Control Plot, 11 AM - 12 PM") 
 
 ggsave("par_2wks.jpeg")
@@ -67,7 +67,7 @@ ggsave("par_2wks.jpeg")
 
 
 #Fd vs temp (with Plot or Species faceted) 
-full_data %>%
+ful l_data %>%
   group_by(TIMESTAMP, Species, Plot) %>% 
   summarize(avg_temp = mean(TEMP), 
             avg_fd = mean(F_tot)) %>%
@@ -84,7 +84,7 @@ full_data %>%
                formula = y ~ x, parse = TRUE, label.x = "center", label.y = "top") + 
   labs(x = "Average Temperature (C)", 
        y = "Average Sap Flux Density (m^3/s)",
-       title = "Temperature vs Sap Flux Density, Last 2 Weeks of 2024") +
+       title = "Temperature vs Sap Flux Density, April-May 2024") +
   theme_light()
 
 #Save as image 
