@@ -67,7 +67,7 @@ ggsave("par_2wks.jpeg")
 
 
 #Fd vs temp (with Plot or Species faceted) 
-ful l_data %>%
+full_data %>%
   group_by(TIMESTAMP, Species, Plot) %>% 
   summarize(avg_temp = mean(TEMP), 
             avg_fd = mean(F_tot)) %>%

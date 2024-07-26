@@ -50,7 +50,7 @@ ggplot(sf_plot_avg) +
   #x = Date, color = Species)) + 
   facet_wrap(~Plot, ncol = 1, scales = "fixed") + 
   annotate(geom = "rect", xmin=Ida_start, xmax=Ida_end, ymin= -Inf, ymax=Inf, alpha=0.6, fill="lightblue") +
-  annotate(geom = "rect", xmin=Elsa_start, xmax=Elsa_end, ymin= -Inf, ymax=Inf, alpha=0.6, fill="lightblue") +
+  annotate(geom = "rect", xmin=Elsa_start, xmax=Elsa_end, ymin= -Inf, ymax=Inf, alpha=0.6, fill="lightgreen") +
   labs(y = expression(Average~Sap~Flux~Density~(m^3/s)), x = "Date", title = "Sap Flux Density Averaged Daily, 11 AM - 12 PM")
 
 ggsave("Daily_Sapflow.jpeg")
@@ -175,3 +175,17 @@ ggplot(anova) +
  
  ggsave("anova_boxplot.jpeg")
 
+ #To calculate average sap flow rates for each species: 
+ full_data %>%
+   mutate(Hour = hour(TIMESTAMP), 
+          Month = month(TIMESTAMP), 
+          Date = date(TIMESTAMP)) %>%
+   filter(Year != 2024, Year !=2021,
+          Hour >= 11, Hour <= 12,
+          Month >= 5, Month <= 9,
+          F <= 17500, F >= 0) -> gs_data
+
+ gs_data %>%
+   group_by(Species, Plot) %>%
+   summarize(avg_F = mean(F))
+ 
