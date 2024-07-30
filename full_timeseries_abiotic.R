@@ -112,10 +112,13 @@ sapflow_sp %>%
             dTmax_time = TIMESTAMP[which.max(Value)])-> sapflow_dtmax
 
 #Calculate Fd
+# convert the probe raw values (in mV) to sap flux velocity (m/s)
+# Granier equation is Fd = ((118 * 10^-6) * K)^1.231, and conversion to mm/hr 
 
 sapflow_sp %>% 
   left_join(sapflow_dtmax, by = c("Plot", "Species", "ID", "Date")) %>% 
-  mutate(Fd = 360000 * (0.00011899) * (((dTmax / Value) - 1)^1.231)) -> sfd_data
+  mutate(Fd = ((0.00011899 * (((dTmax / Value) - 1)))^1.231)) %>%
+  mutate(Fd = 3600 * 1000 * Fd) -> sfd_data
 
 #Load in dbh data (for scaling) 
 inventory <- readRDS("dbh.rds")
@@ -127,9 +130,9 @@ inventory %>%
 
 SA <- function(Species, DBH) {
   case_when(
-    Species == "Red Maple" ~ (0.5973*(DBH)^2.0743),
-    Species == "Tulip Poplar" ~ (0.8086*(DBH)^1.8331),
-    Species == "Beech" ~ (0.8198*(DBH)^1.8635))
+    Species == "Red Maple" ~ (0.5973*(DBH/100)^2.0743),
+    Species == "Tulip Poplar" ~ (0.8086*(DBH/100)^1.8331),
+    Species == "Beech" ~ (0.8198*(DBH/100)^1.8635))
 }
 
 dbh %>%

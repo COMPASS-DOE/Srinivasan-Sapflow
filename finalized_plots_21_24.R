@@ -50,7 +50,7 @@ ggplot(sf_plot_avg) +
   #x = Date, color = Species)) + 
   facet_wrap(~Plot, ncol = 1, scales = "fixed") + 
   annotate(geom = "rect", xmin=Ida_start, xmax=Ida_end, ymin= -Inf, ymax=Inf, alpha=0.6, fill="lightblue") +
-  annotate(geom = "rect", xmin=Elsa_start, xmax=Elsa_end, ymin= -Inf, ymax=Inf, alpha=0.6, fill="lightgreen") +
+  annotate(geom = "rect", xmin=Elsa_start, xmax=Elsa_end, ymin= -Inf, ymax=Inf, alpha=0.6, fill="lightblue") +
   labs(y = expression(Average~Sap~Flux~Density~(m^3/s)), x = "Date", title = "Sap Flux Density Averaged Daily, 11 AM - 12 PM")
 
 ggsave("Daily_Sapflow.jpeg")
@@ -86,6 +86,7 @@ temp_plot_avg %>%
        y = "Average Sap Flux Density (m^3/s)", 
        title = "Air Temp vs Sap Flux Density for Control Plot, 11 AM - 12 PM")
 
+ggsave("AirTemp.jpeg")
 
 #Average PAR vs average sap flux density
 #Years 2021-24, Weeks Pre and Post TEMPEST, hrs 11-12
@@ -117,6 +118,7 @@ par_plot_avg %>%
   labs(x = "Average PAR", 
        y = "Average Sap Flux Density (m^3/s)", 
        title = "PAR vs Sap Flux Density for Control Plot, 11 AM - 12 PM")
+ggsave("PAR.jpeg", width = 11.6, height = 7.28)
 
 #Average soil volumetric water content vs average sap flux density
 #Years 2021-24, Weeks Pre and Post TEMPEST, hrs 11-12
@@ -147,6 +149,7 @@ vwc_plot_avg %>%
   labs(x = "Average Soil Volumetric Water Content", 
        y = "Average Sap Flux Density (m^3/s)", 
        title = "VWC vs Sap Flux Density for Control Plot, 11 AM - 12 PM")
+ggsave("SoilVWC.jpeg", width = 11.6, height = 7.28)
 
 #ANOVA test for difference in means between treatments, species, and their interaction 
 #Fd ~ sp x treatment 
@@ -187,5 +190,9 @@ ggplot(anova) +
 
  gs_data %>%
    group_by(Species, Plot) %>%
-   summarize(avg_F = mean(F))
+   summarize(avg_F = mean(F)) %>%
+  filter(Plot != "Freshwater", 
+         Species == "Red Maple") -> test
+
+t.test(avg_F ~ Plot, data = test, var.equal = FALSE) 
  

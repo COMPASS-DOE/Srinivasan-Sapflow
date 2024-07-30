@@ -11,7 +11,7 @@ output:
 
 ## Background
 
-[Some background about TEMPEST, sapflow measurements]
+This is a summary of the pipeline I have used over the past summer analyzing TEMPEST sap flow data. 
 
 ### Sap Flux Density Calculations
 
