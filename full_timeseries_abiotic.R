@@ -93,7 +93,7 @@ species %>%
 #Create sapflow-only dataframe with scaled Fd
 sapflow <- tmp_full %>% 
   filter(Instrument == "Sapflow",
-         Value >= 0.01, Value <=1) %>%
+         Value >= 0.01, Value <=0.7) %>%
   select(Plot, TIMESTAMP, Sensor_ID, Value) %>%
   mutate(sapflow_2.5cm = Value) %>% 
   mutate(Date = date(TIMESTAMP))
@@ -113,12 +113,11 @@ sapflow_sp %>%
 
 #Calculate Fd
 # convert the probe raw values (in mV) to sap flux velocity (m/s)
-# Granier equation is Fd = ((118 * 10^-6) * K)^1.231, and conversion to mm/hr 
+# Granier equation is Fd = ((118 * 10^-6) * K)^1.231
 
 sapflow_sp %>% 
   left_join(sapflow_dtmax, by = c("Plot", "Species", "ID", "Date")) %>% 
-  mutate(Fd = ((0.00011899 * (((dTmax / Value) - 1)))^1.231)) %>%
-  mutate(Fd = 3600 * 1000 * Fd) -> sfd_data
+  mutate(Fd = ((0.00011899 * (((dTmax / Value) - 1)))^1.231))  -> sfd_data
 
 #Load in dbh data (for scaling) 
 inventory <- readRDS("dbh.rds")
@@ -127,6 +126,7 @@ inventory %>%
 
 
 #Using allometric equations, scale Fd measurements
+#DBH measurements are in cm; scaled to mm 
 
 SA <- function(Species, DBH) {
   case_when(
@@ -168,10 +168,9 @@ sf_scaled %>%
   mutate(Date = date(TIMESTAMP)) %>%
   mutate(monthyr = floor_date(TIMESTAMP, unit = "week")) %>%
   filter(Hour >= 11, Hour <= 12) %>% 
-  filter(F <= 17500, F > 0) %>%
+  filter(F <= 2000000, F >= 0) %>%
   group_by(Plot, Species, Date) %>% 
-  summarise(F_avg = mean(F, na.rm = TRUE)) %>%
-  mutate(F_avg = round(F_avg, digits = 3)) -> sf_plot_avg
+  summarise(F_avg = mean(F, na.rm = TRUE)) -> sf_plot_avg
 
 ggplot(sf_plot_avg) + 
   geom_point(aes (x = Date, y = F_avg, color = Species)) + 
