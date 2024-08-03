@@ -38,11 +38,10 @@ full_data %>%
   mutate(Date = date(TIMESTAMP)) %>%
   mutate(Week = floor_date(TIMESTAMP, unit = "week")) %>%
   filter(Hour >= 11, Hour <= 12) %>% 
-  filter(F <= 17500, F > 0) %>%
+  filter(F <= 0.000002, F > 0) %>%
   group_by(Plot, Species, Date) %>% 
   summarise(F_avg = mean(F, na.rm = FALSE), 
-            F_error = sd(F, na.rm = FALSE)) %>%
-  mutate(F_avg = round(F_avg, digits = 3)) -> sf_plot_avg
+            F_error = sd(F, na.rm = FALSE)) -> sf_plot_avg
 
 ggplot(sf_plot_avg) + 
   geom_point(aes (x = Date, y = F_avg, color = Species)) + 
@@ -53,7 +52,7 @@ ggplot(sf_plot_avg) +
   annotate(geom = "rect", xmin=Elsa_start, xmax=Elsa_end, ymin= -Inf, ymax=Inf, alpha=0.6, fill="lightblue") +
   labs(y = expression(Average~Sap~Flux~Density~(m^3/s)), x = "Date", title = "Sap Flux Density Averaged Daily, 11 AM - 12 PM")
 
-ggsave("Daily_Sapflow.jpeg")
+ggsave("Daily_Sapflow.jpeg", width = 11.5, height = 7.5)
 
 #Average air temperature vs average sap flux density
 #Years 2021-24, Weeks Pre and Post TEMPEST, hrs 11-12
@@ -65,11 +64,10 @@ full_data %>%
   filter(Plot == "Control") %>%
   filter(Hour >= 11, Hour <= 12) %>% 
   filter(Date >= weeks_start & Date <= weeks_end) %>%
-  filter(F <= 17500, F > 0) %>%
+  filter(F <= 0.000002, F > 0) %>%
   group_by(Species, TIMESTAMP) %>% 
   summarise(F_avg = mean(F, na.rm = FALSE), 
-            temp_avg = mean(TEMP, na.rm = FALSE)) %>%
-  mutate(F_avg = round(F_avg, digits = 3)) -> temp_plot_avg
+            temp_avg = mean(TEMP, na.rm = FALSE)) -> temp_plot_avg
 
 temp_plot_avg %>%
   ggplot(aes(x = temp_avg, y = F_avg, 
@@ -83,10 +81,10 @@ temp_plot_avg %>%
   stat_poly_eq(aes(label = paste(..p.value.label.., sep = "~~~")),
                formula = y ~ x, label.x = 0.3, label.y = 0.985) +
   labs(x = "Average Air Temperature (C)", 
-       y = "Average Sap Flux Density (m^3/s)", 
+       y = expression(Average~Sap~Flux~Density~(m^3/s)), 
        title = "Air Temp vs Sap Flux Density for Control Plot, 11 AM - 12 PM")
 
-ggsave("AirTemp.jpeg")
+ggsave("AirTemp.jpeg", width = 11.5, height = 7.5)
 
 #Average PAR vs average sap flux density
 #Years 2021-24, Weeks Pre and Post TEMPEST, hrs 11-12
@@ -98,11 +96,10 @@ full_data %>%
   filter(Plot == "Control") %>%
   filter(Hour >= 11, Hour <= 12) %>% 
   filter(Date >= weeks_start & Date <= weeks_end) %>%
-  filter(F <= 17500, F > 0) %>%
+  filter(F <= 0.000002, F > 0) %>%
   group_by(Species, TIMESTAMP) %>% 
   summarise(F_avg = mean(F, na.rm = FALSE), 
-            par_avg = mean(PAR, na.rm = FALSE)) %>%
-  mutate(F_avg = round(F_avg, digits = 3)) -> par_plot_avg
+            par_avg = mean(PAR, na.rm = FALSE)) -> par_plot_avg
 
 par_plot_avg %>%
   ggplot(aes(x = par_avg, y = F_avg, 
@@ -116,9 +113,9 @@ par_plot_avg %>%
   stat_poly_eq(aes(label = paste(..p.value.label.., sep = "~~~")),
                formula = y ~ x, label.x = 0.3, label.y = 0.985) +
   labs(x = "Average PAR", 
-       y = "Average Sap Flux Density (m^3/s)", 
+       y = expression(Average~Sap~Flux~Density~(m^3/s)), 
        title = "PAR vs Sap Flux Density for Control Plot, 11 AM - 12 PM")
-ggsave("PAR.jpeg", width = 11.6, height = 7.28)
+ggsave("PAR.jpeg", width = 11.5, height = 7.5)
 
 #Average soil volumetric water content vs average sap flux density
 #Years 2021-24, Weeks Pre and Post TEMPEST, hrs 11-12
@@ -129,11 +126,10 @@ full_data %>%
   filter(Plot == "Control") %>%
   filter(Hour >= 11, Hour <= 12) %>% 
   filter(Date >= weeks_start & Date <= weeks_end) %>%
-  filter(F <= 17500, F > 0) %>%
+  filter(F <= 0.000002, F > 0) %>%
   group_by(Species, TIMESTAMP) %>% 
   summarise(F_avg = mean(F, na.rm = FALSE), 
-            vwc_avg = mean(soil_vwc_15cm, na.rm = FALSE)) %>%
-  mutate(F_avg = round(F_avg, digits = 3)) -> vwc_plot_avg
+            vwc_avg = mean(soil_vwc_15cm, na.rm = FALSE)) -> vwc_plot_avg
 
 vwc_plot_avg %>%
   ggplot(aes(x = vwc_avg, y = F_avg, 
@@ -147,9 +143,9 @@ vwc_plot_avg %>%
   stat_poly_eq(aes(label = paste(..p.value.label.., sep = "~~~")),
                formula = y ~ x, label.x = 0.3, label.y = 0.985) +
   labs(x = "Average Soil Volumetric Water Content", 
-       y = "Average Sap Flux Density (m^3/s)", 
+       y = expression(Average~Sap~Flux~Density~(m^3/s)), 
        title = "VWC vs Sap Flux Density for Control Plot, 11 AM - 12 PM")
-ggsave("SoilVWC.jpeg", width = 11.6, height = 7.28)
+ggsave("SoilVWC.jpeg", width = 11.5, height = 7.5)
 
 #ANOVA test for difference in means between treatments, species, and their interaction 
 #Fd ~ sp x treatment 
@@ -162,7 +158,7 @@ full_data %>%
   filter(Hour >= 11, Hour <= 12) %>%
   filter(Date >= weeks_start & Date <= weeks_end) %>%
   filter(year(TIMESTAMP) != 2021,
-         F <= 17500, F > 0) -> anova
+         F <= 0.000002, F > 0) -> anova
 
 
 full_aov <- aov(F ~ Species * Plot, data = anova )
@@ -172,11 +168,11 @@ summary(full_aov)
 ggplot(anova) + 
   geom_boxplot(aes (x = Plot, y = F, fill = Species)) +
   labs(x = "Plot", 
-       y = "Average Sap Flux Density (m^3/s)", 
-       title = "Sap Flux Density per Plot, Pre and Post TEMPEST Weeks")
+       y = expression(Average~Sap~Flux~Density~(m^3/s)), 
+       title = "Sap Flux Density per Plot, Pre and Post TEMPEST Weeks") +
  theme_light()
  
- ggsave("anova_boxplot.jpeg")
+ ggsave("anova_boxplot.jpeg", width = 11.5, height = 7.5)
 
  #To calculate average sap flow rates for each species: 
  full_data %>%
@@ -186,7 +182,7 @@ ggplot(anova) +
    filter(Year != 2024, Year !=2021,
           Hour >= 11, Hour <= 12,
           Month >= 5, Month <= 9,
-          F <= 17500, F >= 0) -> gs_data
+          F <= 0.000002, F >= 0) -> gs_data
 
  gs_data %>%
    group_by(Species, Plot) %>%

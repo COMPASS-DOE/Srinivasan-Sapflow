@@ -143,7 +143,6 @@ dbh %>%
                              Species == "FAGR" ~ "Beech")) %>%
   mutate(across(starts_with("DBH_"), ~SA(Species, .), .names = "SA_{str_extract(.col, '[0-9]{4}')}")) -> sa
 
-
 sa %>% 
   pivot_longer(cols = starts_with("SA_"),
                names_to = "Year",
@@ -168,7 +167,7 @@ sf_scaled %>%
   mutate(Date = date(TIMESTAMP)) %>%
   mutate(monthyr = floor_date(TIMESTAMP, unit = "week")) %>%
   filter(Hour >= 11, Hour <= 12) %>% 
-  filter(F <= 2000000, F >= 0) %>%
+  filter(F <= 2e-06, F >= 0) %>%
   group_by(Plot, Species, Date) %>% 
   summarise(F_avg = mean(F, na.rm = TRUE)) -> sf_plot_avg
 
