@@ -93,7 +93,7 @@ species %>%
 #Create sapflow-only dataframe with scaled Fd
 sapflow <- tmp_full %>% 
   filter(Instrument == "Sapflow",
-         Value >= 0.01, Value <=1) %>%
+         Value >= 0.01, Value <=0.7) %>%
   select(Plot, TIMESTAMP, Sensor_ID, Value) %>%
   mutate(sapflow_2.5cm = Value) %>% 
   mutate(Date = date(TIMESTAMP))
@@ -112,10 +112,12 @@ sapflow_sp %>%
             dTmax_time = TIMESTAMP[which.max(Value)])-> sapflow_dtmax
 
 #Calculate Fd
+# convert the probe raw values (in mV) to sap flux velocity (m/s)
+# Granier equation is Fd = ((118 * 10^-6) * K)^1.231
 
 sapflow_sp %>% 
   left_join(sapflow_dtmax, by = c("Plot", "Species", "ID", "Date")) %>% 
-  mutate(Fd = 360000 * (0.00011899) * (((dTmax / Value) - 1)^1.231)) -> sfd_data
+  mutate(Fd = ((0.00011899 * (((dTmax / Value) - 1)))^1.231))  -> sfd_data
 
 #Load in dbh data (for scaling) 
 inventory <- readRDS("dbh.rds")
@@ -124,12 +126,13 @@ inventory %>%
 
 
 #Using allometric equations, scale Fd measurements
+#DBH measurements are in cm; scaled to mm 
 
 SA <- function(Species, DBH) {
   case_when(
-    Species == "Red Maple" ~ (0.5973*(DBH)^2.0743),
-    Species == "Tulip Poplar" ~ (0.8086*(DBH)^1.8331),
-    Species == "Beech" ~ (0.8198*(DBH)^1.8635))
+    Species == "Red Maple" ~ (0.5973*(DBH/100)^2.0743),
+    Species == "Tulip Poplar" ~ (0.8086*(DBH/100)^1.8331),
+    Species == "Beech" ~ (0.8198*(DBH/100)^1.8635))
 }
 
 dbh %>%
@@ -139,7 +142,6 @@ dbh %>%
                              Species == "LITU" ~ "Tulip Poplar",
                              Species == "FAGR" ~ "Beech")) %>%
   mutate(across(starts_with("DBH_"), ~SA(Species, .), .names = "SA_{str_extract(.col, '[0-9]{4}')}")) -> sa
-
 
 sa %>% 
   pivot_longer(cols = starts_with("SA_"),
@@ -165,10 +167,9 @@ sf_scaled %>%
   mutate(Date = date(TIMESTAMP)) %>%
   mutate(monthyr = floor_date(TIMESTAMP, unit = "week")) %>%
   filter(Hour >= 11, Hour <= 12) %>% 
-  filter(F <= 17500, F > 0) %>%
+  filter(F <= 2e-06, F >= 0) %>%
   group_by(Plot, Species, Date) %>% 
-  summarise(F_avg = mean(F, na.rm = TRUE)) %>%
-  mutate(F_avg = round(F_avg, digits = 3)) -> sf_plot_avg
+  summarise(F_avg = mean(F, na.rm = TRUE)) -> sf_plot_avg
 
 ggplot(sf_plot_avg) + 
   geom_point(aes (x = Date, y = F_avg, color = Species)) + 
