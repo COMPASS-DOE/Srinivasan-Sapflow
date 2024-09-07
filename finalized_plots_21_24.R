@@ -36,20 +36,23 @@ weeks_end<- as_date(weeks_end)
 full_data %>% 
   mutate(Hour = hour(TIMESTAMP)) %>%
   mutate(Date = date(TIMESTAMP)) %>%
+  mutate(Year = year(TIMESTAMP)) %>%
+  filter(Year == 2022) %>%
   mutate(Week = floor_date(TIMESTAMP, unit = "week")) %>%
   filter(Hour >= 11, Hour <= 12) %>% 
+  filter(Date >= weeks_start & Date <= weeks_end) %>%
   filter(F <= 0.000002, F > 0) %>%
   group_by(Plot, Species, Date) %>% 
   summarise(F_avg = mean(F, na.rm = FALSE), 
             F_error = sd(F, na.rm = FALSE)) -> sf_plot_avg
 
 ggplot(sf_plot_avg) + 
-  geom_point(aes (x = Date, y = F_avg, color = Species)) + 
+  geom_line(aes (x = Date, y = F_avg, color = Species)) + 
   #geom_errorbar(aes(ymin = F_avg - F_error, ymax = F_avg + F_error,
   #x = Date, color = Species)) + 
   facet_wrap(~Plot, ncol = 1, scales = "fixed") + 
-  annotate(geom = "rect", xmin=Ida_start, xmax=Ida_end, ymin= -Inf, ymax=Inf, alpha=0.6, fill="lightblue") +
-  annotate(geom = "rect", xmin=Elsa_start, xmax=Elsa_end, ymin= -Inf, ymax=Inf, alpha=0.6, fill="lightblue") +
+  #annotate(geom = "rect", xmin=Ida_start, xmax=Ida_end, ymin= -Inf, ymax=Inf, alpha=0.6, fill="lightblue") +
+ # annotate(geom = "rect", xmin=Elsa_start, xmax=Elsa_end, ymin= -Inf, ymax=Inf, alpha=0.6, fill="lightblue") +
   labs(y = expression(Average~Sap~Flux~Density~(m^3/s)), x = "Date", title = "Sap Flux Density Averaged Daily, 11 AM - 12 PM")
 
 ggsave("Daily_Sapflow.jpeg", width = 11.5, height = 7.5)
