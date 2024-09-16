@@ -1,0 +1,4723 @@
+obs	site	year	period	treatment	method	cl	notab
+1	AL	2005	Before	Impact	Snapshot	1	1
+2	AL	2005	Before	Impact	Snapshot	1	1
+3	AL	2005	Before	Impact	Snapshot	3	3
+4	AL	2005	Before	Impact	Snapshot	7	8
+5	AL	2005	Before	Impact	Snapshot	5	8
+6	AL	2005	Before	Impact	Snapshot	1	1
+7	AL	2005	Before	Impact	Snapshot	4	6
+8	AL	2005	Before	Impact	Snapshot	5	8
+9	AL	2005	Before	Impact	Snapshot	1	2
+10	AL	2005	Before	Impact	Snapshot	5	6
+11	AL	2005	Before	Impact	Snapshot	2	3
+12	AL	2005	Before	Impact	Snapshot	3	4
+13	AL	2005	Before	Impact	Snapshot	5	7
+14	AL	2005	Before	Impact	Snapshot	1	1
+15	AL	2005	Before	Impact	Snapshot	2	4
+16	AL	2005	Before	Impact	Snapshot	1	2
+17	AL	2005	Before	Impact	Snapshot	2	3
+18	AL	2005	Before	Impact	Snapshot	0	1
+19	AL	2005	Before	Impact	Snapshot	9	10
+20	AL	2005	Before	Impact	Snapshot	2	3
+21	AL	2005	Before	Impact	Snapshot	1	1
+22	AL	2005	Before	Impact	Snapshot	2	3
+23	AL	2005	Before	Impact	Snapshot	4	6
+24	AL	2005	Before	Impact	Snapshot	3	6
+25	AL	2005	Before	Impact	Snapshot	2	3
+26	AL	2005	Before	Impact	Snapshot	3	5
+27	AL	2005	Before	Impact	Snapshot	0	1
+28	AL	2005	Before	Impact	Snapshot	0	1
+29	AL	2005	Before	Impact	Snapshot	1	2
+30	AL	2005	Before	Impact	Snapshot	5	7
+31	AL	2005	Before	Impact	Snapshot	9	11
+32	AL	2006	Before	Impact	Snapshot	1	1
+33	AL	2006	Before	Impact	Snapshot	1	1
+34	AL	2006	Before	Impact	Snapshot	9	9
+35	AL	2006	Before	Impact	Snapshot	2	2
+36	AL	2006	Before	Impact	Snapshot	9	10
+37	AL	2006	Before	Impact	Snapshot	2	3
+38	AL	2006	Before	Impact	Snapshot	8	10
+39	AL	2006	Before	Impact	Snapshot	5	6
+40	AL	2006	Before	Impact	Snapshot	1	1
+41	AL	2006	Before	Impact	Snapshot	4	4
+42	AL	2006	Before	Impact	Snapshot	10	11
+43	AL	2006	Before	Impact	Snapshot	8	9
+44	AL	2006	Before	Impact	Snapshot	13	13
+45	AL	2006	Before	Impact	Snapshot	20	20
+46	AL	2006	Before	Impact	Snapshot	5	7
+47	AL	2006	Before	Impact	Snapshot	22	23
+48	AL	2006	Before	Impact	Snapshot	1	1
+49	AL	2006	Before	Impact	Snapshot	12	12
+50	AL	2006	Before	Impact	Snapshot	12	12
+51	AL	2006	Before	Impact	Snapshot	5	5
+52	AL	2006	Before	Impact	Snapshot	9	9
+53	AL	2006	Before	Impact	Snapshot	4	4
+54	AL	2006	Before	Impact	Snapshot	3	3
+55	AL	2006	Before	Impact	Snapshot	2	4
+56	AL	2006	Before	Impact	Snapshot	0	1
+57	AL	2006	Before	Impact	Snapshot	4	4
+58	AL	2006	Before	Impact	Snapshot	4	4
+59	AL	2006	Before	Impact	Snapshot	6	8
+60	AL	2006	Before	Impact	Snapshot	7	10
+61	AL	2006	Before	Impact	Snapshot	2	6
+62	AL	2006	Before	Impact	Snapshot	4	6
+63	AL	2006	Before	Impact	Snapshot	2	7
+64	AL	2006	Before	Impact	Snapshot	2	8
+65	AL	2006	Before	Impact	Snapshot	2	3
+66	AL	2006	Before	Impact	Snapshot	3	5
+67	AL	2006	Before	Impact	Snapshot	1	5
+68	AL	2006	Before	Impact	Snapshot	4	8
+69	AL	2006	Before	Impact	Snapshot	2	2
+70	AL	2006	Before	Impact	Snapshot	2	2
+71	AL	2006	Before	Impact	Snapshot	5	6
+72	AL	2006	Before	Impact	Snapshot	3	6
+73	AL	2006	Before	Impact	Snapshot	7	9
+74	AL	2006	Before	Impact	Snapshot	9	14
+75	AL	2006	Before	Impact	Snapshot	2	3
+76	AL	2006	Before	Impact	Snapshot	2	5
+77	AL	2006	Before	Impact	Snapshot	2	5
+78	AL	2006	Before	Impact	Snapshot	8	15
+79	AL	2006	Before	Impact	Snapshot	4	7
+80	AL	2006	Before	Impact	Snapshot	6	14
+81	AL	2006	Before	Impact	Snapshot	8	13
+82	AL	2006	Before	Impact	Snapshot	0	2
+83	AL	2006	Before	Impact	Snapshot	1	3
+84	AL	2006	Before	Impact	Snapshot	4	6
+85	AL	2006	Before	Impact	Snapshot	0	2
+86	AL	2006	Before	Impact	Snapshot	17	24
+87	AL	2006	Before	Impact	Snapshot	7	8
+88	AL	2007	Before	Impact	Snapshot	10	10
+89	AL	2007	Before	Impact	Snapshot	17	17
+90	AL	2007	Before	Impact	Snapshot	3	5
+91	AL	2007	Before	Impact	Snapshot	8	8
+92	AL	2007	Before	Impact	Snapshot	3	3
+93	AL	2007	Before	Impact	Snapshot	31	33
+94	AL	2007	Before	Impact	Snapshot	2	2
+95	AL	2007	Before	Impact	Snapshot	8	8
+96	AL	2007	Before	Impact	Snapshot	2	2
+97	AL	2007	Before	Impact	Snapshot	18	18
+98	AL	2007	Before	Impact	Snapshot	20	22
+99	AL	2007	Before	Impact	Snapshot	4	4
+100	AL	2007	Before	Impact	Snapshot	28	29
+101	AL	2007	Before	Impact	Snapshot	18	18
+102	AL	2007	Before	Impact	Snapshot	6	6
+103	AL	2007	Before	Impact	Snapshot	4	4
+104	AL	2007	Before	Impact	Snapshot	5	6
+105	AL	2007	Before	Impact	Snapshot	18	20
+106	AL	2007	Before	Impact	Snapshot	20	21
+107	AL	2007	Before	Impact	Snapshot	9	9
+108	AL	2007	Before	Impact	Snapshot	18	20
+109	AL	2007	Before	Impact	Snapshot	12	12
+110	AL	2007	Before	Impact	Snapshot	10	10
+111	AL	2007	Before	Impact	Snapshot	13	13
+112	AL	2007	Before	Impact	Snapshot	26	26
+113	AL	2007	Before	Impact	Snapshot	4	4
+114	AL	2007	Before	Impact	Snapshot	6	6
+115	AL	2007	Before	Impact	Snapshot	5	5
+116	AL	2007	Before	Impact	Snapshot	6	7
+117	AL	2007	Before	Impact	Snapshot	3	3
+118	AL	2007	Before	Impact	Snapshot	9	9
+119	AL	2007	Before	Impact	Snapshot	6	8
+120	AL	2007	Before	Impact	Snapshot	10	13
+121	AL	2007	Before	Impact	Snapshot	3	4
+122	AL	2007	Before	Impact	Snapshot	3	5
+123	AL	2007	Before	Impact	Snapshot	5	23
+124	AL	2007	Before	Impact	Snapshot	17	22
+125	AL	2007	Before	Impact	Snapshot	11	17
+126	AL	2007	Before	Impact	Snapshot	2	3
+127	AL	2007	Before	Impact	Snapshot	23	38
+128	AL	2007	Before	Impact	Snapshot	3	18
+129	AL	2007	Before	Impact	Snapshot	3	3
+130	AL	2007	Before	Impact	Snapshot	14	18
+131	AL	2007	Before	Impact	Snapshot	10	13
+132	AL	2007	Before	Impact	Snapshot	11	18
+133	AL	2008	Before	Impact	Marked racemes	3	3
+134	AL	2008	Before	Impact	Marked racemes	2	2
+135	AL	2008	Before	Impact	Marked racemes	3	3
+136	AL	2008	Before	Impact	Marked racemes	2	2
+137	AL	2008	Before	Impact	Marked racemes	4	4
+138	AL	2008	Before	Impact	Marked racemes	3	3
+139	AL	2008	Before	Impact	Marked racemes	3	3
+140	AL	2008	Before	Impact	Marked racemes	3	3
+141	AL	2008	Before	Impact	Marked racemes	2	3
+142	AL	2008	Before	Impact	Marked racemes	4	4
+143	AL	2008	Before	Impact	Marked racemes	3	3
+144	AL	2008	Before	Impact	Marked racemes	3	3
+145	AL	2008	Before	Impact	Marked racemes	6	6
+146	AL	2008	Before	Impact	Marked racemes	4	4
+147	AL	2008	Before	Impact	Marked racemes	6	6
+148	AL	2008	Before	Impact	Marked racemes	3	3
+149	AL	2008	Before	Impact	Marked racemes	3	3
+150	AL	2008	Before	Impact	Marked racemes	1	1
+151	AL	2008	Before	Impact	Marked racemes	1	1
+152	AL	2008	Before	Impact	Marked racemes	5	5
+153	AL	2008	Before	Impact	Marked racemes	1	1
+154	AL	2008	Before	Impact	Marked racemes	4	4
+155	AL	2008	Before	Impact	Marked racemes	3	3
+156	AL	2008	Before	Impact	Marked racemes	2	2
+157	AL	2008	Before	Impact	Marked racemes	4	4
+158	AL	2008	Before	Impact	Marked racemes	3	3
+159	AL	2008	Before	Impact	Marked racemes	3	4
+160	AL	2008	Before	Impact	Marked racemes	4	4
+161	AL	2008	Before	Impact	Marked racemes	4	4
+162	AL	2008	Before	Impact	Marked racemes	3	4
+163	AL	2008	Before	Impact	Marked racemes	3	3
+164	AL	2008	Before	Impact	Marked racemes	1	1
+165	AL	2008	Before	Impact	Marked racemes	1	1
+166	AL	2008	Before	Impact	Marked racemes	3	3
+167	AL	2008	Before	Impact	Marked racemes	2	2
+168	AL	2008	Before	Impact	Marked racemes	0	2
+169	AL	2008	Before	Impact	Marked racemes	2	2
+170	AL	2008	Before	Impact	Marked racemes	1	3
+171	AL	2008	Before	Impact	Marked racemes	3	3
+172	AL	2008	Before	Impact	Marked racemes	2	2
+173	AL	2008	Before	Impact	Marked racemes	2	2
+174	AL	2009	Before	Impact	Marked racemes	1	1
+175	AL	2009	Before	Impact	Marked racemes	0	3
+176	AL	2009	Before	Impact	Marked racemes	0	3
+177	AL	2009	Before	Impact	Marked racemes	2	8
+178	AL	2009	Before	Impact	Marked racemes	3	5
+179	AL	2009	Before	Impact	Marked racemes	4	8
+180	AL	2009	Before	Impact	Marked racemes	4	8
+181	AL	2009	Before	Impact	Marked racemes	3	7
+182	AL	2009	Before	Impact	Marked racemes	3	4
+183	AL	2009	Before	Impact	Marked racemes	0	8
+184	AL	2009	Before	Impact	Marked racemes	2	6
+185	AL	2009	Before	Impact	Marked racemes	3	6
+186	AL	2009	Before	Impact	Marked racemes	2	8
+187	AL	2009	Before	Impact	Marked racemes	1	2
+188	AL	2009	Before	Impact	Marked racemes	2	2
+189	AL	2009	Before	Impact	Marked racemes	0	1
+190	AL	2009	Before	Impact	Marked racemes	1	1
+191	AL	2009	Before	Impact	Marked racemes	0	1
+192	AL	2009	Before	Impact	Marked racemes	1	1
+193	AL	2009	Before	Impact	Marked racemes	0	2
+194	AL	2009	Before	Impact	Marked racemes	1	2
+195	AL	2009	Before	Impact	Marked racemes	1	1
+196	AL	2009	Before	Impact	Marked racemes	0	1
+197	AL	2009	Before	Impact	Marked racemes	1	1
+198	AL	2009	Before	Impact	Marked racemes	2	3
+199	AL	2009	Before	Impact	Marked racemes	1	2
+200	AL	2009	Before	Impact	Marked racemes	2	2
+201	AL	2009	Before	Impact	Marked racemes	1	2
+202	AL	2009	Before	Impact	Marked racemes	2	4
+203	AL	2009	Before	Impact	Marked racemes	2	4
+204	AL	2009	Before	Impact	Marked racemes	1	5
+205	AL	2009	Before	Impact	Marked racemes	0	2
+206	AL	2009	Before	Impact	Marked racemes	1	2
+207	AL	2009	Before	Impact	Marked racemes	1	4
+208	AL	2009	Before	Impact	Marked racemes	2	5
+209	AL	2009	Before	Impact	Marked racemes	1	1
+210	AL	2009	Before	Impact	Marked racemes	2	3
+211	AL	2009	Before	Impact	Marked racemes	0	5
+212	AL	2009	Before	Impact	Marked racemes	3	3
+213	AL	2009	Before	Impact	Marked racemes	0	2
+214	AL	2009	Before	Impact	Marked racemes	0	1
+215	AL	2009	Before	Impact	Marked racemes	0	4
+216	AL	2009	Before	Impact	Marked racemes	1	7
+217	AL	2009	Before	Impact	Marked racemes	0	4
+218	AL	2009	Before	Impact	Marked racemes	0	3
+219	AL	2009	Before	Impact	Marked racemes	3	7
+220	AL	2009	Before	Impact	Marked racemes	1	2
+221	AL	2009	Before	Impact	Marked racemes	0	3
+222	AL	2009	Before	Impact	Marked racemes	2	7
+223	AL	2009	Before	Impact	Marked racemes	0	6
+224	AL	2009	Before	Impact	Marked racemes	3	6
+225	AL	2009	Before	Impact	Marked racemes	0	1
+226	AL	2009	Before	Impact	Marked racemes	1	3
+227	AL	2009	Before	Impact	Marked racemes	1	7
+228	AL	2009	Before	Impact	Marked racemes	0	6
+229	AL	2009	Before	Impact	Marked racemes	1	1
+230	AL	2009	Before	Impact	Marked racemes	1	1
+231	AL	2009	Before	Impact	Marked racemes	1	1
+232	AL	2009	Before	Impact	Marked racemes	1	3
+233	AL	2009	Before	Impact	Marked racemes	0	2
+234	AL	2009	Before	Impact	Marked racemes	1	3
+235	AL	2009	Before	Impact	Marked racemes	2	2
+236	AL	2009	Before	Impact	Marked racemes	0	3
+237	AL	2009	Before	Impact	Marked racemes	0	1
+238	AL	2009	Before	Impact	Marked racemes	4	6
+239	AL	2009	Before	Impact	Marked racemes	1	1
+240	AL	2009	Before	Impact	Marked racemes	1	2
+241	AL	2009	Before	Impact	Marked racemes	1	5
+242	AL	2009	Before	Impact	Marked racemes	4	7
+243	AL	2009	Before	Impact	Marked racemes	5	6
+244	AL	2009	Before	Impact	Marked racemes	1	4
+245	AL	2009	Before	Impact	Marked racemes	3	3
+246	AL	2009	Before	Impact	Marked racemes	3	3
+247	AL	2009	Before	Impact	Marked racemes	1	1
+248	AL	2009	Before	Impact	Marked racemes	1	2
+249	AL	2009	Before	Impact	Marked racemes	0	1
+250	AL	2009	Before	Impact	Marked racemes	1	1
+251	AL	2009	Before	Impact	Marked racemes	0	1
+252	AL	2009	Before	Impact	Marked racemes	1	1
+253	AL	2009	Before	Impact	Marked racemes	1	2
+254	AL	2010	Before	Impact	Snapshot	3	4
+255	AL	2010	Before	Impact	Snapshot	1	2
+256	AL	2010	Before	Impact	Snapshot	2	4
+257	AL	2010	Before	Impact	Snapshot	0	3
+258	AL	2010	Before	Impact	Snapshot	1	5
+259	AL	2010	Before	Impact	Snapshot	0	1
+260	AL	2010	Before	Impact	Snapshot	0	1
+261	AL	2010	Before	Impact	Snapshot	12	18
+262	AL	2010	Before	Impact	Snapshot	7	7
+263	AL	2010	Before	Impact	Snapshot	1	6
+264	AL	2010	Before	Impact	Snapshot	1	1
+265	AL	2010	Before	Impact	Snapshot	2	2
+266	AL	2010	Before	Impact	Snapshot	1	1
+267	AL	2010	Before	Impact	Snapshot	10	16
+268	AL	2010	Before	Impact	Snapshot	3	3
+269	AL	2010	Before	Impact	Snapshot	3	6
+270	AL	2010	Before	Impact	Snapshot	4	4
+271	AL	2010	Before	Impact	Snapshot	5	7
+272	AL	2010	Before	Impact	Snapshot	4	5
+273	AL	2010	Before	Impact	Snapshot	8	9
+274	AL	2010	Before	Impact	Snapshot	6	7
+275	AL	2010	Before	Impact	Snapshot	2	4
+276	AL	2010	Before	Impact	Snapshot	3	3
+277	AL	2010	Before	Impact	Snapshot	2	2
+278	AL	2010	Before	Impact	Snapshot	1	2
+279	AL	2010	Before	Impact	Snapshot	2	3
+280	AL	2010	Before	Impact	Snapshot	0	3
+281	AL	2010	Before	Impact	Snapshot	2	4
+282	AL	2010	Before	Impact	Snapshot	3	3
+283	AL	2010	Before	Impact	Snapshot	4	7
+284	AL	2010	Before	Impact	Snapshot	3	3
+285	AL	2010	Before	Impact	Snapshot	3	5
+286	AL	2010	Before	Impact	Snapshot	1	1
+287	AL	2010	Before	Impact	Snapshot	4	4
+288	AL	2010	Before	Impact	Snapshot	2	4
+289	AL	2010	Before	Impact	Snapshot	2	4
+290	AL	2010	Before	Impact	Snapshot	3	4
+291	AL	2010	Before	Impact	Snapshot	2	2
+292	AL	2010	Before	Impact	Snapshot	7	7
+293	AL	2010	Before	Impact	Snapshot	5	9
+294	AL	2010	Before	Impact	Snapshot	2	2
+295	AL	2010	Before	Impact	Snapshot	1	1
+296	AL	2010	Before	Impact	Snapshot	1	1
+297	AL	2010	Before	Impact	Snapshot	3	3
+298	AL	2010	Before	Impact	Snapshot	1	1
+299	AL	2010	Before	Impact	Snapshot	0	1
+300	AL	2010	Before	Impact	Snapshot	0	2
+301	AL	2010	Before	Impact	Snapshot	1	4
+302	AL	2010	Before	Impact	Snapshot	0	1
+303	AL	2010	Before	Impact	Snapshot	0	1
+304	AL	2010	Before	Impact	Snapshot	7	11
+305	AL	2010	Before	Impact	Snapshot	3	4
+306	AL	2010	Before	Impact	Snapshot	0	2
+307	AL	2010	Before	Impact	Snapshot	0	1
+308	AL	2010	Before	Impact	Snapshot	3	4
+309	AL	2010	Before	Impact	Snapshot	1	5
+310	AL	2010	Before	Impact	Snapshot	3	4
+311	AL	2010	Before	Impact	Snapshot	1	1
+312	AL	2010	Before	Impact	Snapshot	0	1
+313	AL	2010	Before	Impact	Snapshot	1	1
+314	AL	2010	Before	Impact	Snapshot	1	1
+315	AL	2010	Before	Impact	Snapshot	1	1
+316	AL	2010	Before	Impact	Snapshot	1	1
+317	AL	2010	Before	Impact	Snapshot	0	1
+318	AL	2010	Before	Impact	Snapshot	1	1
+319	AL	2010	Before	Impact	Snapshot	2	2
+320	AL	2010	Before	Impact	Snapshot	2	2
+321	AL	2010	Before	Impact	Snapshot	0	1
+322	AL	2010	Before	Impact	Snapshot	0	1
+323	AL	2010	Before	Impact	Snapshot	0	2
+324	AL	2010	Before	Impact	Snapshot	0	1
+325	AL	2010	Before	Impact	Snapshot	2	4
+326	AL	2010	Before	Impact	Snapshot	1	2
+327	AL	2010	Before	Impact	Snapshot	0	1
+328	AL	2010	Before	Impact	Snapshot	0	1
+329	AL	2010	Before	Impact	Snapshot	1	2
+330	AL	2010	Before	Impact	Snapshot	1	3
+331	AL	2010	Before	Impact	Snapshot	3	3
+332	AL	2010	Before	Impact	Snapshot	1	1
+333	AL	2010	Before	Impact	Snapshot	0	1
+334	AL	2010	Before	Impact	Snapshot	2	2
+335	AL	2010	Before	Impact	Snapshot	5	11
+336	AL	2010	Before	Impact	Snapshot	1	2
+337	AL	2010	Before	Impact	Snapshot	1	6
+338	AL	2010	Before	Impact	Snapshot	0	1
+339	AL	2010	Before	Impact	Snapshot	3	6
+340	AL	2010	Before	Impact	Snapshot	0	4
+341	AL	2010	Before	Impact	Snapshot	3	5
+342	AL	2010	Before	Impact	Snapshot	2	4
+343	AL	2010	Before	Impact	Snapshot	1	1
+344	AL	2010	Before	Impact	Snapshot	2	4
+345	AL	2010	Before	Impact	Snapshot	9	12
+346	AL	2010	Before	Impact	Snapshot	3	8
+347	AL	2010	Before	Impact	Snapshot	3	5
+348	AL	2010	Before	Impact	Snapshot	15	18
+349	AL	2010	Before	Impact	Snapshot	8	8
+350	AL	2010	Before	Impact	Snapshot	11	14
+351	AL	2010	Before	Impact	Snapshot	1	1
+352	AL	2010	Before	Impact	Snapshot	1	1
+353	AL	2010	Before	Impact	Snapshot	8	11
+354	AL	2010	Before	Impact	Snapshot	2	2
+355	AL	2010	Before	Impact	Snapshot	1	4
+356	AL	2010	Before	Impact	Snapshot	6	9
+357	AL	2010	Before	Impact	Snapshot	6	8
+358	AL	2010	Before	Impact	Snapshot	1	8
+359	AL	2010	Before	Impact	Snapshot	2	5
+360	AL	2010	Before	Impact	Snapshot	0	1
+361	AL	2010	Before	Impact	Snapshot	0	1
+362	AL	2010	Before	Impact	Snapshot	1	2
+363	AL	2010	Before	Impact	Snapshot	0	2
+364	AL	2010	Before	Impact	Snapshot	1	1
+365	AL	2011	After	Impact	Snapshot	0	10
+366	AL	2011	After	Impact	Snapshot	10	25
+367	AL	2011	After	Impact	Snapshot	5	22
+368	AL	2011	After	Impact	Snapshot	12	31
+369	AL	2011	After	Impact	Snapshot	4	15
+370	AL	2011	After	Impact	Snapshot	2	18
+371	AL	2011	After	Impact	Snapshot	2	16
+372	AL	2011	After	Impact	Snapshot	5	11
+373	AL	2011	After	Impact	Snapshot	9	17
+374	AL	2011	After	Impact	Snapshot	0	1
+375	AL	2011	After	Impact	Snapshot	1	8
+376	AL	2011	After	Impact	Snapshot	1	15
+377	AL	2011	After	Impact	Snapshot	6	17
+378	AL	2011	After	Impact	Snapshot	2	7
+379	AL	2011	After	Impact	Snapshot	1	8
+380	AL	2011	After	Impact	Snapshot	1	4
+381	AL	2011	After	Impact	Snapshot	4	13
+382	AL	2011	After	Impact	Snapshot	0	4
+383	AL	2011	After	Impact	Snapshot	0	6
+384	AL	2011	After	Impact	Snapshot	1	8
+385	AL	2011	After	Impact	Snapshot	0	6
+386	AL	2011	After	Impact	Snapshot	0	20
+387	AL	2011	After	Impact	Snapshot	0	6
+388	AL	2011	After	Impact	Snapshot	0	1
+389	AL	2011	After	Impact	Snapshot	0	13
+390	AL	2011	After	Impact	Snapshot	2	20
+391	AL	2011	After	Impact	Snapshot	1	23
+392	AL	2011	After	Impact	Snapshot	3	10
+393	AL	2011	After	Impact	Snapshot	0	21
+394	AL	2011	After	Impact	Snapshot	2	14
+395	AL	2011	After	Impact	Snapshot	0	1
+396	AL	2011	After	Impact	Snapshot	0	20
+397	AL	2011	After	Impact	Snapshot	0	15
+398	AL	2011	After	Impact	Snapshot	6	24
+399	AL	2011	After	Impact	Snapshot	10	60
+400	AL	2011	After	Impact	Snapshot	4	12
+401	AL	2011	After	Impact	Snapshot	2	12
+402	AL	2011	After	Impact	Snapshot	1	15
+403	AL	2011	After	Impact	Snapshot	1	6
+404	AL	2011	After	Impact	Snapshot	1	8
+405	AL	2011	After	Impact	Snapshot	0	14
+406	AL	2011	After	Impact	Snapshot	0	1
+407	AL	2011	After	Impact	Snapshot	2	3
+408	AL	2011	After	Impact	Snapshot	2	9
+409	AL	2011	After	Impact	Snapshot	0	7
+410	AL	2011	After	Impact	Snapshot	1	11
+411	AL	2011	After	Impact	Snapshot	0	13
+412	AL	2011	After	Impact	Snapshot	1	9
+413	AL	2011	After	Impact	Snapshot	0	9
+414	AL	2011	After	Impact	Snapshot	0	8
+415	AL	2011	After	Impact	Snapshot	1	12
+416	AL	2011	After	Impact	Snapshot	1	7
+417	AL	2011	After	Impact	Snapshot	0	10
+418	AL	2011	After	Impact	Snapshot	0	11
+419	AL	2011	After	Impact	Snapshot	0	5
+420	AL	2011	After	Impact	Snapshot	0	2
+421	AL	2011	After	Impact	Snapshot	0	3
+422	AL	2011	After	Impact	Snapshot	0	4
+423	AL	2011	After	Impact	Snapshot	0	2
+424	AL	2011	After	Impact	Snapshot	0	6
+425	AL	2011	After	Impact	Snapshot	0	4
+426	AL	2011	After	Impact	Snapshot	0	5
+427	AL	2011	After	Impact	Snapshot	0	1
+428	AL	2011	After	Impact	Snapshot	0	5
+429	AL	2011	After	Impact	Snapshot	0	2
+430	AL	2011	After	Impact	Snapshot	0	5
+431	AL	2011	After	Impact	Snapshot	0	3
+432	AL	2011	After	Impact	Snapshot	2	4
+433	AL	2011	After	Impact	Snapshot	1	16
+434	AL	2011	After	Impact	Snapshot	0	1
+435	AL	2011	After	Impact	Snapshot	0	10
+436	AL	2011	After	Impact	Snapshot	2	21
+437	AL	2011	After	Impact	Snapshot	0	7
+438	AL	2011	After	Impact	Snapshot	0	4
+439	AL	2011	After	Impact	Snapshot	1	7
+440	AL	2011	After	Impact	Snapshot	4	18
+441	AL	2011	After	Impact	Snapshot	1	6
+442	AL	2011	After	Impact	Snapshot	0	2
+443	AL	2011	After	Impact	Snapshot	0	3
+444	AL	2011	After	Impact	Snapshot	0	4
+445	AL	2011	After	Impact	Snapshot	1	3
+446	AL	2011	After	Impact	Snapshot	0	5
+447	AL	2011	After	Impact	Snapshot	0	3
+448	AL	2011	After	Impact	Snapshot	1	5
+449	AL	2011	After	Impact	Snapshot	4	5
+450	AL	2011	After	Impact	Snapshot	0	3
+451	AL	2011	After	Impact	Snapshot	2	14
+452	AL	2011	After	Impact	Snapshot	0	4
+453	AL	2011	After	Impact	Snapshot	0	5
+454	AL	2011	After	Impact	Snapshot	0	9
+455	AL	2011	After	Impact	Snapshot	3	4
+456	AL	2011	After	Impact	Snapshot	0	1
+457	AL	2011	After	Impact	Snapshot	0	1
+458	AL	2011	After	Impact	Snapshot	7	18
+459	AL	2011	After	Impact	Snapshot	0	8
+460	AL	2011	After	Impact	Snapshot	0	4
+461	AL	2011	After	Impact	Snapshot	0	10
+462	AL	2011	After	Impact	Snapshot	0	7
+463	AL	2011	After	Impact	Snapshot	0	2
+464	AL	2011	After	Impact	Snapshot	0	2
+465	AL	2011	After	Impact	Snapshot	0	5
+466	AL	2011	After	Impact	Snapshot	0	5
+467	AL	2011	After	Impact	Snapshot	0	4
+468	AL	2011	After	Impact	Snapshot	0	4
+469	AL	2011	After	Impact	Snapshot	0	1
+470	AL	2011	After	Impact	Snapshot	0	3
+471	AL	2011	After	Impact	Snapshot	0	8
+472	AL	2011	After	Impact	Snapshot	0	1
+473	AL	2011	After	Impact	Snapshot	0	1
+474	AL	2011	After	Impact	Snapshot	0	20
+475	AL	2011	After	Impact	Snapshot	0	13
+476	AL	2011	After	Impact	Snapshot	0	2
+477	AL	2011	After	Impact	Snapshot	0	4
+478	AL	2011	After	Impact	Snapshot	1	9
+479	AL	2011	After	Impact	Snapshot	1	3
+480	AL	2011	After	Impact	Snapshot	1	4
+481	AL	2011	After	Impact	Snapshot	0	1
+482	AL	2011	After	Impact	Snapshot	0	2
+483	AL	2011	After	Impact	Snapshot	0	6
+484	AL	2011	After	Impact	Snapshot	0	1
+485	AL	2011	After	Impact	Snapshot	1	15
+486	AL	2011	After	Impact	Snapshot	0	5
+487	AL	2011	After	Impact	Snapshot	0	7
+488	AL	2011	After	Impact	Snapshot	0	5
+489	AL	2011	After	Impact	Snapshot	0	1
+490	AL	2011	After	Impact	Snapshot	0	1
+491	AL	2011	After	Impact	Snapshot	0	2
+492	AL	2011	After	Impact	Snapshot	2	4
+493	AL	2011	After	Impact	Snapshot	0	7
+494	AL	2011	After	Impact	Snapshot	0	2
+495	AL	2011	After	Impact	Snapshot	0	1
+496	AL	2011	After	Impact	Snapshot	0	1
+497	AL	2011	After	Impact	Snapshot	0	1
+498	AL	2011	After	Impact	Snapshot	0	1
+499	AL	2011	After	Impact	Snapshot	0	1
+500	AL	2011	After	Impact	Snapshot	0	3
+501	AL	2011	After	Impact	Snapshot	0	2
+502	AL	2011	After	Impact	Snapshot	0	2
+503	AL	2011	After	Impact	Snapshot	1	30
+504	AL	2011	After	Impact	Snapshot	2	28
+505	AL	2011	After	Impact	Snapshot	0	7
+506	AL	2011	After	Impact	Snapshot	0	3
+507	AL	2011	After	Impact	Snapshot	1	6
+508	AL	2011	After	Impact	Snapshot	0	5
+509	AL	2011	After	Impact	Snapshot	1	3
+510	AL	2011	After	Impact	Snapshot	0	1
+511	AL	2011	After	Impact	Snapshot	0	2
+512	AL	2011	After	Impact	Snapshot	0	5
+513	AL	2011	After	Impact	Snapshot	0	2
+514	AL	2011	After	Impact	Snapshot	0	4
+515	AL	2011	After	Impact	Snapshot	1	7
+516	AL	2011	After	Impact	Snapshot	0	6
+517	AL	2011	After	Impact	Snapshot	1	1
+518	AL	2011	After	Impact	Snapshot	0	1
+519	AL	2011	After	Impact	Snapshot	0	6
+520	AL	2011	After	Impact	Snapshot	0	4
+521	AL	2011	After	Impact	Snapshot	0	6
+522	AL	2011	After	Impact	Snapshot	0	2
+523	AL	2011	After	Impact	Snapshot	1	9
+524	AL	2011	After	Impact	Snapshot	0	5
+525	AL	2011	After	Impact	Snapshot	1	5
+526	AL	2011	After	Impact	Snapshot	0	3
+527	AL	2011	After	Impact	Snapshot	0	1
+528	AL	2011	After	Impact	Snapshot	0	2
+529	AL	2011	After	Impact	Snapshot	3	8
+530	AL	2011	After	Impact	Snapshot	0	1
+531	AL	2011	After	Impact	Snapshot	5	9
+532	AL	2011	After	Impact	Snapshot	2	4
+533	AL	2011	After	Impact	Snapshot	0	7
+534	AL	2011	After	Impact	Snapshot	0	2
+535	AL	2011	After	Impact	Marked racemes	1	4
+536	AL	2011	After	Impact	Marked racemes	1	2
+537	AL	2011	After	Impact	Marked racemes	0	6
+538	AL	2011	After	Impact	Marked racemes	0	2
+539	AL	2011	After	Impact	Marked racemes	0	3
+540	AL	2011	After	Impact	Marked racemes	1	8
+541	AL	2011	After	Impact	Marked racemes	8	8
+542	AL	2011	After	Impact	Marked racemes	0	5
+543	AL	2011	After	Impact	Marked racemes	2	6
+544	AL	2011	After	Impact	Marked racemes	0	1
+545	AL	2011	After	Impact	Marked racemes	0	4
+546	AL	2011	After	Impact	Marked racemes	0	10
+547	AL	2011	After	Impact	Marked racemes	2	2
+548	AL	2011	After	Impact	Marked racemes	1	2
+549	AL	2011	After	Impact	Marked racemes	0	3
+550	AL	2011	After	Impact	Marked racemes	0	1
+551	AL	2011	After	Impact	Marked racemes	0	3
+552	AL	2011	After	Impact	Marked racemes	1	2
+553	AL	2011	After	Impact	Marked racemes	1	1
+554	AL	2011	After	Impact	Marked racemes	1	2
+555	AL	2011	After	Impact	Marked racemes	0	3
+556	AL	2011	After	Impact	Marked racemes	1	13
+557	AL	2011	After	Impact	Marked racemes	1	1
+558	AL	2011	After	Impact	Marked racemes	1	3
+559	AL	2011	After	Impact	Marked racemes	1	6
+560	AL	2011	After	Impact	Marked racemes	1	9
+561	AL	2011	After	Impact	Marked racemes	0	5
+562	AL	2011	After	Impact	Marked racemes	0	11
+563	AL	2011	After	Impact	Marked racemes	0	1
+564	AL	2011	After	Impact	Marked racemes	0	7
+565	AL	2011	After	Impact	Marked racemes	0	4
+566	AL	2011	After	Impact	Marked racemes	0	1
+567	AL	2011	After	Impact	Marked racemes	1	7
+568	AL	2011	After	Impact	Marked racemes	0	2
+569	AL	2011	After	Impact	Marked racemes	0	1
+570	AL	2011	After	Impact	Marked racemes	5	6
+571	AL	2011	After	Impact	Marked racemes	0	2
+572	AL	2011	After	Impact	Marked racemes	0	2
+573	AL	2011	After	Impact	Marked racemes	6	7
+574	AL	2011	After	Impact	Marked racemes	3	5
+575	AL	2011	After	Impact	Marked racemes	1	5
+576	AL	2011	After	Impact	Marked racemes	1	3
+577	AL	2011	After	Impact	Marked racemes	0	2
+578	AL	2011	After	Impact	Marked racemes	0	3
+579	AL	2011	After	Impact	Marked racemes	2	4
+580	AL	2011	After	Impact	Marked racemes	3	3
+581	AL	2011	After	Impact	Marked racemes	1	4
+582	AL	2011	After	Impact	Marked racemes	0	2
+583	AL	2011	After	Impact	Marked racemes	0	1
+584	AL	2011	After	Impact	Marked racemes	0	2
+585	AL	2011	After	Impact	Marked racemes	2	3
+586	AL	2011	After	Impact	Marked racemes	0	2
+587	AL	2011	After	Impact	Marked racemes	0	2
+588	AL	2011	After	Impact	Marked racemes	1	5
+589	AL	2011	After	Impact	Marked racemes	0	4
+590	AL	2011	After	Impact	Marked racemes	0	3
+591	AL	2011	After	Impact	Marked racemes	1	7
+592	AL	2011	After	Impact	Marked racemes	1	3
+593	AL	2011	After	Impact	Marked racemes	1	9
+594	AL	2011	After	Impact	Marked racemes	0	1
+595	AL	2011	After	Impact	Marked racemes	4	4
+596	AL	2011	After	Impact	Marked racemes	0	2
+597	AL	2011	After	Impact	Marked racemes	3	4
+598	AL	2011	After	Impact	Marked racemes	0	2
+599	AL	2011	After	Impact	Marked racemes	2	2
+600	AL	2011	After	Impact	Marked racemes	4	4
+601	AL	2011	After	Impact	Marked racemes	0	4
+602	AL	2011	After	Impact	Marked racemes	0	1
+603	AL	2011	After	Impact	Marked racemes	0	3
+604	AL	2011	After	Impact	Marked racemes	1	2
+605	AL	2011	After	Impact	Marked racemes	0	5
+606	AL	2011	After	Impact	Marked racemes	1	2
+607	AL	2011	After	Impact	Marked racemes	1	2
+608	AL	2011	After	Impact	Marked racemes	0	3
+609	AL	2011	After	Impact	Marked racemes	0	1
+610	AL	2011	After	Impact	Marked racemes	0	1
+611	AL	2011	After	Impact	Marked racemes	0	1
+612	AL	2011	After	Impact	Marked racemes	0	4
+613	AL	2011	After	Impact	Marked racemes	1	2
+614	AL	2011	After	Impact	Marked racemes	0	1
+615	AL	2011	After	Impact	Marked racemes	1	3
+616	AL	2011	After	Impact	Marked racemes	0	2
+617	AL	2011	After	Impact	Marked racemes	0	3
+618	AL	2011	After	Impact	Marked racemes	0	1
+619	AL	2011	After	Impact	Marked racemes	0	3
+620	AL	2011	After	Impact	Marked racemes	2	11
+621	AL	2011	After	Impact	Marked racemes	0	1
+622	AL	2011	After	Impact	Marked racemes	0	1
+623	AL	2011	After	Impact	Marked racemes	1	3
+624	AL	2011	After	Impact	Marked racemes	0	1
+625	AL	2011	After	Impact	Marked racemes	2	2
+626	AL	2011	After	Impact	Marked racemes	0	8
+627	AL	2011	After	Impact	Marked racemes	1	2
+628	AL	2011	After	Impact	Marked racemes	0	2
+629	AL	2011	After	Impact	Marked racemes	0	2
+630	AL	2011	After	Impact	Marked racemes	0	1
+631	AL	2011	After	Impact	Marked racemes	0	6
+632	AL	2011	After	Impact	Marked racemes	0	8
+633	AL	2011	After	Impact	Marked racemes	0	3
+634	AL	2011	After	Impact	Marked racemes	1	2
+635	AL	2011	After	Impact	Marked racemes	0	1
+636	AL	2011	After	Impact	Marked racemes	0	1
+637	AL	2011	After	Impact	Marked racemes	1	2
+638	AL	2011	After	Impact	Marked racemes	1	3
+639	AL	2011	After	Impact	Marked racemes	1	1
+640	AL	2011	After	Impact	Marked racemes	0	1
+641	AL	2011	After	Impact	Marked racemes	0	1
+642	AL	2011	After	Impact	Marked racemes	0	1
+643	AL	2011	After	Impact	Marked racemes	0	2
+644	AL	2011	After	Impact	Marked racemes	0	13
+645	AL	2011	After	Impact	Marked racemes	1	16
+646	AL	2011	After	Impact	Marked racemes	0	3
+647	AL	2011	After	Impact	Marked racemes	1	1
+648	AL	2011	After	Impact	Marked racemes	0	3
+649	AL	2011	After	Impact	Marked racemes	0	3
+650	AL	2011	After	Impact	Marked racemes	1	1
+651	AL	2011	After	Impact	Marked racemes	0	1
+652	AL	2011	After	Impact	Marked racemes	1	3
+653	AL	2011	After	Impact	Marked racemes	0	2
+654	AL	2011	After	Impact	Marked racemes	0	5
+655	AL	2011	After	Impact	Marked racemes	0	2
+656	AL	2011	After	Impact	Marked racemes	1	4
+657	AL	2011	After	Impact	Marked racemes	0	3
+658	AL	2011	After	Impact	Marked racemes	1	1
+659	AL	2011	After	Impact	Marked racemes	0	5
+660	AL	2011	After	Impact	Marked racemes	0	3
+661	AL	2011	After	Impact	Marked racemes	0	3
+662	AL	2011	After	Impact	Marked racemes	1	3
+663	AL	2011	After	Impact	Marked racemes	0	1
+664	AL	2011	After	Impact	Marked racemes	0	6
+665	AL	2011	After	Impact	Marked racemes	0	4
+666	AL	2011	After	Impact	Marked racemes	0	4
+667	AL	2011	After	Impact	Marked racemes	0	2
+668	AL	2011	After	Impact	Marked racemes	0	3
+669	AL	2011	After	Impact	Marked racemes	0	5
+670	AL	2011	After	Impact	Marked racemes	0	1
+671	AL	2011	After	Impact	Marked racemes	0	2
+672	AL	2011	After	Impact	Marked racemes	0	1
+673	AL	2011	After	Impact	Marked racemes	1	1
+674	AL	2011	After	Impact	Marked racemes	2	6
+675	AL	2011	After	Impact	Marked racemes	0	2
+676	AL	2012	After	Impact	Snapshot	1	10
+677	AL	2012	After	Impact	Snapshot	1	10
+678	AL	2012	After	Impact	Snapshot	1	9
+679	AL	2012	After	Impact	Snapshot	1	10
+680	AL	2012	After	Impact	Snapshot	0	10
+681	AL	2012	After	Impact	Snapshot	0	10
+682	AL	2012	After	Impact	Snapshot	0	10
+683	AL	2012	After	Impact	Snapshot	0	6
+684	AL	2012	After	Impact	Snapshot	0	10
+685	AL	2012	After	Impact	Snapshot	0	3
+686	AL	2012	After	Impact	Snapshot	1	10
+687	AL	2012	After	Impact	Snapshot	0	1
+688	AL	2012	After	Impact	Snapshot	0	10
+689	AL	2012	After	Impact	Snapshot	0	10
+690	AL	2012	After	Impact	Snapshot	1	12
+691	AL	2012	After	Impact	Snapshot	0	10
+692	AL	2012	After	Impact	Snapshot	2	10
+693	AL	2012	After	Impact	Snapshot	0	10
+694	AL	2012	After	Impact	Snapshot	0	10
+695	AL	2012	After	Impact	Snapshot	0	10
+696	AL	2012	After	Impact	Snapshot	1	1
+697	AL	2012	After	Impact	Snapshot	0	10
+698	AL	2012	After	Impact	Snapshot	1	11
+699	AL	2012	After	Impact	Snapshot	0	14
+700	AL	2012	After	Impact	Snapshot	0	10
+701	AL	2012	After	Impact	Snapshot	0	10
+702	AL	2012	After	Impact	Snapshot	0	10
+703	AL	2012	After	Impact	Snapshot	0	10
+704	AL	2012	After	Impact	Snapshot	1	10
+705	AL	2012	After	Impact	Snapshot	1	10
+706	AL	2012	After	Impact	Snapshot	0	10
+707	AL	2012	After	Impact	Snapshot	0	10
+708	AL	2012	After	Impact	Snapshot	0	10
+709	AL	2012	After	Impact	Snapshot	1	10
+710	AL	2012	After	Impact	Snapshot	0	10
+711	AL	2012	After	Impact	Snapshot	0	2
+712	AL	2012	After	Impact	Snapshot	1	12
+713	AL	2012	After	Impact	Snapshot	0	10
+714	AL	2012	After	Impact	Snapshot	0	10
+715	AL	2012	After	Impact	Snapshot	0	10
+716	AL	2012	After	Impact	Snapshot	0	10
+717	AL	2012	After	Impact	Snapshot	0	10
+718	AL	2012	After	Impact	Snapshot	0	4
+719	AL	2012	After	Impact	Snapshot	0	9
+720	AL	2012	After	Impact	Snapshot	0	10
+721	AL	2012	After	Impact	Snapshot	0	15
+722	AL	2012	After	Impact	Snapshot	2	10
+723	AL	2012	After	Impact	Snapshot	0	13
+724	AL	2012	After	Impact	Snapshot	0	10
+725	AL	2012	After	Impact	Snapshot	0	12
+726	AL	2012	After	Impact	Snapshot	0	3
+727	AL	2012	After	Impact	Snapshot	0	10
+728	AL	2012	After	Impact	Snapshot	0	10
+729	AL	2012	After	Impact	Snapshot	0	10
+730	AL	2012	After	Impact	Snapshot	0	10
+731	AL	2012	After	Impact	Snapshot	0	6
+732	AL	2012	After	Impact	Snapshot	0	8
+733	AL	2012	After	Impact	Snapshot	0	3
+734	AL	2012	After	Impact	Snapshot	0	10
+735	AL	2012	After	Impact	Snapshot	0	10
+736	AL	2012	After	Impact	Snapshot	0	10
+737	AL	2012	After	Impact	Snapshot	1	9
+738	AL	2012	After	Impact	Snapshot	1	16
+739	AL	2012	After	Impact	Snapshot	0	20
+740	AL	2012	After	Impact	Snapshot	0	10
+741	AL	2012	After	Impact	Snapshot	0	8
+742	AL	2012	After	Impact	Snapshot	2	10
+743	AL	2012	After	Impact	Snapshot	0	12
+744	AL	2012	After	Impact	Snapshot	5	5
+745	AL	2012	After	Impact	Snapshot	6	6
+746	AL	2012	After	Impact	Snapshot	0	10
+747	AL	2012	After	Impact	Snapshot	0	4
+748	AL	2012	After	Impact	Snapshot	2	10
+749	AL	2012	After	Impact	Snapshot	0	10
+750	AL	2012	After	Impact	Snapshot	0	10
+751	AL	2012	After	Impact	Snapshot	0	9
+752	AL	2012	After	Impact	Snapshot	0	10
+753	AL	2012	After	Impact	Snapshot	2	10
+754	AL	2012	After	Impact	Snapshot	0	10
+755	AL	2012	After	Impact	Snapshot	0	10
+756	AL	2012	After	Impact	Snapshot	0	10
+757	AL	2012	After	Impact	Snapshot	0	10
+758	AL	2012	After	Impact	Snapshot	0	10
+759	AL	2012	After	Impact	Snapshot	0	9
+760	AL	2012	After	Impact	Snapshot	0	10
+761	AL	2012	After	Impact	Snapshot	0	12
+762	AL	2012	After	Impact	Snapshot	0	10
+763	AL	2012	After	Impact	Snapshot	0	10
+764	AL	2012	After	Impact	Snapshot	0	10
+765	AL	2012	After	Impact	Snapshot	0	13
+766	AL	2012	After	Impact	Snapshot	1	10
+767	AL	2012	After	Impact	Snapshot	0	15
+768	AL	2012	After	Impact	Snapshot	0	10
+769	AL	2012	After	Impact	Snapshot	8	10
+770	AL	2012	After	Impact	Snapshot	2	9
+771	AL	2012	After	Impact	Snapshot	0	10
+772	AL	2012	After	Impact	Snapshot	2	11
+773	AL	2012	After	Impact	Snapshot	3	10
+774	AL	2012	After	Impact	Snapshot	2	10
+775	AL	2012	After	Impact	Snapshot	2	10
+776	AL	2012	After	Impact	Snapshot	0	6
+777	AL	2012	After	Impact	Snapshot	0	10
+778	AL	2012	After	Impact	Snapshot	0	10
+779	AL	2012	After	Impact	Snapshot	1	12
+780	AL	2012	After	Impact	Snapshot	0	10
+781	AL	2012	After	Impact	Snapshot	2	10
+782	AL	2012	After	Impact	Snapshot	1	10
+783	AL	2012	After	Impact	Snapshot	2	10
+784	AL	2012	After	Impact	Snapshot	4	10
+785	AL	2012	After	Impact	Snapshot	0	10
+786	AL	2012	After	Impact	Snapshot	3	8
+787	AL	2013	After	Impact	Snapshot	0	13
+788	AL	2013	After	Impact	Snapshot	0	13
+789	AL	2013	After	Impact	Snapshot	0	8
+790	AL	2013	After	Impact	Snapshot	1	2
+791	AL	2013	After	Impact	Snapshot	0	1
+792	AL	2013	After	Impact	Snapshot	1	3
+793	AL	2013	After	Impact	Snapshot	0	2
+794	AL	2013	After	Impact	Snapshot	0	12
+795	AL	2013	After	Impact	Snapshot	0	8
+796	AL	2013	After	Impact	Snapshot	0	6
+797	AL	2013	After	Impact	Snapshot	0	5
+798	AL	2013	After	Impact	Snapshot	0	8
+799	AL	2013	After	Impact	Snapshot	0	1
+800	AL	2013	After	Impact	Snapshot	0	2
+801	AL	2013	After	Impact	Snapshot	0	1
+802	AL	2013	After	Impact	Snapshot	1	10
+803	AL	2013	After	Impact	Snapshot	0	14
+804	AL	2013	After	Impact	Snapshot	0	6
+805	AL	2013	After	Impact	Snapshot	0	13
+806	AL	2013	After	Impact	Snapshot	1	10
+807	AL	2013	After	Impact	Snapshot	0	7
+808	AL	2013	After	Impact	Snapshot	0	1
+809	AL	2013	After	Impact	Snapshot	1	1
+810	AL	2013	After	Impact	Snapshot	0	6
+811	AL	2013	After	Impact	Snapshot	1	7
+812	AL	2013	After	Impact	Snapshot	1	2
+813	AL	2013	After	Impact	Snapshot	0	6
+814	AL	2013	After	Impact	Snapshot	0	3
+815	AL	2013	After	Impact	Snapshot	0	4
+816	AL	2013	After	Impact	Snapshot	0	1
+817	AL	2013	After	Impact	Snapshot	0	6
+818	AL	2013	After	Impact	Snapshot	0	16
+819	AL	2013	After	Impact	Snapshot	0	10
+820	AL	2013	After	Impact	Snapshot	0	5
+821	AL	2013	After	Impact	Snapshot	0	9
+822	AL	2013	After	Impact	Snapshot	1	7
+823	AL	2013	After	Impact	Snapshot	0	3
+824	AL	2013	After	Impact	Snapshot	1	4
+825	AL	2013	After	Impact	Snapshot	0	8
+826	AL	2013	After	Impact	Snapshot	0	13
+827	AL	2013	After	Impact	Snapshot	0	4
+828	AL	2013	After	Impact	Snapshot	1	7
+829	AL	2013	After	Impact	Snapshot	0	5
+830	AL	2013	After	Impact	Snapshot	0	2
+831	AL	2013	After	Impact	Snapshot	1	2
+832	AL	2013	After	Impact	Snapshot	0	4
+833	AL	2013	After	Impact	Snapshot	1	3
+834	AL	2013	After	Impact	Snapshot	0	3
+835	AL	2013	After	Impact	Snapshot	0	6
+836	AL	2013	After	Impact	Snapshot	1	1
+837	AL	2013	After	Impact	Snapshot	0	3
+838	AL	2013	After	Impact	Snapshot	0	2
+839	AL	2013	After	Impact	Snapshot	0	6
+840	AL	2013	After	Impact	Snapshot	2	18
+841	AL	2013	After	Impact	Snapshot	0	1
+842	AL	2013	After	Impact	Snapshot	1	5
+843	AL	2013	After	Impact	Snapshot	0	7
+844	AL	2013	After	Impact	Snapshot	0	1
+845	AL	2013	After	Impact	Snapshot	0	5
+846	AL	2013	After	Impact	Snapshot	0	5
+847	AL	2013	After	Impact	Snapshot	0	2
+848	AL	2013	After	Impact	Snapshot	0	6
+849	AL	2013	After	Impact	Snapshot	0	10
+850	AL	2013	After	Impact	Snapshot	0	1
+851	AL	2013	After	Impact	Snapshot	0	1
+852	AL	2013	After	Impact	Snapshot	0	1
+853	AL	2013	After	Impact	Snapshot	0	2
+854	AL	2013	After	Impact	Snapshot	0	10
+855	AL	2013	After	Impact	Snapshot	0	2
+856	AL	2013	After	Impact	Snapshot	1	11
+857	AL	2013	After	Impact	Snapshot	0	2
+858	AL	2013	After	Impact	Snapshot	0	2
+859	AL	2013	After	Impact	Snapshot	0	2
+860	AL	2013	After	Impact	Snapshot	0	3
+861	AL	2013	After	Impact	Snapshot	0	2
+862	AL	2013	After	Impact	Snapshot	0	1
+863	AL	2013	After	Impact	Snapshot	0	3
+864	AL	2013	After	Impact	Snapshot	0	1
+865	AL	2013	After	Impact	Snapshot	0	2
+866	AL	2013	After	Impact	Snapshot	1	14
+867	AL	2013	After	Impact	Snapshot	0	1
+868	AL	2013	After	Impact	Snapshot	0	4
+869	AL	2013	After	Impact	Snapshot	1	12
+870	AL	2013	After	Impact	Snapshot	0	8
+871	AL	2013	After	Impact	Snapshot	1	5
+872	AL	2013	After	Impact	Snapshot	0	3
+873	AL	2013	After	Impact	Snapshot	0	1
+874	AL	2013	After	Impact	Snapshot	0	6
+875	AL	2013	After	Impact	Snapshot	0	2
+876	AL	2013	After	Impact	Snapshot	0	5
+877	AL	2013	After	Impact	Snapshot	0	9
+878	AL	2013	After	Impact	Snapshot	1	4
+879	AL	2013	After	Impact	Snapshot	0	8
+880	AL	2013	After	Impact	Snapshot	0	7
+881	AL	2013	After	Impact	Snapshot	0	2
+882	AL	2013	After	Impact	Snapshot	0	5
+883	AL	2013	After	Impact	Snapshot	0	2
+884	AL	2013	After	Impact	Snapshot	0	5
+885	AL	2013	After	Impact	Snapshot	0	4
+886	AL	2013	After	Impact	Snapshot	0	4
+887	AL	2013	After	Impact	Snapshot	0	1
+888	AL	2013	After	Impact	Snapshot	0	2
+889	AL	2013	After	Impact	Snapshot	0	8
+890	AL	2013	After	Impact	Snapshot	0	8
+891	AL	2013	After	Impact	Snapshot	0	4
+892	AL	2013	After	Impact	Snapshot	0	4
+893	AL	2013	After	Impact	Snapshot	0	2
+894	AL	2013	After	Impact	Snapshot	0	1
+895	AL	2013	After	Impact	Snapshot	1	3
+896	AL	2013	After	Impact	Snapshot	0	1
+897	AL	2013	After	Impact	Snapshot	0	3
+898	AL	2013	After	Impact	Snapshot	0	3
+899	AL	2013	After	Impact	Snapshot	0	6
+900	AL	2013	After	Impact	Snapshot	0	5
+901	AL	2013	After	Impact	Snapshot	2	14
+902	AL	2013	After	Impact	Snapshot	1	18
+903	AL	2013	After	Impact	Snapshot	0	7
+904	AL	2013	After	Impact	Snapshot	0	2
+905	AL	2013	After	Impact	Snapshot	0	1
+906	AL	2013	After	Impact	Snapshot	0	8
+907	AL	2013	After	Impact	Snapshot	0	2
+908	AL	2013	After	Impact	Snapshot	0	1
+909	AL	2013	After	Impact	Snapshot	0	2
+910	AL	2013	After	Impact	Snapshot	0	1
+911	AL	2013	After	Impact	Snapshot	0	1
+912	AL	2013	After	Impact	Snapshot	0	11
+913	AL	2013	After	Impact	Snapshot	0	1
+914	AL	2013	After	Impact	Snapshot	1	2
+915	AL	2013	After	Impact	Snapshot	0	2
+916	AL	2013	After	Impact	Snapshot	0	1
+917	AL	2013	After	Impact	Snapshot	1	2
+918	AL	2013	After	Impact	Snapshot	0	6
+919	AL	2013	After	Impact	Snapshot	0	6
+920	AL	2013	After	Impact	Snapshot	0	3
+921	AL	2013	After	Impact	Snapshot	0	3
+922	AL	2013	After	Impact	Snapshot	0	5
+923	AL	2013	After	Impact	Snapshot	2	7
+924	AL	2013	After	Impact	Snapshot	0	2
+925	AL	2013	After	Impact	Snapshot	1	10
+926	AL	2013	After	Impact	Snapshot	1	1
+927	AL	2013	After	Impact	Snapshot	0	1
+928	AL	2013	After	Impact	Snapshot	0	2
+929	AL	2013	After	Impact	Snapshot	0	5
+930	AL	2013	After	Impact	Snapshot	0	1
+931	AL	2013	After	Impact	Snapshot	0	8
+932	AL	2013	After	Impact	Snapshot	0	4
+933	AL	2013	After	Impact	Snapshot	2	3
+934	AL	2013	After	Impact	Snapshot	0	5
+935	AL	2013	After	Impact	Snapshot	1	4
+936	AL	2013	After	Impact	Snapshot	0	3
+937	AL	2013	After	Impact	Snapshot	0	9
+938	AL	2013	After	Impact	Snapshot	0	4
+939	AL	2013	After	Impact	Snapshot	0	6
+940	AL	2013	After	Impact	Snapshot	0	4
+941	AL	2013	After	Impact	Snapshot	0	2
+942	AL	2013	After	Impact	Snapshot	0	3
+943	AL	2013	After	Impact	Snapshot	0	6
+944	AL	2013	After	Impact	Snapshot	0	2
+945	AL	2013	After	Impact	Snapshot	0	1
+946	AL	2013	After	Impact	Snapshot	0	4
+947	AL	2013	After	Impact	Snapshot	0	1
+948	AL	2013	After	Impact	Snapshot	0	3
+949	AL	2013	After	Impact	Snapshot	1	2
+950	AL	2013	After	Impact	Snapshot	0	4
+951	AL	2013	After	Impact	Snapshot	0	5
+952	AL	2013	After	Impact	Snapshot	0	7
+953	AL	2013	After	Impact	Snapshot	1	7
+954	AL	2013	After	Impact	Snapshot	1	3
+955	AL	2013	After	Impact	Snapshot	0	4
+956	AL	2013	After	Impact	Snapshot	0	6
+957	AL	2013	After	Impact	Snapshot	0	1
+958	AL	2013	After	Impact	Snapshot	0	3
+959	AL	2013	After	Impact	Snapshot	0	10
+960	AL	2013	After	Impact	Snapshot	0	5
+961	AL	2013	After	Impact	Snapshot	0	13
+962	AL	2013	After	Impact	Snapshot	0	13
+963	AL	2013	After	Impact	Snapshot	0	1
+964	AL	2013	After	Impact	Snapshot	0	1
+965	AL	2013	After	Impact	Snapshot	0	3
+966	AL	2013	After	Impact	Snapshot	0	1
+967	AL	2013	After	Impact	Snapshot	0	1
+968	AL	2013	After	Impact	Snapshot	0	8
+969	AL	2013	After	Impact	Snapshot	0	2
+970	AL	2013	After	Impact	Snapshot	0	2
+971	AL	2013	After	Impact	Snapshot	0	5
+972	AL	2013	After	Impact	Snapshot	0	2
+973	AL	2013	After	Impact	Snapshot	0	8
+974	AL	2013	After	Impact	Snapshot	0	1
+975	AL	2013	After	Impact	Snapshot	0	4
+976	AL	2013	After	Impact	Snapshot	0	4
+977	AL	2013	After	Impact	Snapshot	0	3
+978	AL	2013	After	Impact	Snapshot	0	10
+979	AL	2013	After	Impact	Snapshot	0	3
+980	AL	2013	After	Impact	Snapshot	0	5
+981	AL	2013	After	Impact	Snapshot	0	6
+982	AL	2013	After	Impact	Snapshot	0	7
+983	AL	2013	After	Impact	Snapshot	1	5
+984	AL	2013	After	Impact	Snapshot	0	4
+985	AL	2013	After	Impact	Snapshot	0	2
+986	AL	2013	After	Impact	Snapshot	0	2
+987	AL	2013	After	Impact	Snapshot	0	3
+988	AL	2013	After	Impact	Snapshot	0	2
+989	AL	2013	After	Impact	Snapshot	0	2
+990	AL	2013	After	Impact	Snapshot	0	2
+991	AL	2013	After	Impact	Snapshot	0	6
+992	AL	2013	After	Impact	Snapshot	0	4
+993	AL	2013	After	Impact	Snapshot	0	2
+994	AL	2013	After	Impact	Snapshot	0	6
+995	AL	2013	After	Impact	Snapshot	0	1
+996	AL	2013	After	Impact	Snapshot	1	7
+997	AL	2013	After	Impact	Snapshot	0	7
+998	AL	2013	After	Impact	Snapshot	0	6
+999	AL	2013	After	Impact	Snapshot	0	15
+1000	AL	2013	After	Impact	Snapshot	0	2
+1001	AL	2013	After	Impact	Snapshot	0	3
+1002	AL	2013	After	Impact	Snapshot	0	9
+1003	AL	2013	After	Impact	Snapshot	0	14
+1004	AL	2013	After	Impact	Snapshot	0	10
+1005	AL	2013	After	Impact	Snapshot	0	2
+1006	AL	2014	After	Impact	Snapshot	3	11
+1007	AL	2014	After	Impact	Snapshot	0	4
+1008	AL	2014	After	Impact	Snapshot	0	3
+1009	AL	2014	After	Impact	Snapshot	1	3
+1010	AL	2014	After	Impact	Snapshot	0	6
+1011	AL	2014	After	Impact	Snapshot	0	10
+1012	AL	2014	After	Impact	Snapshot	7	21
+1013	AL	2014	After	Impact	Snapshot	0	3
+1014	AL	2014	After	Impact	Snapshot	0	2
+1015	AL	2014	After	Impact	Snapshot	1	8
+1016	AL	2014	After	Impact	Snapshot	0	8
+1017	AL	2014	After	Impact	Snapshot	0	4
+1018	AL	2014	After	Impact	Snapshot	0	8
+1019	AL	2014	After	Impact	Snapshot	0	3
+1020	AL	2014	After	Impact	Snapshot	0	1
+1021	AL	2014	After	Impact	Snapshot	0	8
+1022	AL	2014	After	Impact	Snapshot	0	2
+1023	AL	2014	After	Impact	Snapshot	0	8
+1024	AL	2014	After	Impact	Snapshot	1	10
+1025	AL	2014	After	Impact	Snapshot	1	2
+1026	AL	2014	After	Impact	Snapshot	0	9
+1027	AL	2014	After	Impact	Snapshot	1	13
+1028	AL	2014	After	Impact	Snapshot	0	5
+1029	AL	2014	After	Impact	Snapshot	0	1
+1030	AL	2014	After	Impact	Snapshot	0	4
+1031	AL	2014	After	Impact	Snapshot	1	1
+1032	AL	2014	After	Impact	Snapshot	0	8
+1033	AL	2014	After	Impact	Snapshot	0	3
+1034	AL	2014	After	Impact	Snapshot	0	2
+1035	AL	2014	After	Impact	Snapshot	1	5
+1036	AL	2014	After	Impact	Snapshot	0	6
+1037	AL	2014	After	Impact	Snapshot	0	14
+1038	AL	2014	After	Impact	Snapshot	0	3
+1039	AL	2014	After	Impact	Snapshot	0	3
+1040	AL	2014	After	Impact	Snapshot	0	2
+1041	AL	2014	After	Impact	Snapshot	0	2
+1042	AL	2014	After	Impact	Snapshot	0	3
+1043	AL	2014	After	Impact	Snapshot	0	1
+1044	AL	2014	After	Impact	Snapshot	2	3
+1045	AL	2014	After	Impact	Snapshot	1	6
+1046	AL	2014	After	Impact	Snapshot	0	14
+1047	AL	2014	After	Impact	Snapshot	0	2
+1048	AL	2014	After	Impact	Snapshot	0	3
+1049	AL	2014	After	Impact	Snapshot	0	3
+1050	AL	2014	After	Impact	Snapshot	1	8
+1051	AL	2014	After	Impact	Snapshot	0	4
+1052	AL	2014	After	Impact	Snapshot	2	7
+1053	AL	2014	After	Impact	Snapshot	0	2
+1054	AL	2014	After	Impact	Snapshot	2	7
+1055	AL	2014	After	Impact	Snapshot	0	2
+1056	AL	2014	After	Impact	Snapshot	1	1
+1057	AL	2014	After	Impact	Snapshot	0	6
+1058	AL	2014	After	Impact	Snapshot	0	3
+1059	AL	2014	After	Impact	Snapshot	0	7
+1060	AL	2014	After	Impact	Snapshot	0	2
+1061	AL	2014	After	Impact	Snapshot	1	1
+1062	AL	2014	After	Impact	Snapshot	1	11
+1063	AL	2014	After	Impact	Snapshot	0	7
+1064	AL	2014	After	Impact	Snapshot	0	4
+1065	AL	2014	After	Impact	Snapshot	0	3
+1066	AL	2014	After	Impact	Snapshot	0	1
+1067	AL	2014	After	Impact	Snapshot	0	1
+1068	AL	2014	After	Impact	Snapshot	2	6
+1069	AL	2014	After	Impact	Snapshot	0	3
+1070	AL	2014	After	Impact	Snapshot	0	12
+1071	AL	2014	After	Impact	Snapshot	0	1
+1072	AL	2014	After	Impact	Snapshot	2	4
+1073	AL	2014	After	Impact	Snapshot	0	2
+1074	AL	2014	After	Impact	Snapshot	1	4
+1075	AL	2014	After	Impact	Snapshot	0	2
+1076	AL	2014	After	Impact	Snapshot	0	4
+1077	AL	2014	After	Impact	Snapshot	0	1
+1078	AL	2014	After	Impact	Snapshot	0	1
+1079	AL	2014	After	Impact	Snapshot	0	2
+1080	AL	2014	After	Impact	Snapshot	1	3
+1081	AL	2014	After	Impact	Snapshot	0	1
+1082	AL	2014	After	Impact	Snapshot	1	6
+1083	AL	2014	After	Impact	Snapshot	2	2
+1084	AL	2014	After	Impact	Snapshot	1	2
+1085	AL	2014	After	Impact	Snapshot	1	4
+1086	AL	2014	After	Impact	Snapshot	1	3
+1087	AL	2014	After	Impact	Snapshot	0	12
+1088	AL	2014	After	Impact	Snapshot	0	5
+1089	AL	2014	After	Impact	Snapshot	0	5
+1090	AL	2014	After	Impact	Snapshot	0	8
+1091	AL	2014	After	Impact	Snapshot	0	3
+1092	AL	2014	After	Impact	Snapshot	0	1
+1093	AL	2014	After	Impact	Snapshot	1	2
+1094	AL	2014	After	Impact	Snapshot	0	1
+1095	AL	2014	After	Impact	Snapshot	1	3
+1096	AL	2014	After	Impact	Snapshot	1	4
+1097	AL	2014	After	Impact	Snapshot	0	3
+1098	AL	2014	After	Impact	Snapshot	1	2
+1099	AL	2014	After	Impact	Snapshot	0	1
+1100	AL	2014	After	Impact	Snapshot	2	3
+1101	AL	2014	After	Impact	Snapshot	0	4
+1102	AL	2014	After	Impact	Snapshot	1	2
+1103	AL	2014	After	Impact	Snapshot	0	3
+1104	AL	2014	After	Impact	Snapshot	0	4
+1105	AL	2014	After	Impact	Snapshot	0	2
+1106	AL	2014	After	Impact	Snapshot	2	3
+1107	AL	2014	After	Impact	Snapshot	2	4
+1108	AL	2014	After	Impact	Snapshot	0	1
+1109	AL	2014	After	Impact	Snapshot	1	3
+1110	AL	2014	After	Impact	Snapshot	0	3
+1111	AL	2014	After	Impact	Snapshot	0	1
+1112	AL	2014	After	Impact	Snapshot	1	1
+1113	AL	2014	After	Impact	Snapshot	1	7
+1114	AL	2014	After	Impact	Snapshot	0	3
+1115	AL	2014	After	Impact	Snapshot	0	2
+1116	AL	2014	After	Impact	Snapshot	0	3
+1117	AL	2014	After	Impact	Snapshot	0	7
+1118	AL	2014	After	Impact	Snapshot	0	2
+1119	AL	2014	After	Impact	Snapshot	2	3
+1120	AL	2014	After	Impact	Snapshot	2	6
+1121	AL	2014	After	Impact	Snapshot	0	5
+1122	AL	2014	After	Impact	Snapshot	0	2
+1123	AL	2014	After	Impact	Snapshot	0	13
+1124	AL	2014	After	Impact	Snapshot	0	2
+1125	AL	2014	After	Impact	Snapshot	0	4
+1126	AL	2014	After	Impact	Snapshot	0	1
+1127	AL	2014	After	Impact	Snapshot	0	1
+1128	AL	2014	After	Impact	Snapshot	0	1
+1129	AL	2014	After	Impact	Snapshot	0	1
+1130	AL	2014	After	Impact	Snapshot	0	3
+1131	AL	2014	After	Impact	Snapshot	0	3
+1132	AL	2014	After	Impact	Snapshot	0	1
+1133	AL	2014	After	Impact	Snapshot	0	5
+1134	AL	2014	After	Impact	Snapshot	0	8
+1135	AL	2014	After	Impact	Snapshot	0	8
+1136	AL	2014	After	Impact	Snapshot	0	9
+1137	AL	2014	After	Impact	Snapshot	0	4
+1138	AL	2014	After	Impact	Snapshot	0	2
+1139	AL	2014	After	Impact	Snapshot	0	2
+1140	AL	2014	After	Impact	Snapshot	0	4
+1141	AL	2014	After	Impact	Snapshot	0	1
+1142	AL	2014	After	Impact	Snapshot	0	2
+1143	AL	2014	After	Impact	Snapshot	0	5
+1144	AL	2014	After	Impact	Snapshot	0	3
+1145	AL	2014	After	Impact	Snapshot	0	6
+1146	AL	2014	After	Impact	Snapshot	0	4
+1147	AL	2014	After	Impact	Snapshot	0	2
+1148	AL	2014	After	Impact	Snapshot	0	4
+1149	AL	2014	After	Impact	Snapshot	0	4
+1150	AL	2014	After	Impact	Snapshot	0	7
+1151	AL	2014	After	Impact	Snapshot	0	3
+1152	AL	2014	After	Impact	Snapshot	1	3
+1153	AL	2014	After	Impact	Snapshot	0	1
+1154	AL	2014	After	Impact	Snapshot	1	10
+1155	AL	2014	After	Impact	Snapshot	0	4
+1156	AL	2014	After	Impact	Snapshot	0	3
+1157	AL	2014	After	Impact	Snapshot	0	5
+1158	AL	2014	After	Impact	Snapshot	0	2
+1159	AL	2014	After	Impact	Snapshot	0	6
+1160	AL	2014	After	Impact	Snapshot	1	4
+1161	AL	2014	After	Impact	Snapshot	0	1
+1162	AL	2014	After	Impact	Snapshot	0	3
+1163	AL	2014	After	Impact	Snapshot	0	3
+1164	AL	2014	After	Impact	Snapshot	0	12
+1165	AL	2014	After	Impact	Snapshot	0	5
+1166	AL	2014	After	Impact	Snapshot	0	1
+1167	AL	2014	After	Impact	Snapshot	0	5
+1168	AL	2014	After	Impact	Snapshot	0	6
+1169	AL	2014	After	Impact	Snapshot	0	2
+1170	AL	2014	After	Impact	Snapshot	0	1
+1171	AL	2014	After	Impact	Snapshot	0	2
+1172	AL	2014	After	Impact	Snapshot	0	1
+1173	AL	2014	After	Impact	Snapshot	0	1
+1174	AL	2014	After	Impact	Snapshot	0	2
+1175	AL	2014	After	Impact	Snapshot	0	2
+1176	AL	2014	After	Impact	Snapshot	0	1
+1177	AL	2014	After	Impact	Snapshot	0	2
+1178	AL	2014	After	Impact	Snapshot	0	2
+1179	AL	2014	After	Impact	Snapshot	0	1
+1180	AL	2014	After	Impact	Snapshot	0	1
+1181	AL	2014	After	Impact	Snapshot	0	1
+1182	AL	2014	After	Impact	Snapshot	0	1
+1183	AL	2014	After	Impact	Snapshot	0	1
+1184	AL	2014	After	Impact	Snapshot	0	3
+1185	AL	2014	After	Impact	Snapshot	0	1
+1186	AL	2014	After	Impact	Snapshot	0	1
+1187	AL	2014	After	Impact	Snapshot	0	1
+1188	AL	2014	After	Impact	Snapshot	0	1
+1189	AL	2014	After	Impact	Snapshot	0	1
+1190	AL	2014	After	Impact	Snapshot	0	1
+1191	AL	2014	After	Impact	Snapshot	2	3
+1192	AL	2014	After	Impact	Snapshot	0	1
+1193	AL	2014	After	Impact	Snapshot	0	2
+1194	AL	2014	After	Impact	Snapshot	0	1
+1195	AL	2014	After	Impact	Snapshot	1	11
+1196	AL	2014	After	Impact	Snapshot	0	2
+1197	AL	2014	After	Impact	Snapshot	0	1
+1198	AL	2014	After	Impact	Snapshot	0	2
+1199	AL	2015	After	Impact	Snapshot	0	1
+1200	AL	2015	After	Impact	Snapshot	1	3
+1201	AL	2015	After	Impact	Snapshot	0	1
+1202	AL	2015	After	Impact	Snapshot	0	1
+1203	AL	2015	After	Impact	Snapshot	0	1
+1204	AL	2015	After	Impact	Snapshot	1	3
+1205	AL	2015	After	Impact	Snapshot	0	5
+1206	AL	2015	After	Impact	Snapshot	0	1
+1207	AL	2015	After	Impact	Snapshot	0	1
+1208	AL	2015	After	Impact	Snapshot	0	1
+1209	AL	2015	After	Impact	Snapshot	0	2
+1210	AL	2015	After	Impact	Snapshot	0	1
+1211	AL	2015	After	Impact	Snapshot	0	1
+1212	AL	2015	After	Impact	Snapshot	2	3
+1213	AL	2015	After	Impact	Snapshot	0	1
+1214	AL	2015	After	Impact	Snapshot	0	1
+1215	AL	2015	After	Impact	Snapshot	0	1
+1216	AL	2015	After	Impact	Snapshot	0	2
+1217	AL	2015	After	Impact	Snapshot	0	1
+1218	AL	2015	After	Impact	Snapshot	0	2
+1219	AL	2015	After	Impact	Snapshot	0	3
+1220	AL	2015	After	Impact	Snapshot	0	1
+1221	AL	2015	After	Impact	Snapshot	0	5
+1222	AL	2015	After	Impact	Snapshot	0	4
+1223	AL	2015	After	Impact	Snapshot	0	1
+1224	AL	2015	After	Impact	Snapshot	0	1
+1225	AL	2015	After	Impact	Snapshot	0	1
+1226	AL	2015	After	Impact	Snapshot	0	1
+1227	AL	2015	After	Impact	Snapshot	0	1
+1228	AL	2015	After	Impact	Snapshot	0	2
+1229	AL	2015	After	Impact	Snapshot	0	1
+1230	AL	2015	After	Impact	Snapshot	0	4
+1231	AL	2015	After	Impact	Snapshot	0	2
+1232	AL	2015	After	Impact	Snapshot	0	2
+1233	AL	2015	After	Impact	Snapshot	0	3
+1234	AL	2015	After	Impact	Snapshot	0	1
+1235	AL	2016	After	Impact	Snapshot	1	6
+1236	AL	2016	After	Impact	Snapshot	0	6
+1237	AL	2016	After	Impact	Snapshot	0	10
+1238	AL	2016	After	Impact	Snapshot	0	4
+1239	AL	2016	After	Impact	Snapshot	0	9
+1240	AL	2016	After	Impact	Snapshot	0	11
+1241	AL	2016	After	Impact	Snapshot	0	7
+1242	AL	2016	After	Impact	Snapshot	0	14
+1243	AL	2016	After	Impact	Snapshot	0	12
+1244	AL	2016	After	Impact	Snapshot	0	18
+1245	AL	2016	After	Impact	Snapshot	1	1
+1246	AL	2016	After	Impact	Snapshot	0	2
+1247	AL	2016	After	Impact	Snapshot	0	8
+1248	AL	2016	After	Impact	Snapshot	0	4
+1249	AL	2016	After	Impact	Snapshot	0	1
+1250	AL	2016	After	Impact	Snapshot	0	2
+1251	AL	2016	After	Impact	Snapshot	0	1
+1252	AL	2016	After	Impact	Snapshot	0	7
+1253	AL	2016	After	Impact	Snapshot	0	2
+1254	AL	2016	After	Impact	Snapshot	0	7
+1255	AL	2016	After	Impact	Snapshot	0	7
+1256	AL	2016	After	Impact	Snapshot	0	14
+1257	AL	2016	After	Impact	Snapshot	0	3
+1258	AL	2016	After	Impact	Snapshot	0	4
+1259	AL	2016	After	Impact	Snapshot	0	6
+1260	AL	2016	After	Impact	Snapshot	0	6
+1261	AL	2016	After	Impact	Snapshot	0	5
+1262	AL	2016	After	Impact	Snapshot	0	8
+1263	AL	2016	After	Impact	Snapshot	0	13
+1264	AL	2016	After	Impact	Snapshot	0	4
+1265	AL	2016	After	Impact	Snapshot	0	4
+1266	AL	2016	After	Impact	Snapshot	0	4
+1267	AL	2016	After	Impact	Snapshot	1	1
+1268	AL	2016	After	Impact	Snapshot	3	13
+1269	AL	2016	After	Impact	Snapshot	0	3
+1270	AL	2016	After	Impact	Snapshot	0	1
+1271	AL	2016	After	Impact	Snapshot	0	7
+1272	AL	2016	After	Impact	Snapshot	0	2
+1273	AL	2016	After	Impact	Snapshot	2	3
+1274	AL	2016	After	Impact	Snapshot	0	1
+1275	AL	2016	After	Impact	Snapshot	1	2
+1276	AL	2016	After	Impact	Snapshot	1	2
+1277	AL	2016	After	Impact	Snapshot	0	3
+1278	AL	2016	After	Impact	Snapshot	1	4
+1279	AL	2016	After	Impact	Snapshot	2	4
+1280	AL	2016	After	Impact	Snapshot	1	2
+1281	AL	2016	After	Impact	Snapshot	0	1
+1282	AL	2016	After	Impact	Snapshot	0	7
+1283	AL	2016	After	Impact	Snapshot	0	1
+1284	AL	2016	After	Impact	Snapshot	0	5
+1285	AL	2016	After	Impact	Snapshot	0	1
+1286	AL	2016	After	Impact	Snapshot	0	2
+1287	AL	2016	After	Impact	Snapshot	0	1
+1288	AL	2016	After	Impact	Snapshot	0	1
+1289	AL	2016	After	Impact	Snapshot	0	3
+1290	AL	2016	After	Impact	Snapshot	0	2
+1291	AL	2016	After	Impact	Snapshot	0	3
+1292	AL	2016	After	Impact	Snapshot	1	2
+1293	AL	2016	After	Impact	Snapshot	0	2
+1294	AL	2016	After	Impact	Snapshot	1	3
+1295	AL	2016	After	Impact	Snapshot	1	6
+1296	AL	2016	After	Impact	Snapshot	0	1
+1297	AL	2016	After	Impact	Snapshot	0	1
+1298	AL	2016	After	Impact	Snapshot	0	2
+1299	AL	2016	After	Impact	Snapshot	0	1
+1300	AL	2016	After	Impact	Snapshot	0	22
+1301	AL	2016	After	Impact	Snapshot	0	8
+1302	AL	2016	After	Impact	Snapshot	0	6
+1303	AL	2016	After	Impact	Snapshot	0	6
+1304	AL	2016	After	Impact	Snapshot	0	2
+1305	AL	2016	After	Impact	Snapshot	0	5
+1306	AL	2016	After	Impact	Snapshot	0	2
+1307	AL	2016	After	Impact	Snapshot	0	4
+1308	AL	2016	After	Impact	Snapshot	0	4
+1309	AL	2016	After	Impact	Snapshot	0	2
+1310	AL	2016	After	Impact	Snapshot	0	8
+1311	AL	2016	After	Impact	Snapshot	0	8
+1312	AL	2016	After	Impact	Snapshot	0	24
+1313	AL	2016	After	Impact	Snapshot	0	3
+1314	AL	2016	After	Impact	Snapshot	0	11
+1315	AL	2016	After	Impact	Snapshot	0	30
+1316	AL	2016	After	Impact	Snapshot	0	34
+1317	AL	2016	After	Impact	Snapshot	0	35
+1318	AL	2016	After	Impact	Snapshot	0	20
+1319	AL	2016	After	Impact	Snapshot	0	2
+1320	AL	2016	After	Impact	Snapshot	0	70
+1321	AL	2016	After	Impact	Snapshot	0	5
+1322	AL	2016	After	Impact	Snapshot	0	11
+1323	AL	2016	After	Impact	Snapshot	0	118
+1324	AL	2016	After	Impact	Snapshot	0	32
+1325	AL	2016	After	Impact	Snapshot	0	15
+1326	AL	2016	After	Impact	Snapshot	0	50
+1327	AL	2016	After	Impact	Snapshot	0	41
+1328	AL	2016	After	Impact	Snapshot	0	63
+1329	AL	2016	After	Impact	Snapshot	0	39
+1330	AL	2016	After	Impact	Snapshot	0	23
+1331	AL	2016	After	Impact	Snapshot	0	5
+1332	AL	2016	After	Impact	Snapshot	0	12
+1333	AL	2016	After	Impact	Snapshot	0	5
+1334	AL	2016	After	Impact	Snapshot	0	10
+1335	AL	2016	After	Impact	Snapshot	0	12
+1336	AL	2016	After	Impact	Snapshot	0	10
+1337	AL	2016	After	Impact	Snapshot	0	24
+1338	AL	2016	After	Impact	Snapshot	0	19
+1339	AL	2016	After	Impact	Snapshot	0	53
+1340	AL	2016	After	Impact	Snapshot	0	8
+1341	AL	2016	After	Impact	Snapshot	0	28
+1342	AL	2016	After	Impact	Snapshot	0	5
+1343	AL	2016	After	Impact	Snapshot	0	11
+1344	AL	2016	After	Impact	Snapshot	0	31
+1345	AL	2016	After	Impact	Snapshot	0	8
+1346	AL	2016	After	Impact	Snapshot	0	1
+1347	AL	2016	After	Impact	Snapshot	0	7
+1348	AL	2016	After	Impact	Snapshot	0	38
+1349	AL	2016	After	Impact	Snapshot	0	53
+1350	AL	2016	After	Impact	Snapshot	0	31
+1351	AL	2016	After	Impact	Snapshot	0	5
+1352	AL	2016	After	Impact	Snapshot	0	49
+1353	AL	2016	After	Impact	Snapshot	0	14
+1354	AL	2016	After	Impact	Snapshot	1	3
+1355	AL	2016	After	Impact	Snapshot	0	7
+1356	AL	2016	After	Impact	Snapshot	1	3
+1357	AL	2016	After	Impact	Snapshot	0	2
+1358	AL	2016	After	Impact	Snapshot	0	1
+1359	AL	2016	After	Impact	Snapshot	0	3
+1360	AL	2016	After	Impact	Snapshot	0	3
+1361	AL	2016	After	Impact	Snapshot	0	15
+1362	AL	2016	After	Impact	Snapshot	0	3
+1363	AL	2016	After	Impact	Snapshot	0	2
+1364	AL	2016	After	Impact	Snapshot	0	1
+1365	AL	2016	After	Impact	Snapshot	0	3
+1366	AL	2016	After	Impact	Snapshot	0	11
+1367	AL	2016	After	Impact	Snapshot	0	8
+1368	AL	2016	After	Impact	Snapshot	0	1
+1369	AL	2016	After	Impact	Snapshot	0	11
+1370	AL	2016	After	Impact	Snapshot	0	12
+1371	AL	2016	After	Impact	Snapshot	0	30
+1372	AL	2016	After	Impact	Snapshot	0	1
+1373	AL	2016	After	Impact	Snapshot	0	2
+1374	AL	2016	After	Impact	Snapshot	0	1
+1375	AL	2016	After	Impact	Snapshot	0	7
+1376	AL	2016	After	Impact	Snapshot	0	22
+1377	AL	2016	After	Impact	Snapshot	0	5
+1378	AL	2016	After	Impact	Snapshot	0	30
+1379	AL	2016	After	Impact	Snapshot	0	40
+1380	AL	2016	After	Impact	Snapshot	0	3
+1381	AL	2016	After	Impact	Snapshot	0	1
+1382	AL	2016	After	Impact	Snapshot	0	4
+1383	AL	2016	After	Impact	Snapshot	0	5
+1384	AL	2016	After	Impact	Snapshot	0	3
+1385	AL	2016	After	Impact	Snapshot	1	3
+1386	AL	2016	After	Impact	Snapshot	0	1
+1387	AL	2016	After	Impact	Snapshot	0	5
+1388	AL	2016	After	Impact	Snapshot	0	4
+1389	ATT	2005	Before	Control	Snapshot	1	1
+1390	ATT	2005	Before	Control	Snapshot	1	5
+1391	ATT	2005	Before	Control	Snapshot	0	2
+1392	ATT	2005	Before	Control	Snapshot	3	3
+1393	ATT	2005	Before	Control	Snapshot	0	4
+1394	ATT	2005	Before	Control	Snapshot	0	3
+1395	ATT	2005	Before	Control	Snapshot	1	1
+1396	ATT	2005	Before	Control	Snapshot	4	4
+1397	ATT	2005	Before	Control	Snapshot	0	3
+1398	ATT	2005	Before	Control	Snapshot	2	2
+1399	ATT	2005	Before	Control	Snapshot	0	1
+1400	ATT	2005	Before	Control	Snapshot	3	4
+1401	ATT	2005	Before	Control	Snapshot	4	4
+1402	ATT	2005	Before	Control	Snapshot	1	1
+1403	ATT	2005	Before	Control	Snapshot	0	2
+1404	ATT	2005	Before	Control	Snapshot	1	3
+1405	ATT	2005	Before	Control	Snapshot	2	2
+1406	ATT	2005	Before	Control	Snapshot	1	2
+1407	ATT	2005	Before	Control	Snapshot	0	1
+1408	ATT	2005	Before	Control	Snapshot	3	3
+1409	ATT	2005	Before	Control	Snapshot	0	1
+1410	ATT	2005	Before	Control	Snapshot	0	2
+1411	ATT	2005	Before	Control	Snapshot	1	1
+1412	ATT	2005	Before	Control	Snapshot	2	2
+1413	ATT	2005	Before	Control	Snapshot	1	3
+1414	ATT	2005	Before	Control	Snapshot	1	1
+1415	ATT	2005	Before	Control	Snapshot	2	6
+1416	ATT	2005	Before	Control	Snapshot	2	2
+1417	ATT	2005	Before	Control	Snapshot	0	4
+1418	ATT	2005	Before	Control	Snapshot	2	4
+1419	ATT	2005	Before	Control	Snapshot	3	3
+1420	ATT	2005	Before	Control	Snapshot	2	3
+1421	ATT	2005	Before	Control	Snapshot	2	4
+1422	ATT	2005	Before	Control	Snapshot	1	1
+1423	ATT	2005	Before	Control	Snapshot	3	3
+1424	ATT	2005	Before	Control	Snapshot	0	1
+1425	ATT	2005	Before	Control	Snapshot	0	4
+1426	ATT	2005	Before	Control	Snapshot	0	1
+1427	ATT	2006	Before	Control	Snapshot	1	1
+1428	ATT	2006	Before	Control	Snapshot	1	1
+1429	ATT	2006	Before	Control	Snapshot	1	2
+1430	ATT	2006	Before	Control	Snapshot	2	3
+1431	ATT	2006	Before	Control	Snapshot	1	1
+1432	ATT	2006	Before	Control	Snapshot	1	4
+1433	ATT	2006	Before	Control	Snapshot	1	1
+1434	ATT	2006	Before	Control	Snapshot	0	2
+1435	ATT	2006	Before	Control	Snapshot	0	1
+1436	ATT	2006	Before	Control	Snapshot	0	3
+1437	ATT	2006	Before	Control	Snapshot	0	2
+1438	ATT	2006	Before	Control	Snapshot	1	1
+1439	ATT	2006	Before	Control	Snapshot	0	1
+1440	ATT	2006	Before	Control	Snapshot	0	1
+1441	ATT	2006	Before	Control	Snapshot	0	2
+1442	ATT	2006	Before	Control	Snapshot	1	3
+1443	ATT	2006	Before	Control	Snapshot	3	3
+1444	ATT	2006	Before	Control	Snapshot	0	2
+1445	ATT	2006	Before	Control	Snapshot	0	2
+1446	ATT	2006	Before	Control	Snapshot	1	1
+1447	ATT	2006	Before	Control	Snapshot	0	1
+1448	ATT	2006	Before	Control	Snapshot	0	2
+1449	ATT	2006	Before	Control	Snapshot	0	1
+1450	ATT	2006	Before	Control	Snapshot	1	3
+1451	ATT	2006	Before	Control	Snapshot	0	1
+1452	ATT	2007	Before	Control	Snapshot	1	3
+1453	ATT	2007	Before	Control	Snapshot	2	3
+1454	ATT	2007	Before	Control	Snapshot	3	5
+1455	ATT	2007	Before	Control	Snapshot	1	3
+1456	ATT	2007	Before	Control	Snapshot	2	4
+1457	ATT	2007	Before	Control	Snapshot	0	1
+1458	ATT	2007	Before	Control	Snapshot	2	2
+1459	ATT	2007	Before	Control	Snapshot	1	1
+1460	ATT	2007	Before	Control	Snapshot	3	14
+1461	ATT	2007	Before	Control	Snapshot	1	1
+1462	ATT	2007	Before	Control	Snapshot	1	1
+1463	ATT	2007	Before	Control	Snapshot	1	7
+1464	ATT	2007	Before	Control	Snapshot	1	8
+1465	ATT	2007	Before	Control	Snapshot	0	3
+1466	ATT	2007	Before	Control	Snapshot	1	2
+1467	ATT	2007	Before	Control	Snapshot	1	1
+1468	ATT	2007	Before	Control	Snapshot	0	4
+1469	ATT	2007	Before	Control	Snapshot	2	2
+1470	ATT	2007	Before	Control	Snapshot	2	3
+1471	ATT	2007	Before	Control	Snapshot	1	1
+1472	ATT	2007	Before	Control	Snapshot	4	4
+1473	ATT	2007	Before	Control	Snapshot	1	1
+1474	ATT	2007	Before	Control	Snapshot	0	3
+1475	ATT	2007	Before	Control	Snapshot	2	5
+1476	ATT	2007	Before	Control	Snapshot	0	3
+1477	ATT	2007	Before	Control	Snapshot	1	2
+1478	ATT	2007	Before	Control	Snapshot	1	1
+1479	ATT	2007	Before	Control	Snapshot	0	2
+1480	ATT	2007	Before	Control	Snapshot	5	17
+1481	ATT	2007	Before	Control	Snapshot	1	2
+1482	ATT	2007	Before	Control	Snapshot	0	3
+1483	ATT	2007	Before	Control	Snapshot	2	3
+1484	ATT	2007	Before	Control	Snapshot	7	8
+1485	ATT	2007	Before	Control	Snapshot	2	6
+1486	ATT	2007	Before	Control	Snapshot	1	2
+1487	ATT	2008	Before	Control	Marked racemes	2	2
+1488	ATT	2008	Before	Control	Marked racemes	2	2
+1489	ATT	2008	Before	Control	Marked racemes	3	3
+1490	ATT	2008	Before	Control	Marked racemes	1	1
+1491	ATT	2008	Before	Control	Marked racemes	0	1
+1492	ATT	2008	Before	Control	Marked racemes	1	1
+1493	ATT	2008	Before	Control	Marked racemes	1	1
+1494	ATT	2008	Before	Control	Marked racemes	1	3
+1495	ATT	2008	Before	Control	Marked racemes	1	1
+1496	ATT	2008	Before	Control	Marked racemes	1	1
+1497	ATT	2008	Before	Control	Marked racemes	1	1
+1498	ATT	2008	Before	Control	Marked racemes	1	1
+1499	ATT	2008	Before	Control	Marked racemes	1	1
+1500	ATT	2008	Before	Control	Marked racemes	1	1
+1501	ATT	2008	Before	Control	Marked racemes	1	1
+1502	ATT	2008	Before	Control	Marked racemes	1	1
+1503	ATT	2008	Before	Control	Marked racemes	3	3
+1504	ATT	2008	Before	Control	Marked racemes	1	1
+1505	ATT	2008	Before	Control	Marked racemes	1	1
+1506	ATT	2008	Before	Control	Marked racemes	1	1
+1507	ATT	2008	Before	Control	Marked racemes	1	1
+1508	ATT	2008	Before	Control	Marked racemes	1	1
+1509	ATT	2008	Before	Control	Marked racemes	0	1
+1510	ATT	2008	Before	Control	Marked racemes	1	1
+1511	ATT	2008	Before	Control	Marked racemes	1	1
+1512	ATT	2008	Before	Control	Marked racemes	1	1
+1513	ATT	2008	Before	Control	Marked racemes	2	3
+1514	ATT	2008	Before	Control	Marked racemes	0	1
+1515	ATT	2008	Before	Control	Marked racemes	0	2
+1516	ATT	2008	Before	Control	Marked racemes	0	2
+1517	ATT	2008	Before	Control	Marked racemes	0	1
+1518	ATT	2008	Before	Control	Marked racemes	0	1
+1519	ATT	2008	Before	Control	Marked racemes	1	1
+1520	ATT	2008	Before	Control	Marked racemes	1	1
+1521	ATT	2008	Before	Control	Marked racemes	1	2
+1522	ATT	2008	Before	Control	Marked racemes	1	4
+1523	ATT	2008	Before	Control	Marked racemes	1	2
+1524	ATT	2008	Before	Control	Marked racemes	2	3
+1525	ATT	2008	Before	Control	Marked racemes	2	4
+1526	ATT	2008	Before	Control	Marked racemes	0	1
+1527	ATT	2008	Before	Control	Marked racemes	1	1
+1528	ATT	2008	Before	Control	Marked racemes	0	1
+1529	ATT	2008	Before	Control	Marked racemes	1	1
+1530	ATT	2008	Before	Control	Marked racemes	0	2
+1531	ATT	2008	Before	Control	Marked racemes	1	2
+1532	ATT	2008	Before	Control	Marked racemes	1	2
+1533	ATT	2008	Before	Control	Marked racemes	4	4
+1534	ATT	2008	Before	Control	Marked racemes	0	1
+1535	ATT	2008	Before	Control	Marked racemes	1	1
+1536	ATT	2010	Before	Control	Snapshot	1	2
+1537	ATT	2010	Before	Control	Snapshot	1	1
+1538	ATT	2010	Before	Control	Snapshot	0	1
+1539	ATT	2010	Before	Control	Snapshot	0	1
+1540	ATT	2010	Before	Control	Snapshot	0	1
+1541	ATT	2010	Before	Control	Snapshot	1	1
+1542	ATT	2010	Before	Control	Snapshot	0	1
+1543	ATT	2010	Before	Control	Snapshot	1	2
+1544	ATT	2010	Before	Control	Snapshot	0	3
+1545	ATT	2010	Before	Control	Snapshot	3	5
+1546	ATT	2010	Before	Control	Snapshot	2	4
+1547	ATT	2010	Before	Control	Snapshot	3	4
+1548	ATT	2010	Before	Control	Snapshot	1	2
+1549	ATT	2010	Before	Control	Snapshot	1	3
+1550	ATT	2010	Before	Control	Snapshot	0	3
+1551	ATT	2010	Before	Control	Snapshot	0	1
+1552	ATT	2010	Before	Control	Snapshot	0	4
+1553	ATT	2010	Before	Control	Snapshot	0	3
+1554	ATT	2010	Before	Control	Snapshot	0	4
+1555	ATT	2010	Before	Control	Snapshot	2	4
+1556	ATT	2010	Before	Control	Snapshot	0	2
+1557	ATT	2010	Before	Control	Snapshot	0	1
+1558	ATT	2010	Before	Control	Snapshot	0	3
+1559	ATT	2010	Before	Control	Snapshot	0	2
+1560	ATT	2010	Before	Control	Snapshot	0	1
+1561	ATT	2010	Before	Control	Snapshot	0	4
+1562	ATT	2010	Before	Control	Snapshot	0	1
+1563	ATT	2010	Before	Control	Snapshot	0	1
+1564	ATT	2010	Before	Control	Snapshot	0	1
+1565	ATT	2010	Before	Control	Snapshot	2	4
+1566	ATT	2010	Before	Control	Snapshot	2	2
+1567	ATT	2010	Before	Control	Snapshot	1	2
+1568	ATT	2010	Before	Control	Snapshot	0	2
+1569	ATT	2010	Before	Control	Snapshot	2	5
+1570	ATT	2010	Before	Control	Snapshot	1	1
+1571	ATT	2010	Before	Control	Snapshot	1	1
+1572	ATT	2010	Before	Control	Snapshot	0	2
+1573	ATT	2010	Before	Control	Snapshot	1	1
+1574	ATT	2010	Before	Control	Snapshot	1	2
+1575	ATT	2010	Before	Control	Snapshot	1	1
+1576	ATT	2010	Before	Control	Snapshot	2	4
+1577	ATT	2010	Before	Control	Snapshot	1	3
+1578	ATT	2010	Before	Control	Snapshot	1	1
+1579	ATT	2010	Before	Control	Snapshot	0	1
+1580	ATT	2010	Before	Control	Snapshot	0	4
+1581	ATT	2010	Before	Control	Snapshot	1	2
+1582	ATT	2010	Before	Control	Snapshot	0	1
+1583	ATT	2010	Before	Control	Snapshot	1	2
+1584	ATT	2010	Before	Control	Snapshot	2	2
+1585	ATT	2010	Before	Control	Snapshot	3	3
+1586	ATT	2010	Before	Control	Snapshot	0	5
+1587	ATT	2010	Before	Control	Snapshot	1	2
+1588	ATT	2010	Before	Control	Snapshot	1	2
+1589	ATT	2010	Before	Control	Snapshot	0	1
+1590	ATT	2010	Before	Control	Snapshot	0	1
+1591	ATT	2010	Before	Control	Snapshot	0	1
+1592	ATT	2010	Before	Control	Snapshot	0	1
+1593	ATT	2010	Before	Control	Snapshot	1	1
+1594	ATT	2010	Before	Control	Snapshot	1	2
+1595	ATT	2010	Before	Control	Snapshot	0	1
+1596	ATT	2010	Before	Control	Snapshot	0	1
+1597	ATT	2011	After	Control	Snapshot	0	1
+1598	ATT	2011	After	Control	Snapshot	1	1
+1599	ATT	2011	After	Control	Snapshot	1	1
+1600	ATT	2011	After	Control	Snapshot	2	5
+1601	ATT	2011	After	Control	Snapshot	4	12
+1602	ATT	2011	After	Control	Snapshot	1	4
+1603	ATT	2011	After	Control	Snapshot	2	3
+1604	ATT	2011	After	Control	Snapshot	1	1
+1605	ATT	2011	After	Control	Snapshot	0	3
+1606	ATT	2011	After	Control	Snapshot	0	4
+1607	ATT	2011	After	Control	Snapshot	0	2
+1608	ATT	2011	After	Control	Snapshot	1	2
+1609	ATT	2011	After	Control	Snapshot	1	2
+1610	ATT	2011	After	Control	Snapshot	4	10
+1611	ATT	2011	After	Control	Snapshot	2	5
+1612	ATT	2011	After	Control	Snapshot	0	5
+1613	ATT	2011	After	Control	Snapshot	3	5
+1614	ATT	2011	After	Control	Snapshot	0	2
+1615	ATT	2011	After	Control	Snapshot	2	2
+1616	ATT	2011	After	Control	Snapshot	2	4
+1617	ATT	2011	After	Control	Snapshot	4	6
+1618	ATT	2011	After	Control	Snapshot	2	2
+1619	ATT	2011	After	Control	Snapshot	0	5
+1620	ATT	2011	After	Control	Snapshot	4	5
+1621	ATT	2011	After	Control	Snapshot	1	1
+1622	ATT	2011	After	Control	Snapshot	2	9
+1623	ATT	2011	After	Control	Snapshot	0	1
+1624	ATT	2011	After	Control	Snapshot	0	3
+1625	ATT	2011	After	Control	Snapshot	0	2
+1626	ATT	2011	After	Control	Snapshot	1	1
+1627	ATT	2011	After	Control	Snapshot	0	1
+1628	ATT	2011	After	Control	Snapshot	0	1
+1629	ATT	2011	After	Control	Snapshot	0	1
+1630	ATT	2011	After	Control	Snapshot	2	5
+1631	ATT	2011	After	Control	Snapshot	0	2
+1632	ATT	2011	After	Control	Snapshot	0	1
+1633	ATT	2011	After	Control	Snapshot	0	2
+1634	ATT	2011	After	Control	Snapshot	0	1
+1635	ATT	2011	After	Control	Snapshot	0	1
+1636	ATT	2011	After	Control	Snapshot	0	4
+1637	ATT	2011	After	Control	Snapshot	0	6
+1638	ATT	2011	After	Control	Snapshot	0	1
+1639	ATT	2011	After	Control	Snapshot	0	2
+1640	ATT	2011	After	Control	Snapshot	1	4
+1641	ATT	2011	After	Control	Snapshot	1	1
+1642	ATT	2011	After	Control	Snapshot	0	6
+1643	ATT	2011	After	Control	Snapshot	0	2
+1644	ATT	2011	After	Control	Snapshot	0	1
+1645	ATT	2011	After	Control	Snapshot	1	2
+1646	ATT	2011	After	Control	Snapshot	0	2
+1647	ATT	2011	After	Control	Snapshot	0	1
+1648	ATT	2011	After	Control	Snapshot	0	3
+1649	ATT	2011	After	Control	Snapshot	0	2
+1650	ATT	2011	After	Control	Snapshot	0	1
+1651	ATT	2011	After	Control	Snapshot	1	5
+1652	ATT	2011	After	Control	Snapshot	0	4
+1653	ATT	2011	After	Control	Snapshot	4	9
+1654	ATT	2011	After	Control	Snapshot	1	1
+1655	ATT	2011	After	Control	Snapshot	0	1
+1656	ATT	2011	After	Control	Snapshot	0	6
+1657	ATT	2011	After	Control	Snapshot	3	4
+1658	ATT	2011	After	Control	Snapshot	0	7
+1659	ATT	2011	After	Control	Snapshot	1	7
+1660	ATT	2011	After	Control	Snapshot	0	12
+1661	ATT	2011	After	Control	Snapshot	2	7
+1662	ATT	2011	After	Control	Snapshot	0	2
+1663	ATT	2011	After	Control	Snapshot	0	1
+1664	ATT	2011	After	Control	Snapshot	1	1
+1665	ATT	2011	After	Control	Snapshot	1	2
+1666	ATT	2011	After	Control	Snapshot	1	4
+1667	ATT	2011	After	Control	Snapshot	0	4
+1668	ATT	2011	After	Control	Snapshot	0	3
+1669	ATT	2011	After	Control	Snapshot	0	12
+1670	ATT	2011	After	Control	Snapshot	0	2
+1671	ATT	2011	After	Control	Snapshot	1	4
+1672	ATT	2011	After	Control	Snapshot	0	4
+1673	ATT	2011	After	Control	Snapshot	0	1
+1674	ATT	2011	After	Control	Snapshot	1	3
+1675	ATT	2011	After	Control	Snapshot	0	4
+1676	ATT	2011	After	Control	Snapshot	2	3
+1677	ATT	2011	After	Control	Snapshot	0	8
+1678	ATT	2011	After	Control	Snapshot	0	4
+1679	ATT	2011	After	Control	Snapshot	0	1
+1680	ATT	2011	After	Control	Snapshot	0	6
+1681	ATT	2011	After	Control	Snapshot	3	15
+1682	ATT	2011	After	Control	Snapshot	0	4
+1683	ATT	2011	After	Control	Snapshot	0	4
+1684	ATT	2011	After	Control	Snapshot	1	3
+1685	ATT	2011	After	Control	Snapshot	0	2
+1686	ATT	2011	After	Control	Snapshot	4	5
+1687	ATT	2011	After	Control	Snapshot	3	4
+1688	ATT	2011	After	Control	Snapshot	1	1
+1689	ATT	2011	After	Control	Snapshot	0	1
+1690	ATT	2011	After	Control	Snapshot	0	1
+1691	ATT	2011	After	Control	Snapshot	0	1
+1692	ATT	2011	After	Control	Snapshot	0	1
+1693	ATT	2011	After	Control	Snapshot	0	2
+1694	ATT	2011	After	Control	Snapshot	0	3
+1695	ATT	2011	After	Control	Snapshot	0	2
+1696	ATT	2011	After	Control	Snapshot	0	6
+1697	ATT	2011	After	Control	Snapshot	3	4
+1698	ATT	2011	After	Control	Snapshot	1	7
+1699	ATT	2011	After	Control	Snapshot	1	2
+1700	ATT	2011	After	Control	Snapshot	3	4
+1701	ATT	2011	After	Control	Snapshot	1	5
+1702	ATT	2011	After	Control	Snapshot	4	8
+1703	ATT	2011	After	Control	Snapshot	7	10
+1704	ATT	2011	After	Control	Snapshot	2	4
+1705	ATT	2011	After	Control	Snapshot	0	1
+1706	ATT	2011	After	Control	Snapshot	0	1
+1707	ATT	2011	After	Control	Snapshot	3	4
+1708	ATT	2011	After	Control	Snapshot	0	1
+1709	ATT	2011	After	Control	Snapshot	1	2
+1710	ATT	2011	After	Control	Snapshot	1	1
+1711	ATT	2011	After	Control	Snapshot	0	4
+1712	ATT	2011	After	Control	Snapshot	1	4
+1713	ATT	2011	After	Control	Snapshot	4	5
+1714	ATT	2011	After	Control	Snapshot	4	7
+1715	ATT	2011	After	Control	Snapshot	0	2
+1716	ATT	2011	After	Control	Snapshot	1	2
+1717	ATT	2011	After	Control	Snapshot	0	1
+1718	ATT	2011	After	Control	Snapshot	0	1
+1719	ATT	2011	After	Control	Snapshot	1	6
+1720	ATT	2011	After	Control	Snapshot	1	1
+1721	ATT	2011	After	Control	Snapshot	0	2
+1722	ATT	2011	After	Control	Snapshot	0	1
+1723	ATT	2011	After	Control	Snapshot	0	1
+1724	ATT	2011	After	Control	Snapshot	4	4
+1725	ATT	2011	After	Control	Snapshot	1	2
+1726	ATT	2011	After	Control	Snapshot	0	1
+1727	ATT	2011	After	Control	Snapshot	1	3
+1728	ATT	2011	After	Control	Snapshot	1	1
+1729	ATT	2011	After	Control	Snapshot	0	1
+1730	ATT	2011	After	Control	Snapshot	1	5
+1731	ATT	2011	After	Control	Snapshot	2	8
+1732	ATT	2011	After	Control	Snapshot	0	3
+1733	ATT	2011	After	Control	Snapshot	1	4
+1734	ATT	2011	After	Control	Snapshot	1	2
+1735	ATT	2011	After	Control	Snapshot	0	3
+1736	ATT	2011	After	Control	Snapshot	0	5
+1737	ATT	2011	After	Control	Snapshot	0	11
+1738	ATT	2011	After	Control	Snapshot	0	6
+1739	ATT	2011	After	Control	Snapshot	6	7
+1740	ATT	2011	After	Control	Snapshot	0	4
+1741	ATT	2011	After	Control	Snapshot	1	4
+1742	ATT	2011	After	Control	Snapshot	1	1
+1743	ATT	2011	After	Control	Snapshot	1	1
+1744	ATT	2011	After	Control	Snapshot	0	2
+1745	ATT	2011	After	Control	Snapshot	0	4
+1746	ATT	2011	After	Control	Snapshot	0	1
+1747	ATT	2011	After	Control	Snapshot	3	4
+1748	ATT	2011	After	Control	Snapshot	2	4
+1749	ATT	2011	After	Control	Snapshot	0	1
+1750	ATT	2011	After	Control	Snapshot	1	1
+1751	ATT	2011	After	Control	Snapshot	2	7
+1752	ATT	2011	After	Control	Snapshot	0	1
+1753	ATT	2011	After	Control	Snapshot	2	7
+1754	ATT	2011	After	Control	Snapshot	0	3
+1755	ATT	2011	After	Control	Snapshot	4	4
+1756	ATT	2011	After	Control	Snapshot	0	1
+1757	ATT	2011	After	Control	Snapshot	0	1
+1758	ATT	2011	After	Control	Snapshot	0	3
+1759	ATT	2011	After	Control	Snapshot	0	3
+1760	ATT	2011	After	Control	Snapshot	2	3
+1761	ATT	2011	After	Control	Snapshot	0	1
+1762	ATT	2011	After	Control	Marked racemes	1	1
+1763	ATT	2011	After	Control	Marked racemes	2	2
+1764	ATT	2011	After	Control	Marked racemes	2	2
+1765	ATT	2011	After	Control	Marked racemes	2	7
+1766	ATT	2011	After	Control	Marked racemes	2	3
+1767	ATT	2011	After	Control	Marked racemes	0	1
+1768	ATT	2011	After	Control	Marked racemes	2	3
+1769	ATT	2011	After	Control	Marked racemes	1	1
+1770	ATT	2011	After	Control	Marked racemes	0	1
+1771	ATT	2011	After	Control	Marked racemes	2	3
+1772	ATT	2011	After	Control	Marked racemes	1	3
+1773	ATT	2011	After	Control	Marked racemes	1	1
+1774	ATT	2011	After	Control	Marked racemes	1	1
+1775	ATT	2011	After	Control	Marked racemes	1	2
+1776	ATT	2011	After	Control	Marked racemes	5	5
+1777	ATT	2011	After	Control	Marked racemes	1	1
+1778	ATT	2011	After	Control	Marked racemes	0	1
+1779	ATT	2011	After	Control	Marked racemes	0	1
+1780	ATT	2011	After	Control	Marked racemes	1	2
+1781	ATT	2011	After	Control	Marked racemes	1	2
+1782	ATT	2011	After	Control	Marked racemes	2	2
+1783	ATT	2011	After	Control	Marked racemes	0	2
+1784	ATT	2011	After	Control	Marked racemes	0	1
+1785	ATT	2011	After	Control	Marked racemes	2	3
+1786	ATT	2011	After	Control	Marked racemes	0	1
+1787	ATT	2011	After	Control	Marked racemes	2	4
+1788	ATT	2011	After	Control	Marked racemes	2	2
+1789	ATT	2011	After	Control	Marked racemes	0	2
+1790	ATT	2011	After	Control	Marked racemes	1	2
+1791	ATT	2011	After	Control	Marked racemes	1	3
+1792	ATT	2011	After	Control	Marked racemes	0	1
+1793	ATT	2011	After	Control	Marked racemes	0	2
+1794	ATT	2011	After	Control	Marked racemes	1	1
+1795	ATT	2011	After	Control	Marked racemes	2	13
+1796	ATT	2011	After	Control	Marked racemes	0	2
+1797	ATT	2011	After	Control	Marked racemes	0	3
+1798	ATT	2011	After	Control	Marked racemes	0	1
+1799	ATT	2011	After	Control	Marked racemes	1	3
+1800	ATT	2011	After	Control	Marked racemes	1	3
+1801	ATT	2011	After	Control	Marked racemes	0	1
+1802	ATT	2011	After	Control	Marked racemes	0	3
+1803	ATT	2011	After	Control	Marked racemes	1	5
+1804	ATT	2011	After	Control	Marked racemes	1	5
+1805	ATT	2011	After	Control	Marked racemes	0	3
+1806	ATT	2011	After	Control	Marked racemes	0	1
+1807	ATT	2011	After	Control	Marked racemes	0	1
+1808	ATT	2011	After	Control	Marked racemes	1	1
+1809	ATT	2011	After	Control	Marked racemes	0	3
+1810	ATT	2011	After	Control	Marked racemes	0	3
+1811	ATT	2011	After	Control	Marked racemes	0	3
+1812	ATT	2011	After	Control	Marked racemes	0	8
+1813	ATT	2011	After	Control	Marked racemes	1	4
+1814	ATT	2011	After	Control	Marked racemes	0	5
+1815	ATT	2011	After	Control	Marked racemes	0	4
+1816	ATT	2011	After	Control	Marked racemes	0	2
+1817	ATT	2011	After	Control	Marked racemes	2	10
+1818	ATT	2011	After	Control	Marked racemes	0	1
+1819	ATT	2011	After	Control	Marked racemes	0	3
+1820	ATT	2011	After	Control	Marked racemes	0	3
+1821	ATT	2011	After	Control	Marked racemes	0	1
+1822	ATT	2011	After	Control	Marked racemes	0	1
+1823	ATT	2011	After	Control	Marked racemes	0	1
+1824	ATT	2011	After	Control	Marked racemes	0	1
+1825	ATT	2011	After	Control	Marked racemes	1	2
+1826	ATT	2011	After	Control	Marked racemes	1	2
+1827	ATT	2011	After	Control	Marked racemes	0	1
+1828	ATT	2011	After	Control	Marked racemes	1	2
+1829	ATT	2011	After	Control	Marked racemes	0	4
+1830	ATT	2011	After	Control	Marked racemes	1	1
+1831	ATT	2011	After	Control	Marked racemes	2	4
+1832	ATT	2011	After	Control	Marked racemes	1	1
+1833	ATT	2011	After	Control	Marked racemes	1	2
+1834	ATT	2011	After	Control	Marked racemes	0	1
+1835	ATT	2011	After	Control	Marked racemes	0	1
+1836	ATT	2011	After	Control	Marked racemes	0	1
+1837	ATT	2011	After	Control	Marked racemes	2	4
+1838	ATT	2011	After	Control	Marked racemes	0	2
+1839	ATT	2011	After	Control	Marked racemes	0	1
+1840	ATT	2011	After	Control	Marked racemes	2	3
+1841	ATT	2011	After	Control	Marked racemes	1	1
+1842	ATT	2011	After	Control	Marked racemes	3	3
+1843	ATT	2011	After	Control	Marked racemes	1	2
+1844	ATT	2011	After	Control	Marked racemes	1	1
+1845	ATT	2011	After	Control	Marked racemes	0	1
+1846	ATT	2011	After	Control	Marked racemes	1	1
+1847	ATT	2011	After	Control	Marked racemes	2	2
+1848	ATT	2011	After	Control	Marked racemes	1	1
+1849	ATT	2011	After	Control	Marked racemes	1	1
+1850	ATT	2011	After	Control	Marked racemes	0	2
+1851	ATT	2011	After	Control	Marked racemes	1	4
+1852	ATT	2011	After	Control	Marked racemes	0	2
+1853	ATT	2011	After	Control	Marked racemes	0	1
+1854	ATT	2011	After	Control	Marked racemes	0	1
+1855	ATT	2011	After	Control	Marked racemes	0	1
+1856	ATT	2011	After	Control	Marked racemes	0	2
+1857	ATT	2011	After	Control	Marked racemes	1	10
+1858	ATT	2011	After	Control	Marked racemes	0	1
+1859	ATT	2011	After	Control	Marked racemes	0	2
+1860	ATT	2011	After	Control	Marked racemes	1	3
+1861	ATT	2011	After	Control	Marked racemes	1	1
+1862	ATT	2011	After	Control	Marked racemes	2	4
+1863	ATT	2011	After	Control	Marked racemes	0	1
+1864	ATT	2011	After	Control	Marked racemes	0	1
+1865	ATT	2011	After	Control	Marked racemes	1	1
+1866	ATT	2011	After	Control	Marked racemes	0	3
+1867	ATT	2011	After	Control	Marked racemes	0	1
+1868	ATT	2011	After	Control	Marked racemes	0	4
+1869	ATT	2011	After	Control	Marked racemes	1	3
+1870	ATT	2011	After	Control	Marked racemes	1	1
+1871	ATT	2011	After	Control	Marked racemes	1	2
+1872	ATT	2011	After	Control	Marked racemes	1	3
+1873	ATT	2011	After	Control	Marked racemes	0	1
+1874	ATT	2013	After	Control	Snapshot	1	5
+1875	ATT	2013	After	Control	Snapshot	12	18
+1876	ATT	2013	After	Control	Snapshot	20	24
+1877	ATT	2013	After	Control	Snapshot	9	10
+1878	ATT	2013	After	Control	Snapshot	0	1
+1879	ATT	2013	After	Control	Snapshot	15	21
+1880	ATT	2013	After	Control	Snapshot	1	3
+1881	ATT	2013	After	Control	Snapshot	10	12
+1882	ATT	2013	After	Control	Snapshot	13	28
+1883	ATT	2013	After	Control	Snapshot	5	8
+1884	ATT	2013	After	Control	Snapshot	10	12
+1885	ATT	2013	After	Control	Snapshot	4	5
+1886	ATT	2013	After	Control	Snapshot	19	23
+1887	ATT	2013	After	Control	Snapshot	5	6
+1888	ATT	2013	After	Control	Snapshot	3	5
+1889	ATT	2013	After	Control	Snapshot	5	6
+1890	ATT	2013	After	Control	Snapshot	7	10
+1891	ATT	2013	After	Control	Snapshot	11	18
+1892	ATT	2013	After	Control	Snapshot	5	7
+1893	ATT	2013	After	Control	Snapshot	2	2
+1894	ATT	2013	After	Control	Snapshot	26	36
+1895	ATT	2013	After	Control	Snapshot	4	5
+1896	ATT	2013	After	Control	Snapshot	10	15
+1897	ATT	2013	After	Control	Snapshot	16	21
+1898	ATT	2013	After	Control	Snapshot	3	9
+1899	ATT	2013	After	Control	Snapshot	15	25
+1900	ATT	2013	After	Control	Snapshot	11	20
+1901	ATT	2013	After	Control	Snapshot	10	16
+1902	ATT	2013	After	Control	Snapshot	15	17
+1903	ATT	2013	After	Control	Snapshot	29	36
+1904	ATT	2013	After	Control	Snapshot	11	12
+1905	ATT	2013	After	Control	Snapshot	6	6
+1906	ATT	2013	After	Control	Snapshot	1	2
+1907	ATT	2013	After	Control	Snapshot	9	16
+1908	ATT	2013	After	Control	Snapshot	4	7
+1909	ATT	2013	After	Control	Snapshot	4	5
+1910	ATT	2013	After	Control	Snapshot	10	11
+1911	ATT	2013	After	Control	Snapshot	1	1
+1912	ATT	2013	After	Control	Snapshot	7	8
+1913	ATT	2013	After	Control	Snapshot	9	17
+1914	ATT	2013	After	Control	Snapshot	17	26
+1915	ATT	2013	After	Control	Snapshot	16	18
+1916	ATT	2013	After	Control	Snapshot	2	3
+1917	ATT	2013	After	Control	Snapshot	1	1
+1918	ATT	2013	After	Control	Snapshot	2	2
+1919	ATT	2013	After	Control	Snapshot	5	6
+1920	ATT	2013	After	Control	Snapshot	0	1
+1921	ATT	2013	After	Control	Snapshot	1	1
+1922	ATT	2013	After	Control	Snapshot	2	4
+1923	ATT	2013	After	Control	Snapshot	1	12
+1924	ATT	2013	After	Control	Snapshot	1	1
+1925	ATT	2013	After	Control	Snapshot	1	2
+1926	ATT	2013	After	Control	Snapshot	2	6
+1927	ATT	2013	After	Control	Snapshot	3	8
+1928	ATT	2013	After	Control	Snapshot	8	12
+1929	ATT	2013	After	Control	Snapshot	5	11
+1930	ATT	2013	After	Control	Snapshot	5	11
+1931	ATT	2013	After	Control	Snapshot	3	6
+1932	ATT	2013	After	Control	Snapshot	4	9
+1933	ATT	2013	After	Control	Snapshot	4	8
+1934	ATT	2013	After	Control	Snapshot	1	2
+1935	ATT	2013	After	Control	Snapshot	2	4
+1936	ATT	2013	After	Control	Snapshot	0	8
+1937	ATT	2013	After	Control	Snapshot	10	19
+1938	ATT	2013	After	Control	Snapshot	1	3
+1939	ATT	2013	After	Control	Snapshot	0	1
+1940	ATT	2013	After	Control	Snapshot	7	9
+1941	ATT	2013	After	Control	Snapshot	4	6
+1942	ATT	2013	After	Control	Snapshot	3	6
+1943	ATT	2013	After	Control	Snapshot	4	4
+1944	ATT	2013	After	Control	Snapshot	3	6
+1945	ATT	2013	After	Control	Snapshot	3	4
+1946	ATT	2013	After	Control	Snapshot	1	2
+1947	ATT	2013	After	Control	Snapshot	5	8
+1948	ATT	2013	After	Control	Snapshot	2	3
+1949	ATT	2013	After	Control	Snapshot	6	9
+1950	ATT	2013	After	Control	Snapshot	14	15
+1951	ATT	2013	After	Control	Snapshot	1	1
+1952	ATT	2013	After	Control	Snapshot	2	2
+1953	ATT	2013	After	Control	Snapshot	6	14
+1954	ATT	2013	After	Control	Snapshot	3	8
+1955	ATT	2013	After	Control	Snapshot	3	7
+1956	ATT	2013	After	Control	Snapshot	8	8
+1957	ATT	2013	After	Control	Snapshot	6	6
+1958	ATT	2013	After	Control	Snapshot	14	17
+1959	ATT	2013	After	Control	Snapshot	2	2
+1960	ATT	2013	After	Control	Snapshot	14	17
+1961	ATT	2013	After	Control	Snapshot	1	4
+1962	ATT	2013	After	Control	Snapshot	4	6
+1963	ATT	2013	After	Control	Snapshot	4	5
+1964	ATT	2013	After	Control	Snapshot	2	2
+1965	ATT	2013	After	Control	Snapshot	6	8
+1966	ATT	2013	After	Control	Snapshot	7	8
+1967	ATT	2013	After	Control	Snapshot	12	15
+1968	ATT	2013	After	Control	Snapshot	4	5
+1969	ATT	2013	After	Control	Snapshot	5	6
+1970	ATT	2013	After	Control	Snapshot	10	11
+1971	ATT	2013	After	Control	Snapshot	5	13
+1972	ATT	2013	After	Control	Snapshot	2	2
+1973	ATT	2013	After	Control	Snapshot	9	14
+1974	ATT	2013	After	Control	Snapshot	4	4
+1975	ATT	2013	After	Control	Snapshot	2	5
+1976	ATT	2013	After	Control	Snapshot	6	8
+1977	ATT	2013	After	Control	Snapshot	7	7
+1978	ATT	2013	After	Control	Snapshot	6	10
+1979	ATT	2013	After	Control	Snapshot	7	10
+1980	ATT	2013	After	Control	Snapshot	4	6
+1981	ATT	2013	After	Control	Snapshot	2	3
+1982	ATT	2013	After	Control	Snapshot	18	20
+1983	ATT	2013	After	Control	Snapshot	5	5
+1984	ATT	2013	After	Control	Snapshot	3	6
+1985	ATT	2013	After	Control	Snapshot	1	5
+1986	ATT	2013	After	Control	Snapshot	6	7
+1987	ATT	2013	After	Control	Snapshot	9	19
+1988	ATT	2013	After	Control	Snapshot	14	15
+1989	ATT	2013	After	Control	Snapshot	9	10
+1990	ATT	2013	After	Control	Snapshot	4	7
+1991	ATT	2013	After	Control	Snapshot	4	4
+1992	ATT	2013	After	Control	Snapshot	9	16
+1993	ATT	2013	After	Control	Snapshot	3	5
+1994	ATT	2013	After	Control	Snapshot	3	3
+1995	ATT	2013	After	Control	Snapshot	0	4
+1996	ATT	2013	After	Control	Snapshot	18	18
+1997	ATT	2013	After	Control	Snapshot	12	12
+1998	ATT	2013	After	Control	Snapshot	2	5
+1999	ATT	2013	After	Control	Snapshot	2	5
+2000	ATT	2013	After	Control	Snapshot	19	24
+2001	ATT	2013	After	Control	Snapshot	10	12
+2002	ATT	2013	After	Control	Snapshot	5	7
+2003	ATT	2013	After	Control	Snapshot	5	9
+2004	ATT	2013	After	Control	Snapshot	4	5
+2005	ATT	2013	After	Control	Snapshot	2	3
+2006	ATT	2013	After	Control	Snapshot	4	8
+2007	ATT	2013	After	Control	Snapshot	1	4
+2008	ATT	2013	After	Control	Snapshot	16	20
+2009	ATT	2013	After	Control	Snapshot	3	3
+2010	ATT	2013	After	Control	Snapshot	5	5
+2011	ATT	2013	After	Control	Snapshot	3	3
+2012	ATT	2013	After	Control	Snapshot	2	4
+2013	ATT	2013	After	Control	Snapshot	3	3
+2014	ATT	2013	After	Control	Snapshot	3	3
+2015	ATT	2013	After	Control	Snapshot	6	9
+2016	ATT	2013	After	Control	Snapshot	0	6
+2017	ATT	2013	After	Control	Snapshot	2	4
+2018	ATT	2013	After	Control	Snapshot	4	5
+2019	ATT	2013	After	Control	Snapshot	10	14
+2020	ATT	2013	After	Control	Snapshot	12	15
+2021	ATT	2013	After	Control	Snapshot	3	3
+2022	ATT	2013	After	Control	Snapshot	13	17
+2023	ATT	2013	After	Control	Snapshot	1	4
+2024	ATT	2013	After	Control	Snapshot	5	12
+2025	ATT	2013	After	Control	Snapshot	2	4
+2026	ATT	2013	After	Control	Snapshot	7	7
+2027	ATT	2013	After	Control	Snapshot	1	3
+2028	ATT	2013	After	Control	Snapshot	7	10
+2029	ATT	2013	After	Control	Snapshot	5	6
+2030	ATT	2013	After	Control	Snapshot	5	5
+2031	ATT	2013	After	Control	Snapshot	5	5
+2032	ATT	2013	After	Control	Snapshot	6	9
+2033	ATT	2013	After	Control	Snapshot	1	2
+2034	ATT	2013	After	Control	Snapshot	7	9
+2035	ATT	2013	After	Control	Snapshot	0	1
+2036	ATT	2013	After	Control	Snapshot	2	2
+2037	ATT	2013	After	Control	Snapshot	5	7
+2038	ATT	2013	After	Control	Snapshot	1	5
+2039	ATT	2013	After	Control	Snapshot	7	9
+2040	ATT	2013	After	Control	Snapshot	16	18
+2041	ATT	2013	After	Control	Snapshot	11	15
+2042	ATT	2013	After	Control	Snapshot	18	22
+2043	ATT	2013	After	Control	Snapshot	9	11
+2044	ATT	2013	After	Control	Snapshot	3	3
+2045	ATT	2013	After	Control	Snapshot	4	4
+2046	ATT	2013	After	Control	Snapshot	2	2
+2047	ATT	2013	After	Control	Snapshot	14	22
+2048	ATT	2013	After	Control	Snapshot	0	2
+2049	ATT	2013	After	Control	Snapshot	3	4
+2050	ATT	2013	After	Control	Snapshot	2	2
+2051	ATT	2013	After	Control	Snapshot	3	8
+2052	ATT	2013	After	Control	Snapshot	1	4
+2053	ATT	2013	After	Control	Snapshot	1	2
+2054	ATT	2013	After	Control	Snapshot	0	2
+2055	ATT	2013	After	Control	Snapshot	3	6
+2056	ATT	2013	After	Control	Snapshot	1	1
+2057	ATT	2013	After	Control	Snapshot	0	4
+2058	ATT	2013	After	Control	Snapshot	3	10
+2059	ATT	2013	After	Control	Snapshot	2	2
+2060	ATT	2013	After	Control	Snapshot	1	9
+2061	ATT	2013	After	Control	Snapshot	0	1
+2062	ATT	2013	After	Control	Snapshot	0	5
+2063	ATT	2013	After	Control	Snapshot	5	6
+2064	ATT	2013	After	Control	Snapshot	1	2
+2065	ATT	2013	After	Control	Snapshot	2	3
+2066	ATT	2013	After	Control	Snapshot	1	1
+2067	ATT	2013	After	Control	Snapshot	1	1
+2068	ATT	2013	After	Control	Snapshot	3	4
+2069	ATT	2013	After	Control	Snapshot	0	1
+2070	ATT	2013	After	Control	Snapshot	4	11
+2071	ATT	2013	After	Control	Snapshot	4	7
+2072	ATT	2013	After	Control	Snapshot	1	3
+2073	ATT	2013	After	Control	Snapshot	0	1
+2074	ATT	2013	After	Control	Snapshot	8	15
+2075	ATT	2013	After	Control	Snapshot	1	1
+2076	ATT	2013	After	Control	Snapshot	0	1
+2077	ATT	2013	After	Control	Snapshot	1	3
+2078	ATT	2013	After	Control	Snapshot	0	5
+2079	ATT	2013	After	Control	Snapshot	4	7
+2080	ATT	2013	After	Control	Snapshot	2	2
+2081	ATT	2013	After	Control	Snapshot	0	1
+2082	ATT	2013	After	Control	Snapshot	7	10
+2083	ATT	2013	After	Control	Snapshot	8	12
+2084	ATT	2013	After	Control	Snapshot	0	3
+2085	ATT	2013	After	Control	Snapshot	5	5
+2086	ATT	2013	After	Control	Snapshot	1	3
+2087	ATT	2013	After	Control	Snapshot	2	2
+2088	ATT	2013	After	Control	Snapshot	1	1
+2089	ATT	2013	After	Control	Snapshot	1	1
+2090	ATT	2013	After	Control	Snapshot	0	1
+2091	ATT	2013	After	Control	Snapshot	1	1
+2092	ATT	2013	After	Control	Snapshot	5	9
+2093	ATT	2013	After	Control	Snapshot	5	6
+2094	ATT	2013	After	Control	Snapshot	4	4
+2095	ATT	2013	After	Control	Snapshot	7	7
+2096	ATT	2013	After	Control	Snapshot	5	7
+2097	ATT	2013	After	Control	Snapshot	1	1
+2098	ATT	2013	After	Control	Snapshot	5	5
+2099	ATT	2013	After	Control	Snapshot	1	1
+2100	ATT	2013	After	Control	Snapshot	2	5
+2101	ATT	2013	After	Control	Snapshot	11	17
+2102	ATT	2013	After	Control	Snapshot	1	3
+2103	ATT	2013	After	Control	Snapshot	3	5
+2104	ATT	2013	After	Control	Snapshot	4	6
+2105	ATT	2013	After	Control	Snapshot	1	2
+2106	ATT	2013	After	Control	Snapshot	5	6
+2107	ATT	2013	After	Control	Snapshot	4	5
+2108	ATT	2013	After	Control	Snapshot	0	1
+2109	ATT	2013	After	Control	Snapshot	7	7
+2110	ATT	2013	After	Control	Snapshot	3	8
+2111	ATT	2013	After	Control	Snapshot	2	5
+2112	ATT	2013	After	Control	Snapshot	0	2
+2113	ATT	2013	After	Control	Snapshot	4	8
+2114	ATT	2013	After	Control	Snapshot	2	3
+2115	ATT	2013	After	Control	Snapshot	0	1
+2116	ATT	2013	After	Control	Snapshot	4	5
+2117	ATT	2013	After	Control	Snapshot	1	1
+2118	ATT	2013	After	Control	Snapshot	6	8
+2119	ATT	2013	After	Control	Snapshot	1	1
+2120	ATT	2013	After	Control	Snapshot	3	3
+2121	ATT	2013	After	Control	Snapshot	1	2
+2122	ATT	2013	After	Control	Snapshot	2	2
+2123	ATT	2013	After	Control	Snapshot	0	1
+2124	ATT	2013	After	Control	Snapshot	7	10
+2125	ATT	2013	After	Control	Snapshot	8	9
+2126	ATT	2013	After	Control	Snapshot	2	3
+2127	ATT	2013	After	Control	Snapshot	1	2
+2128	ATT	2013	After	Control	Snapshot	0	1
+2129	ATT	2013	After	Control	Snapshot	1	2
+2130	ATT	2013	After	Control	Snapshot	0	1
+2131	ATT	2013	After	Control	Snapshot	5	5
+2132	ATT	2013	After	Control	Snapshot	2	3
+2133	ATT	2013	After	Control	Snapshot	1	2
+2134	ATT	2013	After	Control	Snapshot	0	3
+2135	ATT	2013	After	Control	Snapshot	1	1
+2136	ATT	2013	After	Control	Snapshot	0	1
+2137	ATT	2013	After	Control	Snapshot	0	1
+2138	ATT	2013	After	Control	Snapshot	1	2
+2139	ATT	2013	After	Control	Snapshot	2	2
+2140	ATT	2013	After	Control	Snapshot	1	2
+2141	ATT	2013	After	Control	Snapshot	1	1
+2142	ATT	2013	After	Control	Snapshot	1	3
+2143	ATT	2013	After	Control	Snapshot	1	4
+2144	ATT	2013	After	Control	Snapshot	7	9
+2145	ATT	2013	After	Control	Snapshot	3	4
+2146	ATT	2013	After	Control	Snapshot	1	4
+2147	ATT	2013	After	Control	Snapshot	5	7
+2148	ATT	2013	After	Control	Snapshot	1	2
+2149	ATT	2013	After	Control	Snapshot	0	1
+2150	ATT	2013	After	Control	Snapshot	0	1
+2151	ATT	2013	After	Control	Snapshot	1	2
+2152	ATT	2013	After	Control	Snapshot	0	1
+2153	ATT	2013	After	Control	Snapshot	1	1
+2154	ATT	2013	After	Control	Snapshot	0	1
+2155	ATT	2013	After	Control	Snapshot	0	1
+2156	ATT	2013	After	Control	Snapshot	0	2
+2157	ATT	2013	After	Control	Snapshot	0	1
+2158	ATT	2013	After	Control	Snapshot	1	3
+2159	ATT	2013	After	Control	Snapshot	1	2
+2160	ATT	2013	After	Control	Snapshot	1	1
+2161	ATT	2013	After	Control	Snapshot	0	1
+2162	ATT	2013	After	Control	Snapshot	1	1
+2163	ATT	2013	After	Control	Snapshot	1	2
+2164	ATT	2013	After	Control	Snapshot	0	1
+2165	ATT	2013	After	Control	Snapshot	0	2
+2166	ATT	2013	After	Control	Snapshot	0	1
+2167	ATT	2013	After	Control	Snapshot	0	1
+2168	ATT	2013	After	Control	Snapshot	3	3
+2169	ATT	2013	After	Control	Snapshot	0	1
+2170	ATT	2013	After	Control	Snapshot	1	1
+2171	ATT	2013	After	Control	Snapshot	1	2
+2172	ATT	2013	After	Control	Snapshot	0	1
+2173	ATT	2013	After	Control	Snapshot	1	3
+2174	ATT	2013	After	Control	Snapshot	2	2
+2175	ATT	2013	After	Control	Snapshot	3	11
+2176	ATT	2013	After	Control	Snapshot	6	6
+2177	ATT	2013	After	Control	Snapshot	0	8
+2178	ATT	2013	After	Control	Snapshot	2	14
+2179	ATT	2013	After	Control	Snapshot	1	14
+2180	ATT	2013	After	Control	Snapshot	5	10
+2181	ATT	2013	After	Control	Snapshot	0	2
+2182	ATT	2013	After	Control	Snapshot	0	1
+2183	ATT	2013	After	Control	Snapshot	1	2
+2184	ATT	2013	After	Control	Snapshot	3	4
+2185	ATT	2013	After	Control	Snapshot	2	3
+2186	ATT	2013	After	Control	Snapshot	2	2
+2187	ATT	2013	After	Control	Snapshot	1	2
+2188	ATT	2013	After	Control	Snapshot	0	1
+2189	ATT	2013	After	Control	Snapshot	1	3
+2190	ATT	2013	After	Control	Snapshot	3	3
+2191	ATT	2013	After	Control	Snapshot	1	2
+2192	ATT	2013	After	Control	Snapshot	2	2
+2193	ATT	2013	After	Control	Snapshot	1	1
+2194	ATT	2013	After	Control	Snapshot	1	4
+2195	ATT	2013	After	Control	Snapshot	1	3
+2196	ATT	2013	After	Control	Snapshot	2	2
+2197	ATT	2013	After	Control	Snapshot	1	6
+2198	ATT	2013	After	Control	Snapshot	1	3
+2199	ATT	2013	After	Control	Snapshot	1	3
+2200	ATT	2013	After	Control	Snapshot	1	5
+2201	ATT	2013	After	Control	Snapshot	0	1
+2202	ATT	2013	After	Control	Snapshot	1	1
+2203	ATT	2013	After	Control	Snapshot	0	1
+2204	ATT	2013	After	Control	Snapshot	1	1
+2205	ATT	2013	After	Control	Snapshot	0	1
+2206	ATT	2013	After	Control	Snapshot	0	1
+2207	ATT	2013	After	Control	Snapshot	1	2
+2208	ATT	2013	After	Control	Snapshot	0	1
+2209	ATT	2013	After	Control	Snapshot	1	1
+2210	ATT	2013	After	Control	Snapshot	1	1
+2211	ATT	2013	After	Control	Snapshot	2	4
+2212	ATT	2013	After	Control	Snapshot	0	1
+2213	ATT	2013	After	Control	Snapshot	0	1
+2214	ATT	2013	After	Control	Snapshot	1	4
+2215	ATT	2013	After	Control	Snapshot	0	1
+2216	ATT	2013	After	Control	Snapshot	0	2
+2217	ATT	2013	After	Control	Snapshot	0	1
+2218	ATT	2013	After	Control	Snapshot	0	1
+2219	ATT	2013	After	Control	Snapshot	2	2
+2220	ATT	2013	After	Control	Snapshot	1	3
+2221	ATT	2013	After	Control	Snapshot	6	7
+2222	ATT	2013	After	Control	Snapshot	3	5
+2223	ATT	2013	After	Control	Snapshot	0	2
+2224	ATT	2013	After	Control	Snapshot	0	2
+2225	ATT	2013	After	Control	Snapshot	1	1
+2226	ATT	2013	After	Control	Snapshot	1	1
+2227	ATT	2013	After	Control	Snapshot	0	1
+2228	ATT	2013	After	Control	Snapshot	1	3
+2229	ATT	2013	After	Control	Snapshot	0	1
+2230	ATT	2013	After	Control	Snapshot	0	1
+2231	ATT	2013	After	Control	Snapshot	1	3
+2232	ATT	2013	After	Control	Snapshot	0	2
+2233	ATT	2013	After	Control	Snapshot	0	1
+2234	ATT	2013	After	Control	Snapshot	4	4
+2235	ATT	2013	After	Control	Snapshot	12	20
+2236	ATT	2013	After	Control	Snapshot	1	10
+2237	ATT	2013	After	Control	Snapshot	1	2
+2238	ATT	2013	After	Control	Snapshot	0	1
+2239	ATT	2013	After	Control	Snapshot	1	4
+2240	ATT	2013	After	Control	Snapshot	0	5
+2241	ATT	2014	After	Control	Snapshot	8	11
+2242	ATT	2014	After	Control	Snapshot	11	12
+2243	ATT	2014	After	Control	Snapshot	12	15
+2244	ATT	2014	After	Control	Snapshot	4	4
+2245	ATT	2014	After	Control	Snapshot	5	7
+2246	ATT	2014	After	Control	Snapshot	3	4
+2247	ATT	2014	After	Control	Snapshot	13	19
+2248	ATT	2014	After	Control	Snapshot	4	6
+2249	ATT	2014	After	Control	Snapshot	10	10
+2250	ATT	2014	After	Control	Snapshot	9	10
+2251	ATT	2014	After	Control	Snapshot	13	16
+2252	ATT	2014	After	Control	Snapshot	8	12
+2253	ATT	2014	After	Control	Snapshot	0	1
+2254	ATT	2014	After	Control	Snapshot	4	6
+2255	ATT	2014	After	Control	Snapshot	5	7
+2256	ATT	2014	After	Control	Snapshot	9	10
+2257	ATT	2014	After	Control	Snapshot	0	1
+2258	ATT	2014	After	Control	Snapshot	2	4
+2259	ATT	2014	After	Control	Snapshot	3	3
+2260	ATT	2014	After	Control	Snapshot	4	5
+2261	ATT	2014	After	Control	Snapshot	2	2
+2262	ATT	2014	After	Control	Snapshot	1	1
+2263	ATT	2014	After	Control	Snapshot	3	6
+2264	ATT	2014	After	Control	Snapshot	3	5
+2265	ATT	2014	After	Control	Snapshot	11	12
+2266	ATT	2014	After	Control	Snapshot	4	4
+2267	ATT	2014	After	Control	Snapshot	12	15
+2268	ATT	2014	After	Control	Snapshot	6	6
+2269	ATT	2014	After	Control	Snapshot	6	10
+2270	ATT	2014	After	Control	Snapshot	5	5
+2271	ATT	2014	After	Control	Snapshot	5	6
+2272	ATT	2014	After	Control	Snapshot	17	22
+2273	ATT	2014	After	Control	Snapshot	3	6
+2274	ATT	2014	After	Control	Snapshot	7	7
+2275	ATT	2014	After	Control	Snapshot	3	3
+2276	ATT	2014	After	Control	Snapshot	11	12
+2277	ATT	2014	After	Control	Snapshot	9	12
+2278	ATT	2014	After	Control	Snapshot	6	8
+2279	ATT	2014	After	Control	Snapshot	5	10
+2280	ATT	2014	After	Control	Snapshot	13	16
+2281	ATT	2014	After	Control	Snapshot	9	12
+2282	ATT	2014	After	Control	Snapshot	16	18
+2283	ATT	2014	After	Control	Snapshot	6	8
+2284	ATT	2014	After	Control	Snapshot	3	3
+2285	ATT	2014	After	Control	Snapshot	5	6
+2286	ATT	2014	After	Control	Snapshot	4	5
+2287	ATT	2014	After	Control	Snapshot	2	2
+2288	ATT	2014	After	Control	Snapshot	11	12
+2289	ATT	2014	After	Control	Snapshot	3	3
+2290	ATT	2014	After	Control	Snapshot	16	20
+2291	ATT	2014	After	Control	Snapshot	4	4
+2292	ATT	2014	After	Control	Snapshot	4	4
+2293	ATT	2014	After	Control	Snapshot	5	5
+2294	ATT	2014	After	Control	Snapshot	8	9
+2295	ATT	2014	After	Control	Snapshot	19	24
+2296	ATT	2014	After	Control	Snapshot	8	9
+2297	ATT	2014	After	Control	Snapshot	7	9
+2298	ATT	2014	After	Control	Snapshot	1	1
+2299	ATT	2014	After	Control	Snapshot	5	7
+2300	ATT	2014	After	Control	Snapshot	2	2
+2301	ATT	2014	After	Control	Snapshot	3	3
+2302	ATT	2014	After	Control	Snapshot	9	9
+2303	ATT	2014	After	Control	Snapshot	0	2
+2304	ATT	2014	After	Control	Snapshot	1	1
+2305	ATT	2014	After	Control	Snapshot	0	5
+2306	ATT	2014	After	Control	Snapshot	5	11
+2307	ATT	2014	After	Control	Snapshot	4	4
+2308	ATT	2014	After	Control	Snapshot	7	9
+2309	ATT	2014	After	Control	Snapshot	6	9
+2310	ATT	2014	After	Control	Snapshot	5	7
+2311	ATT	2014	After	Control	Snapshot	9	9
+2312	ATT	2014	After	Control	Snapshot	1	1
+2313	ATT	2014	After	Control	Snapshot	3	5
+2314	ATT	2014	After	Control	Snapshot	4	4
+2315	ATT	2014	After	Control	Snapshot	2	2
+2316	ATT	2014	After	Control	Snapshot	5	8
+2317	ATT	2014	After	Control	Snapshot	9	14
+2318	ATT	2014	After	Control	Snapshot	4	6
+2319	ATT	2014	After	Control	Snapshot	6	6
+2320	ATT	2014	After	Control	Snapshot	2	2
+2321	ATT	2014	After	Control	Snapshot	8	9
+2322	ATT	2014	After	Control	Snapshot	1	1
+2323	ATT	2014	After	Control	Snapshot	3	3
+2324	ATT	2014	After	Control	Snapshot	9	11
+2325	ATT	2014	After	Control	Snapshot	3	4
+2326	ATT	2014	After	Control	Snapshot	4	5
+2327	ATT	2014	After	Control	Snapshot	7	9
+2328	ATT	2014	After	Control	Snapshot	6	17
+2329	ATT	2014	After	Control	Snapshot	8	8
+2330	ATT	2014	After	Control	Snapshot	6	6
+2331	ATT	2014	After	Control	Snapshot	2	2
+2332	ATT	2014	After	Control	Snapshot	3	3
+2333	ATT	2014	After	Control	Snapshot	1	1
+2334	ATT	2014	After	Control	Snapshot	5	8
+2335	ATT	2014	After	Control	Snapshot	1	2
+2336	ATT	2014	After	Control	Snapshot	2	2
+2337	ATT	2014	After	Control	Snapshot	1	1
+2338	ATT	2014	After	Control	Snapshot	3	3
+2339	ATT	2014	After	Control	Snapshot	1	1
+2340	ATT	2014	After	Control	Snapshot	1	1
+2341	ATT	2014	After	Control	Snapshot	4	5
+2342	ATT	2014	After	Control	Snapshot	2	5
+2343	ATT	2014	After	Control	Snapshot	2	4
+2344	ATT	2014	After	Control	Snapshot	1	3
+2345	ATT	2014	After	Control	Snapshot	1	2
+2346	ATT	2014	After	Control	Snapshot	3	3
+2347	ATT	2014	After	Control	Snapshot	4	4
+2348	ATT	2014	After	Control	Snapshot	8	9
+2349	ATT	2014	After	Control	Snapshot	3	5
+2350	ATT	2014	After	Control	Snapshot	3	3
+2351	ATT	2014	After	Control	Snapshot	0	1
+2352	ATT	2014	After	Control	Snapshot	2	2
+2353	ATT	2014	After	Control	Snapshot	4	4
+2354	ATT	2014	After	Control	Snapshot	1	2
+2355	ATT	2014	After	Control	Snapshot	0	1
+2356	ATT	2014	After	Control	Snapshot	1	1
+2357	ATT	2014	After	Control	Snapshot	1	1
+2358	ATT	2014	After	Control	Snapshot	3	7
+2359	ATT	2014	After	Control	Snapshot	1	4
+2360	ATT	2014	After	Control	Snapshot	2	3
+2361	ATT	2014	After	Control	Snapshot	1	1
+2362	ATT	2014	After	Control	Snapshot	0	1
+2363	ATT	2014	After	Control	Snapshot	1	3
+2364	ATT	2014	After	Control	Snapshot	2	3
+2365	ATT	2014	After	Control	Snapshot	1	1
+2366	ATT	2014	After	Control	Snapshot	1	1
+2367	ATT	2014	After	Control	Snapshot	2	5
+2368	ATT	2014	After	Control	Snapshot	1	1
+2369	ATT	2014	After	Control	Snapshot	8	13
+2370	ATT	2014	After	Control	Snapshot	7	8
+2371	ATT	2014	After	Control	Snapshot	0	1
+2372	ATT	2014	After	Control	Snapshot	0	3
+2373	ATT	2014	After	Control	Snapshot	0	2
+2374	ATT	2014	After	Control	Snapshot	0	1
+2375	ATT	2014	After	Control	Snapshot	3	7
+2376	ATT	2014	After	Control	Snapshot	0	1
+2377	ATT	2014	After	Control	Snapshot	0	1
+2378	ATT	2014	After	Control	Snapshot	1	1
+2379	ATT	2014	After	Control	Snapshot	8	8
+2380	ATT	2014	After	Control	Snapshot	1	2
+2381	ATT	2014	After	Control	Snapshot	1	1
+2382	ATT	2014	After	Control	Snapshot	0	1
+2383	ATT	2014	After	Control	Snapshot	2	3
+2384	ATT	2014	After	Control	Snapshot	2	2
+2385	ATT	2014	After	Control	Snapshot	3	3
+2386	ATT	2014	After	Control	Snapshot	1	1
+2387	ATT	2014	After	Control	Snapshot	2	4
+2388	ATT	2014	After	Control	Snapshot	0	1
+2389	ATT	2014	After	Control	Snapshot	3	4
+2390	ATT	2014	After	Control	Snapshot	2	3
+2391	ATT	2014	After	Control	Snapshot	2	2
+2392	ATT	2014	After	Control	Snapshot	1	1
+2393	ATT	2014	After	Control	Snapshot	3	3
+2394	ATT	2014	After	Control	Snapshot	0	1
+2395	ATT	2014	After	Control	Snapshot	0	1
+2396	ATT	2014	After	Control	Snapshot	0	1
+2397	ATT	2014	After	Control	Snapshot	2	2
+2398	ATT	2014	After	Control	Snapshot	0	2
+2399	ATT	2014	After	Control	Snapshot	5	7
+2400	ATT	2014	After	Control	Snapshot	0	1
+2401	ATT	2014	After	Control	Snapshot	2	3
+2402	ATT	2014	After	Control	Snapshot	0	1
+2403	ATT	2014	After	Control	Snapshot	2	3
+2404	ATT	2014	After	Control	Snapshot	1	2
+2405	ATT	2014	After	Control	Snapshot	1	1
+2406	ATT	2014	After	Control	Snapshot	5	7
+2407	ATT	2014	After	Control	Snapshot	1	1
+2408	ATT	2014	After	Control	Snapshot	2	2
+2409	ATT	2014	After	Control	Snapshot	5	9
+2410	ATT	2014	After	Control	Snapshot	3	5
+2411	ATT	2014	After	Control	Snapshot	1	1
+2412	ATT	2014	After	Control	Snapshot	1	5
+2413	ATT	2014	After	Control	Snapshot	1	1
+2414	ATT	2014	After	Control	Snapshot	2	6
+2415	ATT	2014	After	Control	Snapshot	5	6
+2416	ATT	2014	After	Control	Snapshot	2	5
+2417	ATT	2014	After	Control	Snapshot	1	2
+2418	ATT	2014	After	Control	Snapshot	1	1
+2419	ATT	2014	After	Control	Snapshot	3	3
+2420	ATT	2014	After	Control	Snapshot	1	2
+2421	ATT	2014	After	Control	Snapshot	1	1
+2422	ATT	2014	After	Control	Snapshot	4	9
+2423	ATT	2014	After	Control	Snapshot	7	7
+2424	ATT	2014	After	Control	Snapshot	0	1
+2425	ATT	2014	After	Control	Snapshot	0	1
+2426	ATT	2014	After	Control	Snapshot	2	13
+2427	ATT	2014	After	Control	Snapshot	1	1
+2428	ATT	2015	After	Control	Snapshot	1	11
+2429	ATT	2015	After	Control	Snapshot	0	3
+2430	ATT	2015	After	Control	Snapshot	1	3
+2431	ATT	2015	After	Control	Snapshot	0	1
+2432	ATT	2015	After	Control	Snapshot	0	1
+2433	ATT	2015	After	Control	Snapshot	0	2
+2434	ATT	2015	After	Control	Snapshot	0	1
+2435	ATT	2015	After	Control	Snapshot	0	4
+2436	ATT	2015	After	Control	Snapshot	0	4
+2437	ATT	2015	After	Control	Snapshot	0	10
+2438	ATT	2015	After	Control	Snapshot	0	1
+2439	ATT	2015	After	Control	Snapshot	0	1
+2440	ATT	2015	After	Control	Snapshot	0	2
+2441	ATT	2015	After	Control	Snapshot	0	3
+2442	ATT	2015	After	Control	Snapshot	0	3
+2443	ATT	2015	After	Control	Snapshot	0	2
+2444	ATT	2015	After	Control	Snapshot	2	2
+2445	ATT	2015	After	Control	Snapshot	0	1
+2446	ATT	2015	After	Control	Snapshot	0	2
+2447	ATT	2015	After	Control	Snapshot	0	2
+2448	ATT	2015	After	Control	Snapshot	0	1
+2449	ATT	2015	After	Control	Snapshot	0	1
+2450	ATT	2015	After	Control	Snapshot	0	1
+2451	ATT	2015	After	Control	Snapshot	0	1
+2452	ATT	2015	After	Control	Snapshot	0	1
+2453	ATT	2015	After	Control	Snapshot	1	3
+2454	ATT	2015	After	Control	Snapshot	0	4
+2455	ATT	2015	After	Control	Snapshot	0	2
+2456	ATT	2015	After	Control	Snapshot	0	4
+2457	ATT	2015	After	Control	Snapshot	0	2
+2458	ATT	2015	After	Control	Snapshot	0	1
+2459	ATT	2015	After	Control	Snapshot	0	1
+2460	ATT	2015	After	Control	Snapshot	0	4
+2461	ATT	2015	After	Control	Snapshot	0	2
+2462	ATT	2015	After	Control	Snapshot	0	1
+2463	ATT	2015	After	Control	Snapshot	0	4
+2464	ATT	2015	After	Control	Snapshot	0	7
+2465	ATT	2015	After	Control	Snapshot	2	9
+2466	ATT	2015	After	Control	Snapshot	1	2
+2467	ATT	2015	After	Control	Snapshot	4	5
+2468	ATT	2015	After	Control	Snapshot	1	1
+2469	ATT	2015	After	Control	Snapshot	0	4
+2470	ATT	2015	After	Control	Snapshot	0	3
+2471	ATT	2015	After	Control	Snapshot	0	1
+2472	ATT	2015	After	Control	Snapshot	0	1
+2473	ATT	2015	After	Control	Snapshot	0	1
+2474	ATT	2016	After	Control	Snapshot	0	3
+2475	ATT	2016	After	Control	Snapshot	0	3
+2476	ATT	2016	After	Control	Snapshot	3	10
+2477	ATT	2016	After	Control	Snapshot	1	12
+2478	ATT	2016	After	Control	Snapshot	0	17
+2479	ATT	2016	After	Control	Snapshot	0	9
+2480	ATT	2016	After	Control	Snapshot	0	4
+2481	ATT	2016	After	Control	Snapshot	3	5
+2482	ATT	2016	After	Control	Snapshot	0	5
+2483	ATT	2016	After	Control	Snapshot	4	6
+2484	ATT	2016	After	Control	Snapshot	0	3
+2485	ATT	2016	After	Control	Snapshot	0	2
+2486	ATT	2016	After	Control	Snapshot	4	11
+2487	ATT	2016	After	Control	Snapshot	2	4
+2488	ATT	2016	After	Control	Snapshot	0	2
+2489	ATT	2016	After	Control	Snapshot	1	2
+2490	ATT	2016	After	Control	Snapshot	1	11
+2491	ATT	2016	After	Control	Snapshot	0	4
+2492	ATT	2016	After	Control	Snapshot	1	13
+2493	ATT	2016	After	Control	Snapshot	1	3
+2494	ATT	2016	After	Control	Snapshot	0	4
+2495	ATT	2016	After	Control	Snapshot	1	1
+2496	ATT	2016	After	Control	Snapshot	0	6
+2497	ATT	2016	After	Control	Snapshot	4	10
+2498	ATT	2016	After	Control	Snapshot	0	3
+2499	ATT	2016	After	Control	Snapshot	0	1
+2500	ATT	2016	After	Control	Snapshot	0	1
+2501	ATT	2016	After	Control	Snapshot	0	2
+2502	ATT	2016	After	Control	Snapshot	11	19
+2503	ATT	2016	After	Control	Snapshot	5	7
+2504	ATT	2016	After	Control	Snapshot	0	3
+2505	ATT	2016	After	Control	Snapshot	0	7
+2506	ATT	2016	After	Control	Snapshot	3	16
+2507	ATT	2016	After	Control	Snapshot	0	1
+2508	ATT	2016	After	Control	Snapshot	1	7
+2509	ATT	2016	After	Control	Snapshot	0	2
+2510	ATT	2016	After	Control	Snapshot	1	3
+2511	ATT	2016	After	Control	Snapshot	0	5
+2512	ATT	2016	After	Control	Snapshot	3	11
+2513	ATT	2016	After	Control	Snapshot	0	3
+2514	ATT	2016	After	Control	Snapshot	0	5
+2515	ATT	2016	After	Control	Snapshot	0	2
+2516	ATT	2016	After	Control	Snapshot	0	1
+2517	ATT	2016	After	Control	Snapshot	0	8
+2518	ATT	2016	After	Control	Snapshot	1	6
+2519	ATT	2016	After	Control	Snapshot	0	3
+2520	ATT	2016	After	Control	Snapshot	1	5
+2521	ATT	2016	After	Control	Snapshot	1	4
+2522	ATT	2016	After	Control	Snapshot	0	4
+2523	ATT	2016	After	Control	Snapshot	0	1
+2524	ATT	2016	After	Control	Snapshot	1	2
+2525	ATT	2016	After	Control	Snapshot	1	3
+2526	ATT	2016	After	Control	Snapshot	1	12
+2527	ATT	2016	After	Control	Snapshot	0	1
+2528	ATT	2016	After	Control	Snapshot	0	2
+2529	ATT	2016	After	Control	Snapshot	0	9
+2530	ATT	2016	After	Control	Snapshot	1	4
+2531	ATT	2016	After	Control	Snapshot	0	6
+2532	ATT	2016	After	Control	Snapshot	0	4
+2533	ATT	2016	After	Control	Snapshot	0	3
+2534	ATT	2016	After	Control	Snapshot	0	35
+2535	ATT	2016	After	Control	Snapshot	1	4
+2536	ATT	2016	After	Control	Snapshot	0	23
+2537	ATT	2016	After	Control	Snapshot	0	2
+2538	ATT	2016	After	Control	Snapshot	0	5
+2539	ATT	2016	After	Control	Snapshot	0	1
+2540	ATT	2016	After	Control	Snapshot	0	2
+2541	ATT	2016	After	Control	Snapshot	0	1
+2542	ATT	2016	After	Control	Snapshot	2	3
+2543	ATT	2016	After	Control	Snapshot	0	2
+2544	ATT	2016	After	Control	Snapshot	0	2
+2545	ATT	2016	After	Control	Snapshot	0	2
+2546	ATT	2016	After	Control	Snapshot	0	1
+2547	ATT	2016	After	Control	Snapshot	0	1
+2548	ATT	2016	After	Control	Snapshot	0	2
+2549	ATT	2016	After	Control	Snapshot	0	1
+2550	ATT	2016	After	Control	Snapshot	0	2
+2551	ATT	2016	After	Control	Snapshot	1	3
+2552	ATT	2016	After	Control	Snapshot	0	2
+2553	ATT	2016	After	Control	Snapshot	0	2
+2554	ATT	2016	After	Control	Snapshot	3	4
+2555	ATT	2016	After	Control	Snapshot	0	1
+2556	ATT	2016	After	Control	Snapshot	0	2
+2557	ATT	2016	After	Control	Snapshot	0	1
+2558	ATT	2016	After	Control	Snapshot	0	3
+2559	ATT	2016	After	Control	Snapshot	0	2
+2560	ATT	2016	After	Control	Snapshot	0	1
+2561	ATT	2016	After	Control	Snapshot	1	1
+2562	ATT	2016	After	Control	Snapshot	1	5
+2563	ATT	2016	After	Control	Snapshot	0	4
+2564	ATT	2016	After	Control	Snapshot	0	2
+2565	ATT	2016	After	Control	Snapshot	0	2
+2566	ATT	2016	After	Control	Snapshot	1	3
+2567	ATT	2016	After	Control	Snapshot	1	1
+2568	ATT	2016	After	Control	Snapshot	0	1
+2569	ATT	2016	After	Control	Snapshot	0	2
+2570	ATT	2016	After	Control	Snapshot	0	1
+2571	ATT	2016	After	Control	Snapshot	0	3
+2572	ATT	2016	After	Control	Snapshot	1	2
+2573	ATT	2016	After	Control	Snapshot	0	30
+2574	ATT	2016	After	Control	Snapshot	2	23
+2575	ATT	2016	After	Control	Snapshot	0	2
+2576	ATT	2016	After	Control	Snapshot	1	21
+2577	ATT	2016	After	Control	Snapshot	6	24
+2578	ATT	2016	After	Control	Snapshot	1	5
+2579	ATT	2016	After	Control	Snapshot	0	4
+2580	ATT	2016	After	Control	Snapshot	0	1
+2581	ATT	2016	After	Control	Snapshot	0	10
+2582	ATT	2016	After	Control	Snapshot	0	2
+2583	ATT	2016	After	Control	Snapshot	0	6
+2584	ATT	2016	After	Control	Snapshot	0	2
+2585	ATT	2016	After	Control	Snapshot	0	6
+2586	ATT	2016	After	Control	Snapshot	0	2
+2587	ATT	2016	After	Control	Snapshot	0	1
+2588	ATT	2016	After	Control	Snapshot	0	1
+2589	ATT	2016	After	Control	Snapshot	0	1
+2590	ATT	2016	After	Control	Snapshot	0	1
+2591	ATT	2016	After	Control	Snapshot	0	2
+2592	ATT	2016	After	Control	Snapshot	0	2
+2593	ATT	2016	After	Control	Snapshot	0	1
+2594	ATT	2016	After	Control	Snapshot	0	2
+2595	ATT	2016	After	Control	Snapshot	0	1
+2596	ATT	2016	After	Control	Snapshot	0	3
+2597	ATT	2016	After	Control	Snapshot	0	2
+2598	ATT	2016	After	Control	Snapshot	0	2
+2599	ATT	2016	After	Control	Snapshot	0	3
+2600	ATT	2016	After	Control	Snapshot	0	1
+2601	ATT	2016	After	Control	Snapshot	0	4
+2602	ATT	2016	After	Control	Snapshot	0	2
+2603	BR	2008	Before	Control	Marked racemes	2	4
+2604	BR	2008	Before	Control	Marked racemes	4	4
+2605	BR	2008	Before	Control	Marked racemes	4	4
+2606	BR	2008	Before	Control	Marked racemes	2	2
+2607	BR	2008	Before	Control	Marked racemes	2	2
+2608	BR	2008	Before	Control	Marked racemes	2	2
+2609	BR	2008	Before	Control	Marked racemes	1	1
+2610	BR	2008	Before	Control	Marked racemes	2	3
+2611	BR	2008	Before	Control	Marked racemes	4	4
+2612	BR	2008	Before	Control	Marked racemes	2	2
+2613	BR	2008	Before	Control	Marked racemes	2	2
+2614	BR	2008	Before	Control	Marked racemes	3	3
+2615	BR	2008	Before	Control	Marked racemes	1	1
+2616	BR	2008	Before	Control	Marked racemes	1	1
+2617	BR	2008	Before	Control	Marked racemes	1	1
+2618	BR	2008	Before	Control	Marked racemes	2	2
+2619	BR	2008	Before	Control	Marked racemes	1	1
+2620	BR	2008	Before	Control	Marked racemes	1	1
+2621	BR	2008	Before	Control	Marked racemes	1	3
+2622	BR	2008	Before	Control	Marked racemes	1	1
+2623	BR	2008	Before	Control	Marked racemes	1	1
+2624	BR	2008	Before	Control	Marked racemes	1	1
+2625	BR	2008	Before	Control	Marked racemes	1	1
+2626	BR	2008	Before	Control	Marked racemes	1	1
+2627	BR	2008	Before	Control	Marked racemes	1	1
+2628	BR	2009	Before	Control	Marked racemes	1	1
+2629	BR	2009	Before	Control	Marked racemes	0	1
+2630	BR	2009	Before	Control	Marked racemes	1	1
+2631	BR	2009	Before	Control	Marked racemes	4	4
+2632	BR	2009	Before	Control	Marked racemes	3	3
+2633	BR	2009	Before	Control	Marked racemes	3	3
+2634	BR	2009	Before	Control	Marked racemes	1	1
+2635	BR	2009	Before	Control	Marked racemes	1	1
+2636	BR	2009	Before	Control	Marked racemes	1	1
+2637	BR	2009	Before	Control	Marked racemes	2	2
+2638	BR	2009	Before	Control	Marked racemes	1	1
+2639	BR	2009	Before	Control	Marked racemes	2	3
+2640	BR	2009	Before	Control	Marked racemes	1	1
+2641	BR	2009	Before	Control	Marked racemes	5	5
+2642	BR	2009	Before	Control	Marked racemes	2	2
+2643	BR	2009	Before	Control	Marked racemes	1	1
+2644	BR	2009	Before	Control	Marked racemes	7	7
+2645	BR	2009	Before	Control	Marked racemes	1	1
+2646	BR	2009	Before	Control	Marked racemes	3	3
+2647	BR	2009	Before	Control	Marked racemes	4	5
+2648	BR	2009	Before	Control	Marked racemes	4	5
+2649	BR	2009	Before	Control	Marked racemes	1	1
+2650	BR	2009	Before	Control	Marked racemes	1	1
+2651	BR	2009	Before	Control	Marked racemes	0	1
+2652	BR	2009	Before	Control	Marked racemes	2	2
+2653	BR	2009	Before	Control	Marked racemes	1	1
+2654	BR	2009	Before	Control	Marked racemes	3	3
+2655	BR	2009	Before	Control	Marked racemes	1	1
+2656	BR	2009	Before	Control	Marked racemes	3	3
+2657	BR	2009	Before	Control	Marked racemes	5	5
+2658	BR	2009	Before	Control	Marked racemes	2	3
+2659	BR	2009	Before	Control	Marked racemes	3	3
+2660	BR	2010	Before	Control	Snapshot	11	13
+2661	BR	2010	Before	Control	Snapshot	1	8
+2662	BR	2010	Before	Control	Snapshot	1	4
+2663	BR	2010	Before	Control	Snapshot	3	4
+2664	BR	2010	Before	Control	Snapshot	4	4
+2665	BR	2010	Before	Control	Snapshot	4	4
+2666	BR	2010	Before	Control	Snapshot	5	6
+2667	BR	2010	Before	Control	Snapshot	3	3
+2668	BR	2010	Before	Control	Snapshot	17	18
+2669	BR	2010	Before	Control	Snapshot	3	3
+2670	BR	2010	Before	Control	Snapshot	3	5
+2671	BR	2010	Before	Control	Snapshot	1	1
+2672	BR	2010	Before	Control	Snapshot	1	1
+2673	BR	2010	Before	Control	Snapshot	1	1
+2674	BR	2010	Before	Control	Snapshot	2	2
+2675	BR	2010	Before	Control	Snapshot	3	3
+2676	BR	2010	Before	Control	Snapshot	1	1
+2677	BR	2010	Before	Control	Snapshot	4	7
+2678	BR	2010	Before	Control	Snapshot	10	12
+2679	BR	2010	Before	Control	Snapshot	1	5
+2680	BR	2010	Before	Control	Snapshot	2	3
+2681	BR	2010	Before	Control	Snapshot	4	5
+2682	BR	2010	Before	Control	Snapshot	0	1
+2683	BR	2010	Before	Control	Snapshot	1	4
+2684	BR	2010	Before	Control	Snapshot	3	5
+2685	BR	2010	Before	Control	Snapshot	3	3
+2686	BR	2010	Before	Control	Snapshot	1	2
+2687	BR	2010	Before	Control	Snapshot	6	11
+2688	BR	2010	Before	Control	Snapshot	3	4
+2689	BR	2010	Before	Control	Snapshot	1	1
+2690	BR	2010	Before	Control	Snapshot	0	2
+2691	BR	2010	Before	Control	Snapshot	2	4
+2692	BR	2010	Before	Control	Snapshot	0	1
+2693	BR	2010	Before	Control	Snapshot	3	3
+2694	BR	2010	Before	Control	Snapshot	5	7
+2695	BR	2010	Before	Control	Snapshot	2	2
+2696	BR	2010	Before	Control	Snapshot	5	5
+2697	BR	2010	Before	Control	Snapshot	0	1
+2698	BR	2010	Before	Control	Snapshot	1	1
+2699	BR	2010	Before	Control	Snapshot	5	7
+2700	BR	2010	Before	Control	Snapshot	2	4
+2701	BR	2010	Before	Control	Snapshot	2	2
+2702	BR	2010	Before	Control	Snapshot	2	4
+2703	BR	2010	Before	Control	Snapshot	1	6
+2704	BR	2010	Before	Control	Snapshot	1	5
+2705	BR	2010	Before	Control	Snapshot	1	1
+2706	BR	2010	Before	Control	Snapshot	2	2
+2707	BR	2010	Before	Control	Snapshot	10	12
+2708	BR	2010	Before	Control	Snapshot	5	7
+2709	BR	2010	Before	Control	Snapshot	8	9
+2710	BR	2010	Before	Control	Snapshot	3	4
+2711	BR	2010	Before	Control	Snapshot	4	5
+2712	BR	2010	Before	Control	Snapshot	2	2
+2713	BR	2010	Before	Control	Snapshot	0	1
+2714	BR	2010	Before	Control	Snapshot	1	1
+2715	BR	2010	Before	Control	Snapshot	6	6
+2716	BR	2010	Before	Control	Snapshot	3	3
+2717	BR	2010	Before	Control	Snapshot	4	5
+2718	BR	2010	Before	Control	Snapshot	1	1
+2719	BR	2010	Before	Control	Snapshot	2	2
+2720	BR	2010	Before	Control	Snapshot	1	2
+2721	BR	2010	Before	Control	Snapshot	0	1
+2722	BR	2010	Before	Control	Snapshot	6	7
+2723	BR	2010	Before	Control	Snapshot	6	6
+2724	BR	2010	Before	Control	Snapshot	0	1
+2725	BR	2010	Before	Control	Snapshot	2	2
+2726	BR	2010	Before	Control	Snapshot	2	5
+2727	BR	2010	Before	Control	Snapshot	4	7
+2728	BR	2010	Before	Control	Snapshot	0	1
+2729	BR	2010	Before	Control	Snapshot	0	1
+2730	BR	2010	Before	Control	Snapshot	2	6
+2731	BR	2011	After	Control	Snapshot	26	36
+2732	BR	2011	After	Control	Snapshot	1	3
+2733	BR	2011	After	Control	Snapshot	2	3
+2734	BR	2011	After	Control	Snapshot	1	3
+2735	BR	2011	After	Control	Snapshot	3	7
+2736	BR	2011	After	Control	Snapshot	1	3
+2737	BR	2011	After	Control	Snapshot	13	21
+2738	BR	2011	After	Control	Snapshot	0	7
+2739	BR	2011	After	Control	Snapshot	4	12
+2740	BR	2011	After	Control	Snapshot	0	1
+2741	BR	2011	After	Control	Snapshot	0	1
+2742	BR	2011	After	Control	Snapshot	1	2
+2743	BR	2011	After	Control	Snapshot	1	3
+2744	BR	2011	After	Control	Snapshot	2	3
+2745	BR	2011	After	Control	Snapshot	0	2
+2746	BR	2011	After	Control	Snapshot	0	4
+2747	BR	2011	After	Control	Snapshot	0	1
+2748	BR	2011	After	Control	Snapshot	1	9
+2749	BR	2011	After	Control	Snapshot	7	7
+2750	BR	2011	After	Control	Snapshot	0	3
+2751	BR	2011	After	Control	Snapshot	0	1
+2752	BR	2011	After	Control	Snapshot	2	7
+2753	BR	2011	After	Control	Snapshot	1	3
+2754	BR	2011	After	Control	Snapshot	0	1
+2755	BR	2011	After	Control	Snapshot	0	1
+2756	BR	2011	After	Control	Snapshot	31	41
+2757	BR	2011	After	Control	Snapshot	2	10
+2758	BR	2011	After	Control	Snapshot	1	2
+2759	BR	2011	After	Control	Snapshot	3	12
+2760	BR	2011	After	Control	Snapshot	2	2
+2761	BR	2011	After	Control	Snapshot	3	3
+2762	BR	2011	After	Control	Snapshot	1	1
+2763	BR	2011	After	Control	Snapshot	0	2
+2764	BR	2011	After	Control	Snapshot	2	2
+2765	BR	2011	After	Control	Snapshot	0	3
+2766	BR	2011	After	Control	Snapshot	4	18
+2767	BR	2011	After	Control	Snapshot	0	2
+2768	BR	2011	After	Control	Snapshot	1	4
+2769	BR	2011	After	Control	Snapshot	0	1
+2770	BR	2011	After	Control	Snapshot	1	1
+2771	BR	2011	After	Control	Snapshot	2	8
+2772	BR	2011	After	Control	Snapshot	12	14
+2773	BR	2011	After	Control	Snapshot	0	6
+2774	BR	2011	After	Control	Snapshot	1	4
+2775	BR	2011	After	Control	Snapshot	1	1
+2776	BR	2011	After	Control	Snapshot	0	1
+2777	BR	2011	After	Control	Snapshot	0	4
+2778	BR	2011	After	Control	Snapshot	0	1
+2779	BR	2011	After	Control	Snapshot	2	3
+2780	BR	2011	After	Control	Snapshot	2	4
+2781	BR	2011	After	Control	Snapshot	5	8
+2782	BR	2011	After	Control	Snapshot	2	3
+2783	BR	2011	After	Control	Snapshot	0	8
+2784	BR	2011	After	Control	Snapshot	1	1
+2785	BR	2011	After	Control	Snapshot	5	11
+2786	BR	2011	After	Control	Snapshot	4	5
+2787	BR	2011	After	Control	Snapshot	1	3
+2788	BR	2011	After	Control	Snapshot	1	1
+2789	BR	2011	After	Control	Snapshot	0	1
+2790	BR	2011	After	Control	Snapshot	3	3
+2791	BR	2011	After	Control	Snapshot	7	8
+2792	BR	2011	After	Control	Snapshot	22	27
+2793	BR	2011	After	Control	Snapshot	3	7
+2794	BR	2011	After	Control	Snapshot	4	7
+2795	BR	2011	After	Control	Snapshot	2	3
+2796	BR	2011	After	Control	Snapshot	6	11
+2797	BR	2011	After	Control	Snapshot	0	3
+2798	BR	2011	After	Control	Snapshot	1	1
+2799	BR	2011	After	Control	Snapshot	0	1
+2800	BR	2011	After	Control	Snapshot	3	4
+2801	BR	2011	After	Control	Snapshot	1	9
+2802	BR	2011	After	Control	Snapshot	0	5
+2803	BR	2011	After	Control	Snapshot	0	2
+2804	BR	2011	After	Control	Snapshot	12	13
+2805	BR	2011	After	Control	Snapshot	6	11
+2806	BR	2011	After	Control	Snapshot	3	3
+2807	BR	2011	After	Control	Snapshot	0	2
+2808	BR	2011	After	Control	Snapshot	14	24
+2809	BR	2011	After	Control	Snapshot	5	13
+2810	BR	2011	After	Control	Snapshot	5	6
+2811	BR	2011	After	Control	Snapshot	1	2
+2812	BR	2011	After	Control	Snapshot	1	8
+2813	BR	2011	After	Control	Snapshot	1	6
+2814	BR	2011	After	Control	Snapshot	0	3
+2815	BR	2011	After	Control	Snapshot	0	2
+2816	BR	2011	After	Control	Marked racemes	2	2
+2817	BR	2011	After	Control	Marked racemes	1	1
+2818	BR	2011	After	Control	Marked racemes	2	2
+2819	BR	2011	After	Control	Marked racemes	5	5
+2820	BR	2011	After	Control	Marked racemes	0	1
+2821	BR	2011	After	Control	Marked racemes	1	1
+2822	BR	2011	After	Control	Marked racemes	1	1
+2823	BR	2011	After	Control	Marked racemes	0	4
+2824	BR	2011	After	Control	Marked racemes	2	3
+2825	BR	2011	After	Control	Marked racemes	1	1
+2826	BR	2011	After	Control	Marked racemes	1	2
+2827	BR	2011	After	Control	Marked racemes	0	1
+2828	BR	2011	After	Control	Marked racemes	1	1
+2829	BR	2011	After	Control	Marked racemes	1	1
+2830	BR	2011	After	Control	Marked racemes	1	1
+2831	BR	2011	After	Control	Marked racemes	1	1
+2832	BR	2011	After	Control	Marked racemes	0	1
+2833	BR	2011	After	Control	Marked racemes	4	4
+2834	BR	2011	After	Control	Marked racemes	0	1
+2835	BR	2011	After	Control	Marked racemes	1	1
+2836	BR	2011	After	Control	Marked racemes	1	1
+2837	BR	2011	After	Control	Marked racemes	0	1
+2838	BR	2011	After	Control	Marked racemes	6	6
+2839	BR	2011	After	Control	Marked racemes	2	2
+2840	BR	2011	After	Control	Marked racemes	1	1
+2841	BR	2011	After	Control	Marked racemes	1	1
+2842	BR	2011	After	Control	Marked racemes	2	3
+2843	BR	2011	After	Control	Marked racemes	0	1
+2844	BR	2011	After	Control	Marked racemes	1	1
+2845	BR	2011	After	Control	Marked racemes	1	1
+2846	BR	2011	After	Control	Marked racemes	0	4
+2847	BR	2011	After	Control	Marked racemes	0	1
+2848	BR	2011	After	Control	Marked racemes	1	1
+2849	BR	2011	After	Control	Marked racemes	1	1
+2850	BR	2011	After	Control	Marked racemes	0	1
+2851	BR	2011	After	Control	Marked racemes	1	1
+2852	BR	2011	After	Control	Marked racemes	2	2
+2853	BR	2013	After	Control	Snapshot	6	9
+2854	BR	2013	After	Control	Snapshot	2	2
+2855	BR	2013	After	Control	Snapshot	2	7
+2856	BR	2013	After	Control	Snapshot	6	14
+2857	BR	2013	After	Control	Snapshot	4	6
+2858	BR	2013	After	Control	Snapshot	12	26
+2859	BR	2013	After	Control	Snapshot	6	9
+2860	BR	2013	After	Control	Snapshot	14	23
+2861	BR	2013	After	Control	Snapshot	10	13
+2862	BR	2013	After	Control	Snapshot	0	1
+2863	BR	2013	After	Control	Snapshot	4	6
+2864	BR	2013	After	Control	Snapshot	4	6
+2865	BR	2013	After	Control	Snapshot	2	7
+2866	BR	2013	After	Control	Snapshot	1	4
+2867	BR	2013	After	Control	Snapshot	7	11
+2868	BR	2013	After	Control	Snapshot	7	16
+2869	BR	2013	After	Control	Snapshot	13	23
+2870	BR	2013	After	Control	Snapshot	7	15
+2871	BR	2013	After	Control	Snapshot	12	17
+2872	BR	2013	After	Control	Snapshot	32	59
+2873	BR	2013	After	Control	Snapshot	6	10
+2874	BR	2013	After	Control	Snapshot	2	4
+2875	BR	2013	After	Control	Snapshot	2	4
+2876	BR	2013	After	Control	Snapshot	3	4
+2877	BR	2013	After	Control	Snapshot	5	13
+2878	BR	2013	After	Control	Snapshot	4	4
+2879	BR	2013	After	Control	Snapshot	19	24
+2880	BR	2013	After	Control	Snapshot	1	1
+2881	BR	2013	After	Control	Snapshot	9	9
+2882	BR	2013	After	Control	Snapshot	5	10
+2883	BR	2013	After	Control	Snapshot	5	7
+2884	BR	2013	After	Control	Snapshot	0	4
+2885	BR	2013	After	Control	Snapshot	4	6
+2886	BR	2013	After	Control	Snapshot	15	30
+2887	BR	2013	After	Control	Snapshot	2	4
+2888	BR	2013	After	Control	Snapshot	5	5
+2889	BR	2013	After	Control	Snapshot	2	4
+2890	BR	2013	After	Control	Snapshot	11	14
+2891	BR	2013	After	Control	Snapshot	1	1
+2892	BR	2013	After	Control	Snapshot	2	5
+2893	BR	2013	After	Control	Snapshot	1	3
+2894	BR	2013	After	Control	Snapshot	5	9
+2895	BR	2013	After	Control	Snapshot	5	11
+2896	BR	2013	After	Control	Snapshot	2	5
+2897	BR	2013	After	Control	Snapshot	4	5
+2898	BR	2013	After	Control	Snapshot	2	4
+2899	BR	2013	After	Control	Snapshot	1	3
+2900	BR	2013	After	Control	Snapshot	5	5
+2901	BR	2013	After	Control	Snapshot	15	27
+2902	BR	2013	After	Control	Snapshot	2	8
+2903	BR	2013	After	Control	Snapshot	7	8
+2904	BR	2013	After	Control	Snapshot	2	4
+2905	BR	2013	After	Control	Snapshot	1	4
+2906	BR	2013	After	Control	Snapshot	6	21
+2907	BR	2013	After	Control	Snapshot	6	8
+2908	BR	2013	After	Control	Snapshot	3	10
+2909	BR	2013	After	Control	Snapshot	3	9
+2910	BR	2013	After	Control	Snapshot	10	15
+2911	BR	2013	After	Control	Snapshot	1	1
+2912	BR	2013	After	Control	Snapshot	3	8
+2913	BR	2013	After	Control	Snapshot	2	3
+2914	BR	2013	After	Control	Snapshot	0	2
+2915	BR	2013	After	Control	Snapshot	1	7
+2916	BR	2013	After	Control	Snapshot	0	2
+2917	BR	2013	After	Control	Snapshot	2	4
+2918	BR	2013	After	Control	Snapshot	5	5
+2919	BR	2013	After	Control	Snapshot	1	2
+2920	BR	2013	After	Control	Snapshot	1	2
+2921	BR	2013	After	Control	Snapshot	4	5
+2922	BR	2013	After	Control	Snapshot	2	4
+2923	BR	2013	After	Control	Snapshot	2	8
+2924	BR	2013	After	Control	Snapshot	1	17
+2925	BR	2013	After	Control	Snapshot	5	15
+2926	BR	2013	After	Control	Snapshot	8	10
+2927	BR	2013	After	Control	Snapshot	0	10
+2928	BR	2013	After	Control	Snapshot	6	8
+2929	BR	2013	After	Control	Snapshot	6	9
+2930	BR	2013	After	Control	Snapshot	17	27
+2931	BR	2013	After	Control	Snapshot	4	11
+2932	BR	2013	After	Control	Snapshot	2	2
+2933	BR	2013	After	Control	Snapshot	12	13
+2934	BR	2013	After	Control	Snapshot	0	1
+2935	BR	2013	After	Control	Snapshot	0	4
+2936	BR	2013	After	Control	Snapshot	2	3
+2937	BR	2013	After	Control	Snapshot	1	5
+2938	BR	2013	After	Control	Snapshot	0	3
+2939	BR	2013	After	Control	Snapshot	1	5
+2940	BR	2013	After	Control	Snapshot	0	1
+2941	BR	2013	After	Control	Snapshot	0	1
+2942	BR	2013	After	Control	Snapshot	1	2
+2943	BR	2013	After	Control	Snapshot	5	9
+2944	BR	2013	After	Control	Snapshot	2	4
+2945	BR	2013	After	Control	Snapshot	4	17
+2946	BR	2013	After	Control	Snapshot	4	8
+2947	BR	2013	After	Control	Snapshot	0	1
+2948	BR	2013	After	Control	Snapshot	1	1
+2949	BR	2013	After	Control	Snapshot	3	6
+2950	BR	2013	After	Control	Snapshot	0	1
+2951	BR	2013	After	Control	Snapshot	1	3
+2952	BR	2013	After	Control	Snapshot	1	2
+2953	BR	2013	After	Control	Snapshot	3	5
+2954	BR	2013	After	Control	Snapshot	1	2
+2955	BR	2013	After	Control	Snapshot	0	1
+2956	BR	2014	After	Control	Snapshot	3	4
+2957	BR	2014	After	Control	Snapshot	1	1
+2958	BR	2014	After	Control	Snapshot	0	3
+2959	BR	2014	After	Control	Snapshot	7	8
+2960	BR	2014	After	Control	Snapshot	6	7
+2961	BR	2014	After	Control	Snapshot	5	17
+2962	BR	2014	After	Control	Snapshot	11	16
+2963	BR	2014	After	Control	Snapshot	11	12
+2964	BR	2014	After	Control	Snapshot	3	4
+2965	BR	2014	After	Control	Snapshot	4	5
+2966	BR	2014	After	Control	Snapshot	12	12
+2967	BR	2014	After	Control	Snapshot	9	9
+2968	BR	2014	After	Control	Snapshot	12	12
+2969	BR	2014	After	Control	Snapshot	2	2
+2970	BR	2014	After	Control	Snapshot	0	1
+2971	BR	2014	After	Control	Snapshot	1	1
+2972	BR	2014	After	Control	Snapshot	26	29
+2973	BR	2014	After	Control	Snapshot	34	35
+2974	BR	2014	After	Control	Snapshot	27	29
+2975	BR	2014	After	Control	Snapshot	23	26
+2976	BR	2014	After	Control	Snapshot	5	5
+2977	BR	2014	After	Control	Snapshot	92	117
+2978	BR	2014	After	Control	Snapshot	4	11
+2979	BR	2014	After	Control	Snapshot	3	5
+2980	BR	2014	After	Control	Snapshot	4	4
+2981	BR	2014	After	Control	Snapshot	5	9
+2982	BR	2014	After	Control	Snapshot	4	6
+2983	BR	2014	After	Control	Snapshot	9	11
+2984	BR	2014	After	Control	Snapshot	9	10
+2985	BR	2014	After	Control	Snapshot	7	10
+2986	BR	2014	After	Control	Snapshot	8	10
+2987	BR	2014	After	Control	Snapshot	3	3
+2988	BR	2014	After	Control	Snapshot	23	25
+2989	BR	2014	After	Control	Snapshot	10	11
+2990	BR	2014	After	Control	Snapshot	1	1
+2991	BR	2014	After	Control	Snapshot	25	25
+2992	BR	2014	After	Control	Snapshot	3	3
+2993	BR	2014	After	Control	Snapshot	11	12
+2994	BR	2014	After	Control	Snapshot	13	15
+2995	BR	2014	After	Control	Snapshot	4	5
+2996	BR	2014	After	Control	Snapshot	4	6
+2997	BR	2014	After	Control	Snapshot	14	16
+2998	BR	2014	After	Control	Snapshot	13	15
+2999	BR	2014	After	Control	Snapshot	28	35
+3000	BR	2014	After	Control	Snapshot	27	30
+3001	BR	2014	After	Control	Snapshot	19	19
+3002	BR	2014	After	Control	Snapshot	12	12
+3003	BR	2014	After	Control	Snapshot	11	13
+3004	BR	2014	After	Control	Snapshot	22	24
+3005	BR	2014	After	Control	Snapshot	19	22
+3006	BR	2014	After	Control	Snapshot	9	9
+3007	BR	2014	After	Control	Snapshot	5	5
+3008	BR	2014	After	Control	Snapshot	7	8
+3009	BR	2014	After	Control	Snapshot	1	2
+3010	BR	2014	After	Control	Snapshot	2	5
+3011	BR	2014	After	Control	Snapshot	7	10
+3012	BR	2014	After	Control	Snapshot	15	15
+3013	BR	2014	After	Control	Snapshot	7	8
+3014	BR	2014	After	Control	Snapshot	2	2
+3015	BR	2014	After	Control	Snapshot	2	2
+3016	BR	2014	After	Control	Snapshot	7	8
+3017	BR	2014	After	Control	Snapshot	3	4
+3018	BR	2014	After	Control	Snapshot	36	37
+3019	BR	2014	After	Control	Snapshot	23	25
+3020	BR	2014	After	Control	Snapshot	18	19
+3021	BR	2014	After	Control	Snapshot	16	16
+3022	BR	2014	After	Control	Snapshot	22	22
+3023	BR	2014	After	Control	Snapshot	9	12
+3024	BR	2014	After	Control	Snapshot	4	6
+3025	BR	2014	After	Control	Snapshot	12	12
+3026	BR	2014	After	Control	Snapshot	17	19
+3027	BR	2014	After	Control	Snapshot	12	15
+3028	BR	2014	After	Control	Snapshot	5	6
+3029	BR	2014	After	Control	Snapshot	4	4
+3030	BR	2014	After	Control	Snapshot	16	21
+3031	BR	2014	After	Control	Snapshot	15	15
+3032	BR	2014	After	Control	Snapshot	7	8
+3033	BR	2014	After	Control	Snapshot	6	7
+3034	BR	2014	After	Control	Snapshot	8	9
+3035	BR	2014	After	Control	Snapshot	0	1
+3036	BR	2014	After	Control	Snapshot	4	4
+3037	BR	2014	After	Control	Snapshot	23	25
+3038	BR	2014	After	Control	Snapshot	4	4
+3039	BR	2014	After	Control	Snapshot	1	2
+3040	BR	2014	After	Control	Snapshot	1	4
+3041	BR	2014	After	Control	Snapshot	6	13
+3042	BR	2014	After	Control	Snapshot	2	4
+3043	BR	2014	After	Control	Snapshot	7	7
+3044	BR	2014	After	Control	Snapshot	12	15
+3045	BR	2014	After	Control	Snapshot	4	4
+3046	BR	2014	After	Control	Snapshot	22	23
+3047	BR	2014	After	Control	Snapshot	3	10
+3048	BR	2014	After	Control	Snapshot	5	9
+3049	BR	2014	After	Control	Snapshot	8	10
+3050	BR	2014	After	Control	Snapshot	5	9
+3051	BR	2014	After	Control	Snapshot	5	7
+3052	BR	2014	After	Control	Snapshot	4	8
+3053	BR	2014	After	Control	Snapshot	1	1
+3054	BR	2014	After	Control	Snapshot	1	2
+3055	BR	2014	After	Control	Snapshot	10	11
+3056	BR	2014	After	Control	Snapshot	2	5
+3057	BR	2014	After	Control	Snapshot	4	4
+3058	BR	2014	After	Control	Snapshot	11	14
+3059	BR	2014	After	Control	Snapshot	1	1
+3060	BR	2014	After	Control	Snapshot	4	5
+3061	BR	2014	After	Control	Snapshot	4	4
+3062	BR	2014	After	Control	Snapshot	3	4
+3063	BR	2014	After	Control	Snapshot	2	2
+3064	BR	2014	After	Control	Snapshot	2	2
+3065	BR	2014	After	Control	Snapshot	1	1
+3066	BR	2014	After	Control	Snapshot	2	2
+3067	BR	2014	After	Control	Snapshot	9	9
+3068	BR	2014	After	Control	Snapshot	12	13
+3069	BR	2015	After	Control	Snapshot	1	1
+3070	BR	2015	After	Control	Snapshot	1	1
+3071	BR	2015	After	Control	Snapshot	0	1
+3072	BR	2016	After	Control	Snapshot	0	3
+3073	BR	2016	After	Control	Snapshot	2	3
+3074	BR	2016	After	Control	Snapshot	3	6
+3075	BR	2016	After	Control	Snapshot	1	4
+3076	BR	2016	After	Control	Snapshot	4	6
+3077	BR	2016	After	Control	Snapshot	3	8
+3078	BR	2016	After	Control	Snapshot	2	3
+3079	BR	2016	After	Control	Snapshot	0	1
+3080	BR	2016	After	Control	Snapshot	1	4
+3081	BR	2016	After	Control	Snapshot	1	5
+3082	BR	2016	After	Control	Snapshot	1	1
+3083	BR	2016	After	Control	Snapshot	1	1
+3084	BR	2016	After	Control	Snapshot	3	5
+3085	BR	2016	After	Control	Snapshot	1	1
+3086	BR	2016	After	Control	Snapshot	5	12
+3087	BR	2016	After	Control	Snapshot	4	4
+3088	BR	2016	After	Control	Snapshot	1	2
+3089	BR	2016	After	Control	Snapshot	0	1
+3090	BR	2016	After	Control	Snapshot	1	2
+3091	BR	2016	After	Control	Snapshot	1	4
+3092	BR	2016	After	Control	Snapshot	5	8
+3093	BR	2016	After	Control	Snapshot	0	2
+3094	BR	2016	After	Control	Snapshot	3	5
+3095	BR	2016	After	Control	Snapshot	0	1
+3096	BR	2016	After	Control	Snapshot	1	1
+3097	BR	2016	After	Control	Snapshot	0	2
+3098	BR	2016	After	Control	Snapshot	1	3
+3099	BR	2016	After	Control	Snapshot	2	2
+3100	BR	2016	After	Control	Snapshot	0	3
+3101	BR	2016	After	Control	Snapshot	2	5
+3102	BR	2016	After	Control	Snapshot	1	3
+3103	BR	2016	After	Control	Snapshot	0	1
+3104	BR	2016	After	Control	Snapshot	2	6
+3105	BR	2016	After	Control	Snapshot	2	9
+3106	BR	2016	After	Control	Snapshot	0	1
+3107	BR	2016	After	Control	Snapshot	0	3
+3108	BR	2016	After	Control	Snapshot	0	3
+3109	BR	2016	After	Control	Snapshot	1	1
+3110	BR	2016	After	Control	Snapshot	2	3
+3111	BR	2016	After	Control	Snapshot	1	3
+3112	BR	2016	After	Control	Snapshot	0	2
+3113	BR	2016	After	Control	Snapshot	0	1
+3114	BR	2016	After	Control	Snapshot	0	3
+3115	BR	2016	After	Control	Snapshot	0	2
+3116	BR	2016	After	Control	Snapshot	0	2
+3117	BR	2016	After	Control	Snapshot	0	2
+3118	BR	2016	After	Control	Snapshot	1	16
+3119	BR	2016	After	Control	Snapshot	0	1
+3120	BR	2016	After	Control	Snapshot	0	1
+3121	BR	2016	After	Control	Snapshot	1	1
+3122	BR	2016	After	Control	Snapshot	0	1
+3123	BR	2016	After	Control	Snapshot	1	2
+3124	BR	2016	After	Control	Snapshot	0	1
+3125	BR	2016	After	Control	Snapshot	1	2
+3126	BR	2016	After	Control	Snapshot	2	2
+3127	BR	2016	After	Control	Snapshot	3	7
+3128	BR	2016	After	Control	Snapshot	4	6
+3129	BR	2016	After	Control	Snapshot	4	8
+3130	BR	2016	After	Control	Snapshot	1	3
+3131	BR	2016	After	Control	Snapshot	0	1
+3132	BR	2016	After	Control	Snapshot	1	1
+3133	BS	2008	Before	Control	Marked racemes	1	1
+3134	BS	2008	Before	Control	Marked racemes	1	1
+3135	BS	2008	Before	Control	Marked racemes	4	4
+3136	BS	2008	Before	Control	Marked racemes	2	2
+3137	BS	2008	Before	Control	Marked racemes	1	1
+3138	BS	2008	Before	Control	Marked racemes	2	3
+3139	BS	2008	Before	Control	Marked racemes	1	1
+3140	BS	2008	Before	Control	Marked racemes	4	4
+3141	BS	2008	Before	Control	Marked racemes	3	3
+3142	BS	2008	Before	Control	Marked racemes	3	3
+3143	BS	2008	Before	Control	Marked racemes	1	1
+3144	BS	2008	Before	Control	Marked racemes	1	1
+3145	BS	2010	Before	Control	Snapshot	1	1
+3146	BS	2010	Before	Control	Snapshot	2	2
+3147	BS	2010	Before	Control	Snapshot	1	1
+3148	BS	2010	Before	Control	Snapshot	0	3
+3149	BS	2010	Before	Control	Snapshot	1	1
+3150	BS	2010	Before	Control	Snapshot	0	1
+3151	BS	2010	Before	Control	Snapshot	5	6
+3152	BS	2011	After	Control	Snapshot	2	5
+3153	BS	2011	After	Control	Snapshot	0	1
+3154	BS	2011	After	Control	Snapshot	0	1
+3155	BS	2011	After	Control	Snapshot	1	1
+3156	BS	2011	After	Control	Snapshot	0	5
+3157	BS	2011	After	Control	Snapshot	0	1
+3158	BS	2011	After	Control	Snapshot	1	5
+3159	BS	2011	After	Control	Snapshot	0	2
+3160	BS	2011	After	Control	Snapshot	10	15
+3161	BS	2011	After	Control	Snapshot	2	7
+3162	BS	2011	After	Control	Snapshot	2	6
+3163	BS	2011	After	Control	Snapshot	1	8
+3164	BS	2011	After	Control	Snapshot	3	8
+3165	BS	2011	After	Control	Snapshot	5	7
+3166	BS	2011	After	Control	Snapshot	0	5
+3167	BS	2011	After	Control	Snapshot	2	4
+3168	BS	2011	After	Control	Snapshot	0	5
+3169	BS	2011	After	Control	Snapshot	0	7
+3170	BS	2011	After	Control	Snapshot	2	2
+3171	BS	2011	After	Control	Snapshot	4	6
+3172	BS	2011	After	Control	Snapshot	0	5
+3173	BS	2011	After	Control	Snapshot	4	18
+3174	BS	2011	After	Control	Snapshot	0	2
+3175	BS	2011	After	Control	Snapshot	0	3
+3176	BS	2011	After	Control	Snapshot	2	3
+3177	BS	2011	After	Control	Snapshot	0	6
+3178	BS	2011	After	Control	Snapshot	0	5
+3179	BS	2011	After	Control	Snapshot	0	6
+3180	BS	2011	After	Control	Snapshot	0	5
+3181	BS	2011	After	Control	Snapshot	3	6
+3182	BS	2011	After	Control	Snapshot	6	12
+3183	BS	2011	After	Control	Snapshot	0	3
+3184	BS	2011	After	Control	Snapshot	0	1
+3185	BS	2011	After	Control	Snapshot	0	3
+3186	BS	2011	After	Control	Snapshot	0	7
+3187	BS	2011	After	Control	Snapshot	2	6
+3188	BS	2011	After	Control	Snapshot	6	13
+3189	BS	2011	After	Control	Snapshot	1	3
+3190	BS	2011	After	Control	Snapshot	2	4
+3191	BS	2011	After	Control	Snapshot	1	4
+3192	BS	2011	After	Control	Snapshot	0	2
+3193	BS	2011	After	Control	Snapshot	1	15
+3194	BS	2011	After	Control	Snapshot	2	6
+3195	BS	2011	After	Control	Snapshot	0	2
+3196	BS	2011	After	Control	Snapshot	3	5
+3197	BS	2011	After	Control	Snapshot	0	1
+3198	BS	2011	After	Control	Snapshot	0	2
+3199	BS	2011	After	Control	Snapshot	0	2
+3200	BS	2011	After	Control	Snapshot	0	2
+3201	BS	2011	After	Control	Snapshot	0	3
+3202	BS	2011	After	Control	Snapshot	5	7
+3203	BS	2011	After	Control	Marked racemes	2	2
+3204	BS	2011	After	Control	Marked racemes	1	1
+3205	BS	2011	After	Control	Marked racemes	2	2
+3206	BS	2011	After	Control	Marked racemes	1	1
+3207	BS	2011	After	Control	Marked racemes	3	4
+3208	BS	2011	After	Control	Marked racemes	1	2
+3209	BS	2011	After	Control	Marked racemes	2	3
+3210	BS	2011	After	Control	Marked racemes	3	3
+3211	BS	2011	After	Control	Marked racemes	2	3
+3212	BS	2011	After	Control	Marked racemes	2	2
+3213	BS	2011	After	Control	Marked racemes	1	1
+3214	BS	2011	After	Control	Marked racemes	3	4
+3215	BS	2011	After	Control	Marked racemes	5	5
+3216	BS	2011	After	Control	Marked racemes	3	3
+3217	BS	2011	After	Control	Marked racemes	1	1
+3218	BS	2011	After	Control	Marked racemes	0	1
+3219	BS	2011	After	Control	Marked racemes	4	5
+3220	BS	2011	After	Control	Marked racemes	5	5
+3221	BS	2011	After	Control	Marked racemes	6	6
+3222	BS	2011	After	Control	Marked racemes	2	2
+3223	BS	2011	After	Control	Marked racemes	6	6
+3224	BS	2011	After	Control	Marked racemes	1	1
+3225	BS	2011	After	Control	Marked racemes	6	6
+3226	BS	2011	After	Control	Marked racemes	2	3
+3227	BS	2011	After	Control	Marked racemes	1	1
+3228	BS	2011	After	Control	Marked racemes	1	1
+3229	BS	2011	After	Control	Marked racemes	1	3
+3230	BS	2011	After	Control	Marked racemes	0	1
+3231	BS	2011	After	Control	Marked racemes	6	6
+3232	BS	2011	After	Control	Marked racemes	1	1
+3233	BS	2011	After	Control	Marked racemes	1	1
+3234	BS	2011	After	Control	Marked racemes	1	2
+3235	BS	2013	After	Control	Snapshot	1	1
+3236	BS	2013	After	Control	Snapshot	2	3
+3237	BS	2013	After	Control	Snapshot	2	2
+3238	BS	2013	After	Control	Snapshot	5	6
+3239	BS	2013	After	Control	Snapshot	5	5
+3240	BS	2013	After	Control	Snapshot	0	9
+3241	BS	2013	After	Control	Snapshot	4	6
+3242	BS	2013	After	Control	Snapshot	0	6
+3243	BS	2013	After	Control	Snapshot	3	4
+3244	BS	2013	After	Control	Snapshot	2	3
+3245	BS	2013	After	Control	Snapshot	9	9
+3246	BS	2013	After	Control	Snapshot	1	6
+3247	BS	2013	After	Control	Snapshot	2	2
+3248	BS	2013	After	Control	Snapshot	1	2
+3249	BS	2013	After	Control	Snapshot	0	3
+3250	BS	2013	After	Control	Snapshot	1	1
+3251	BS	2013	After	Control	Snapshot	3	5
+3252	BS	2013	After	Control	Snapshot	2	2
+3253	BS	2013	After	Control	Snapshot	5	6
+3254	BS	2013	After	Control	Snapshot	3	6
+3255	BS	2013	After	Control	Snapshot	0	2
+3256	BS	2013	After	Control	Snapshot	1	3
+3257	BS	2013	After	Control	Snapshot	1	8
+3258	BS	2013	After	Control	Snapshot	3	5
+3259	BS	2013	After	Control	Snapshot	1	1
+3260	BS	2013	After	Control	Snapshot	5	8
+3261	BS	2013	After	Control	Snapshot	0	2
+3262	BS	2013	After	Control	Snapshot	1	1
+3263	BS	2013	After	Control	Snapshot	2	3
+3264	BS	2013	After	Control	Snapshot	1	2
+3265	BS	2013	After	Control	Snapshot	0	2
+3266	BS	2013	After	Control	Snapshot	1	4
+3267	BS	2013	After	Control	Snapshot	2	3
+3268	BS	2013	After	Control	Snapshot	13	14
+3269	BS	2013	After	Control	Snapshot	1	1
+3270	BS	2013	After	Control	Snapshot	2	4
+3271	BS	2013	After	Control	Snapshot	0	1
+3272	BS	2013	After	Control	Snapshot	0	1
+3273	BS	2013	After	Control	Snapshot	0	1
+3274	BS	2014	After	Control	Snapshot	3	5
+3275	BS	2014	After	Control	Snapshot	4	4
+3276	BS	2014	After	Control	Snapshot	4	4
+3277	BS	2014	After	Control	Snapshot	4	5
+3278	BS	2014	After	Control	Snapshot	2	2
+3279	BS	2014	After	Control	Snapshot	5	5
+3280	BS	2014	After	Control	Snapshot	4	4
+3281	BS	2014	After	Control	Snapshot	16	16
+3282	BS	2014	After	Control	Snapshot	8	9
+3283	BS	2014	After	Control	Snapshot	1	2
+3284	BS	2014	After	Control	Snapshot	22	22
+3285	BS	2014	After	Control	Snapshot	1	2
+3286	BS	2014	After	Control	Snapshot	13	14
+3287	BS	2014	After	Control	Snapshot	5	5
+3288	BS	2014	After	Control	Snapshot	3	3
+3289	BS	2014	After	Control	Snapshot	7	7
+3290	BS	2014	After	Control	Snapshot	1	1
+3291	BS	2014	After	Control	Snapshot	5	5
+3292	BS	2014	After	Control	Snapshot	2	2
+3293	BS	2014	After	Control	Snapshot	4	6
+3294	BS	2014	After	Control	Snapshot	7	11
+3295	BS	2014	After	Control	Snapshot	5	5
+3296	BS	2014	After	Control	Snapshot	2	4
+3297	BS	2014	After	Control	Snapshot	1	1
+3298	BS	2014	After	Control	Snapshot	18	18
+3299	BS	2014	After	Control	Snapshot	4	7
+3300	BS	2014	After	Control	Snapshot	6	7
+3301	BS	2014	After	Control	Snapshot	7	8
+3302	BS	2014	After	Control	Snapshot	1	1
+3303	BS	2014	After	Control	Snapshot	3	3
+3304	BS	2014	After	Control	Snapshot	1	1
+3305	BS	2014	After	Control	Snapshot	6	6
+3306	BS	2014	After	Control	Snapshot	7	7
+3307	BS	2014	After	Control	Snapshot	5	6
+3308	BS	2014	After	Control	Snapshot	1	1
+3309	BS	2014	After	Control	Snapshot	6	6
+3310	BS	2014	After	Control	Snapshot	2	2
+3311	BS	2014	After	Control	Snapshot	4	4
+3312	BS	2014	After	Control	Snapshot	1	2
+3313	BS	2014	After	Control	Snapshot	1	1
+3314	BS	2014	After	Control	Snapshot	2	2
+3315	BS	2014	After	Control	Snapshot	2	2
+3316	BS	2014	After	Control	Snapshot	3	4
+3317	BS	2014	After	Control	Snapshot	0	3
+3318	BS	2014	After	Control	Snapshot	2	3
+3319	BS	2014	After	Control	Snapshot	0	3
+3320	BS	2015	After	Control	Snapshot	0	1
+3321	BS	2015	After	Control	Snapshot	1	1
+3322	BS	2015	After	Control	Snapshot	2	5
+3323	BS	2015	After	Control	Snapshot	1	1
+3324	BS	2016	After	Control	Snapshot	1	2
+3325	BS	2016	After	Control	Snapshot	7	14
+3326	BS	2016	After	Control	Snapshot	1	7
+3327	BS	2016	After	Control	Snapshot	4	4
+3328	BS	2016	After	Control	Snapshot	1	5
+3329	BS	2016	After	Control	Snapshot	1	7
+3330	BS	2016	After	Control	Snapshot	5	7
+3331	BS	2016	After	Control	Snapshot	0	4
+3332	BS	2016	After	Control	Snapshot	1	2
+3333	BS	2016	After	Control	Snapshot	0	1
+3334	BS	2016	After	Control	Snapshot	0	3
+3335	BS	2016	After	Control	Snapshot	1	2
+3336	BS	2016	After	Control	Snapshot	0	2
+3337	BS	2016	After	Control	Snapshot	0	1
+3338	BS	2016	After	Control	Snapshot	3	5
+3339	BS	2016	After	Control	Snapshot	4	11
+3340	BS	2016	After	Control	Snapshot	1	2
+3341	BS	2016	After	Control	Snapshot	0	1
+3342	DR	2010	Before	Control	Snapshot	3	3
+3343	DR	2010	Before	Control	Snapshot	2	3
+3344	DR	2010	Before	Control	Snapshot	4	6
+3345	DR	2010	Before	Control	Snapshot	4	7
+3346	DR	2010	Before	Control	Snapshot	0	1
+3347	DR	2010	Before	Control	Snapshot	0	1
+3348	DR	2010	Before	Control	Snapshot	6	7
+3349	DR	2010	Before	Control	Snapshot	19	21
+3350	DR	2010	Before	Control	Snapshot	5	5
+3351	DR	2010	Before	Control	Snapshot	4	4
+3352	DR	2010	Before	Control	Snapshot	5	5
+3353	DR	2010	Before	Control	Snapshot	4	5
+3354	DR	2010	Before	Control	Snapshot	7	7
+3355	DR	2010	Before	Control	Snapshot	7	9
+3356	DR	2010	Before	Control	Snapshot	4	8
+3357	DR	2010	Before	Control	Snapshot	4	9
+3358	DR	2010	Before	Control	Snapshot	2	4
+3359	DR	2010	Before	Control	Snapshot	6	6
+3360	DR	2010	Before	Control	Snapshot	5	5
+3361	DR	2010	Before	Control	Snapshot	10	13
+3362	DR	2010	Before	Control	Snapshot	13	16
+3363	DR	2010	Before	Control	Snapshot	3	5
+3364	DR	2010	Before	Control	Snapshot	4	4
+3365	DR	2010	Before	Control	Snapshot	8	14
+3366	DR	2010	Before	Control	Snapshot	6	8
+3367	DR	2010	Before	Control	Snapshot	3	4
+3368	DR	2010	Before	Control	Snapshot	2	3
+3369	DR	2010	Before	Control	Snapshot	2	4
+3370	DR	2010	Before	Control	Snapshot	0	1
+3371	DR	2010	Before	Control	Snapshot	3	3
+3372	DR	2010	Before	Control	Snapshot	3	8
+3373	DR	2010	Before	Control	Snapshot	2	2
+3374	DR	2011	After	Control	Snapshot	7	35
+3375	DR	2011	After	Control	Snapshot	0	4
+3376	DR	2011	After	Control	Snapshot	1	38
+3377	DR	2011	After	Control	Snapshot	1	12
+3378	DR	2011	After	Control	Snapshot	0	2
+3379	DR	2011	After	Control	Snapshot	0	8
+3380	DR	2011	After	Control	Snapshot	0	10
+3381	DR	2011	After	Control	Snapshot	0	11
+3382	DR	2011	After	Control	Snapshot	0	9
+3383	DR	2011	After	Control	Snapshot	0	19
+3384	DR	2011	After	Control	Snapshot	0	11
+3385	DR	2011	After	Control	Snapshot	0	9
+3386	DR	2011	After	Control	Snapshot	0	8
+3387	DR	2011	After	Control	Snapshot	0	3
+3388	DR	2011	After	Control	Snapshot	0	10
+3389	DR	2011	After	Control	Snapshot	0	3
+3390	DR	2011	After	Control	Snapshot	17	37
+3391	DR	2011	After	Control	Snapshot	5	14
+3392	DR	2011	After	Control	Snapshot	2	18
+3393	DR	2011	After	Control	Snapshot	30	42
+3394	DR	2011	After	Control	Snapshot	3	5
+3395	DR	2011	After	Control	Snapshot	0	8
+3396	DR	2011	After	Control	Snapshot	0	7
+3397	DR	2011	After	Control	Snapshot	0	4
+3398	DR	2011	After	Control	Snapshot	0	2
+3399	DR	2011	After	Control	Snapshot	0	2
+3400	DR	2011	After	Control	Snapshot	0	1
+3401	DR	2011	After	Control	Snapshot	1	4
+3402	DR	2011	After	Control	Snapshot	0	1
+3403	DR	2011	After	Control	Snapshot	0	4
+3404	DR	2011	After	Control	Snapshot	11	23
+3405	DR	2011	After	Control	Snapshot	2	10
+3406	DR	2011	After	Control	Snapshot	0	1
+3407	DR	2011	After	Control	Snapshot	0	3
+3408	DR	2011	After	Control	Snapshot	0	1
+3409	DR	2011	After	Control	Snapshot	4	10
+3410	DR	2011	After	Control	Snapshot	0	1
+3411	DR	2011	After	Control	Snapshot	0	4
+3412	DR	2011	After	Control	Snapshot	15	26
+3413	DR	2011	After	Control	Snapshot	5	9
+3414	DR	2011	After	Control	Snapshot	1	15
+3415	DR	2011	After	Control	Snapshot	1	6
+3416	DR	2011	After	Control	Marked racemes	1	4
+3417	DR	2011	After	Control	Marked racemes	0	4
+3418	DR	2011	After	Control	Marked racemes	0	10
+3419	DR	2011	After	Control	Marked racemes	7	15
+3420	DR	2011	After	Control	Marked racemes	1	5
+3421	DR	2011	After	Control	Marked racemes	5	7
+3422	DR	2011	After	Control	Marked racemes	0	6
+3423	DR	2011	After	Control	Marked racemes	0	2
+3424	DR	2011	After	Control	Marked racemes	2	9
+3425	DR	2011	After	Control	Marked racemes	2	6
+3426	DR	2011	After	Control	Marked racemes	4	5
+3427	DR	2011	After	Control	Marked racemes	3	7
+3428	DR	2011	After	Control	Marked racemes	1	2
+3429	DR	2011	After	Control	Marked racemes	0	1
+3430	DR	2011	After	Control	Marked racemes	3	4
+3431	DR	2011	After	Control	Marked racemes	1	4
+3432	DR	2011	After	Control	Marked racemes	1	2
+3433	DR	2011	After	Control	Marked racemes	1	2
+3434	DR	2011	After	Control	Marked racemes	0	3
+3435	DR	2011	After	Control	Marked racemes	0	1
+3436	DR	2011	After	Control	Marked racemes	4	6
+3437	DR	2011	After	Control	Marked racemes	0	3
+3438	DR	2011	After	Control	Marked racemes	10	13
+3439	DR	2011	After	Control	Marked racemes	3	3
+3440	DR	2011	After	Control	Marked racemes	4	9
+3441	DR	2011	After	Control	Marked racemes	8	8
+3442	DR	2011	After	Control	Marked racemes	0	8
+3443	DR	2011	After	Control	Marked racemes	1	3
+3444	DR	2011	After	Control	Marked racemes	0	3
+3445	DR	2011	After	Control	Marked racemes	0	2
+3446	DR	2011	After	Control	Marked racemes	0	2
+3447	DR	2011	After	Control	Marked racemes	2	4
+3448	DR	2011	After	Control	Marked racemes	0	1
+3449	DR	2011	After	Control	Marked racemes	2	2
+3450	DR	2011	After	Control	Marked racemes	15	17
+3451	DR	2011	After	Control	Marked racemes	4	4
+3452	DR	2011	After	Control	Marked racemes	1	2
+3453	DR	2011	After	Control	Marked racemes	0	1
+3454	DR	2011	After	Control	Marked racemes	4	4
+3455	DR	2011	After	Control	Marked racemes	2	10
+3456	DR	2011	After	Control	Marked racemes	0	5
+3457	DR	2011	After	Control	Marked racemes	0	4
+3458	DR	2011	After	Control	Marked racemes	2	2
+3459	DR	2011	After	Control	Marked racemes	0	2
+3460	DR	2011	After	Control	Marked racemes	7	8
+3461	DR	2011	After	Control	Marked racemes	1	3
+3462	DR	2013	After	Control	Snapshot	15	17
+3463	DR	2013	After	Control	Snapshot	11	11
+3464	DR	2013	After	Control	Snapshot	13	15
+3465	DR	2013	After	Control	Snapshot	10	24
+3466	DR	2013	After	Control	Snapshot	5	5
+3467	DR	2013	After	Control	Snapshot	1	2
+3468	DR	2013	After	Control	Snapshot	13	18
+3469	DR	2013	After	Control	Snapshot	18	25
+3470	DR	2013	After	Control	Snapshot	4	5
+3471	DR	2013	After	Control	Snapshot	5	5
+3472	DR	2013	After	Control	Snapshot	1	2
+3473	DR	2013	After	Control	Snapshot	9	19
+3474	DR	2013	After	Control	Snapshot	22	26
+3475	DR	2013	After	Control	Snapshot	24	35
+3476	DR	2013	After	Control	Snapshot	14	15
+3477	DR	2013	After	Control	Snapshot	0	2
+3478	DR	2013	After	Control	Snapshot	8	8
+3479	DR	2013	After	Control	Snapshot	8	13
+3480	DR	2013	After	Control	Snapshot	15	16
+3481	DR	2013	After	Control	Snapshot	13	13
+3482	DR	2013	After	Control	Snapshot	18	27
+3483	DR	2013	After	Control	Snapshot	17	19
+3484	DR	2013	After	Control	Snapshot	11	14
+3485	DR	2013	After	Control	Snapshot	0	1
+3486	DR	2013	After	Control	Snapshot	7	7
+3487	DR	2013	After	Control	Snapshot	6	6
+3488	DR	2013	After	Control	Snapshot	1	2
+3489	DR	2013	After	Control	Snapshot	9	12
+3490	DR	2013	After	Control	Snapshot	8	11
+3491	DR	2013	After	Control	Snapshot	17	19
+3492	DR	2013	After	Control	Snapshot	0	1
+3493	DR	2013	After	Control	Snapshot	14	14
+3494	DR	2013	After	Control	Snapshot	9	10
+3495	DR	2013	After	Control	Snapshot	9	13
+3496	DR	2013	After	Control	Snapshot	29	37
+3497	DR	2013	After	Control	Snapshot	20	32
+3498	DR	2013	After	Control	Snapshot	10	12
+3499	DR	2013	After	Control	Snapshot	6	8
+3500	DR	2013	After	Control	Snapshot	11	12
+3501	DR	2013	After	Control	Snapshot	5	6
+3502	DR	2013	After	Control	Snapshot	1	3
+3503	DR	2013	After	Control	Snapshot	0	1
+3504	DR	2013	After	Control	Snapshot	4	4
+3505	DR	2013	After	Control	Snapshot	5	6
+3506	DR	2013	After	Control	Snapshot	17	21
+3507	DR	2013	After	Control	Snapshot	26	28
+3508	DR	2013	After	Control	Snapshot	1	5
+3509	DR	2013	After	Control	Snapshot	1	1
+3510	DR	2013	After	Control	Snapshot	4	4
+3511	DR	2013	After	Control	Snapshot	5	5
+3512	DR	2013	After	Control	Snapshot	4	5
+3513	DR	2013	After	Control	Snapshot	3	3
+3514	DR	2013	After	Control	Snapshot	7	7
+3515	DR	2013	After	Control	Snapshot	3	3
+3516	DR	2013	After	Control	Snapshot	4	5
+3517	DR	2013	After	Control	Snapshot	9	11
+3518	DR	2013	After	Control	Snapshot	1	3
+3519	DR	2013	After	Control	Snapshot	1	1
+3520	DR	2013	After	Control	Snapshot	1	1
+3521	DR	2013	After	Control	Snapshot	2	3
+3522	DR	2013	After	Control	Snapshot	2	2
+3523	DR	2013	After	Control	Snapshot	1	1
+3524	DR	2013	After	Control	Snapshot	2	3
+3525	DR	2013	After	Control	Snapshot	5	6
+3526	DR	2013	After	Control	Snapshot	6	6
+3527	DR	2013	After	Control	Snapshot	4	5
+3528	DR	2013	After	Control	Snapshot	10	12
+3529	DR	2013	After	Control	Snapshot	3	3
+3530	DR	2013	After	Control	Snapshot	3	3
+3531	DR	2013	After	Control	Snapshot	4	4
+3532	DR	2013	After	Control	Snapshot	1	1
+3533	DR	2013	After	Control	Snapshot	5	5
+3534	DR	2013	After	Control	Snapshot	4	4
+3535	DR	2013	After	Control	Snapshot	7	7
+3536	DR	2013	After	Control	Snapshot	5	7
+3537	DR	2013	After	Control	Snapshot	7	8
+3538	DR	2013	After	Control	Snapshot	4	4
+3539	DR	2013	After	Control	Snapshot	2	2
+3540	DR	2013	After	Control	Snapshot	1	1
+3541	DR	2013	After	Control	Snapshot	4	4
+3542	DR	2013	After	Control	Snapshot	0	1
+3543	DR	2013	After	Control	Snapshot	0	1
+3544	DR	2013	After	Control	Snapshot	1	1
+3545	DR	2013	After	Control	Snapshot	2	2
+3546	DR	2013	After	Control	Snapshot	8	10
+3547	DR	2013	After	Control	Snapshot	4	4
+3548	DR	2013	After	Control	Snapshot	3	3
+3549	DR	2013	After	Control	Snapshot	1	1
+3550	DR	2013	After	Control	Snapshot	3	3
+3551	DR	2013	After	Control	Snapshot	3	3
+3552	DR	2013	After	Control	Snapshot	11	12
+3553	DR	2013	After	Control	Snapshot	7	7
+3554	DR	2013	After	Control	Snapshot	1	1
+3555	DR	2013	After	Control	Snapshot	11	12
+3556	DR	2013	After	Control	Snapshot	1	1
+3557	DR	2013	After	Control	Snapshot	4	5
+3558	DR	2013	After	Control	Snapshot	2	2
+3559	DR	2014	After	Control	Snapshot	0	1
+3560	DR	2014	After	Control	Snapshot	2	12
+3561	DR	2014	After	Control	Snapshot	23	32
+3562	DR	2014	After	Control	Snapshot	20	29
+3563	DR	2014	After	Control	Snapshot	6	12
+3564	DR	2014	After	Control	Snapshot	6	6
+3565	DR	2014	After	Control	Snapshot	2	2
+3566	DR	2014	After	Control	Snapshot	26	43
+3567	DR	2014	After	Control	Snapshot	20	23
+3568	DR	2014	After	Control	Snapshot	10	10
+3569	DR	2014	After	Control	Snapshot	40	60
+3570	DR	2014	After	Control	Snapshot	8	8
+3571	DR	2014	After	Control	Snapshot	16	16
+3572	DR	2014	After	Control	Snapshot	5	8
+3573	DR	2014	After	Control	Snapshot	6	6
+3574	DR	2014	After	Control	Snapshot	2	2
+3575	DR	2014	After	Control	Snapshot	10	27
+3576	DR	2014	After	Control	Snapshot	4	16
+3577	DR	2014	After	Control	Snapshot	19	35
+3578	DR	2014	After	Control	Snapshot	20	33
+3579	DR	2014	After	Control	Snapshot	14	22
+3580	DR	2014	After	Control	Snapshot	30	56
+3581	DR	2014	After	Control	Snapshot	20	58
+3582	DR	2014	After	Control	Snapshot	15	18
+3583	DR	2014	After	Control	Snapshot	9	12
+3584	DR	2014	After	Control	Snapshot	20	26
+3585	DR	2014	After	Control	Snapshot	7	10
+3586	DR	2014	After	Control	Snapshot	6	6
+3587	DR	2014	After	Control	Snapshot	16	30
+3588	DR	2014	After	Control	Snapshot	12	22
+3589	DR	2014	After	Control	Snapshot	23	30
+3590	DR	2014	After	Control	Snapshot	40	50
+3591	DR	2014	After	Control	Snapshot	9	25
+3592	DR	2014	After	Control	Snapshot	2	4
+3593	DR	2014	After	Control	Snapshot	2	3
+3594	DR	2014	After	Control	Snapshot	3	3
+3595	DR	2014	After	Control	Snapshot	9	13
+3596	DR	2014	After	Control	Snapshot	1	1
+3597	DR	2014	After	Control	Snapshot	1	3
+3598	DR	2014	After	Control	Snapshot	2	4
+3599	DR	2014	After	Control	Snapshot	1	1
+3600	DR	2014	After	Control	Snapshot	32	42
+3601	DR	2014	After	Control	Snapshot	10	18
+3602	DR	2014	After	Control	Snapshot	7	7
+3603	DR	2014	After	Control	Snapshot	4	4
+3604	DR	2014	After	Control	Snapshot	3	3
+3605	DR	2014	After	Control	Snapshot	11	12
+3606	DR	2014	After	Control	Snapshot	6	6
+3607	DR	2014	After	Control	Snapshot	2	4
+3608	DR	2014	After	Control	Snapshot	6	7
+3609	DR	2014	After	Control	Snapshot	7	7
+3610	DR	2014	After	Control	Snapshot	4	4
+3611	DR	2014	After	Control	Snapshot	4	4
+3612	DR	2014	After	Control	Snapshot	3	4
+3613	DR	2014	After	Control	Snapshot	1	2
+3614	DR	2014	After	Control	Snapshot	8	11
+3615	DR	2014	After	Control	Snapshot	8	10
+3616	DR	2014	After	Control	Snapshot	11	12
+3617	DR	2014	After	Control	Snapshot	0	1
+3618	DR	2014	After	Control	Snapshot	6	6
+3619	DR	2014	After	Control	Snapshot	1	1
+3620	DR	2014	After	Control	Snapshot	3	3
+3621	DR	2014	After	Control	Snapshot	1	1
+3622	DR	2014	After	Control	Snapshot	5	6
+3623	DR	2014	After	Control	Snapshot	1	2
+3624	DR	2014	After	Control	Snapshot	2	2
+3625	DR	2014	After	Control	Snapshot	6	6
+3626	DR	2014	After	Control	Snapshot	2	2
+3627	DR	2014	After	Control	Snapshot	0	1
+3628	DR	2014	After	Control	Snapshot	4	8
+3629	DR	2014	After	Control	Snapshot	1	2
+3630	DR	2014	After	Control	Snapshot	3	6
+3631	DR	2014	After	Control	Snapshot	2	3
+3632	DR	2014	After	Control	Snapshot	1	3
+3633	DR	2014	After	Control	Snapshot	5	6
+3634	DR	2014	After	Control	Snapshot	2	2
+3635	DR	2014	After	Control	Snapshot	7	10
+3636	DR	2014	After	Control	Snapshot	0	2
+3637	DR	2014	After	Control	Snapshot	1	2
+3638	DR	2014	After	Control	Snapshot	1	2
+3639	DR	2014	After	Control	Snapshot	0	1
+3640	DR	2014	After	Control	Snapshot	2	2
+3641	DR	2014	After	Control	Snapshot	6	8
+3642	DR	2014	After	Control	Snapshot	4	4
+3643	DR	2014	After	Control	Snapshot	6	6
+3644	DR	2014	After	Control	Snapshot	4	5
+3645	DR	2014	After	Control	Snapshot	1	1
+3646	DR	2014	After	Control	Snapshot	7	9
+3647	DR	2014	After	Control	Snapshot	4	4
+3648	DR	2014	After	Control	Snapshot	1	2
+3649	DR	2014	After	Control	Snapshot	0	2
+3650	DR	2014	After	Control	Snapshot	1	2
+3651	DR	2014	After	Control	Snapshot	3	5
+3652	DR	2014	After	Control	Snapshot	4	6
+3653	DR	2014	After	Control	Snapshot	1	2
+3654	DR	2014	After	Control	Snapshot	47	56
+3655	DR	2014	After	Control	Snapshot	54	56
+3656	DR	2014	After	Control	Snapshot	62	66
+3657	DR	2014	After	Control	Snapshot	2	2
+3658	DR	2014	After	Control	Snapshot	4	4
+3659	DR	2014	After	Control	Snapshot	6	6
+3660	DR	2014	After	Control	Snapshot	7	7
+3661	DR	2014	After	Control	Snapshot	2	2
+3662	DR	2014	After	Control	Snapshot	1	1
+3663	DR	2014	After	Control	Snapshot	5	5
+3664	DR	2014	After	Control	Snapshot	2	12
+3665	DR	2014	After	Control	Snapshot	2	5
+3666	DR	2014	After	Control	Snapshot	4	4
+3667	DR	2014	After	Control	Snapshot	1	3
+3668	DR	2014	After	Control	Snapshot	0	3
+3669	DR	2014	After	Control	Snapshot	3	3
+3670	DR	2014	After	Control	Snapshot	40	42
+3671	DR	2014	After	Control	Snapshot	11	13
+3672	DR	2014	After	Control	Snapshot	1	2
+3673	DR	2014	After	Control	Snapshot	6	6
+3674	DR	2014	After	Control	Snapshot	1	1
+3675	DR	2014	After	Control	Snapshot	0	2
+3676	DR	2014	After	Control	Snapshot	4	5
+3677	DR	2016	After	Control	Snapshot	6	10
+3678	DR	2016	After	Control	Snapshot	2	4
+3679	DR	2016	After	Control	Snapshot	21	45
+3680	DR	2016	After	Control	Snapshot	3	7
+3681	DR	2016	After	Control	Snapshot	1	3
+3682	DR	2016	After	Control	Snapshot	2	2
+3683	DR	2016	After	Control	Snapshot	1	1
+3684	DR	2016	After	Control	Snapshot	0	2
+3685	DR	2016	After	Control	Snapshot	5	7
+3686	DR	2016	After	Control	Snapshot	1	6
+3687	DR	2016	After	Control	Snapshot	4	6
+3688	DR	2016	After	Control	Snapshot	4	10
+3689	DR	2016	After	Control	Snapshot	6	11
+3690	DR	2016	After	Control	Snapshot	5	7
+3691	DR	2016	After	Control	Snapshot	5	14
+3692	DR	2016	After	Control	Snapshot	3	4
+3693	DR	2016	After	Control	Snapshot	10	13
+3694	DR	2016	After	Control	Snapshot	6	13
+3695	DR	2016	After	Control	Snapshot	3	4
+3696	DR	2016	After	Control	Snapshot	2	3
+3697	DR	2016	After	Control	Snapshot	15	16
+3698	DR	2016	After	Control	Snapshot	8	8
+3699	DR	2016	After	Control	Snapshot	2	4
+3700	DR	2016	After	Control	Snapshot	0	1
+3701	DR	2016	After	Control	Snapshot	0	2
+3702	DR	2016	After	Control	Snapshot	1	4
+3703	DR	2016	After	Control	Snapshot	2	3
+3704	DR	2016	After	Control	Snapshot	1	3
+3705	DR	2016	After	Control	Snapshot	2	8
+3706	DR	2016	After	Control	Snapshot	11	17
+3707	DR	2016	After	Control	Snapshot	1	8
+3708	DR	2016	After	Control	Snapshot	9	16
+3709	DR	2016	After	Control	Snapshot	11	11
+3710	DR	2016	After	Control	Snapshot	6	12
+3711	DR	2016	After	Control	Snapshot	3	4
+3712	DR	2016	After	Control	Snapshot	1	1
+3713	DR	2016	After	Control	Snapshot	7	9
+3714	DR	2016	After	Control	Snapshot	1	3
+3715	DR	2016	After	Control	Snapshot	8	11
+3716	DR	2016	After	Control	Snapshot	6	6
+3717	DR	2016	After	Control	Snapshot	2	3
+3718	DR	2016	After	Control	Snapshot	0	2
+3719	DR	2016	After	Control	Snapshot	1	2
+3720	DR	2016	After	Control	Snapshot	1	1
+3721	DR	2016	After	Control	Snapshot	1	1
+3722	DR	2016	After	Control	Snapshot	3	5
+3723	NB	2005	Before	Control	Snapshot	3	4
+3724	NB	2005	Before	Control	Snapshot	0	4
+3725	NB	2005	Before	Control	Snapshot	0	2
+3726	NB	2005	Before	Control	Snapshot	0	1
+3727	NB	2005	Before	Control	Snapshot	4	4
+3728	NB	2005	Before	Control	Snapshot	2	2
+3729	NB	2005	Before	Control	Snapshot	2	4
+3730	NB	2005	Before	Control	Snapshot	0	1
+3731	NB	2005	Before	Control	Snapshot	0	5
+3732	NB	2005	Before	Control	Snapshot	1	1
+3733	NB	2005	Before	Control	Snapshot	1	2
+3734	NB	2005	Before	Control	Snapshot	4	4
+3735	NB	2005	Before	Control	Snapshot	1	2
+3736	NB	2005	Before	Control	Snapshot	0	1
+3737	NB	2005	Before	Control	Snapshot	2	2
+3738	NB	2005	Before	Control	Snapshot	2	2
+3739	NB	2006	Before	Control	Snapshot	0	1
+3740	NB	2006	Before	Control	Snapshot	2	3
+3741	NB	2006	Before	Control	Snapshot	2	4
+3742	NB	2006	Before	Control	Snapshot	1	1
+3743	NB	2006	Before	Control	Snapshot	1	1
+3744	NB	2006	Before	Control	Snapshot	0	3
+3745	NB	2006	Before	Control	Snapshot	3	6
+3746	NB	2006	Before	Control	Snapshot	0	1
+3747	NB	2006	Before	Control	Snapshot	0	1
+3748	NB	2006	Before	Control	Snapshot	4	5
+3749	NB	2006	Before	Control	Snapshot	1	2
+3750	NB	2006	Before	Control	Snapshot	3	3
+3751	NB	2006	Before	Control	Snapshot	1	2
+3752	NB	2006	Before	Control	Snapshot	0	1
+3753	NB	2007	Before	Control	Snapshot	2	2
+3754	NB	2007	Before	Control	Snapshot	1	1
+3755	NB	2007	Before	Control	Snapshot	2	3
+3756	NB	2007	Before	Control	Snapshot	6	6
+3757	NB	2007	Before	Control	Snapshot	8	8
+3758	NB	2007	Before	Control	Snapshot	3	3
+3759	NB	2007	Before	Control	Snapshot	7	7
+3760	NB	2007	Before	Control	Snapshot	2	2
+3761	NB	2007	Before	Control	Snapshot	1	1
+3762	NB	2007	Before	Control	Snapshot	2	2
+3763	NB	2007	Before	Control	Snapshot	3	4
+3764	NB	2007	Before	Control	Snapshot	1	1
+3765	NB	2010	Before	Control	Snapshot	0	7
+3766	NB	2010	Before	Control	Snapshot	8	30
+3767	NB	2010	Before	Control	Snapshot	2	4
+3768	NB	2010	Before	Control	Snapshot	0	3
+3769	NB	2010	Before	Control	Snapshot	0	3
+3770	NB	2010	Before	Control	Snapshot	3	4
+3771	NB	2010	Before	Control	Snapshot	1	5
+3772	NB	2010	Before	Control	Snapshot	0	3
+3773	NB	2010	Before	Control	Snapshot	0	1
+3774	NB	2010	Before	Control	Snapshot	5	10
+3775	NB	2010	Before	Control	Snapshot	9	10
+3776	NB	2010	Before	Control	Snapshot	5	5
+3777	NB	2010	Before	Control	Snapshot	4	6
+3778	NB	2010	Before	Control	Snapshot	0	1
+3779	NB	2010	Before	Control	Snapshot	0	1
+3780	NB	2010	Before	Control	Snapshot	2	2
+3781	NB	2010	Before	Control	Snapshot	2	2
+3782	NB	2010	Before	Control	Snapshot	1	1
+3783	NB	2010	Before	Control	Snapshot	1	1
+3784	NB	2010	Before	Control	Snapshot	0	1
+3785	NB	2011	After	Control	Snapshot	11	11
+3786	NB	2011	After	Control	Snapshot	15	15
+3787	NB	2011	After	Control	Snapshot	7	7
+3788	NB	2011	After	Control	Snapshot	0	16
+3789	NB	2011	After	Control	Snapshot	8	23
+3790	NB	2011	After	Control	Snapshot	1	2
+3791	NB	2011	After	Control	Snapshot	1	8
+3792	NB	2011	After	Control	Snapshot	3	8
+3793	NB	2011	After	Control	Snapshot	3	4
+3794	NB	2011	After	Control	Snapshot	3	6
+3795	NB	2011	After	Control	Snapshot	0	2
+3796	NB	2011	After	Control	Snapshot	4	7
+3797	NB	2011	After	Control	Snapshot	4	7
+3798	NB	2011	After	Control	Snapshot	4	6
+3799	NB	2011	After	Control	Marked racemes	1	7
+3800	NB	2011	After	Control	Marked racemes	3	8
+3801	NB	2011	After	Control	Marked racemes	1	1
+3802	NB	2011	After	Control	Marked racemes	2	4
+3803	NB	2011	After	Control	Marked racemes	2	3
+3804	NB	2011	After	Control	Marked racemes	1	1
+3805	NB	2011	After	Control	Marked racemes	0	2
+3806	NB	2011	After	Control	Marked racemes	1	2
+3807	NB	2011	After	Control	Marked racemes	0	1
+3808	NB	2011	After	Control	Marked racemes	1	1
+3809	NB	2013	After	Control	Snapshot	12	22
+3810	NB	2013	After	Control	Snapshot	3	3
+3811	NB	2013	After	Control	Snapshot	9	16
+3812	NB	2013	After	Control	Snapshot	2	2
+3813	NB	2013	After	Control	Snapshot	6	11
+3814	NB	2013	After	Control	Snapshot	9	15
+3815	NB	2013	After	Control	Snapshot	12	17
+3816	NB	2013	After	Control	Snapshot	3	8
+3817	NB	2013	After	Control	Snapshot	5	7
+3818	NB	2013	After	Control	Snapshot	10	13
+3819	NB	2013	After	Control	Snapshot	3	4
+3820	NB	2013	After	Control	Snapshot	2	2
+3821	NB	2013	After	Control	Snapshot	12	18
+3822	NB	2013	After	Control	Snapshot	0	2
+3823	NB	2013	After	Control	Snapshot	1	3
+3824	NB	2014	After	Control	Snapshot	3	4
+3825	NB	2014	After	Control	Snapshot	2	2
+3826	NB	2014	After	Control	Snapshot	1	1
+3827	NB	2014	After	Control	Snapshot	16	16
+3828	NB	2014	After	Control	Snapshot	3	6
+3829	NB	2014	After	Control	Snapshot	4	5
+3830	NB	2014	After	Control	Snapshot	2	2
+3831	NB	2014	After	Control	Snapshot	1	1
+3832	NB	2014	After	Control	Snapshot	1	1
+3833	NB	2014	After	Control	Snapshot	7	9
+3834	NB	2014	After	Control	Snapshot	2	2
+3835	NB	2014	After	Control	Snapshot	1	1
+3836	NB	2014	After	Control	Snapshot	3	7
+3837	NB	2014	After	Control	Snapshot	1	3
+3838	NB	2015	After	Control	Snapshot	0	1
+3839	NB	2015	After	Control	Snapshot	0	3
+3840	NB	2016	After	Control	Snapshot	3	15
+3841	NB	2016	After	Control	Snapshot	0	4
+3842	NB	2016	After	Control	Snapshot	0	2
+3843	NB	2016	After	Control	Snapshot	4	6
+3844	NB	2016	After	Control	Snapshot	0	2
+3845	NB	2016	After	Control	Snapshot	0	1
+3846	NB	2016	After	Control	Snapshot	0	3
+3847	NB	2016	After	Control	Snapshot	1	2
+3848	NB	2016	After	Control	Snapshot	0	2
+3849	NB	2016	After	Control	Snapshot	4	4
+3850	NB	2016	After	Control	Snapshot	3	4
+3851	Pop9	2010	Before	Control	Snapshot	1	2
+3852	Pop9	2010	Before	Control	Snapshot	1	1
+3853	Pop9	2010	Before	Control	Snapshot	1	1
+3854	Pop9	2010	Before	Control	Snapshot	1	1
+3855	Pop9	2010	Before	Control	Snapshot	1	2
+3856	Pop9	2010	Before	Control	Snapshot	0	2
+3857	Pop9	2010	Before	Control	Snapshot	3	8
+3858	Pop9	2010	Before	Control	Snapshot	0	1
+3859	Pop9	2010	Before	Control	Snapshot	0	1
+3860	Pop9	2010	Before	Control	Snapshot	1	1
+3861	Pop9	2010	Before	Control	Snapshot	0	4
+3862	Pop9	2010	Before	Control	Snapshot	2	4
+3863	Pop9	2010	Before	Control	Snapshot	1	2
+3864	Pop9	2010	Before	Control	Snapshot	0	1
+3865	Pop9	2010	Before	Control	Snapshot	1	2
+3866	Pop9	2010	Before	Control	Snapshot	0	1
+3867	Pop9	2010	Before	Control	Snapshot	2	3
+3868	Pop9	2010	Before	Control	Snapshot	0	1
+3869	Pop9	2010	Before	Control	Snapshot	2	2
+3870	Pop9	2010	Before	Control	Snapshot	0	1
+3871	Pop9	2010	Before	Control	Snapshot	0	1
+3872	Pop9	2010	Before	Control	Snapshot	1	1
+3873	Pop9	2010	Before	Control	Snapshot	0	3
+3874	Pop9	2010	Before	Control	Snapshot	3	4
+3875	Pop9	2010	Before	Control	Snapshot	2	3
+3876	Pop9	2010	Before	Control	Snapshot	0	2
+3877	Pop9	2010	Before	Control	Snapshot	0	1
+3878	Pop9	2010	Before	Control	Snapshot	0	3
+3879	Pop9	2010	Before	Control	Snapshot	1	1
+3880	Pop9	2010	Before	Control	Snapshot	0	1
+3881	Pop9	2010	Before	Control	Snapshot	2	3
+3882	Pop9	2011	After	Control	Snapshot	1	6
+3883	Pop9	2011	After	Control	Snapshot	1	2
+3884	Pop9	2011	After	Control	Snapshot	0	1
+3885	Pop9	2011	After	Control	Snapshot	0	1
+3886	Pop9	2011	After	Control	Snapshot	0	1
+3887	Pop9	2011	After	Control	Snapshot	0	2
+3888	Pop9	2011	After	Control	Snapshot	2	4
+3889	Pop9	2011	After	Control	Snapshot	4	6
+3890	Pop9	2011	After	Control	Snapshot	0	1
+3891	Pop9	2011	After	Control	Snapshot	6	7
+3892	Pop9	2011	After	Control	Snapshot	3	5
+3893	Pop9	2011	After	Control	Snapshot	2	2
+3894	Pop9	2011	After	Control	Snapshot	1	3
+3895	Pop9	2011	After	Control	Snapshot	5	5
+3896	Pop9	2011	After	Control	Snapshot	2	2
+3897	Pop9	2011	After	Control	Snapshot	0	1
+3898	Pop9	2011	After	Control	Snapshot	1	2
+3899	Pop9	2011	After	Control	Snapshot	2	2
+3900	Pop9	2011	After	Control	Snapshot	0	1
+3901	Pop9	2011	After	Control	Snapshot	3	5
+3902	Pop9	2011	After	Control	Snapshot	3	7
+3903	Pop9	2011	After	Control	Snapshot	1	2
+3904	Pop9	2011	After	Control	Snapshot	2	4
+3905	Pop9	2011	After	Control	Snapshot	0	2
+3906	Pop9	2011	After	Control	Snapshot	0	2
+3907	Pop9	2011	After	Control	Snapshot	6	7
+3908	Pop9	2011	After	Control	Snapshot	2	3
+3909	Pop9	2011	After	Control	Snapshot	1	6
+3910	Pop9	2011	After	Control	Snapshot	0	1
+3911	Pop9	2011	After	Control	Snapshot	0	6
+3912	Pop9	2011	After	Control	Snapshot	1	2
+3913	Pop9	2011	After	Control	Snapshot	2	5
+3914	Pop9	2011	After	Control	Snapshot	3	4
+3915	Pop9	2011	After	Control	Snapshot	1	3
+3916	Pop9	2011	After	Control	Snapshot	0	2
+3917	Pop9	2011	After	Control	Snapshot	0	5
+3918	Pop9	2011	After	Control	Snapshot	2	6
+3919	Pop9	2011	After	Control	Snapshot	2	6
+3920	Pop9	2011	After	Control	Snapshot	2	2
+3921	Pop9	2011	After	Control	Snapshot	2	4
+3922	Pop9	2011	After	Control	Snapshot	0	3
+3923	Pop9	2011	After	Control	Snapshot	0	12
+3924	Pop9	2011	After	Control	Snapshot	2	4
+3925	Pop9	2011	After	Control	Snapshot	1	3
+3926	Pop9	2011	After	Control	Snapshot	1	1
+3927	Pop9	2011	After	Control	Snapshot	3	7
+3928	Pop9	2011	After	Control	Snapshot	1	2
+3929	Pop9	2011	After	Control	Snapshot	0	1
+3930	Pop9	2011	After	Control	Snapshot	3	5
+3931	Pop9	2011	After	Control	Snapshot	16	27
+3932	Pop9	2011	After	Control	Snapshot	0	1
+3933	Pop9	2011	After	Control	Snapshot	3	4
+3934	Pop9	2011	After	Control	Snapshot	0	1
+3935	Pop9	2011	After	Control	Snapshot	1	1
+3936	Pop9	2011	After	Control	Snapshot	1	1
+3937	Pop9	2011	After	Control	Snapshot	1	1
+3938	Pop9	2011	After	Control	Snapshot	4	5
+3939	Pop9	2011	After	Control	Marked racemes	2	2
+3940	Pop9	2011	After	Control	Marked racemes	1	1
+3941	Pop9	2011	After	Control	Marked racemes	1	1
+3942	Pop9	2011	After	Control	Marked racemes	1	1
+3943	Pop9	2011	After	Control	Marked racemes	1	1
+3944	Pop9	2011	After	Control	Marked racemes	0	2
+3945	Pop9	2011	After	Control	Marked racemes	0	1
+3946	Pop9	2011	After	Control	Marked racemes	0	1
+3947	Pop9	2011	After	Control	Marked racemes	0	1
+3948	Pop9	2011	After	Control	Marked racemes	0	2
+3949	Pop9	2011	After	Control	Marked racemes	0	2
+3950	Pop9	2011	After	Control	Marked racemes	2	2
+3951	Pop9	2011	After	Control	Marked racemes	0	1
+3952	Pop9	2011	After	Control	Marked racemes	0	2
+3953	Pop9	2011	After	Control	Marked racemes	0	5
+3954	Pop9	2011	After	Control	Marked racemes	1	1
+3955	Pop9	2011	After	Control	Marked racemes	1	1
+3956	Pop9	2011	After	Control	Marked racemes	1	1
+3957	Pop9	2011	After	Control	Marked racemes	1	1
+3958	Pop9	2011	After	Control	Marked racemes	2	4
+3959	Pop9	2011	After	Control	Marked racemes	1	1
+3960	Pop9	2011	After	Control	Marked racemes	1	3
+3961	Pop9	2011	After	Control	Marked racemes	0	1
+3962	Pop9	2011	After	Control	Marked racemes	1	7
+3963	Pop9	2011	After	Control	Marked racemes	0	1
+3964	Pop9	2011	After	Control	Marked racemes	0	1
+3965	Pop9	2011	After	Control	Marked racemes	1	2
+3966	Pop9	2011	After	Control	Marked racemes	0	1
+3967	Pop9	2011	After	Control	Marked racemes	1	1
+3968	Pop9	2011	After	Control	Marked racemes	0	5
+3969	Pop9	2011	After	Control	Marked racemes	1	1
+3970	Pop9	2011	After	Control	Marked racemes	0	1
+3971	Pop9	2013	After	Control	Snapshot	0	36
+3972	Pop9	2013	After	Control	Snapshot	1	1
+3973	Pop9	2013	After	Control	Snapshot	1	3
+3974	Pop9	2013	After	Control	Snapshot	0	1
+3975	Pop9	2013	After	Control	Snapshot	1	1
+3976	Pop9	2013	After	Control	Snapshot	1	9
+3977	Pop9	2013	After	Control	Snapshot	6	20
+3978	Pop9	2013	After	Control	Snapshot	2	11
+3979	Pop9	2013	After	Control	Snapshot	0	3
+3980	Pop9	2013	After	Control	Snapshot	0	5
+3981	Pop9	2013	After	Control	Snapshot	0	3
+3982	Pop9	2013	After	Control	Snapshot	6	11
+3983	Pop9	2013	After	Control	Snapshot	0	1
+3984	Pop9	2013	After	Control	Snapshot	0	4
+3985	Pop9	2013	After	Control	Snapshot	2	5
+3986	Pop9	2013	After	Control	Snapshot	0	6
+3987	Pop9	2013	After	Control	Snapshot	1	1
+3988	Pop9	2013	After	Control	Snapshot	1	3
+3989	Pop9	2013	After	Control	Snapshot	2	12
+3990	Pop9	2013	After	Control	Snapshot	0	1
+3991	Pop9	2013	After	Control	Snapshot	1	5
+3992	Pop9	2013	After	Control	Snapshot	0	1
+3993	Pop9	2013	After	Control	Snapshot	1	4
+3994	Pop9	2013	After	Control	Snapshot	3	3
+3995	Pop9	2013	After	Control	Snapshot	0	1
+3996	Pop9	2013	After	Control	Snapshot	1	1
+3997	Pop9	2013	After	Control	Snapshot	0	1
+3998	Pop9	2013	After	Control	Snapshot	0	3
+3999	Pop9	2013	After	Control	Snapshot	0	6
+4000	Pop9	2013	After	Control	Snapshot	1	1
+4001	Pop9	2013	After	Control	Snapshot	2	4
+4002	Pop9	2013	After	Control	Snapshot	0	9
+4003	Pop9	2013	After	Control	Snapshot	3	10
+4004	Pop9	2013	After	Control	Snapshot	1	1
+4005	Pop9	2013	After	Control	Snapshot	0	5
+4006	Pop9	2013	After	Control	Snapshot	5	7
+4007	Pop9	2013	After	Control	Snapshot	0	3
+4008	Pop9	2013	After	Control	Snapshot	8	26
+4009	Pop9	2013	After	Control	Snapshot	3	7
+4010	Pop9	2013	After	Control	Snapshot	6	16
+4011	Pop9	2013	After	Control	Snapshot	0	7
+4012	Pop9	2013	After	Control	Snapshot	2	8
+4013	Pop9	2013	After	Control	Snapshot	1	2
+4014	Pop9	2013	After	Control	Snapshot	2	4
+4015	Pop9	2013	After	Control	Snapshot	1	2
+4016	Pop9	2013	After	Control	Snapshot	1	6
+4017	Pop9	2013	After	Control	Snapshot	2	4
+4018	Pop9	2013	After	Control	Snapshot	3	6
+4019	Pop9	2013	After	Control	Snapshot	0	3
+4020	Pop9	2013	After	Control	Snapshot	5	5
+4021	Pop9	2013	After	Control	Snapshot	1	2
+4022	Pop9	2013	After	Control	Snapshot	1	2
+4023	Pop9	2013	After	Control	Snapshot	3	8
+4024	Pop9	2013	After	Control	Snapshot	0	1
+4025	Pop9	2013	After	Control	Snapshot	0	1
+4026	Pop9	2013	After	Control	Snapshot	0	2
+4027	Pop9	2013	After	Control	Snapshot	0	6
+4028	Pop9	2013	After	Control	Snapshot	1	5
+4029	Pop9	2013	After	Control	Snapshot	1	10
+4030	Pop9	2013	After	Control	Snapshot	0	1
+4031	Pop9	2013	After	Control	Snapshot	0	2
+4032	Pop9	2013	After	Control	Snapshot	0	5
+4033	Pop9	2013	After	Control	Snapshot	0	1
+4034	Pop9	2013	After	Control	Snapshot	2	4
+4035	Pop9	2013	After	Control	Snapshot	3	5
+4036	Pop9	2013	After	Control	Snapshot	3	7
+4037	Pop9	2013	After	Control	Snapshot	4	8
+4038	Pop9	2013	After	Control	Snapshot	1	10
+4039	Pop9	2013	After	Control	Snapshot	2	6
+4040	Pop9	2013	After	Control	Snapshot	3	5
+4041	Pop9	2013	After	Control	Snapshot	3	13
+4042	Pop9	2013	After	Control	Snapshot	0	8
+4043	Pop9	2013	After	Control	Snapshot	0	2
+4044	Pop9	2013	After	Control	Snapshot	3	7
+4045	Pop9	2013	After	Control	Snapshot	2	2
+4046	Pop9	2013	After	Control	Snapshot	0	5
+4047	Pop9	2013	After	Control	Snapshot	2	3
+4048	Pop9	2013	After	Control	Snapshot	0	3
+4049	Pop9	2013	After	Control	Snapshot	1	1
+4050	Pop9	2013	After	Control	Snapshot	1	1
+4051	Pop9	2013	After	Control	Snapshot	0	1
+4052	Pop9	2013	After	Control	Snapshot	0	1
+4053	Pop9	2013	After	Control	Snapshot	2	3
+4054	Pop9	2013	After	Control	Snapshot	0	2
+4055	Pop9	2013	After	Control	Snapshot	0	1
+4056	Pop9	2013	After	Control	Snapshot	2	2
+4057	Pop9	2013	After	Control	Snapshot	0	4
+4058	Pop9	2013	After	Control	Snapshot	0	6
+4059	Pop9	2013	After	Control	Snapshot	3	4
+4060	Pop9	2013	After	Control	Snapshot	1	2
+4061	Pop9	2013	After	Control	Snapshot	0	1
+4062	Pop9	2013	After	Control	Snapshot	1	4
+4063	Pop9	2013	After	Control	Snapshot	0	2
+4064	Pop9	2013	After	Control	Snapshot	1	1
+4065	Pop9	2013	After	Control	Snapshot	1	3
+4066	Pop9	2013	After	Control	Snapshot	2	10
+4067	Pop9	2013	After	Control	Snapshot	3	4
+4068	Pop9	2013	After	Control	Snapshot	0	3
+4069	Pop9	2013	After	Control	Snapshot	0	1
+4070	Pop9	2013	After	Control	Snapshot	2	6
+4071	Pop9	2013	After	Control	Snapshot	2	5
+4072	Pop9	2014	After	Control	Snapshot	5	9
+4073	Pop9	2014	After	Control	Snapshot	2	3
+4074	Pop9	2014	After	Control	Snapshot	0	6
+4075	Pop9	2014	After	Control	Snapshot	2	2
+4076	Pop9	2014	After	Control	Snapshot	2	2
+4077	Pop9	2014	After	Control	Snapshot	1	1
+4078	Pop9	2014	After	Control	Snapshot	1	1
+4079	Pop9	2014	After	Control	Snapshot	1	8
+4080	Pop9	2014	After	Control	Snapshot	6	35
+4081	Pop9	2014	After	Control	Snapshot	6	26
+4082	Pop9	2014	After	Control	Snapshot	5	7
+4083	Pop9	2014	After	Control	Snapshot	1	5
+4084	Pop9	2014	After	Control	Snapshot	1	14
+4085	Pop9	2014	After	Control	Snapshot	1	3
+4086	Pop9	2014	After	Control	Snapshot	5	23
+4087	Pop9	2014	After	Control	Snapshot	7	19
+4088	Pop9	2014	After	Control	Snapshot	5	15
+4089	Pop9	2014	After	Control	Snapshot	1	8
+4090	Pop9	2014	After	Control	Snapshot	4	6
+4091	Pop9	2014	After	Control	Snapshot	1	3
+4092	Pop9	2014	After	Control	Snapshot	3	7
+4093	Pop9	2014	After	Control	Snapshot	4	5
+4094	Pop9	2014	After	Control	Snapshot	4	9
+4095	Pop9	2014	After	Control	Snapshot	0	1
+4096	Pop9	2014	After	Control	Snapshot	4	14
+4097	Pop9	2014	After	Control	Snapshot	2	4
+4098	Pop9	2014	After	Control	Snapshot	4	4
+4099	Pop9	2014	After	Control	Snapshot	5	10
+4100	Pop9	2014	After	Control	Snapshot	2	2
+4101	Pop9	2014	After	Control	Snapshot	1	1
+4102	Pop9	2014	After	Control	Snapshot	7	16
+4103	Pop9	2014	After	Control	Snapshot	6	15
+4104	Pop9	2014	After	Control	Snapshot	5	12
+4105	Pop9	2014	After	Control	Snapshot	5	32
+4106	Pop9	2014	After	Control	Snapshot	4	5
+4107	Pop9	2014	After	Control	Snapshot	10	16
+4108	Pop9	2014	After	Control	Snapshot	1	11
+4109	Pop9	2014	After	Control	Snapshot	4	8
+4110	Pop9	2014	After	Control	Snapshot	6	13
+4111	Pop9	2014	After	Control	Snapshot	0	1
+4112	Pop9	2014	After	Control	Snapshot	4	4
+4113	Pop9	2014	After	Control	Snapshot	5	14
+4114	Pop9	2014	After	Control	Snapshot	5	10
+4115	Pop9	2014	After	Control	Snapshot	1	4
+4116	Pop9	2014	After	Control	Snapshot	1	8
+4117	Pop9	2014	After	Control	Snapshot	4	5
+4118	Pop9	2014	After	Control	Snapshot	0	1
+4119	Pop9	2014	After	Control	Snapshot	0	4
+4120	Pop9	2014	After	Control	Snapshot	1	1
+4121	Pop9	2014	After	Control	Snapshot	5	7
+4122	Pop9	2014	After	Control	Snapshot	4	6
+4123	Pop9	2014	After	Control	Snapshot	4	4
+4124	Pop9	2014	After	Control	Snapshot	4	8
+4125	Pop9	2014	After	Control	Snapshot	6	8
+4126	Pop9	2014	After	Control	Snapshot	2	3
+4127	Pop9	2014	After	Control	Snapshot	1	3
+4128	Pop9	2014	After	Control	Snapshot	8	20
+4129	Pop9	2014	After	Control	Snapshot	0	4
+4130	Pop9	2014	After	Control	Snapshot	3	3
+4131	Pop9	2014	After	Control	Snapshot	9	24
+4132	Pop9	2014	After	Control	Snapshot	14	18
+4133	Pop9	2014	After	Control	Snapshot	1	15
+4134	Pop9	2014	After	Control	Snapshot	7	11
+4135	Pop9	2014	After	Control	Snapshot	0	2
+4136	Pop9	2014	After	Control	Snapshot	1	1
+4137	Pop9	2014	After	Control	Snapshot	14	14
+4138	Pop9	2014	After	Control	Snapshot	5	8
+4139	Pop9	2014	After	Control	Snapshot	0	2
+4140	Pop9	2014	After	Control	Snapshot	2	2
+4141	Pop9	2014	After	Control	Snapshot	2	2
+4142	Pop9	2014	After	Control	Snapshot	1	1
+4143	Pop9	2014	After	Control	Snapshot	0	1
+4144	Pop9	2014	After	Control	Snapshot	0	1
+4145	Pop9	2014	After	Control	Snapshot	0	6
+4146	Pop9	2014	After	Control	Snapshot	5	7
+4147	Pop9	2014	After	Control	Snapshot	1	2
+4148	Pop9	2014	After	Control	Snapshot	7	12
+4149	Pop9	2014	After	Control	Snapshot	2	7
+4150	Pop9	2014	After	Control	Snapshot	6	6
+4151	Pop9	2014	After	Control	Snapshot	11	13
+4152	Pop9	2014	After	Control	Snapshot	4	9
+4153	Pop9	2014	After	Control	Snapshot	0	1
+4154	Pop9	2014	After	Control	Snapshot	2	5
+4155	Pop9	2014	After	Control	Snapshot	2	4
+4156	Pop9	2014	After	Control	Snapshot	4	8
+4157	Pop9	2014	After	Control	Snapshot	2	9
+4158	Pop9	2014	After	Control	Snapshot	2	5
+4159	Pop9	2014	After	Control	Snapshot	2	5
+4160	Pop9	2014	After	Control	Snapshot	16	20
+4161	Pop9	2014	After	Control	Snapshot	1	1
+4162	Pop9	2014	After	Control	Snapshot	5	6
+4163	Pop9	2014	After	Control	Snapshot	3	8
+4164	Pop9	2014	After	Control	Snapshot	2	10
+4165	Pop9	2014	After	Control	Snapshot	5	14
+4166	Pop9	2014	After	Control	Snapshot	3	5
+4167	Pop9	2014	After	Control	Snapshot	1	3
+4168	Pop9	2014	After	Control	Snapshot	3	3
+4169	Pop9	2014	After	Control	Snapshot	2	3
+4170	Pop9	2014	After	Control	Snapshot	0	1
+4171	Pop9	2014	After	Control	Snapshot	5	14
+4172	Pop9	2014	After	Control	Snapshot	1	7
+4173	Pop9	2014	After	Control	Snapshot	6	7
+4174	Pop9	2014	After	Control	Snapshot	4	7
+4175	Pop9	2014	After	Control	Snapshot	3	4
+4176	Pop9	2014	After	Control	Snapshot	1	3
+4177	Pop9	2014	After	Control	Snapshot	0	5
+4178	Pop9	2014	After	Control	Snapshot	3	5
+4179	Pop9	2014	After	Control	Snapshot	1	1
+4180	Pop9	2014	After	Control	Snapshot	2	7
+4181	Pop9	2014	After	Control	Snapshot	1	2
+4182	Pop9	2014	After	Control	Snapshot	2	3
+4183	Pop9	2014	After	Control	Snapshot	4	5
+4184	Pop9	2014	After	Control	Snapshot	1	2
+4185	Pop9	2014	After	Control	Snapshot	1	1
+4186	Pop9	2014	After	Control	Snapshot	0	1
+4187	Pop9	2014	After	Control	Snapshot	1	1
+4188	Pop9	2014	After	Control	Snapshot	3	5
+4189	Pop9	2014	After	Control	Snapshot	3	8
+4190	Pop9	2014	After	Control	Snapshot	1	1
+4191	Pop9	2014	After	Control	Snapshot	1	4
+4192	Pop9	2014	After	Control	Snapshot	2	2
+4193	Pop9	2014	After	Control	Snapshot	3	9
+4194	Pop9	2014	After	Control	Snapshot	6	7
+4195	Pop9	2014	After	Control	Snapshot	1	2
+4196	Pop9	2014	After	Control	Snapshot	2	2
+4197	Pop9	2014	After	Control	Snapshot	2	4
+4198	Pop9	2014	After	Control	Snapshot	0	1
+4199	Pop9	2014	After	Control	Snapshot	1	2
+4200	Pop9	2014	After	Control	Snapshot	0	1
+4201	Pop9	2014	After	Control	Snapshot	7	7
+4202	Pop9	2014	After	Control	Snapshot	1	1
+4203	Pop9	2014	After	Control	Snapshot	0	1
+4204	Pop9	2014	After	Control	Snapshot	2	2
+4205	Pop9	2014	After	Control	Snapshot	0	1
+4206	Pop9	2014	After	Control	Snapshot	7	8
+4207	Pop9	2015	After	Control	Snapshot	0	1
+4208	Pop9	2015	After	Control	Snapshot	1	1
+4209	Pop9	2015	After	Control	Snapshot	1	1
+4210	Pop9	2015	After	Control	Snapshot	0	1
+4211	Pop9	2015	After	Control	Snapshot	1	1
+4212	Pop9	2015	After	Control	Snapshot	0	1
+4213	Pop9	2016	After	Control	Snapshot	5	6
+4214	Pop9	2016	After	Control	Snapshot	2	3
+4215	Pop9	2016	After	Control	Snapshot	2	2
+4216	Pop9	2016	After	Control	Snapshot	2	3
+4217	Pop9	2016	After	Control	Snapshot	0	1
+4218	Pop9	2016	After	Control	Snapshot	0	3
+4219	Pop9	2016	After	Control	Snapshot	0	2
+4220	Pop9	2016	After	Control	Snapshot	2	7
+4221	Pop9	2016	After	Control	Snapshot	2	2
+4222	Pop9	2016	After	Control	Snapshot	4	10
+4223	Pop9	2016	After	Control	Snapshot	3	3
+4224	Pop9	2016	After	Control	Snapshot	0	1
+4225	Pop9	2016	After	Control	Snapshot	2	7
+4226	Pop9	2016	After	Control	Snapshot	0	2
+4227	Pop9	2016	After	Control	Snapshot	4	5
+4228	Pop9	2016	After	Control	Snapshot	0	2
+4229	Pop9	2016	After	Control	Snapshot	1	3
+4230	Pop9	2016	After	Control	Snapshot	3	7
+4231	Pop9	2016	After	Control	Snapshot	2	3
+4232	Pop9	2016	After	Control	Snapshot	2	8
+4233	Pop9	2016	After	Control	Snapshot	0	1
+4234	Pop9	2016	After	Control	Snapshot	2	2
+4235	Pop9	2016	After	Control	Snapshot	0	1
+4236	Pop9	2016	After	Control	Snapshot	0	1
+4237	Pop9	2016	After	Control	Snapshot	0	2
+4238	Pop9	2016	After	Control	Snapshot	2	4
+4239	Pop9	2016	After	Control	Snapshot	1	2
+4240	AL	2017	After	Impact	Snapshot	0	3
+4241	AL	2017	After	Impact	Snapshot	1	4
+4242	AL	2017	After	Impact	Snapshot	0	2
+4243	AL	2017	After	Impact	Snapshot	0	20
+4244	AL	2017	After	Impact	Snapshot	0	1
+4245	AL	2017	After	Impact	Snapshot	0	2
+4246	AL	2017	After	Impact	Snapshot	0	4
+4247	AL	2017	After	Impact	Snapshot	0	3
+4248	AL	2017	After	Impact	Snapshot	0	1
+4249	AL	2017	After	Impact	Snapshot	3	5
+4250	AL	2017	After	Impact	Snapshot	1	2
+4251	AL	2017	After	Impact	Snapshot	0	1
+4252	AL	2017	After	Impact	Snapshot	0	1
+4253	AL	2017	After	Impact	Snapshot	0	1
+4254	AL	2017	After	Impact	Snapshot	0	1
+4255	AL	2017	After	Impact	Snapshot	0	3
+4256	AL	2017	After	Impact	Snapshot	0	4
+4257	AL	2017	After	Impact	Snapshot	0	5
+4258	AL	2017	After	Impact	Snapshot	0	4
+4259	AL	2017	After	Impact	Snapshot	0	4
+4260	AL	2017	After	Impact	Snapshot	0	1
+4261	AL	2017	After	Impact	Snapshot	0	1
+4262	AL	2017	After	Impact	Snapshot	0	3
+4263	AL	2017	After	Impact	Snapshot	0	4
+4264	AL	2017	After	Impact	Snapshot	1	1
+4265	AL	2017	After	Impact	Snapshot	0	5
+4266	AL	2017	After	Impact	Snapshot	0	1
+4267	AL	2017	After	Impact	Snapshot	0	7
+4268	AL	2017	After	Impact	Snapshot	0	1
+4269	AL	2017	After	Impact	Snapshot	1	5
+4270	AL	2017	After	Impact	Snapshot	0	2
+4271	AL	2017	After	Impact	Snapshot	0	1
+4272	AL	2017	After	Impact	Snapshot	0	3
+4273	AL	2017	After	Impact	Snapshot	0	1
+4274	AL	2017	After	Impact	Snapshot	0	3
+4275	AL	2017	After	Impact	Snapshot	0	5
+4276	AL	2017	After	Impact	Snapshot	0	1
+4277	AL	2017	After	Impact	Snapshot	0	2
+4278	AL	2017	After	Impact	Snapshot	1	3
+4279	AL	2017	After	Impact	Snapshot	0	2
+4280	AL	2017	After	Impact	Snapshot	0	1
+4281	AL	2017	After	Impact	Snapshot	0	9
+4282	AL	2017	After	Impact	Snapshot	0	5
+4283	AL	2017	After	Impact	Snapshot	0	6
+4284	AL	2017	After	Impact	Snapshot	0	2
+4285	AL	2017	After	Impact	Snapshot	1	3
+4286	AL	2017	After	Impact	Snapshot	0	4
+4287	AL	2017	After	Impact	Snapshot	0	2
+4288	AL	2017	After	Impact	Snapshot	0	2
+4289	AL	2017	After	Impact	Snapshot	0	2
+4290	AL	2017	After	Impact	Snapshot	0	6
+4291	AL	2017	After	Impact	Snapshot	0	1
+4292	AL	2017	After	Impact	Snapshot	0	2
+4293	AL	2017	After	Impact	Snapshot	0	2
+4294	AL	2017	After	Impact	Snapshot	0	1
+4295	AL	2017	After	Impact	Snapshot	0	2
+4296	AL	2017	After	Impact	Snapshot	0	1
+4297	AL	2017	After	Impact	Snapshot	0	3
+4298	AL	2017	After	Impact	Snapshot	0	42
+4299	AL	2017	After	Impact	Snapshot	0	40
+4300	AL	2017	After	Impact	Snapshot	0	40
+4301	AL	2017	After	Impact	Snapshot	0	18
+4302	AL	2017	After	Impact	Snapshot	1	15
+4303	AL	2017	After	Impact	Snapshot	3	4
+4304	AL	2017	After	Impact	Snapshot	0	31
+4305	AL	2017	After	Impact	Snapshot	0	120
+4306	AL	2017	After	Impact	Snapshot	0	84
+4307	AL	2017	After	Impact	Snapshot	0	32
+4308	AL	2017	After	Impact	Snapshot	0	108
+4309	AL	2017	After	Impact	Snapshot	0	23
+4310	AL	2017	After	Impact	Snapshot	1	23
+4311	AL	2017	After	Impact	Snapshot	2	24
+4312	AL	2017	After	Impact	Snapshot	0	20
+4313	AL	2017	After	Impact	Snapshot	1	2
+4314	AL	2017	After	Impact	Snapshot	0	11
+4315	AL	2017	After	Impact	Snapshot	0	3
+4316	AL	2017	After	Impact	Snapshot	0	7
+4317	AL	2017	After	Impact	Snapshot	0	28
+4318	AL	2017	After	Impact	Snapshot	0	4
+4319	AL	2017	After	Impact	Snapshot	1	2
+4320	AL	2017	After	Impact	Snapshot	0	4
+4321	AL	2017	After	Impact	Snapshot	0	5
+4322	AL	2017	After	Impact	Snapshot	0	30
+4323	AL	2017	After	Impact	Snapshot	0	38
+4324	AL	2017	After	Impact	Snapshot	0	56
+4325	AL	2017	After	Impact	Snapshot	0	13
+4326	AL	2017	After	Impact	Snapshot	0	1
+4327	AL	2017	After	Impact	Snapshot	0	34
+4328	AL	2017	After	Impact	Snapshot	1	7
+4329	AL	2017	After	Impact	Snapshot	0	18
+4330	AL	2017	After	Impact	Snapshot	0	38
+4331	AL	2017	After	Impact	Snapshot	0	1
+4332	AL	2017	After	Impact	Snapshot	0	2
+4333	AL	2017	After	Impact	Snapshot	0	2
+4334	AL	2017	After	Impact	Snapshot	0	1
+4335	AL	2017	After	Impact	Snapshot	0	4
+4336	AL	2017	After	Impact	Snapshot	0	7
+4337	AL	2017	After	Impact	Snapshot	0	2
+4338	AL	2017	After	Impact	Snapshot	2	6
+4339	AL	2017	After	Impact	Snapshot	0	2
+4340	AL	2017	After	Impact	Snapshot	1	3
+4341	AL	2017	After	Impact	Snapshot	0	15
+4342	AL	2017	After	Impact	Snapshot	0	1
+4343	AL	2017	After	Impact	Snapshot	1	6
+4344	AL	2017	After	Impact	Snapshot	2	7
+4345	AL	2017	After	Impact	Snapshot	0	9
+4346	AL	2017	After	Impact	Snapshot	0	7
+4347	AL	2017	After	Impact	Snapshot	3	16
+4348	AL	2017	After	Impact	Snapshot	0	17
+4349	AL	2017	After	Impact	Snapshot	0	1
+4350	AL	2017	After	Impact	Snapshot	0	10
+4351	AL	2017	After	Impact	Snapshot	0	1
+4352	AL	2017	After	Impact	Snapshot	0	1
+4353	AL	2017	After	Impact	Snapshot	0	8
+4354	AL	2017	After	Impact	Snapshot	0	1
+4355	AL	2017	After	Impact	Snapshot	0	7
+4356	AL	2017	After	Impact	Snapshot	0	1
+4357	AL	2017	After	Impact	Snapshot	0	1
+4358	AL	2017	After	Impact	Snapshot	0	2
+4359	AL	2017	After	Impact	Snapshot	0	9
+4360	AL	2017	After	Impact	Snapshot	0	4
+4361	AL	2017	After	Impact	Snapshot	0	2
+4362	AL	2017	After	Impact	Snapshot	0	1
+4363	AL	2017	After	Impact	Snapshot	0	1
+4364	AL	2017	After	Impact	Snapshot	1	1
+4365	AL	2017	After	Impact	Snapshot	0	3
+4366	AL	2017	After	Impact	Snapshot	0	1
+4367	AL	2017	After	Impact	Snapshot	0	1
+4368	AL	2017	After	Impact	Snapshot	1	3
+4369	AL	2017	After	Impact	Snapshot	0	1
+4370	AL	2017	After	Impact	Snapshot	1	3
+4371	AL	2017	After	Impact	Snapshot	0	3
+4372	AL	2017	After	Impact	Snapshot	0	7
+4373	AL	2017	After	Impact	Snapshot	0	12
+4374	AL	2017	After	Impact	Snapshot	0	3
+4375	AL	2017	After	Impact	Snapshot	0	2
+4376	AL	2017	After	Impact	Snapshot	0	1
+4377	AL	2017	After	Impact	Snapshot	0	3
+4378	AL	2017	After	Impact	Snapshot	0	7
+4379	AL	2017	After	Impact	Snapshot	1	6
+4380	AL	2017	After	Impact	Snapshot	0	5
+4381	AL	2017	After	Impact	Snapshot	0	5
+4382	AL	2017	After	Impact	Snapshot	0	2
+4383	AL	2017	After	Impact	Snapshot	0	3
+4384	AL	2017	After	Impact	Snapshot	0	2
+4385	AL	2017	After	Impact	Snapshot	0	1
+4386	AL	2017	After	Impact	Snapshot	0	1
+4387	AL	2017	After	Impact	Snapshot	0	1
+4388	AL	2017	After	Impact	Snapshot	0	2
+4389	AL	2017	After	Impact	Snapshot	0	2
+4390	AL	2017	After	Impact	Snapshot	0	2
+4391	AL	2017	After	Impact	Snapshot	0	1
+4392	AL	2017	After	Impact	Snapshot	0	2
+4393	AL	2017	After	Impact	Snapshot	1	1
+4394	AL	2017	After	Impact	Snapshot	0	1
+4395	AL	2017	After	Impact	Snapshot	1	2
+4396	AL	2017	After	Impact	Snapshot	0	1
+4397	AL	2017	After	Impact	Snapshot	0	1
+4398	AL	2017	After	Impact	Snapshot	0	2
+4399	ATT	2017	After	Control	Snapshot	1	3
+4400	ATT	2017	After	Control	Snapshot	4	5
+4401	ATT	2017	After	Control	Snapshot	5	6
+4402	ATT	2017	After	Control	Snapshot	3	6
+4403	ATT	2017	After	Control	Snapshot	2	5
+4404	ATT	2017	After	Control	Snapshot	17	17
+4405	ATT	2017	After	Control	Snapshot	13	13
+4406	ATT	2017	After	Control	Snapshot	2	3
+4407	ATT	2017	After	Control	Snapshot	1	3
+4408	ATT	2017	After	Control	Snapshot	3	5
+4409	ATT	2017	After	Control	Snapshot	2	7
+4410	ATT	2017	After	Control	Snapshot	1	4
+4411	ATT	2017	After	Control	Snapshot	2	2
+4412	ATT	2017	After	Control	Snapshot	3	3
+4413	ATT	2017	After	Control	Snapshot	2	3
+4414	ATT	2017	After	Control	Snapshot	3	8
+4415	ATT	2017	After	Control	Snapshot	0	1
+4416	ATT	2017	After	Control	Snapshot	1	1
+4417	ATT	2017	After	Control	Snapshot	11	12
+4418	ATT	2017	After	Control	Snapshot	11	13
+4419	ATT	2017	After	Control	Snapshot	1	1
+4420	ATT	2017	After	Control	Snapshot	15	19
+4421	ATT	2017	After	Control	Snapshot	9	11
+4422	ATT	2017	After	Control	Snapshot	0	2
+4423	ATT	2017	After	Control	Snapshot	6	6
+4424	ATT	2017	After	Control	Snapshot	5	11
+4425	ATT	2017	After	Control	Snapshot	9	13
+4426	ATT	2017	After	Control	Snapshot	5	5
+4427	ATT	2017	After	Control	Snapshot	3	4
+4428	ATT	2017	After	Control	Snapshot	1	1
+4429	ATT	2017	After	Control	Snapshot	3	7
+4430	ATT	2017	After	Control	Snapshot	3	4
+4431	ATT	2017	After	Control	Snapshot	1	2
+4432	ATT	2017	After	Control	Snapshot	7	8
+4433	ATT	2017	After	Control	Snapshot	2	4
+4434	ATT	2017	After	Control	Snapshot	0	1
+4435	ATT	2017	After	Control	Snapshot	4	4
+4436	ATT	2017	After	Control	Snapshot	4	4
+4437	ATT	2017	After	Control	Snapshot	6	10
+4438	ATT	2017	After	Control	Snapshot	2	4
+4439	ATT	2017	After	Control	Snapshot	4	4
+4440	ATT	2017	After	Control	Snapshot	1	1
+4441	ATT	2017	After	Control	Snapshot	5	6
+4442	ATT	2017	After	Control	Snapshot	0	1
+4443	ATT	2017	After	Control	Snapshot	3	4
+4444	ATT	2017	After	Control	Snapshot	3	4
+4445	ATT	2017	After	Control	Snapshot	2	3
+4446	ATT	2017	After	Control	Snapshot	4	4
+4447	ATT	2017	After	Control	Snapshot	2	3
+4448	ATT	2017	After	Control	Snapshot	4	7
+4449	ATT	2017	After	Control	Snapshot	1	2
+4450	ATT	2017	After	Control	Snapshot	0	3
+4451	ATT	2017	After	Control	Snapshot	1	1
+4452	ATT	2017	After	Control	Snapshot	7	10
+4453	ATT	2017	After	Control	Snapshot	8	9
+4454	ATT	2017	After	Control	Snapshot	9	10
+4455	ATT	2017	After	Control	Snapshot	3	4
+4456	ATT	2017	After	Control	Snapshot	6	11
+4457	ATT	2017	After	Control	Snapshot	0	1
+4458	ATT	2017	After	Control	Snapshot	0	2
+4459	ATT	2017	After	Control	Snapshot	1	1
+4460	ATT	2017	After	Control	Snapshot	3	3
+4461	ATT	2017	After	Control	Snapshot	0	1
+4462	ATT	2017	After	Control	Snapshot	1	1
+4463	ATT	2017	After	Control	Snapshot	2	3
+4464	ATT	2017	After	Control	Snapshot	7	8
+4465	ATT	2017	After	Control	Snapshot	2	3
+4466	ATT	2017	After	Control	Snapshot	7	11
+4467	ATT	2017	After	Control	Snapshot	0	2
+4468	ATT	2017	After	Control	Snapshot	2	7
+4469	ATT	2017	After	Control	Snapshot	2	2
+4470	ATT	2017	After	Control	Snapshot	0	5
+4471	ATT	2017	After	Control	Snapshot	1	4
+4472	ATT	2017	After	Control	Snapshot	0	1
+4473	ATT	2017	After	Control	Snapshot	1	2
+4474	ATT	2017	After	Control	Snapshot	0	2
+4475	ATT	2017	After	Control	Snapshot	0	6
+4476	ATT	2017	After	Control	Snapshot	6	8
+4477	ATT	2017	After	Control	Snapshot	1	1
+4478	ATT	2017	After	Control	Snapshot	1	1
+4479	ATT	2017	After	Control	Snapshot	0	1
+4480	ATT	2017	After	Control	Snapshot	0	2
+4481	ATT	2017	After	Control	Snapshot	0	1
+4482	ATT	2017	After	Control	Snapshot	0	1
+4483	ATT	2017	After	Control	Snapshot	1	2
+4484	ATT	2017	After	Control	Snapshot	0	1
+4485	ATT	2017	After	Control	Snapshot	2	3
+4486	ATT	2017	After	Control	Snapshot	2	6
+4487	ATT	2017	After	Control	Snapshot	0	1
+4488	ATT	2017	After	Control	Snapshot	2	5
+4489	ATT	2017	After	Control	Snapshot	0	3
+4490	ATT	2017	After	Control	Snapshot	2	7
+4491	ATT	2017	After	Control	Snapshot	5	8
+4492	ATT	2017	After	Control	Snapshot	0	6
+4493	ATT	2017	After	Control	Snapshot	0	4
+4494	ATT	2017	After	Control	Snapshot	0	2
+4495	ATT	2017	After	Control	Snapshot	0	6
+4496	ATT	2017	After	Control	Snapshot	1	1
+4497	ATT	2017	After	Control	Snapshot	1	1
+4498	ATT	2017	After	Control	Snapshot	0	1
+4499	ATT	2017	After	Control	Snapshot	0	1
+4500	ATT	2017	After	Control	Snapshot	0	2
+4501	ATT	2017	After	Control	Snapshot	1	2
+4502	ATT	2017	After	Control	Snapshot	0	2
+4503	ATT	2017	After	Control	Snapshot	2	2
+4504	ATT	2017	After	Control	Snapshot	6	7
+4505	ATT	2017	After	Control	Snapshot	2	3
+4506	ATT	2017	After	Control	Snapshot	0	1
+4507	ATT	2017	After	Control	Snapshot	0	1
+4508	ATT	2017	After	Control	Snapshot	2	2
+4509	ATT	2017	After	Control	Snapshot	7	7
+4510	ATT	2017	After	Control	Snapshot	1	1
+4511	ATT	2017	After	Control	Snapshot	1	2
+4512	ATT	2017	After	Control	Snapshot	3	3
+4513	ATT	2017	After	Control	Snapshot	3	6
+4514	ATT	2017	After	Control	Snapshot	0	1
+4515	ATT	2017	After	Control	Snapshot	1	1
+4516	ATT	2017	After	Control	Snapshot	2	2
+4517	BR	2017	After	Control	Snapshot	8	8
+4518	BR	2017	After	Control	Snapshot	1	1
+4519	BR	2017	After	Control	Snapshot	26	27
+4520	BR	2017	After	Control	Snapshot	26	30
+4521	BR	2017	After	Control	Snapshot	5	6
+4522	BR	2017	After	Control	Snapshot	9	11
+4523	BR	2017	After	Control	Snapshot	7	14
+4524	BR	2017	After	Control	Snapshot	11	11
+4525	BR	2017	After	Control	Snapshot	10	11
+4526	BR	2017	After	Control	Snapshot	19	23
+4527	BR	2017	After	Control	Snapshot	13	19
+4528	BR	2017	After	Control	Snapshot	13	14
+4529	BR	2017	After	Control	Snapshot	0	1
+4530	BR	2017	After	Control	Snapshot	0	1
+4531	BR	2017	After	Control	Snapshot	3	3
+4532	BR	2017	After	Control	Snapshot	3	4
+4533	BR	2017	After	Control	Snapshot	1	4
+4534	BR	2017	After	Control	Snapshot	9	9
+4535	BR	2017	After	Control	Snapshot	1	3
+4536	BR	2017	After	Control	Snapshot	14	15
+4537	BR	2017	After	Control	Snapshot	2	3
+4538	BR	2017	After	Control	Snapshot	9	9
+4539	BR	2017	After	Control	Snapshot	16	17
+4540	BR	2017	After	Control	Snapshot	9	9
+4541	BR	2017	After	Control	Snapshot	1	1
+4542	BR	2017	After	Control	Snapshot	3	3
+4543	BR	2017	After	Control	Snapshot	8	11
+4544	BR	2017	After	Control	Snapshot	4	9
+4545	BR	2017	After	Control	Snapshot	2	2
+4546	BR	2017	After	Control	Snapshot	6	6
+4547	BR	2017	After	Control	Snapshot	1	1
+4548	BR	2017	After	Control	Snapshot	3	3
+4549	BR	2017	After	Control	Snapshot	2	2
+4550	BR	2017	After	Control	Snapshot	3	4
+4551	BR	2017	After	Control	Snapshot	1	1
+4552	BR	2017	After	Control	Snapshot	10	14
+4553	BR	2017	After	Control	Snapshot	8	8
+4554	BR	2017	After	Control	Snapshot	6	7
+4555	BR	2017	After	Control	Snapshot	0	2
+4556	BR	2017	After	Control	Snapshot	4	4
+4557	BR	2017	After	Control	Snapshot	1	1
+4558	BR	2017	After	Control	Snapshot	5	7
+4559	BR	2017	After	Control	Snapshot	9	13
+4560	BR	2017	After	Control	Snapshot	20	23
+4561	BR	2017	After	Control	Snapshot	0	1
+4562	BR	2017	After	Control	Snapshot	11	11
+4563	BR	2017	After	Control	Snapshot	5	7
+4564	BR	2017	After	Control	Snapshot	6	13
+4565	BR	2017	After	Control	Snapshot	8	8
+4566	BR	2017	After	Control	Snapshot	0	1
+4567	BR	2017	After	Control	Snapshot	1	2
+4568	BR	2017	After	Control	Snapshot	7	12
+4569	BR	2017	After	Control	Snapshot	35	37
+4570	BR	2017	After	Control	Snapshot	0	3
+4571	BR	2017	After	Control	Snapshot	0	1
+4572	BR	2017	After	Control	Snapshot	6	6
+4573	BR	2017	After	Control	Snapshot	6	11
+4574	BR	2017	After	Control	Snapshot	4	6
+4575	BR	2017	After	Control	Snapshot	16	24
+4576	BR	2017	After	Control	Snapshot	7	11
+4577	BR	2017	After	Control	Snapshot	2	2
+4578	BR	2017	After	Control	Snapshot	3	5
+4579	BR	2017	After	Control	Snapshot	7	10
+4580	BR	2017	After	Control	Snapshot	11	13
+4581	BR	2017	After	Control	Snapshot	1	9
+4582	BR	2017	After	Control	Snapshot	1	3
+4583	BR	2017	After	Control	Snapshot	0	2
+4584	BR	2017	After	Control	Snapshot	6	12
+4585	BR	2017	After	Control	Snapshot	10	12
+4586	BR	2017	After	Control	Snapshot	1	2
+4587	BR	2017	After	Control	Snapshot	1	1
+4588	BR	2017	After	Control	Snapshot	7	10
+4589	BR	2017	After	Control	Snapshot	2	2
+4590	BR	2017	After	Control	Snapshot	0	2
+4591	BR	2017	After	Control	Snapshot	0	1
+4592	BR	2017	After	Control	Snapshot	3	4
+4593	BR	2017	After	Control	Snapshot	1	2
+4594	BR	2017	After	Control	Snapshot	4	4
+4595	BR	2017	After	Control	Snapshot	7	7
+4596	BR	2017	After	Control	Snapshot	14	14
+4597	BR	2017	After	Control	Snapshot	2	2
+4598	BR	2017	After	Control	Snapshot	0	1
+4599	BR	2017	After	Control	Snapshot	1	2
+4600	BR	2017	After	Control	Snapshot	3	3
+4601	BR	2017	After	Control	Snapshot	0	1
+4602	BR	2017	After	Control	Snapshot	1	1
+4603	BR	2017	After	Control	Snapshot	2	2
+4604	BR	2017	After	Control	Snapshot	1	1
+4605	BR	2017	After	Control	Snapshot	2	2
+4606	BR	2017	After	Control	Snapshot	7	9
+4607	BR	2017	After	Control	Snapshot	4	5
+4608	BR	2017	After	Control	Snapshot	0	3
+4609	BS	2017	After	Control	Snapshot	12	14
+4610	BS	2017	After	Control	Snapshot	6	10
+4611	BS	2017	After	Control	Snapshot	9	15
+4612	BS	2017	After	Control	Snapshot	2	3
+4613	BS	2017	After	Control	Snapshot	18	28
+4614	BS	2017	After	Control	Snapshot	19	26
+4615	BS	2017	After	Control	Snapshot	16	20
+4616	BS	2017	After	Control	Snapshot	7	7
+4617	BS	2017	After	Control	Snapshot	2	2
+4618	BS	2017	After	Control	Snapshot	1	4
+4619	BS	2017	After	Control	Snapshot	16	22
+4620	BS	2017	After	Control	Snapshot	1	3
+4621	BS	2017	After	Control	Snapshot	3	4
+4622	DR	2017	After	Control	Snapshot	2	10
+4623	DR	2017	After	Control	Snapshot	25	33
+4624	DR	2017	After	Control	Snapshot	3	3
+4625	DR	2017	After	Control	Snapshot	2	3
+4626	DR	2017	After	Control	Snapshot	23	37
+4627	DR	2017	After	Control	Snapshot	2	2
+4628	DR	2017	After	Control	Snapshot	4	4
+4629	DR	2017	After	Control	Snapshot	10	12
+4630	DR	2017	After	Control	Snapshot	19	19
+4631	DR	2017	After	Control	Snapshot	2	2
+4632	DR	2017	After	Control	Snapshot	8	8
+4633	DR	2017	After	Control	Snapshot	23	23
+4634	DR	2017	After	Control	Snapshot	2	3
+4635	DR	2017	After	Control	Snapshot	14	16
+4636	DR	2017	After	Control	Snapshot	7	7
+4637	DR	2017	After	Control	Snapshot	13	13
+4638	DR	2017	After	Control	Snapshot	25	25
+4639	DR	2017	After	Control	Snapshot	9	13
+4640	DR	2017	After	Control	Snapshot	26	26
+4641	DR	2017	After	Control	Snapshot	18	23
+4642	DR	2017	After	Control	Snapshot	5	13
+4643	DR	2017	After	Control	Snapshot	17	27
+4644	DR	2017	After	Control	Snapshot	2	2
+4645	DR	2017	After	Control	Snapshot	0	2
+4646	DR	2017	After	Control	Snapshot	3	4
+4647	DR	2017	After	Control	Snapshot	9	18
+4648	DR	2017	After	Control	Snapshot	0	2
+4649	DR	2017	After	Control	Snapshot	2	2
+4650	DR	2017	After	Control	Snapshot	8	8
+4651	DR	2017	After	Control	Snapshot	1	1
+4652	DR	2017	After	Control	Snapshot	0	1
+4653	DR	2017	After	Control	Snapshot	1	7
+4654	DR	2017	After	Control	Snapshot	4	4
+4655	DR	2017	After	Control	Snapshot	1	2
+4656	DR	2017	After	Control	Snapshot	0	1
+4657	DR	2017	After	Control	Snapshot	1	1
+4658	DR	2017	After	Control	Snapshot	0	3
+4659	DR	2017	After	Control	Snapshot	1	1
+4660	DR	2017	After	Control	Snapshot	0	1
+4661	NB	2017	After	Control	Snapshot	11	12
+4662	NB	2017	After	Control	Snapshot	22	22
+4663	NB	2017	After	Control	Snapshot	4	10
+4664	NB	2017	After	Control	Snapshot	6	8
+4665	NB	2017	After	Control	Snapshot	5	10
+4666	NB	2017	After	Control	Snapshot	1	4
+4667	NB	2017	After	Control	Snapshot	4	6
+4668	NB	2017	After	Control	Snapshot	13	16
+4669	NB	2017	After	Control	Snapshot	5	5
+4670	NB	2017	After	Control	Snapshot	5	7
+4671	NB	2017	After	Control	Snapshot	4	6
+4672	NB	2017	After	Control	Snapshot	1	1
+4673	NB	2017	After	Control	Snapshot	4	9
+4674	NB	2017	After	Control	Snapshot	1	1
+4675	NB	2017	After	Control	Snapshot	0	1
+4676	NB	2017	After	Control	Snapshot	1	1
+4677	NB	2017	After	Control	Snapshot	0	2
+4678	Pop9	2017	After	Control	Snapshot	4	5
+4679	Pop9	2017	After	Control	Snapshot	0	1
+4680	Pop9	2017	After	Control	Snapshot	1	5
+4681	Pop9	2017	After	Control	Snapshot	3	5
+4682	Pop9	2017	After	Control	Snapshot	0	2
+4683	Pop9	2017	After	Control	Snapshot	15	18
+4684	Pop9	2017	After	Control	Snapshot	7	7
+4685	Pop9	2017	After	Control	Snapshot	2	3
+4686	Pop9	2017	After	Control	Snapshot	3	3
+4687	Pop9	2017	After	Control	Snapshot	1	6
+4688	Pop9	2017	After	Control	Snapshot	2	3
+4689	Pop9	2017	After	Control	Snapshot	1	1
+4690	Pop9	2017	After	Control	Snapshot	1	4
+4691	Pop9	2017	After	Control	Snapshot	7	9
+4692	Pop9	2017	After	Control	Snapshot	9	10
+4693	Pop9	2017	After	Control	Snapshot	4	4
+4694	Pop9	2017	After	Control	Snapshot	1	12
+4695	Pop9	2017	After	Control	Snapshot	2	2
+4696	Pop9	2017	After	Control	Snapshot	0	1
+4697	Pop9	2017	After	Control	Snapshot	5	6
+4698	Pop9	2017	After	Control	Snapshot	4	10
+4699	Pop9	2017	After	Control	Snapshot	0	1
+4700	Pop9	2017	After	Control	Snapshot	1	2
+4701	Pop9	2017	After	Control	Snapshot	4	5
+4702	Pop9	2017	After	Control	Snapshot	0	2
+4703	Pop9	2017	After	Control	Snapshot	0	2
+4704	Pop9	2017	After	Control	Snapshot	5	11
+4705	Pop9	2017	After	Control	Snapshot	21	22
+4706	Pop9	2017	After	Control	Snapshot	1	1
+4707	Pop9	2017	After	Control	Snapshot	1	1
+4708	Pop9	2017	After	Control	Snapshot	2	3
+4709	Pop9	2017	After	Control	Snapshot	0	1
+4710	Pop9	2017	After	Control	Snapshot	3	4
+4711	Pop9	2017	After	Control	Snapshot	0	2
+4712	Pop9	2017	After	Control	Snapshot	0	1
+4713	Pop9	2017	After	Control	Snapshot	1	5
+4714	Pop9	2017	After	Control	Snapshot	1	2
+4715	Pop9	2017	After	Control	Snapshot	2	3
+4716	Pop9	2017	After	Control	Snapshot	3	6
+4717	Pop9	2017	After	Control	Snapshot	12	19
+4718	Pop9	2017	After	Control	Snapshot	3	3
+4719	Pop9	2017	After	Control	Snapshot	0	2
+4720	Pop9	2017	After	Control	Snapshot	3	3
+4721	Pop9	2017	After	Control	Snapshot	0	1
+4722	Pop9	2017	After	Control	Snapshot	1	2

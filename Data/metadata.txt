@@ -1,0 +1,50 @@
+This is the metadata file describing the data used in:
+Pardini, E. A., Parsons, L. S., Ştefan, V., & Knight, T. M. (2018). GLMM BACI environmental impact analysis shows coastal dune restoration reduces seed predation on an endangered plant. Restoration Ecology, 26(6), 1190-1194.
+
+Data collected at Point Reyes National Seashore.
+See more details in Supporting Information:
+https://onlinelibrary.wiley.com/action/downloadSupplement?doi=10.1111%2Frec.12678&file=rec12678-sup-0001-AppendixS1.pdf
+
+
+VARIABLES from "baci_predation_data.txt" data file:
+
+obs       - The row ids. Integer type, range of values from 1 to 4722.
+
+site      - The acronyms of the seven sites used in the study.
+            Character type: "AL", "ATT", "BR", "BS", "DR", "NB", "Pop9".
+            The impact site considered in the study is "AL" (Abbotts Lagoon).
+            The six control sites are: "ATT", "BR", "BS", "DR", "NB", "Pop9".
+
+year      - The year when the data was collected.
+            Integer type, range of values from 2005 to 2017.
+
+period    - Indicates the moment before or after the considered impact (restoration occurred between 2010 and 2011).
+            Character type: "After", "Before".
+
+treatment - The type of treatment.
+            Character type: "Control", "Impact".
+            "Impact" means restoration by mechanical methods (excavator and burial).
+
+method    - The method used for quantifying the pre-dispersal seed predation.
+            Character type: "Marked racemes", "Snapshot".
+            See more details in Supporting Information:
+            https://onlinelibrary.wiley.com/action/downloadSupplement?doi=10.1111%2Frec.12678&file=rec12678-sup-0001-AppendixS1.pdf
+
+cl        - Number of clipped (consumed) racemes.
+            Integer type, range of values from 0 to 92.
+
+notab     - Number of not aborted racemes.
+            Integer type, range of values from 1 to 120.
+
+
+The data file "baci_predation_data.txt" was saved under "UTF-8" encoding, using "." as decimal separator and is a tab-delimited text file.
+
+In particular, the "baci_predation_data.txt" file was derived from the raw field data (extra variables not used in the analysis were dropped) and saved with an R command similar to this:
+
+write.table(x = raw_data,
+            file = "./data/baci_predation_data.txt",
+            quote = FALSE,
+            sep = "\t",
+            dec = ".",
+            row.names = FALSE,
+            fileEncoding = "UTF-8")

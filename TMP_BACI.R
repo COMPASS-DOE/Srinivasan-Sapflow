@@ -34,34 +34,60 @@ tmp_baci <- tmpfull %>%
   mutate(Date = as_date(date(TIMESTAMP)),
          Hour = hour(TIMESTAMP)) %>%
   filter(Hour <= 12, Hour >= 11, 
-         Plot != "Freshwater") %>%
+         Plot != "Freshwater", 
+         Species == "Tulip Poplar") %>%
   filter(Date >= weeks_start & Date <= weeks_end) %>%
   mutate(BA = ifelse(Date < "2022-06-22", "Before", "After")) %>%
   mutate(Day = as.numeric(Date - as_date("2022-06-22")))
 
 #Obtain average F for 11 am - 12 pm period: 
 tmp_baci <- tmp_baci %>%
-  group_by(Date, Plot, Species, ID, Year, Day, BA) %>%
+  group_by(Date, Plot, ID, Year, Day, BA) %>%
   summarise(F_avg = mean(F, na.rm = TRUE))
  
-#Ignore everything after this!! 
 #Testing the following model: 
 # sapflow ~ BA + site + BA*site + (1 | TreeID)
-
-
-
-# Fit model without the interaction of random effects (Site and Year)
 glmm_tmp <- glmer(F_avg ~ BA + Plot + BA*Plot +
-                    (1|ID),
-                  data = tmp_baci, family = binomial)
+                  (1|ID),
+                  data = tmp_baci, family = gaussian)
 
-model.noint <- glmer(F_avg ~ BA + Plot +
-                    (1|ID),
-                  data = tmp_baci, family = binomial)
+#Check model assumptions (visually)
+
+qqnorm(residuals(glmm_tmp), 
+       main = "Q-Q plot - residuals")
+qqline(residuals(glmm_tmp), col="red")
+#Looks normal
+
+# inspecting the random effects (see also Bolker, 2009 - supp 1)
+qqnorm(unlist(ranef(glmm_tmp)), 
+       main = "Q-Q plot, random effects")
+qqline(unlist(ranef(glmm_tmp)), col="red")
+#Looks normal... ish? Weird outliers?
+
+# fitted vs residuals
+scatter.smooth(fitted(glmm_tmp), 
+               residuals(glmm_tmp, type="pearson"),
+               main="fitted vs residuals",
+               xlab="Fitted Values", ylab="Residuals")
+abline(h=0, col="red")
+
+# fitted vs observed
+scatter.smooth(fitted(glmm_tmp), tmp_baci$F_avg,
+               xlab="Fitted Values", ylab="Observed F_avg")
+abline(0,1, col="red")
+
+#Test for statistical significance of BACI interaction term
+# Using a parametric bootstrap comparison between nested models
+# (see Halekoh & Højsgaard 2014 and Bolker, 2009 - supp 1)
+
+#Model without BACI interaction
+model.noint <- glmer(F_avg ~ BA+Plot +
+                               (1|ID), 
+                             data = tmp_baci, family = gaussian)
 
 refdist.pb.100.interaction <- PBrefdist(largeModel = glmm_tmp, 
                                         smallModel = model.noint, 
-                                        nsim = 100, seed = 1989)
+                                        nsim = 100, seed = 2004)
 
 compar.interaction.100 <- PBmodcomp(largeModel = glmm_tmp, 
                                     smallModel = model.noint,
