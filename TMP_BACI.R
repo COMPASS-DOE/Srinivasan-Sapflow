@@ -40,7 +40,7 @@ tempest_events %>%
          flood_end = ymd(flood_end)) -> events
 
 #window of data to look at
-window <- days(14)
+window <- days(15)
 
 #Tidy up our data: 
 full_data %>%
@@ -51,33 +51,44 @@ full_data %>%
   group_by(Year) %>%
   mutate(data_start = flood_start - window,
          data_end = flood_end + window) %>%
-  filter(Date > data_start,
-         Date < data_end,
+  filter(Date > data_start & Date < flood_start |
+         Date < data_end & Date > flood_end,
          Hour < 14, Hour >= 11, 
          Plot != "Freshwater",
          Species == "Tulip Poplar") %>%
   ungroup() -> tulip_salt
 
-#[tmp_baci$`F` > 6e-06,]
-ggplot(tmp_baci[tmp_baci$`F` < 6e-06,], aes(Day, `F`, color = ID)) +
+#Obtain average F for 11 am - 2 pm period: 
+tulip_salt %>%
+  group_by(Year) %>%
+  mutate(BA = ifelse(Date > flood_end, "After", "Before"),
+         Year = as.factor(Year),
+         ID = as.factor(ID),
+         BA = as.factor(BA),
+         Plot = as.factor(Plot)) %>%
+  filter(`F` < 6e-06) %>% #remove outliers, ggplot below for confirmation
+  group_by(Date, Plot, ID, Year, BA, flood_start, flood_end) %>%
+  summarise(F_avg = mean(`F`, na.rm = TRUE),
+            n = n()) %>%
+  ungroup()-> tsb_1
+
+#[tulip_salt$`F` > 6e-06,]
+ggplot(tulip_salt[tulip_salt$`F` < 6e-06,],
+       aes(Date, `F`, color = ID)) +
   geom_point() + facet_grid(Plot~Year, scales = "free")
 
-#Obtain average F for 11 am - 2 pm period: 
-tulip_salt_baci <- tulip_salt %>%
-  mutate(BA = ifelse(Date < flood_start, "Before", "After"),
-         Year = as.factor(tulip_salt$Year),
-         ID = as.factor(tulip_salt$ID),
-         BA = as.factor(BA),
-         Plot = as.factor(tulip_salt$Plot)) %>%
-  filter(`F` < 6e-06) %>%
-  group_by(Date, Plot, ID, Year, BA) %>%
-  summarise(F_avg = mean(`F`, na.rm = TRUE),
-            n = length(.))
+ggplot(tsb_1,
+       aes(Date, F_avg, color = ID, shape = BA)) +
+  geom_point() + facet_grid(Plot~Year, scales = "free")
 
-tulip_salt_baci %>%
-  arrange(ID, Year) -> test
 
-ggplot(tmp_baci2, aes(Day, F_avg, color = ID, shape = BA)) +
+tsb_1 %>%
+  group_by(Year) %>%
+  mutate(Day = ifelse(BA == "Before",
+                      - as.numeric(flood_start - Date),
+                      as.numeric(Date - flood_end))) -> tsb_2
+
+ggplot(tsb_2, aes(Day, F_avg, color = ID, shape = BA)) +
   geom_point(size = 2.5) + facet_grid(Plot~Year, scales = "free")
 
 
@@ -85,14 +96,14 @@ ggplot(tmp_baci2, aes(Day, F_avg, color = ID, shape = BA)) +
 Cand.set <- list()
 
 #model.noint
-Cand.set[[1]] <- glmer(sqrt(F_avg) ~ BA + Plot  + BA*Plot +
+Cand.set[[1]] <- glmer(F_avg ~ BA + Plot  + BA*Plot +
                          (1|ID) + (1|Year),
-                       data = tmp_baci2, family = gaussian)
+                       data = tsb_2, family = gaussian)
 #model.int 
-Cand.set[[2]] <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot +
+Cand.set[[2]] <- glmer(F_avg ~ BA + Plot + BA*Plot +
                          (1|ID) + (1|Year) +
                          (1|ID:Year),
-                       data = tmp_baci2, family = gaussian)
+                       data = tsb_2, family = gaussian)
 
 
 
@@ -132,17 +143,17 @@ abline(h=0, col="red")
 #definitely a little right skewed
 
 library(e1071)
-current_skewness <- skewness(tmp_baci2$F_avg)
+current_skewness <- skewness(tsb_2$F_avg)
 print(paste("Current Skewness:", current_skewness))
 
 # Logarithmic Transformation
-log_transformed_response <- log(tmp_baci2$F_avg + 1)
+log_transformed_response <- log(tsb_2$F_avg + 1)
 
 # Square Root Transformation
-sqrt_transformed_response <- sqrt(tmp_baci2$F_avg)
+sqrt_transformed_response <- sqrt(tsb_2$F_avg)
 
 # Inverse Transformation
-inv_transformed_response <- 1 / tmp_baci2$F_avg
+inv_transformed_response <- 1 / tsb_2$F_avg
 
 log_skewness <- skewness(log_transformed_response)
 sqrt_skewness <- skewness(sqrt_transformed_response)
@@ -152,8 +163,32 @@ print(paste("Log Transformation Skewness:", log_skewness))
 print(paste("Square Root Transformation Skewness:", sqrt_skewness))
 print(paste("Inverse Transformation Skewness:", inv_skewness))
 
-ggplot(tmp_baci2, aes(sqrt(F_avg))) + geom_histogram() +
+ggplot(tsb_2, aes(sqrt(F_avg))) + geom_histogram() +
   facet_grid(Plot~.)
+
+#Square Root Transformed normality check
+
+model.int_sr <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot +
+           (1|ID) + (1|Year) +
+           (1|ID:Year),
+         data = tsb_2, family = gaussian)
+
+#check assumptions of normality
+qqnorm(residuals(model.int_sr), 
+       main = "Q-Q plot - residuals")
+qqline(residuals(model.int), col="red")
+
+# inspecting the random effects (see also Bolker, 2009 - supp 1)
+qqnorm(unlist(ranef(model.int_sr)), 
+       main = "Q-Q plot, random effects")
+qqline(unlist(ranef(model.int)), col="red")
+
+# fitted vs residuals
+scatter.smooth(fitted(model.int_sr), 
+               residuals(model.int, type="pearson"),
+               main="fitted vs residuals",
+               xlab="Fitted Values", ylab="Residuals")
+abline(h=0, col="red")
 
 # not sure what this does - ignore for now
   # fitted vs observed
