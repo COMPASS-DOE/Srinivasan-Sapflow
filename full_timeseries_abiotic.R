@@ -16,10 +16,10 @@ variables <- c("sapflow_2.5cm", "soil_vwc_15cm")
 pat <- paste0("^", site, ".*csv$")
 
 #Lists of data for different years for TEMPEST
-files_T24 <- list.files("C:/Users/srin662/OneDrive - PNNL/Documents/R/TMP_2024/", pattern = pat, recursive = TRUE, full.names = TRUE)
-files_T23 <- list.files("C:/Users/srin662/OneDrive - PNNL/Documents/R/TMP_2023/", pattern = pat, recursive = TRUE, full.names = TRUE)
-files_T22 <- list.files("C:/Users/srin662/OneDrive - PNNL/Documents/R/TMP_2022/", pattern = pat, recursive = TRUE, full.names = TRUE)
-files_T21 <- list.files("C:/Users/srin662/OneDrive - PNNL/Documents/R/TMP_2021/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_T24 <- list.files("C:/Users/srin662/Documents/R/TMP_2024/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_T23 <- list.files("C:/Users/srin662/Documents/R/TMP_2023/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_T22 <- list.files("C:/Users/srin662/Documents/R/TMP_2022/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_T21 <- list.files("C:/Users/srin662/Documents/R/TMP_2021/", pattern = pat, recursive = TRUE, full.names = TRUE)
 
 files_T <- c(files_T24, files_T23, files_T22, files_T21)
 
