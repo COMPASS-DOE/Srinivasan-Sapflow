@@ -201,7 +201,7 @@ ggplot(tsb_2, aes(sqrt(F_avg))) + geom_histogram() +
 
 qqnorm(residuals(model.int_sr), 
        main = "Q-Q plot - residuals")
-qqline(residuals(model.int), col="red")
+qqline(residuals(model.int_sr), col="red")
 ```
 
 Check again for normality of random effects using this transformed model: 
@@ -210,11 +210,11 @@ Check again for normality of random effects using this transformed model:
 # inspecting the random effects (see also Bolker, 2009 - supp 1)
 qqnorm(unlist(ranef(model.int_sr)), 
        main = "Q-Q plot, random effects")
-qqline(unlist(ranef(model.int)), col="red")
+qqline(unlist(ranef(model.int_sr)), col="red")
 
 # fitted vs residuals
 scatter.smooth(fitted(model.int_sr), 
-               residuals(model.int, type="pearson"),
+               residuals(model.int_sr, type="pearson"),
                main="fitted vs residuals",
                xlab="Fitted Values", ylab="Residuals")
 abline(h=0, col="red")
@@ -224,12 +224,16 @@ Looks good!
 Lastly, test for the significance of the BACI interaction term using a parametric bootstrap comparison between nested models: 
 
 ```{r}
+model.noint_sr <- glmer(sqrt(F_avg) ~ BA + Plot  + BA*Plot +
+                         (1|ID) + (1|Year),
+                       data = tsb_2, family = gaussian)
+
 refdist.pb.100.interaction <- PBrefdist(largeModel = model.int_sr, 
-                                        smallModel = model.noint, 
+                                        smallModel = model.noint_sr, 
                                         nsim = 100, seed = 1989)
 
 compar.interaction.100 <- PBmodcomp(largeModel = model.int_sr, 
-                                    smallModel = model.noint,
+                                    smallModel = model.noint_sr,
                                     ref = refdist.pb.100.interaction)
 compar.interaction.100
 ```
