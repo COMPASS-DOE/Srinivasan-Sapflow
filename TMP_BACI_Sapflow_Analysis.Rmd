@@ -226,8 +226,8 @@ Looks good!
 Lastly, test for the significance of the BACI interaction term using a parametric bootstrap comparison between nested models: 
 
 ```{r warning = FALSE}
-model.noint_sr <- glmer(sqrt(F_avg) ~ BA + Plot  + BA*Plot +
-                         (1|ID) + (1|Year),
+model.noint_sr <- glmer(sqrt(F_avg) ~ BA + Plot +
+                         (1|ID) + (1|Year) + (1|ID:Year),
                        data = tsb_2, family = gaussian)
 
 refdist.pb.100.interaction <- PBrefdist(largeModel = model.int_sr, 
