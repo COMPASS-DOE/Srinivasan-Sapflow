@@ -86,14 +86,14 @@ tulip_salt %>%
          ID = as.factor(ID),
          BA = as.factor(BA),
          Plot = as.factor(Plot)) %>%
-  filter(`F` < 6e-06) %>% #remove outliers, ggplot below for confirmation
+  filter(`F` < 4e-06) %>% #remove outliers, ggplot below for confirmation
   group_by(Date, Plot, ID, Year, BA, flood_start, flood_end) %>%
   summarise(F_avg = mean(`F`, na.rm = TRUE),
             n = n()) %>%
   ungroup()-> tsb_1
 
 
-ggplot(tulip_salt[tulip_salt$`F` < 6e-06,],
+ggplot(tulip_salt[tulip_salt$`F` < 4e-06,],
        aes(Date, `F`, color = ID)) +
   geom_point() + facet_grid(Plot~Year, scales = "free")
 
@@ -198,12 +198,20 @@ model.int_sr <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot +
            (1|ID:Year),
          data = tsb_2, family = gaussian)
 
+library(car)
+
+Anova(model.int_sr, type = "III")
+
 ggplot(tsb_2, aes(sqrt(F_avg))) + geom_histogram() +
   facet_grid(Plot~.)
 
-qqnorm(residuals(model.int_sr), 
-       main = "Q-Q plot - residuals")
-qqline(residuals(model.int_sr), col="red")
+qqnorm(predict(model.int_sr), 
+       main = "Q-Q, Predicted vs Observed \n square root transformed")
+qqline(predict(model.int_sr), col="red")
+
+qqnorm(predict(model.int), 
+       main = "Q-Q, Predicted vs Observed \n untransformed")
+qqline(predict(model.int), col="red")
 ```
 
 Check again for normality of random effects using this transformed model: 
@@ -232,14 +240,14 @@ model.noint_sr <- glmer(sqrt(F_avg) ~ BA + Plot +
 
 refdist.pb.100.interaction <- PBrefdist(largeModel = model.int_sr, 
                                         smallModel = model.noint_sr, 
-                                        nsim = 100, seed = 1989)
+                                        nsim = 100)
 
 compar.interaction.100 <- PBmodcomp(largeModel = model.int_sr, 
                                     smallModel = model.noint_sr,
                                     ref = refdist.pb.100.interaction)
 compar.interaction.100
 ```
-Both the limited ratio test and the parametric bootstrap test yield statistically significant p-values. This indicates that the BACI interaction term does have a statistically significant effect in the glmm. 
+Both the likelihood ratio test and the parametric bootstrap test show no evidence of an impact of saltwater treatments on midday Tulip Poplar sapflow density in the two weeks following treatment for the first 3 years.
 
 
 
