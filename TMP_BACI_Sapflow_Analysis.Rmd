@@ -1,7 +1,7 @@
 ---
 title: "TEMPEST Sapflow Initial Analysis"
 author: "Radha Srinivasan"
-date: 'r Sys.Date()'
+date: "10-01-2024"
 output: 
   html_document:
     toc: true 
@@ -9,10 +9,10 @@ output:
     code_folding: hide
 ---
 
-This code tests for statistically significant differences in tulip poplar sapflow due to TEMPEST saltwater treatment. We use a generalized linear mixed model (GLMM) on BACI structured data, treating years as a random effect. 
-This method is adapted from Pardini et. al. (2018).
+This code tests for statistically significant differences in tulip poplar sapflow due to TEMPEST saltwater treatment. We use a generalized linear mixed model (GLMM) on BACI structured data, treating years as a random effect. This method is adapted from Pardini et. al. (2018).
 
 Load packages:
+
 ```{r message = FALSE}
 #General packages: 
 library(tidyr)
@@ -36,11 +36,13 @@ sapply(.packages, require, character.only=TRUE)
 ```
 
 Read in TEMPEST sapflow data:
+
 ```{r}
 full_data <- readRDS("Full_21_24.rds")
 ```
 
-Define the TEMPEST flood events, as well as the 2 weeks before and after flooding: 
+Define the TEMPEST flood events, as well as the 2 weeks before and after flooding:
+
 ```{r}
 #TEMPEST EVENTS
 tempest_events <- bind_rows(
@@ -59,6 +61,7 @@ window <- days(15)
 ```
 
 Isolate the data to focus on tulip poplar, saltwater and control treatments, weeks before and after treatment, and midday sapflow (between 11 am and 2 pm).
+
 ```{r message = FALSE}
 #Tidy up our data: 
 full_data %>%
@@ -77,7 +80,8 @@ full_data %>%
   ungroup() -> tulip_salt
 ```
 
-Further tidy dataframe for BACI analysis; filter for outliers and confirm by plotting entire four-year sapflow. 
+Further tidy dataframe for BACI analysis; filter for outliers and confirm by plotting entire four-year sapflow.
+
 ```{r message = FALSE, warning = FALSE}
 tulip_salt %>%
   group_by(Year) %>%
@@ -102,7 +106,8 @@ ggplot(tsb_1,
   geom_point() + facet_grid(Plot~Year, scales = "free")
 ```
 
-Visualize all data as part of BACI model, with timescale represented as days before/after flood events:       
+Visualize all data as part of BACI model, with timescale represented as days before/after flood events:
+
 ```{r}
 tsb_1 %>%
   group_by(Year) %>%
@@ -115,16 +120,15 @@ ggplot(tsb_2, aes(Day, F_avg, color = ID, shape = BA)) +
 
 ```
 
-We want to use the following general linear mixed model: 
+We want to use the following general linear mixed model:
 
-F_avg ~ BA + Plot  + BA*Plot +
-        (1|ID) + (1|Year) + (1|ID:Year)
-        
-In which 'Plot' is the control/impact treatment effect, 'BA' is the pre/post flood treatment effect, and tree ID and Year are random effects. 
+F_avg \~ BA + Plot + BA\*Plot + (1\|ID) + (1\|Year) + (1\|ID:Year)
 
-*Note that although, flooding intensity increases each year, we ignore this effect for now. 
+In which 'Plot' is the control/impact treatment effect, 'BA' is the pre/post flood treatment effect, and tree ID and Year are random effects.
 
-First, test for the statistical significance of the final term (1|ID:Year), the interaction of the ID and Year random effects, using an AIC comparison. 
+\*Note that although, flooding intensity increases each year, we ignore this effect for now.
+
+First, test for the statistical significance of the final term (1\|ID:Year), the interaction of the ID and Year random effects, using an AIC comparison.
 
 ```{r warning = FALSE}
 Cand.set <- list()
@@ -145,9 +149,11 @@ AIC.res.table <- aictab(cand.set = list(Cand.set[[1]], Cand.set[[2]]),
                         second.ord = TRUE)
 AIC.res.table
 ```
+
 Choose the model with the lowest AICc value (i.e. largest negative value); this suggests that the second model, which includes the random effects interaction term, is a better fit for our data.
 
 Next, check for normally distributed data:
+
 ```{r}
 qqnorm(residuals(model.int), 
        main = "Q-Q plot - residuals")
@@ -165,8 +171,9 @@ scatter.smooth(fitted(model.int),
                xlab="Fitted Values", ylab="Residuals")
 abline(h=0, col="red")
 ```
-Data appears to be slightly right-skewed. Let's test a few different transformations on our data and compare the resulting skewness using the e1071 package. 
-Values of skewness closer to 0 indicate more normally distributed data.
+
+Data appears to be slightly right-skewed. Let's test a few different transformations on our data and compare the resulting skewness using the e1071 package. Values of skewness closer to 0 indicate more normally distributed data.
+
 ```{r}
 library(e1071)
 current_skewness <- skewness(tsb_2$F_avg)
@@ -190,7 +197,8 @@ print(paste("Square Root Transformation Skewness:", sqrt_skewness))
 print(paste("Inverse Transformation Skewness:", inv_skewness))
 
 ```
-A square root transformation on our data seems to be best. Transform our original glmm and check again for normality with a histogram and by plotting residuals: 
+
+A square root transformation on our data seems to be best. Transform our original glmm and check again for normality with a histogram and by plotting residuals:
 
 ```{r}
 model.int_sr <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot +
@@ -214,7 +222,7 @@ qqnorm(predict(model.int),
 qqline(predict(model.int), col="red")
 ```
 
-Check again for normality of random effects using this transformed model: 
+Check again for normality of random effects using this transformed model:
 
 ```{r}
 # inspecting the random effects (see also Bolker, 2009 - supp 1)
@@ -229,11 +237,12 @@ scatter.smooth(fitted(model.int_sr),
                xlab="Fitted Values", ylab="Residuals")
 abline(h=0, col="red")
 ```
+
 Looks good!
 
-Lastly, test for the significance of the BACI interaction term using a parametric bootstrap comparison between nested models: 
+Lastly, test for the significance of the BACI interaction term using a parametric bootstrap comparison between nested models:
 
-```{r warning = FALSE}
+```{r}
 model.noint_sr <- glmer(sqrt(F_avg) ~ BA + Plot +
                          (1|ID) + (1|Year) + (1|ID:Year),
                        data = tsb_2, family = gaussian)
@@ -248,6 +257,3 @@ compar.interaction.100 <- PBmodcomp(largeModel = model.int_sr,
 compar.interaction.100
 ```
 Both the likelihood ratio test and the parametric bootstrap test show no evidence of an impact of saltwater treatments on midday Tulip Poplar sapflow density in the two weeks following treatment for the first 3 years.
-
-
-
