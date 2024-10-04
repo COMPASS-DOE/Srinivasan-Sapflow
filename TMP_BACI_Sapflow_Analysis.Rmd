@@ -20,6 +20,7 @@ library(readr)
 library(dplyr)
 library(lubridate)
 library(ggplot2)
+library(car)
 ```
 
 ```{r message = FALSE}
@@ -94,7 +95,7 @@ tulip_salt %>%
   group_by(Date, Plot, ID, Year, BA, flood_start, flood_end) %>%
   summarise(F_avg = mean(`F`, na.rm = TRUE),
             n = n()) %>%
-  ungroup()-> tsb_1
+  ungroup() -> tsb_1
 
 
 ggplot(tulip_salt[tulip_salt$`F` < 4e-06,],
@@ -113,7 +114,9 @@ tsb_1 %>%
   group_by(Year) %>%
   mutate(Day = ifelse(BA == "Before",
                       - as.numeric(flood_start - Date),
-                      as.numeric(Date - flood_end))) -> tsb_2
+                      as.numeric(Date - flood_end))) %>%
+  mutate(BA = as.character(BA)) %>%
+  mutate(BA = ifelse(Year == 2021, "Before", BA)) -> tsb_2
 
 ggplot(tsb_2, aes(Day, F_avg, color = ID, shape = BA)) +
   geom_point(size = 2.5) + facet_grid(Plot~Year, scales = "free")
@@ -206,9 +209,10 @@ model.int_sr <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot +
            (1|ID:Year),
          data = tsb_2, family = gaussian)
 
-library(car)
-
 Anova(model.int_sr, type = "III")
+
+ggplot(tsb_2, aes(F_avg)) + geom_histogram() +
+  facet_grid(Plot~.)
 
 ggplot(tsb_2, aes(sqrt(F_avg))) + geom_histogram() +
   facet_grid(Plot~.)
