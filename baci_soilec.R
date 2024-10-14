@@ -74,11 +74,11 @@ tulip_salt %>%
          Plot = as.factor(Plot)) %>%
   filter(`F` < 4e-06, 
          SWC > 0.25,
-         SEC < 500,
-         (PAR >480 | is.na(PAR))) %>%
+         (PAR > 480 | is.na(PAR))) %>%
   group_by(Date, Plot, ID, Year, BA, flood_start, flood_end) %>%
   summarise(F_avg = mean(`F`, na.rm = TRUE),
-            n = n()) %>%
+            n = n(), 
+            soil_ec_avg = mean(SEC)) %>%
   ungroup() -> tsb_1
 
 tsb_1 %>%
@@ -93,52 +93,21 @@ ggplot(tsb_2, aes(Day, F_avg, color = ID, shape = BA)) +
   geom_point(size = 2.5) + facet_grid(Plot~Year, scales = "free")
 
 ####
-##Filter out dataframes for 22, 23, and 24
 
-tsb_2 %>%
-  filter(Year == '2021' | 
-           (Year == '2022' & BA == 'After')) -> tsb22
-tsb_2 %>%
-  filter(Year == '2021' | 
-           (Year == '2023' & BA == 'After')) -> tsb23
-tsb_2 %>%
-  filter(Year == '2021' | 
-           (Year == '2024' & BA == 'After')) -> tsb24
-
-##for 22: 
-model.int_22 <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot +
+model.int <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot + soil_ec_avg +
                         (1|ID),
-                      data = tsb22, family = gaussian)
-Anova(model.int_22, type = "III")
+                      data = tsb_2, family = gaussian)
+Anova(model.int, type = "III")
 
-model.noint_22 <- glmer(sqrt(F_avg) ~ BA + Plot +
+model.noint <- glmer(sqrt(F_avg) ~ BA + Plot + soil_ec_avg +
                           (1|ID),
-                        data = tsb22, family = gaussian)
+                        data = tsb_2, family = gaussian)
 
-refdist.pb.100.interaction <- PBrefdist(largeModel = model.int_22, 
-                                        smallModel = model.noint_22, 
+refdist.pb.100.interaction <- PBrefdist(largeModel = model.int, 
+                                        smallModel = model.noint, 
                                         nsim = 100)
 
-compar.interaction.100 <- PBmodcomp(largeModel = model.int_22, 
-                                    smallModel = model.noint_22,
-                                    ref = refdist.pb.100.interaction)
-compar.interaction.100
-
-##for 23: 
-model.int_23 <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot +
-                        (1|ID),
-                      data = tsb23, family = gaussian)
-Anova(model.int_23, type = "III")
-
-model.noint_23 <- glmer(sqrt(F_avg) ~ BA + Plot +
-                          (1|ID),
-                        data = tsb23, family = gaussian)
-
-refdist.pb.100.interaction <- PBrefdist(largeModel = model.int_23, 
-                                        smallModel = model.noint_23, 
-                                        nsim = 100)
-
-compar.interaction.100 <- PBmodcomp(largeModel = model.int_23, 
-                                    smallModel = model.noint_23,
+compar.interaction.100 <- PBmodcomp(largeModel = model.int, 
+                                    smallModel = model.noint,
                                     ref = refdist.pb.100.interaction)
 compar.interaction.100
