@@ -209,14 +209,16 @@ model.int_sr <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot +
            (1|ID:Year),
          data = tsb_2, family = gaussian)
 
-Anova(model.int_sr, type = "III")
-
 ggplot(tsb_2, aes(F_avg)) + geom_histogram() +
   facet_grid(Plot~.)
 
 ggplot(tsb_2, aes(sqrt(F_avg))) + geom_histogram() +
   facet_grid(Plot~.)
 
+```
+
+Predicted vs Observed plots for square root transformation and untransformed data:
+```{r}
 qqnorm(predict(model.int_sr), 
        main = "Q-Q, Predicted vs Observed \n square root transformed")
 qqline(predict(model.int_sr), col="red")
@@ -224,6 +226,12 @@ qqline(predict(model.int_sr), col="red")
 qqnorm(predict(model.int), 
        main = "Q-Q, Predicted vs Observed \n untransformed")
 qqline(predict(model.int), col="red")
+```
+
+
+Type III ANOVA test for this model:
+```{r}
+Anova(model.int_sr, type = "III")
 ```
 
 Check again for normality of random effects using this transformed model:
