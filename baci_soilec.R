@@ -1,7 +1,10 @@
-##Recreating analysis in TMP_BACI_Sapflow_Analysis with the following years: 
-## all of '21 (before) and post-'22 (after)
-## all of '21 (before) and post-'23 (after)
-## all of '21 (before) and post-'24 (after)
+##(Trying to) bring in soil electrical conductivity to the BACI model
+
+#Model: 
+#F_avg ~ BA + Plot + BA*Plot + soil_ec
+#        (1|ID) 
+#Preliminarily focus on all years (21-24 before and after), saltwater
+#treatment, and tulip poplars 
 
 #load packages
 .packages = c("tidyr", "ggplot2", "dplyr", "lme4", "AICcmodavg", "MuMIn", 
@@ -11,7 +14,7 @@
 sapply(.packages, require, character.only=TRUE)
 
 #Load data
-full_data <- readRDS("Full_21_24.rds")
+full_data <- readRDS("Full_21_24_updated.rds")
 
 #TEMPEST EVENTS
 tempest_events <- bind_rows(
@@ -30,7 +33,8 @@ window <- days(15)
 #Tidy up our data:
 full_data %>%
   mutate(SWC = soil_vwc_15cm) %>%
-  dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`, PAR, SWC) %>%
+  mutate(SEC = soil_ec_15cm) %>%
+  dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`, PAR, SWC, SEC) %>%
   mutate(Date = as_date(date(TIMESTAMP)),
          Hour = hour(TIMESTAMP)) %>%
   left_join(events) %>%
@@ -45,41 +49,21 @@ full_data %>%
   ungroup() -> tulip_salt
 
 ##Confirm outliers with plotting: 
-#Histograms & scatterplot of PAR and SWC so we can see what the distribution 
+#Histograms & scatterplot of SEC so we can see what the distribution 
 #is like: 
 
 tulip_salt %>%
   filter (`F` < 4e-06) %>%
   group_by (Hour,Date, Year, Plot) %>%
-  summarize(avg_PAR = mean(PAR)) -> parplot
+  summarize(avg_SEC = mean(SEC)) -> secplot
 
-ggplot(parplot, aes(x = avg_PAR)) + 
+ggplot(secplot, aes(x = avg_SEC)) + 
   geom_histogram()
 
-ggplot(parplot, aes(x=Date, y= avg_PAR)) + 
+ggplot(secplot, aes(x=Date, y= avg_SEC)) + 
   geom_point() + facet_grid(~Year, scales = "free")
 
-#Filter out <500? <480?
-
-tulip_salt %>%
-  filter (`F` < 4e-06, 
-          Date == "2022-06-17") %>%
-  group_by (Hour, Date, Year, Plot) %>%
-  summarize(avg_SWC = mean(SWC)) -> swcplot
-
-ggplot(swcplot, aes(x = avg_SWC)) + 
-  geom_histogram()
-
-ggplot(swcplot, aes(x=Hour, y= avg_SWC)) + 
-  geom_point() + facet_grid(Plot~Year, scales = "free")
-
-#Filter out <0.25
-
-ggplot(tulip_salt[tulip_salt$`F` < 4e-06,],
-       aes(Date, `F`, color = ID)) +
-  geom_point() + facet_grid(Plot~Year, scales = "free")
-
-#
+#Filter out <500
 
 tulip_salt %>%
   group_by(Year) %>%
@@ -89,7 +73,8 @@ tulip_salt %>%
          BA = as.factor(BA),
          Plot = as.factor(Plot)) %>%
   filter(`F` < 4e-06, 
-         SWC > 0.25, 
+         SWC > 0.25,
+         SEC < 500,
          (PAR >480 | is.na(PAR))) %>%
   group_by(Date, Plot, ID, Year, BA, flood_start, flood_end) %>%
   summarise(F_avg = mean(`F`, na.rm = TRUE),
@@ -112,7 +97,7 @@ ggplot(tsb_2, aes(Day, F_avg, color = ID, shape = BA)) +
 
 tsb_2 %>%
   filter(Year == '2021' | 
-         (Year == '2022' & BA == 'After')) -> tsb22
+           (Year == '2022' & BA == 'After')) -> tsb22
 tsb_2 %>%
   filter(Year == '2021' | 
            (Year == '2023' & BA == 'After')) -> tsb23
@@ -122,8 +107,8 @@ tsb_2 %>%
 
 ##for 22: 
 model.int_22 <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot +
-                          (1|ID),
-                        data = tsb22, family = gaussian)
+                        (1|ID),
+                      data = tsb22, family = gaussian)
 Anova(model.int_22, type = "III")
 
 model.noint_22 <- glmer(sqrt(F_avg) ~ BA + Plot +
@@ -157,25 +142,3 @@ compar.interaction.100 <- PBmodcomp(largeModel = model.int_23,
                                     smallModel = model.noint_23,
                                     ref = refdist.pb.100.interaction)
 compar.interaction.100
-
-##for 24: 
-model.int_24 <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot +
-                        (1|ID),
-                      data = tsb24, family = gaussian)
-Anova(model.int_24, type = "III")
-
-model.noint_24 <- glmer(sqrt(F_avg) ~ BA + Plot +
-                          (1|ID),
-                        data = tsb24, family = gaussian)
-
-refdist.pb.100.interaction <- PBrefdist(largeModel = model.int_24, 
-                                        smallModel = model.noint_24, 
-                                        nsim = 100)
-
-compar.interaction.100 <- PBmodcomp(largeModel = model.int_24, 
-                                    smallModel = model.noint_24,
-                                    ref = refdist.pb.100.interaction)
-compar.interaction.100
-
-
-
