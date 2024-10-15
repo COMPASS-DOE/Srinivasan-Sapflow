@@ -1,8 +1,8 @@
 ##(Trying to) bring in soil electrical conductivity to the BACI model
 
 #Model: 
-#F_avg ~ BA + Plot + BA*Plot + soil_ec
-#        (1|ID) 
+#F_avg ~ BA + Plot + BA*Plot + soil_ec +
+#        (1|ID) + (1|Year) + (1|ID:Year)
 #Preliminarily focus on all years (21-24 before and after), saltwater
 #treatment, and tulip poplars 
 
@@ -60,7 +60,7 @@ tulip_salt %>%
 ggplot(secplot, aes(x = avg_SEC)) + 
   geom_histogram()
 
-ggplot(secplot, aes(x=Date, y= avg_SEC)) + 
+ggplot(secplot, aes(x=Date, y= avg_SEC, color = Plot)) + 
   geom_point() + facet_grid(~Year, scales = "free")
 
 #Filter out <500
@@ -95,12 +95,12 @@ ggplot(tsb_2, aes(Day, F_avg, color = ID, shape = BA)) +
 ####
 
 model.int <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot + soil_ec_avg +
-                        (1|ID),
+                        (1|ID) + (1|Year) + (1|ID:Year),
                       data = tsb_2, family = gaussian)
 Anova(model.int, type = "III")
 
 model.noint <- glmer(sqrt(F_avg) ~ BA + Plot + soil_ec_avg +
-                          (1|ID),
+                          (1|ID) + (1|Year) + (1|ID:Year),
                         data = tsb_2, family = gaussian)
 
 refdist.pb.100.interaction <- PBrefdist(largeModel = model.int, 
@@ -111,3 +111,6 @@ compar.interaction.100 <- PBmodcomp(largeModel = model.int,
                                     smallModel = model.noint,
                                     ref = refdist.pb.100.interaction)
 compar.interaction.100
+
+
+  
