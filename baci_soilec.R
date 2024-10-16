@@ -111,6 +111,45 @@ compar.interaction.100 <- PBmodcomp(largeModel = model.int,
                                     smallModel = model.noint,
                                     ref = refdist.pb.100.interaction)
 compar.interaction.100
+# Bootstrap test; time: 43.99 sec; samples: 100; extremes: 0;
+# large : sqrt(F_avg) ~ BA + Plot + BA * Plot + soil_ec_avg + (1 | ID) + 
+#   (1 | Year) + (1 | ID:Year)
+# sqrt(F_avg) ~ BA + Plot + soil_ec_avg + (1 | ID) + (1 | Year) + 
+#   (1 | ID:Year)
+# stat df   p.value    
+# LRT    21.858  1 2.935e-06 ***
+# PBtest 21.858     0.009901 ** 
 
+#Compare to BACI results without EC in model: 
+## Bootstrap test; time: 36.60 sec; samples: 100; extremes: 25;
+## large : sqrt(F_avg) ~ BA + Plot + BA * Plot + (1 | ID) + (1 | Year) + 
+##     (1 | ID:Year)
+## sqrt(F_avg) ~ BA + Plot + (1 | ID) + (1 | Year) + (1 | ID:Year)
+##         stat df p.value
+## LRT    1.361  1  0.2434
+## PBtest 1.361     0.2574
 
-  
+#AIC comparison test between BACI models
+Cand.set <- list()
+
+Cand.set[[1]] <- glmer(F_avg ~ BA + Plot  + BA*Plot +
+                         (1|ID) + (1|Year) + (1|ID:Year),
+                       data = tsb_2, family = gaussian)
+model.noec <- Cand.set[[1]]
+
+Cand.set[[2]] <- glmer(F_avg ~ BA + Plot + BA*Plot + soil_ec_avg +
+                         (1|ID) + (1|Year) + (1|ID:Year),
+                       data = tsb_2, family = gaussian)
+model.ec <- Cand.set[[2]]
+
+AIC.res.table <- aictab(cand.set = list(Cand.set[[1]], Cand.set[[2]]), 
+                        modnames = paste0("Cand.set_", c(1,2)), 
+                        second.ord = TRUE)
+AIC.res.table
+
+#Says better candidate is the model without ec?
+# Model selection based on AICc:
+#   
+#   K      AICc Delta_AICc AICcWt Cum.Wt   Res.LL
+# Cand.set_1 8 -34002.05       0.00      1      1 17009.08
+# Cand.set_2 9 -33965.48      36.57      0      1 16991.82
