@@ -147,9 +147,15 @@ AIC.res.table <- aictab(cand.set = list(Cand.set[[1]], Cand.set[[2]]),
                         second.ord = TRUE)
 AIC.res.table
 
-#Says better candidate is the model without ec?
+#Says better candidate is the model without ec? 
 # Model selection based on AICc:
 #   
 #   K      AICc Delta_AICc AICcWt Cum.Wt   Res.LL
 # Cand.set_1 8 -34002.05       0.00      1      1 17009.08
 # Cand.set_2 9 -33965.48      36.57      0      1 16991.82
+
+AIC(model.noec)
+AIC(model.ec)
+
+BIC(model.noec)
+BIC(model.ec)
