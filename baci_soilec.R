@@ -155,15 +155,47 @@ AIC.res.table
 # Cand.set_1 8 -34002.05       0.00      1      1 17009.08
 # Cand.set_2 9 -33965.48      36.57      0      1 16991.82
 
+## vs model selection from our test for interaction of random effects 
+
+# Model selection based on AICc:
+# 
+#            K      AICc Delta_AICc AICcWt Cum.Wt   Res.LL
+# Cand.set_2 8 -32443.87       0.00      1      1 16230.00
+# Cand.set_1 7 -32088.52     355.35      0      1 16051.31
+
+
 AIC(model.noec)
 AIC(model.ec)
 
 BIC(model.noec)
 BIC(model.ec)
 
-##Adding in soil vwc to model? 
-model.int.vwc <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot + soil_ec_avg + 
+##Adding in soil vwc to model
+model.vwc <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot + soil_ec_avg + 
                       soil_vwc_avg +
                      (1|ID) + (1|Year) + (1|ID:Year),
                    data = tsb_2, family = gaussian)
-Anova(model.int.vwc, type = "III")
+Anova(model.vwc, type = "III")
+
+# Analysis of Deviance Table (Type III Wald chisquare tests)
+# 
+# Response: sqrt(F_avg)
+# Chisq Df Pr(>Chisq)    
+# (Intercept)  32.1447  1  1.431e-08 ***
+#   BA            3.3827  1   0.065884 .  
+#   Plot          4.9053  1   0.026774 *  
+#   soil_ec_avg  31.3805  1  2.121e-08 ***
+#   soil_vwc_avg 10.1335  1   0.001456 ** 
+#   BA:Plot      34.8086  1  3.638e-09 ***
+
+model.novwc <- glmer(F_avg ~ BA + Plot  + BA*Plot + soil_ec_avg + 
+                         (1|ID) + (1|Year) + (1|ID:Year),
+                       data = tsb_2, family = gaussian)
+
+AIC(model.vwc)
+#-17053.42
+AIC(model.novwc)
+#-32411.76
+
+
+

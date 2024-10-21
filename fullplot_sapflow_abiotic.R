@@ -39,7 +39,7 @@ sapflow_plot
 par_plot <- 
   ggplot(data = fulldata_plot, aes(x = Date, y = par_avg)) + 
   geom_point() + 
-  labs(x = NULL, y = "PAR, umol/m^3")
+  labs(x = NULL, y = "PAR, umol/m^2/s")
 
 swc_plot <- 
   ggplot(data = fulldata_plot, aes(x = Date, y = swc_avg)) + 
@@ -49,7 +49,7 @@ swc_plot <-
 sec_plot <- 
   ggplot(data = fulldata_plot, aes(x = Date, y = sec_avg)) + 
   geom_point() + 
-  labs(x = NULL, y = "Soil EC, mV")
+  labs(x = NULL, y = "Soil EC, uS/cm")
 
 combined_plot <- (sapflow_plot | par_plot) / (swc_plot | sec_plot)
 
