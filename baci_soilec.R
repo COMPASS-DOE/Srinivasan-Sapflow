@@ -78,7 +78,8 @@ tulip_salt %>%
   group_by(Date, Plot, ID, Year, BA, flood_start, flood_end) %>%
   summarise(F_avg = mean(`F`, na.rm = TRUE),
             n = n(), 
-            soil_ec_avg = mean(SEC)) %>%
+            soil_ec_avg = mean(SEC), 
+            soil_vwc_avg = mean(SWC)) %>%
   ungroup() -> tsb_1
 
 tsb_1 %>%
@@ -159,3 +160,10 @@ AIC(model.ec)
 
 BIC(model.noec)
 BIC(model.ec)
+
+##Adding in soil vwc to model? 
+model.int.vwc <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot + soil_ec_avg + 
+                      soil_vwc_avg +
+                     (1|ID) + (1|Year) + (1|ID:Year),
+                   data = tsb_2, family = gaussian)
+Anova(model.int.vwc, type = "III")
