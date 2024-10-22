@@ -3,7 +3,7 @@
 #Model: 
 #F_avg ~ BA + Plot + BA*Plot + soil_ec +
 #        (1|ID) + (1|Year) + (1|ID:Year)
-#Preliminarily focus on all years (21-24 before and after), saltwater
+#Preliminary focus on all years (21-24 before and after), saltwater
 #treatment, and tulip poplars 
 
 #load packages
