@@ -197,5 +197,26 @@ AIC(model.vwc)
 AIC(model.novwc)
 #-32411.76
 
+##AIC plot comparing AIC differences for random effects interaction, soil ec
+# addition, and soil vwc addition 
 
+variable <- c("ID:Year", "ID:Year", "Soil EC", "Soil EC", "Soil VWC", "Soil VWC")
+AIC <- c(-32088.52, -32443.87, -34002.05, -33965.48, -32411.76, -17053.42)
+candidate <- c("Without interaction", "With interaction", 
+               "Without interaction", "With interaction",
+               "Without interaction", "With interaction")
+
+AIC <- data.frame(variable, AIC, candidate)
+
+AIC %>%
+  mutate(`Model Specification` = candidate) %>%
+  ggplot(aes(variable, AIC, fill = `Model Specification`)) +
+  geom_col(position = 'dodge') +
+  scale_y_continuous(expand = c(0, 0)) + # Starts x axis at true zero
+  expand_limits(y = c(-35000, 0)) +
+  scale_fill_viridis_d(option = 'D', begin = .25, end = .8) + 
+  labs( title = 'AIC Model Comparison', x = 'Variable', y = 'AIC Value') +
+  theme_light()
+
+ggsave("AIC_comp.jpeg")
 

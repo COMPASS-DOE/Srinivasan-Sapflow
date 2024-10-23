@@ -74,47 +74,53 @@ sapflow_plot <- dat2 %>%
 ggplot(aes(x = day_hr, y = F_avg)) +
   geom_ribbon(aes(x = day_hr, ymin = (F_avg - F_se), 
                   ymax = (F_avg + F_se)),
-              color = 'gray70', alpha = 0.05) +
+              color = 'lightblue', alpha = 0.05) +
 geom_point() +
-  scale_x_continuous(name = "Day", 
+  scale_x_continuous(name = NULL, 
                      breaks = seq(from = min(dat2$day_hr), to = max(dat2$day_hr), by = 24), 
-                     labels = function(x) x %/% 24 )
+                     labels = function(x) x %/% 24 ) + 
+  labs (y = "Sap Flux Density, g/m^3")
 
 par_plot <- dat2 %>%
   ggplot(aes(x = day_hr, y = par_avg)) +
   geom_ribbon(aes(x = day_hr, ymin = (par_avg - par_se), 
                   ymax = (par_avg + par_se)),
-              color = 'gray70', alpha = 0.05) +
+              color = 'lightblue', alpha = 0.05) +
   geom_point() +
-  scale_x_continuous(name = "Day", 
+  scale_x_continuous(name = NULL, 
                      breaks = seq(from = min(dat2$day_hr), to = max(dat2$day_hr), by = 24), 
-                     labels = function(x) x %/% 24 )
+                     labels = function(x) x %/% 24 ) + 
+  labs(y = "PAR, umol/m^2/s")
 
 swc_plot <- dat2 %>%
   ggplot(aes(x = day_hr, y = swc_avg)) +
   geom_ribbon(aes(x = day_hr, ymin = (swc_avg - swc_se), 
                   ymax = (swc_avg + swc_se)),
-              color = 'gray70', alpha = 0.05) +
+              color = 'lightblue', alpha = 0.05) +
   geom_point() +
   scale_x_continuous(name = "Day", 
                      breaks = seq(from = min(dat2$day_hr), to = max(dat2$day_hr), by = 24), 
-                     labels = function(x) x %/% 24 )
+                     labels = function(x) x %/% 24 ) +
+  labs(y = "SWC, m^3/m^3")
 
 sec_plot <- dat2 %>%
   ggplot(aes(x = day_hr, y = sec_avg)) +
   geom_ribbon(aes(x = day_hr, ymin = (sec_avg - sec_se), 
                   ymax = (sec_avg + sec_se)),
-              color = 'gray70', alpha = 0.05) +
+              color = 'lightblue', alpha = 0.05) +
   geom_point() +
   scale_x_continuous(name = "Day", 
                      breaks = seq(from = min(dat2$day_hr), to = max(dat2$day_hr), by = 24), 
-                     labels = function(x) x %/% 24 )
+                     labels = function(x) x %/% 24 ) +
+  labs(y = "SEC, m^2/s")
 
 combined_diurnal <- (sapflow_plot | par_plot) / (swc_plot | sec_plot)
 
 combined_diurnal + 
-  plot_annotation( title = "Sapflow and Abiotic Variables in Control Plot, 
-                   averaged Hourly for pre and post flood period") 
+  plot_annotation(title = "Sapflow and Abiotic Variables in Control Plot, 
+                   averaged Hourly for pre and post flood period")
+
+ggsave("Diurnal_Sapflow_Abiotic.jpeg")
 
 ##Now we do it annually!
 
@@ -203,6 +209,6 @@ ggplot(data = long_plot, aes(x= day_month, y = value)) +
   geom_point() + 
   facet_wrap(~Variable, scales = "free", labeller = label_both) 
   
-  
+
   
   
