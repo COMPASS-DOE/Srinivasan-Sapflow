@@ -59,56 +59,68 @@ dat1 %>%
                       as.numeric(Date - flood_end))) %>%
   ungroup() %>%
   mutate(day_hr = Day * 24 + Hour) %>%
-  group_by(day_hr, Year) %>%
+  group_by(day_hr) %>%
   summarise(F_avg = mean(`F`),
             F_se = sd(`F`)/sqrt(n()),
+            F_sd = sd(`F`),
             swc_avg = mean(SWC),
             swc_se = sd(SWC)/sqrt(n()),
             sec_avg = mean(SEC),
             sec_se = sd(SEC)/sqrt(n()),
-            par_avg = mean(PAR),
-            par_se = sd(PAR)/sqrt(n())) %>%
+            par_avg = mean(na.omit(PAR)),
+            par_se = sd(na.omit(PAR))/sqrt(n())) %>%
   ungroup() -> dat2
 
-sapflow_plot <- dat2 %>%
-ggplot(aes(x = day_hr, y = F_avg)) +
-  geom_ribbon(aes(x = day_hr, ymin = (F_avg - F_se), 
-                  ymax = (F_avg + F_se)),
-              color = 'lightblue', alpha = 0.05) +
-geom_point() +
-  scale_x_continuous(name = NULL, 
-                     breaks = seq(from = min(dat2$day_hr), to = max(dat2$day_hr), by = 24), 
-                     labels = function(x) x %/% 24 ) + 
+
+sapflow_plot <- 
+dat2 %>%
+  filter(day_hr < 97 & day_hr > -97) %>%
+  ggplot(aes(x = day_hr, y = F_avg)) +
+  geom_ribbon(aes(x = day_hr, ymin = (F_avg - F_sd),
+                  ymax = (F_avg + F_sd)),
+              fill = 'lightblue', alpha = 0.5) +
+  geom_line(color = 'skyblue', size = 0.75 ) +
+  geom_point(color = 'blue') +
+  scale_x_continuous(name = NULL,
+                     breaks = seq(from = min(dat2$day_hr), to = max(dat2$day_hr), by = 24),
+                     labels = function(x) x %/% 24 ) +
   labs (y = "Sap Flux Density, g/m^3")
 
-par_plot <- dat2 %>%
+par_plot <- 
+  dat2 %>%
+  filter(day_hr < 97 & day_hr > -97) %>%
   ggplot(aes(x = day_hr, y = par_avg)) +
   geom_ribbon(aes(x = day_hr, ymin = (par_avg - par_se), 
                   ymax = (par_avg + par_se)),
-              color = 'lightblue', alpha = 0.05) +
-  geom_point() +
+              fill = 'lightblue', alpha = 0.5) +
+    geom_line(color = 'skyblue', size = 0.75 ) +
+    geom_point(color = 'blue') +
   scale_x_continuous(name = NULL, 
                      breaks = seq(from = min(dat2$day_hr), to = max(dat2$day_hr), by = 24), 
                      labels = function(x) x %/% 24 ) + 
   labs(y = "PAR, umol/m^2/s")
 
 swc_plot <- dat2 %>%
+  filter(day_hr < 145 & day_hr > -145) %>%
   ggplot(aes(x = day_hr, y = swc_avg)) +
   geom_ribbon(aes(x = day_hr, ymin = (swc_avg - swc_se), 
                   ymax = (swc_avg + swc_se)),
-              color = 'lightblue', alpha = 0.05) +
-  geom_point() +
+              fill = 'lightblue', alpha = 0.5) +
+  geom_line(color = 'skyblue', size = 0.75 ) +
+  geom_point(color = 'blue') +
   scale_x_continuous(name = "Day", 
                      breaks = seq(from = min(dat2$day_hr), to = max(dat2$day_hr), by = 24), 
                      labels = function(x) x %/% 24 ) +
   labs(y = "SWC, m^3/m^3")
 
 sec_plot <- dat2 %>%
+  filter(day_hr < 145 & day_hr > -145) %>%
   ggplot(aes(x = day_hr, y = sec_avg)) +
   geom_ribbon(aes(x = day_hr, ymin = (sec_avg - sec_se), 
                   ymax = (sec_avg + sec_se)),
-              color = 'lightblue', alpha = 0.05) +
-  geom_point() +
+              fill = 'lightblue', alpha = 0.5) +
+  geom_line(color = 'skyblue', size = 0.75 ) +
+  geom_point(color = 'blue') +
   scale_x_continuous(name = "Day", 
                      breaks = seq(from = min(dat2$day_hr), to = max(dat2$day_hr), by = 24), 
                      labels = function(x) x %/% 24 ) +
