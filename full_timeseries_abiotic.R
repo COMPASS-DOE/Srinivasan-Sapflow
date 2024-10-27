@@ -46,14 +46,14 @@ tmp_full <- readRDS("tmp_full.rds")
 #GCREW data from 2022-24
 #Note: vappress is all 0 for now until we get that sorted out 
 site <- "GCW"
-variables <- c("wx_tempavg15", "wx_par_den15", "wx_vappress15")
+variables <- c("wx_tempavg15", "wx_par_den15", "wx_vappress15", "soil_EC_15cm")
 
 pat <- paste0("^", site, ".*csv$")
 
 #Lists of data for different years for GCREW
-files_G24 <- list.files("C:/Users/srin662/OneDrive - PNNL/Documents/R/GCW_2024/", pattern = pat, recursive = TRUE, full.names = TRUE)
-files_G23 <- list.files("C:/Users/srin662/OneDrive - PNNL/Documents/R/GCW_2023/", pattern = pat, recursive = TRUE, full.names = TRUE)
-files_G22 <- list.files("C:/Users/srin662/OneDrive - PNNL/Documents/R/GCW_2022/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_G24 <- list.files("C:/Users/srin662/OneDrive - PNNL/R/GCW_2024/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_G23 <- list.files("C:/Users/srin662/OneDrive - PNNL/R/GCW_2023/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_G22 <- list.files("C:/Users/srin662/OneDrive - PNNL/R/GCW_2022/", pattern = pat, recursive = TRUE, full.names = TRUE)
 
 files_G <- c(files_G24, files_G23, files_G22)
 
@@ -218,12 +218,21 @@ gcw %>%
   mutate(TEMP = Value) %>% 
   select(TIMESTAMP, TEMP) -> temp
 
+gcw %>%
+  filter(research_name == "soil_EC_15cm") %>%
+  mutate(EC = Value) %>%
+  select(TIMESTAMP, EC) -> ec
+
 full_data <- 
   merge(tmp_data, par, by.x = c("TIMESTAMP"), 
         by.y = c("TIMESTAMP"), all = TRUE)
 
 full_data <- 
   merge(full_data, temp, by.x = c("TIMESTAMP"), 
+        by.y = c("TIMESTAMP"), all.x = TRUE) 
+
+full_data <- 
+  merge(full_data, ec, by.x = c("TIMESTAMP"), 
         by.y = c("TIMESTAMP"), all.x = TRUE) 
 
 #Now we have a full time series for 2021-2024!
