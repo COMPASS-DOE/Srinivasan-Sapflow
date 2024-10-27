@@ -1,0 +1,359 @@
+---
+title: "TEMPEST Sapflow Updated BACI Analysis"
+author: "Radha Srinivasan"
+date: 
+output: 
+  html_document:
+    toc: true 
+    toc_float: true 
+    code_folding: hide
+---
+
+Updated BACI analysis model examining TEMPEST sapflow from 2021-2024, including soil electrical conductivity as a fixed effect. As of now, focusing on effects of saltwater treatment on tulip poplars. 
+
+Load our packages: 
+
+```{r message = FALSE}
+.packages = c("tidyr", "ggplot2", "dplyr", "lme4", "AICcmodavg", "MuMIn", "pbkrtest", "readr", "lubridate", "car", "parallel", "data.table", "blmeco", "lsmeans", "patchwork")
+
+sapply(.packages, require, character.only=TRUE)
+```
+
+
+Load in our data from 2021 - 2024: 
+
+```{r message = FALSE}
+full_data <- readRDS("Full_21_24_updated.rds")
+```
+
+Variables included:
+
+Allometrically scaled sapflow (F, x^3/s)
+Photosynthetically active radiation (PAR, umol/m^2/s) 
+Soil volumetric water content at 15 cm (VWC, m^3/m^3)
+Soil electrical conductivity at 15 cm (SEC, m^2/s)
+
+Note that PAR data is not available until March 2022. 
+
+Set TEMPEST event dates; we will be looking at a window of 2 weeks (15 days) before and after the flood event:
+
+```{r message = FALSE}
+tempest_events <- bind_rows(
+  tibble( Year = 2021, flood_start = "2021-06-12", flood_end = "2021-06-12"), #average date = June 12
+  tibble( Year = 2022, flood_start = "2022-06-22", flood_end = "2022-06-22"), #June 22
+  tibble( Year = 2023, flood_start = "2023-06-06", flood_end = "2023-06-07"), #June 6, 7
+  tibble( Year = 2024, flood_start = "2024-06-11", flood_end = "2024-06-13")) #June 11, 12, 13
+
+tempest_events %>%
+  mutate(flood_start = ymd(flood_start),
+         flood_end = ymd(flood_end)) -> events
+
+window <- days(15)
+```
+
+
+Filter for tulip poplars and saltwater, weeks before and after flood events, and midday (11 am - 2 pm):
+```{r message = FALSE, warning = FALSE}
+full_data %>%
+  mutate(SWC = soil_vwc_15cm) %>%
+  mutate(SEC = soil_ec_15cm) %>%
+  dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`, PAR, SWC, SEC) %>%
+  mutate(Date = as_date(date(TIMESTAMP)),
+         Hour = hour(TIMESTAMP)) %>%
+  left_join(events) %>%
+  group_by(Year) %>%
+  mutate(data_start = flood_start - window,
+         data_end = flood_end + window) %>%
+  filter(Date > data_start & Date < flood_start |
+           Date < data_end & Date > flood_end,
+         Hour < 14, Hour >= 11, 
+         Plot != "Freshwater",
+         Species == "Tulip Poplar") %>%
+  ungroup() -> tulip_salt
+```
+
+Filter out outliers, average sapflow per day, and fit data within Before-After framework:
+
+```{r}
+tulip_salt %>%
+  group_by(Year) %>%
+  mutate(BA = ifelse(Date > flood_end, "After", "Before"),
+         Year = as.factor(Year),
+         ID = as.factor(ID),
+         BA = as.factor(BA),
+         Plot = as.factor(Plot)) %>%
+  filter(`F` < 4e-06, 
+         SWC > 0.25,
+         (PAR > 480 | is.na(PAR))) %>%
+  group_by(Date, Plot, ID, Year, BA, flood_start, flood_end) %>%
+  summarise(F_avg = mean(`F`, na.rm = TRUE),
+            n = n(), 
+            soil_ec_avg = mean(SEC), 
+            soil_vwc_avg = mean(SWC)) %>%
+  ungroup() -> tsb_1
+
+tsb_1 %>%
+  group_by(Year) %>%
+  mutate(Day = ifelse(BA == "Before",
+                      - as.numeric(flood_start - Date),
+                      as.numeric(Date - flood_end))) %>%
+  mutate(BA = as.character(BA)) %>%
+  mutate(BA = ifelse(Year == 2021, "Before", BA)) -> tsb_2
+```
+
+
+#Plots of Individual Variables
+
+##Sapflow
+
+Over pre-and-post flood weeks for 4 year period, averaged for midday (11 am - 2 pm), coded by 'before' and 'after' data:
+```{r message = FALSE, warning = FALSE}
+ggplot(tsb_2, aes(Day, F_avg, color = ID, shape = BA)) +
+  geom_point(size = 2.5) + facet_grid(Plot~Year, scales = "free")
+```
+
+##Soil EC
+
+```{r message = FALSE, warning = FALSE}
+tulip_salt %>%
+  filter (`F` < 4e-06) %>%
+  group_by (Hour,Date, Year, Plot) %>%
+  summarize(avg_SEC = mean(SEC)) -> secplot
+
+ggplot(secplot, aes(x=Date, y= avg_SEC, color = Plot)) + 
+  geom_point() + facet_grid(~Year, scales = "free")
+```
+
+#Create and test BACI model(s)
+
+Our existing model- square root transformed sapflow, only including Plot and BA as fixed effects: 
+```{r message = FALSE, warning = FALSE}
+model.int.og <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot +
+                        (1|ID) + (1|Year) + (1|ID:Year),
+                      data = tsb_2, family = gaussian)
+
+model.noint.og <- glmer(sqrt(F_avg) ~ BA + Plot +
+                          (1|ID) + (1|Year) + (1|ID:Year),
+                        data = tsb_2, family = gaussian)
+
+og.refdist <- PBrefdist(largeModel = model.int.og, 
+                        smallModel = model.noint.og, 
+                        nsim = 100)
+
+og.compar <- PBmodcomp(largeModel = model.int.og, 
+                       smallModel = model.noint.og,
+                       ref = og.refdist)
+
+og.compar
+Anova(model.int.og, type = "III")
+```
+
+Neither the likelihood ratio test nor the parametric bootstrap test show significance for the BACI interaction term.
+
+Inclusion of soil electrical conductivity into the model: 
+
+```{r message = FALSE, warning = FALSE}
+model.int.ec <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot + soil_ec_avg +
+                      (1|ID) + (1|Year) + (1|ID:Year),
+                      data = tsb_2, family = gaussian)
+
+model.noint.ec <- glmer(sqrt(F_avg) ~ BA + Plot + soil_ec_avg +
+                        (1|ID) + (1|Year) + (1|ID:Year),
+                        data = tsb_2, family = gaussian)
+
+ec.refdist <- PBrefdist(largeModel = model.int.ec, 
+                        smallModel = model.noint.ec, 
+                        nsim = 100)
+
+ec.compar <- PBmodcomp(largeModel = model.int.ec, 
+                       smallModel = model.noint.ec,
+                       ref = ec.refdist)
+ec.compar
+Anova(model.int.ec, type = "III")
+```
+We now see significance for the BACI interaction term and soil ec fixed effect with both the likelihood ratio and parametric bootstrap test! 
+
+Conducting the same test with soil vwc: 
+```{r message = FALSE, warning = FALSE}
+model.int.vwc <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot + soil_ec_avg + 
+                       soil_vwc_avg +
+                      (1|ID) + (1|Year) + (1|ID:Year),
+                      data = tsb_2, family = gaussian)
+
+model.noint.vwc <- glmer(sqrt(F_avg) ~ BA + Plot + soil_ec_avg +
+                        (1|ID) + (1|Year) + (1|ID:Year),
+                        data = tsb_2, family = gaussian)
+
+vwc.refdist <- PBrefdist(largeModel = model.int.vwc, 
+                        smallModel = model.noint.vwc, 
+                        nsim = 100)
+
+vwc.compar <- PBmodcomp(largeModel = model.int.vwc, 
+                       smallModel = model.noint.vwc,
+                       ref = vwc.refdist)
+vwc.compar
+Anova(model.int.vwc, type = "III")
+```
+
+AIC comparison to visually observe differences in how well each model fits the data: 
+
+```{r message = FALSE, warning = FALSE}
+model.int <- glmer(F_avg ~ BA + Plot  + BA*Plot +
+                         (1|ID) + (1|Year),
+                       data = tsb_2, family = gaussian)
+
+model.noint <- glmer(F_avg ~ BA + Plot + BA*Plot +
+                         (1|ID) + (1|Year) + (1|ID:Year),
+                       data = tsb_2, family = gaussian)
+```
+
+
+```{r message = FALSE, warning = FALSE}
+AIC(model.int) -> AIC_int
+AIC(model.noint) -> AIC_noint
+AIC(model.int.ec) -> AIC_int_ec
+AIC(model.noint.ec) -> AIC_noint_ec
+AIC(model.int.vwc) -> AIC_int_vwc
+AIC(model.noint.vwc) -> AIC_noint_vwc
+
+
+variable <- c("ID:Year", "ID:Year", "Soil EC", "Soil EC", "Soil VWC", "Soil VWC")
+AIC <- c(AIC_int, AIC_noint, AIC_int_ec, AIC_noint_ec, AIC_int_vwc, AIC_noint_vwc)
+candidate <- c("Without interaction", "With interaction", 
+               "Without interaction", "With interaction",
+               "Without interaction", "With interaction")
+
+AIC <- data.frame(variable, AIC, candidate)
+
+AIC %>%
+  mutate(`Model Specification` = candidate) %>%
+  ggplot(aes(variable, AIC, fill = `Model Specification`)) +
+  geom_col(position = 'dodge') +
+  scale_y_continuous(expand = c(0, 0)) + # Starts x axis at true zero
+  expand_limits(y = c(-35000, 0)) +
+  scale_fill_viridis_d(option = 'D', begin = .25, end = .8) + 
+  labs( title = 'AIC Model Comparison', x = 'Variable', y = 'AIC Value') +
+  theme_light()
+```
+We can see that the inclusion of the ID & Year interaction makes for a slightly better model, the inclusion of soil ec does not strongly affect the model's fit, and the inclusion of soil vwc worsens the model.
+
+
+#Full Plot
+
+Creating a full plot of diurnal sapflow and abiotic variables before and after flood events in the control plot, averaged over all 4 years:
+
+Filter and summarize data for all variables: 
+```{r message = FALSE, warning = FALSE}
+
+full_data %>%
+ group_by(TIMESTAMP) %>%
+ mutate(PAR = ifelse(is.na(PAR), PAR[Plot == "Freshwater"], PAR)) %>%
+ ungroup() %>%
+ mutate(SWC = soil_vwc_15cm) %>%
+ mutate(SEC = soil_ec_15cm) %>%
+ dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`, PAR, SWC, SEC) %>%
+ mutate(Date = as_date(date(TIMESTAMP)),
+        Hour = hour(TIMESTAMP)) %>%
+ left_join(events) %>%
+ group_by(Year) %>%
+ mutate(data_start = flood_start - window,
+        data_end = flood_end + window) %>%
+ filter(Date > data_start & Date < flood_start |
+        Date < data_end & Date > flood_end,
+        Plot == "Control",
+        Species == "Tulip Poplar",
+        `F` < 2e-06,
+        SWC > 0.25) %>%
+ ungroup() -> dat1
+
+dat1 %>%
+  group_by(Year) %>%
+  mutate(BA = ifelse(Date > flood_end, "After", "Before")) %>% 
+  mutate(BA = ifelse(Year == 2021, "Before", BA)) %>%
+  mutate(Day = ifelse(BA == "Before",
+                      - as.numeric(flood_start - Date),
+                      as.numeric(Date - flood_end))) %>%
+  ungroup() %>%
+  mutate(day_hr = Day * 24 + Hour) %>%
+  group_by(day_hr) %>%
+  summarise(F_avg = mean(`F`),
+            F_se = sd(`F`)/sqrt(n()),
+            F_sd = sd(`F`),
+            swc_avg = mean(SWC),
+            swc_se = sd(SWC)/sqrt(n()),
+            sec_avg = mean(SEC),
+            sec_se = sd(SEC)/sqrt(n()),
+            par_avg = mean(na.omit(PAR)),
+            par_se = sd(na.omit(PAR))/sqrt(n())) %>%
+  ungroup() -> dat2
+```
+
+Plot individual variables with error ribbons to represent variation and combine into full plot:
+```{r message = FALSE, warning = FALSE}
+
+sapflow_plot <- 
+dat2 %>%
+  filter(day_hr < 97 & day_hr > -97) %>%
+  ggplot(aes(x = day_hr, y = F_avg)) +
+  geom_ribbon(aes(x = day_hr, ymin = (F_avg - F_sd),
+                  ymax = (F_avg + F_sd)),
+              fill = 'lightblue', alpha = 0.5) +
+  geom_line(color = 'skyblue', size = 0.75 ) +
+  geom_point(color = 'blue') +
+  scale_x_continuous(name = NULL,
+                     breaks = seq(from = min(dat2$day_hr), to = max(dat2$day_hr), by = 24),
+                     labels = function(x) x %/% 24 ) +
+  labs (y = "Sap Flux Density, g/m^3")
+
+par_plot <- 
+  dat2 %>%
+  filter(day_hr < 97 & day_hr > -97) %>%
+  ggplot(aes(x = day_hr, y = par_avg)) +
+  geom_ribbon(aes(x = day_hr, ymin = (par_avg - par_se), 
+                  ymax = (par_avg + par_se)),
+              fill = 'lightblue', alpha = 0.5) +
+    geom_line(color = 'skyblue', size = 0.75 ) +
+    geom_point(color = 'blue') +
+  scale_x_continuous(name = NULL, 
+                     breaks = seq(from = min(dat2$day_hr), to = max(dat2$day_hr), by = 24), 
+                     labels = function(x) x %/% 24 ) + 
+  labs(y = "PAR, umol/m^2/s")
+
+swc_plot <- dat2 %>%
+  filter(day_hr < 145 & day_hr > -145) %>%
+  ggplot(aes(x = day_hr, y = swc_avg)) +
+  geom_ribbon(aes(x = day_hr, ymin = (swc_avg - swc_se), 
+                  ymax = (swc_avg + swc_se)),
+              fill = 'lightblue', alpha = 0.5) +
+  geom_line(color = 'skyblue', size = 0.75 ) +
+  geom_point(color = 'blue') +
+  scale_x_continuous(name = "Day", 
+                     breaks = seq(from = min(dat2$day_hr), to = max(dat2$day_hr), by = 24), 
+                     labels = function(x) x %/% 24 ) +
+  labs(y = "SWC, m^3/m^3")
+
+sec_plot <- dat2 %>%
+  filter(day_hr < 145 & day_hr > -145) %>%
+  ggplot(aes(x = day_hr, y = sec_avg)) +
+  geom_ribbon(aes(x = day_hr, ymin = (sec_avg - sec_se), 
+                  ymax = (sec_avg + sec_se)),
+              fill = 'lightblue', alpha = 0.5) +
+  geom_line(color = 'skyblue', size = 0.75 ) +
+  geom_point(color = 'blue') +
+  scale_x_continuous(name = "Day", 
+                     breaks = seq(from = min(dat2$day_hr), to = max(dat2$day_hr), by = 24), 
+                     labels = function(x) x %/% 24 ) +
+  labs(y = "SEC, m^2/s")
+
+combined_diurnal <- (sapflow_plot | par_plot) / (swc_plot | sec_plot)
+
+combined_diurnal + 
+  plot_annotation(title = "Sapflow and Abiotic Variables in Control Plot, 
+                   averaged Hourly for pre and post flood period")
+```
+
+
+
+
+
+
