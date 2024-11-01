@@ -220,3 +220,21 @@ AIC %>%
 
 ggsave("AIC_comp.jpeg")
 
+
+## New SEC plot for poster; single panel, shapes code non-treatment and
+## treatment years, error bars
+
+tsb_2 %>% 
+  mutate(`Flood Year` = ifelse(Year == "2021", "2021", "2022-24 Average")) %>%
+  group_by(`Flood Year`, Day, Plot) %>%
+  summarize(sec_avg = mean(soil_ec_avg), 
+            sec_se = sd(soil_ec_avg)) %>%
+  ggplot(aes(x = Day, y = sec_avg, color = Plot, shape = `Flood Year`)) + 
+  geom_ribbon(aes(x = Day, ymin = (sec_avg - sec_se), 
+                  ymax = (sec_avg + sec_se)), fill = "lightgreen", alpha = 0.5) +
+ geom_point()
+  
+  
+
+
+
