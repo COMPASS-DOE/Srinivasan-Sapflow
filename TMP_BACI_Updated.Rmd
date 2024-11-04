@@ -124,6 +124,19 @@ ggplot(secplot, aes(x=Date, y= avg_SEC, color = Plot)) +
   geom_point() + facet_grid(~Year, scales = "free")
 ```
 
+```{r}
+tsb_2 %>% 
+  mutate(`Flood Year` = ifelse(Year == "2021", "2021", "2022-24 Average")) %>%
+  group_by(`Flood Year`, Day, Plot) %>%
+  summarize(sec_avg = mean(soil_ec_avg), 
+            sec_se = sd(soil_ec_avg)) %>%
+  ggplot(aes(x = Day, y = sec_avg, color = Plot, shape = `Flood Year`)) + 
+  geom_ribbon(aes(x = Day, ymin = (sec_avg - sec_se), 
+                  ymax = (sec_avg + sec_se)), fill = "lightgreen", alpha = 0.5) +
+ geom_point()
+```
+
+
 #Create and test BACI model(s)
 
 Our existing model- square root transformed sapflow, only including Plot and BA as fixed effects: 
@@ -217,11 +230,10 @@ AIC(model.int.vwc) -> AIC_int_vwc
 AIC(model.noint.vwc) -> AIC_noint_vwc
 
 
-variable <- c("ID:Year", "ID:Year", "Soil EC", "Soil EC", "Soil VWC", "Soil VWC")
-AIC <- c(AIC_int, AIC_noint, AIC_int_ec, AIC_noint_ec, AIC_int_vwc, AIC_noint_vwc)
+variable <- c("ID:Year", "ID:Year", "Soil EC", "Soil VWC")
+AIC <- c(AIC_int, AIC_noint, AIC_int_ec, AIC_int_vwc)
 candidate <- c("Without interaction", "With interaction", 
-               "Without interaction", "With interaction",
-               "Without interaction", "With interaction")
+               "Soil EC", "Soil VWC")
 
 AIC <- data.frame(variable, AIC, candidate)
 
@@ -231,9 +243,10 @@ AIC %>%
   geom_col(position = 'dodge') +
   scale_y_continuous(expand = c(0, 0)) + # Starts x axis at true zero
   expand_limits(y = c(-35000, 0)) +
-  scale_fill_viridis_d(option = 'D', begin = .25, end = .8) + 
+  scale_fill_manual(values = c("With interaction" = "#481F70FF", "Without interaction" = "#287C8EFF", "Soil EC" = "#1F9A8AFF", "Soil VWC" = "#35B779FF")) +
   labs( title = 'AIC Model Comparison', x = 'Variable', y = 'AIC Value') +
-  theme_light()
+  guides(fill = FALSE) + 
+  theme_light() 
 ```
 We can see that the inclusion of the ID & Year interaction makes for a slightly better model, the inclusion of soil ec does not strongly affect the model's fit, and the inclusion of soil vwc worsens the model.
 

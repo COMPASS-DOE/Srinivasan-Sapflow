@@ -231,8 +231,10 @@ tsb_2 %>%
             sec_se = sd(soil_ec_avg)) %>%
   ggplot(aes(x = Day, y = sec_avg, color = Plot, shape = `Flood Year`)) + 
   geom_ribbon(aes(x = Day, ymin = (sec_avg - sec_se), 
-                  ymax = (sec_avg + sec_se)), fill = "lightgreen", alpha = 0.5) +
- geom_point()
+                  ymax = (sec_avg + sec_se), fill = Plot), alpha = 0.25, color = NA) +
+ geom_point() + 
+ labs(x = "Average Soil Electrical Conductivity", title = "Soil EC pre and post 
+      flooding treatments")
   
   
 
