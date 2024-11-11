@@ -209,11 +209,14 @@ model.int_sr <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot +
            (1|ID:Year),
          data = tsb_2, family = gaussian)
 
-ggplot(tsb_2, aes(F_avg)) + geom_histogram() +
-  facet_grid(Plot~.)
+ggplot(tsb_2, aes(F_avg)) + geom_histogram(fill = '#31688EFF') +
+  facet_grid(Plot~.) +
+  labs(y = NULL, x = "Average Sapflow", title = "Untransformed Data")
+  
 
-ggplot(tsb_2, aes(sqrt(F_avg))) + geom_histogram() +
-  facet_grid(Plot~.)
+ggplot(tsb_2, aes(sqrt(F_avg))) + geom_histogram(fill = '#31688EFF') +
+  facet_grid(Plot~.) + 
+  labs(y = NULL, x = "Avergae Sapflow", title = "Transformed Data")
 
 ```
 

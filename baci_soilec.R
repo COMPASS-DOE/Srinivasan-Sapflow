@@ -233,8 +233,10 @@ tsb_2 %>%
   geom_ribbon(aes(x = Day, ymin = (sec_avg - sec_se), 
                   ymax = (sec_avg + sec_se), fill = Plot), alpha = 0.25, color = NA) +
  geom_point() + 
- labs(x = "Average Soil Electrical Conductivity", title = "Soil EC pre and post 
-      flooding treatments")
+ scale_color_viridis_d(begin = 0.8, end = 0.2) +
+ scale_fill_viridis_d(begin = 0.8, end = 0.2) +
+ labs(y = "Average Soil Electrical Conductivity", y = "Day",
+      title = "Soil EC pre and post flooding treatments")
   
   
 
