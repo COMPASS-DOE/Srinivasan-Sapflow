@@ -188,7 +188,7 @@ model.int.ec <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot + soil_ec_avg +
                       (1|ID) + (1|Year) + (1|ID:Year),
                       data = tsb_2, family = gaussian)
 
-model.noint.ec <- glmer(sqrt(F_avg) ~ BA + Plot + soil_ec_avg +
+model.noint.ec <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot +
                         (1|ID) + (1|Year) + (1|ID:Year),
                         data = tsb_2, family = gaussian)
 
@@ -211,7 +211,7 @@ model.int.vwc <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot + soil_ec_avg +
                       (1|ID) + (1|Year) + (1|ID:Year),
                       data = tsb_2, family = gaussian)
 
-model.noint.vwc <- glmer(sqrt(F_avg) ~ BA + Plot + soil_ec_avg +
+model.noint.vwc <- glmer(sqrt(F_avg) ~ BA + Plot + BA*Plot + soil_ec_avg +
                         (1|ID) + (1|Year) + (1|ID:Year),
                         data = tsb_2, family = gaussian)
 
@@ -291,13 +291,14 @@ full_data %>%
         data_end = flood_end + window) %>%
  filter(Date > data_start & Date < flood_start |
         Date < data_end & Date > flood_end,
-        Plot == "Control",
+        #Plot == "Control",
         Species == "Tulip Poplar",
         `F` < 2e-06,
         SWC > 0.25) %>%
  ungroup() -> dat1
 
 dat1 %>%
+  filter(Plot == "Control") %>%
   group_by(Year) %>%
   mutate(BA = ifelse(Date > flood_end, "After", "Before")) %>% 
   mutate(BA = ifelse(Year == 2021, "Before", BA)) %>%
@@ -318,6 +319,32 @@ dat1 %>%
             par_se = sd(na.omit(PAR))/sqrt(n())) %>%
   ungroup() -> dat2
 ```
+
+New plot of soil ec vs soil vwc, faceted by plot and colored by before/after, averaged for all years.                            
+```{r}
+dat1 %>%
+  group_by(Year) %>%
+  mutate(BA = ifelse(Date > flood_end, "After", "Before")) %>% 
+  mutate(BA = ifelse(Year == 2021, "Before", BA)) %>%
+  mutate(Day = ifelse(BA == "Before",
+                      - as.numeric(flood_start - Date),
+                      as.numeric(Date - flood_end))) %>% 
+  ungroup() %>%
+  mutate(day_hr = Day * 24 + Hour) %>%
+  group_by(Plot, BA, Date, Year) %>%
+  summarise(swc_avg = mean(SWC),
+            sec_avg = mean(SEC)) %>%
+  ungroup()-> dat3
+  
+dat3 %>%
+  filter(Plot != "Freshwater", 
+         Year != "2021") %>%
+  ggplot(aes(x = sec_avg, y = swc_avg, group = BA)) +
+  geom_point(aes(color = Year, shape = BA)) +
+  stat_smooth(method = 'lm') +
+  facet_wrap(~Plot, scales = 'free')
+```
+
 
 Plot individual variables with error ribbons to represent variation and combine into full plot:
 ```{r message = FALSE, warning = FALSE}
