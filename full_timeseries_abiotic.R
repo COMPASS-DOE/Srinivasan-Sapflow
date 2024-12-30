@@ -11,7 +11,7 @@ library(stringr)
 
 #TEMPEST data from 2022-24
 site <- "TMP"
-variables <- c("sapflow_2.5cm", "soil_vwc_15cm")
+variables <- c("sapflow_2.5cm", "soil_vwc_15cm", "soil_EC_15cm")
 
 pat <- paste0("^", site, ".*csv$")
 

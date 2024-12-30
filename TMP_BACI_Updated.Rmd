@@ -14,7 +14,7 @@ Updated BACI analysis model examining TEMPEST sapflow from 2021-2024, including 
 Load our packages: 
 
 ```{r message = FALSE}
-.packages = c("tidyr", "ggplot2", "dplyr", "lme4", "AICcmodavg", "MuMIn", "pbkrtest", "readr", "lubridate", "car", "parallel", "data.table", "blmeco", "lsmeans", "patchwork", "viridis")
+.packages = c("tidyr", "ggplot2", "dplyr", "lme4", "AICcmodavg", "MuMIn", "pbkrtest", "readr", "lubridate", "car", "parallel", "data.table", "blmeco", "lsmeans", "patchwork", "viridis", "forcats")
 
 sapply(.packages, require, character.only=TRUE)
 ```

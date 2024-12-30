@@ -1,0 +1,21 @@
+---
+title: "Srinivasan_Sapflow"
+author: "Radha V. Srinivasan & Kendalynn A. Morris"
+date: "`r Sys.Date()`"
+output: html_document
+toc: true 
+    toc_float: true 
+    code_folding: hide
+---
+
+```{r}
+#load packages
+#pull data from gdrive
+#calculate sapflux density and allometrically scale
+#summary figure of data for visualization
+#normal data
+#BACI analysis via Pardini et al
+#w/ EC data
+#Summary AIC table - BACI, EC, SWC, etc
+#Figures for the manuscript
+```
