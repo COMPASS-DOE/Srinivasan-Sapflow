@@ -9,17 +9,17 @@ library(ggplot2)
 library(lubridate)
 library(stringr)
 
-#TEMPEST data from 2022-24
+#TEMPEST data from 2021-24
 site <- "TMP"
 variables <- c("sapflow_2.5cm", "soil_vwc_15cm", "soil_EC_15cm")
 
 pat <- paste0("^", site, ".*csv$")
 
 #Lists of data for different years for TEMPEST
-files_T24 <- list.files("C:/Users/srin662/Documents/R/TMP_2024/", pattern = pat, recursive = TRUE, full.names = TRUE)
-files_T23 <- list.files("C:/Users/srin662/Documents/R/TMP_2023/", pattern = pat, recursive = TRUE, full.names = TRUE)
-files_T22 <- list.files("C:/Users/srin662/Documents/R/TMP_2022/", pattern = pat, recursive = TRUE, full.names = TRUE)
-files_T21 <- list.files("C:/Users/srin662/Documents/R/TMP_2021/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_T24 <- list.files("Data/Unzipped/TMP_2024/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_T23 <- list.files("Data/Unzipped/TMP_2023/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_T22 <- list.files("Data/Unzipped/TMP_2022/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_T21 <- list.files("Data/Unzipped/TMP_2021/", pattern = pat, recursive = TRUE, full.names = TRUE)
 
 files_T <- c(files_T24, files_T23, files_T22, files_T21)
 
@@ -35,6 +35,34 @@ dat <- do.call("rbind", dat)
 
 tmp_full <- dat
 
+# #Repeat just for soil electrical conductivity
+# site <- "TMP"
+# variables <- c("soil_EC_15cm")
+# 
+# pat <- paste0("^", site, ".*csv$")
+# 
+# #Lists of data for different years for TEMPEST
+# files_T24 <- list.files("/Users/radha/Documents/TMP_Data/TMP_2024", pattern = pat, recursive = TRUE, full.names = TRUE)
+# files_T23_2 <- list.files("/Users/radha/Documents/TMP_Data/TMP_2023 2", pattern = pat, recursive = TRUE, full.names = TRUE)
+# files_T23_1 <- list.files("/Users/radha/Documents/TMP_Data/TMP_2023", pattern = pat, recursive = TRUE, full.names = TRUE)
+# files_T22_2 <- list.files("/Users/radha/Documents/TMP_Data/TMP_2022 2/", pattern = pat, recursive = TRUE, full.names = TRUE)
+# files_T22_1 <- list.files("/Users/radha/Documents/TMP_Data/TMP_2022/", pattern = pat, recursive = TRUE, full.names = TRUE)
+# files_T21 <- list.files("/Users/radha/Documents/TMP_Data/TMP_2021/", pattern = pat, recursive = TRUE, full.names = TRUE)
+# 
+# files_T <- c(files_T24, files_T23_2, files_T23_1, files_T22_1, files_T22_2, files_T21)
+# 
+# f <- function(f) {
+#   message("Reading ", basename(f))
+#   x <- read_csv(f, col_types = "ccTccccdccii")
+#   x[x$research_name %in% variables,]
+# }
+# 
+# #Bind together all files 
+# dat <- lapply(files_T,  f)
+# dat <- do.call("rbind", dat)
+# 
+# soil_ec <- dat
+
 #Correction for F19 being mislabeled as F19D in L1 data
 tmp_full %>%
   drop_na(Sensor_ID) %>%
@@ -43,19 +71,20 @@ tmp_full %>%
 saveRDS(tmp_full, "tmp_full.rds")
 tmp_full <- readRDS("tmp_full.rds")
 
-#GCREW data from 2022-24
+#GCREW data from 2021-24
 #Note: vappress is all 0 for now until we get that sorted out 
 site <- "GCW"
-variables <- c("wx_tempavg15", "wx_par_den15", "wx_vappress15", "soil_EC_15cm")
+variables <- c("wx_tempavg15", "wx_par_den15", "wx_vappress15")
 
 pat <- paste0("^", site, ".*csv$")
 
 #Lists of data for different years for GCREW
-files_G24 <- list.files("C:/Users/srin662/OneDrive - PNNL/R/GCW_2024/", pattern = pat, recursive = TRUE, full.names = TRUE)
-files_G23 <- list.files("C:/Users/srin662/OneDrive - PNNL/R/GCW_2023/", pattern = pat, recursive = TRUE, full.names = TRUE)
-files_G22 <- list.files("C:/Users/srin662/OneDrive - PNNL/R/GCW_2022/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_G24 <- list.files("Data/Unzipped/GCW_2024/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_G23 <- list.files("Data/Unzipped/GCW_2023/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_G22 <- list.files("Data/Unzipped/GCW_2022/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_G21 <- list.files("Data/Unzipped/GCW_2021/", pattern = pat, recursive = TRUE, full.names = TRUE)
 
-files_G <- c(files_G24, files_G23, files_G22)
+files_G <- c(files_G24, files_G23, files_G22, files_G21)
 
 f <- function(f) {
   message("Reading ", basename(f))
@@ -195,6 +224,18 @@ swc_15 <- tmp_full %>%
 tmp_data <- 
   left_join(sf_scaled, swc_15, by = c("Plot", "TIMESTAMP"))  
 
+soil_ec %>%
+  group_by(TIMESTAMP, Plot) %>%
+  drop_na(Value) %>%
+  summarize(soil_ec_15cm = mean(Value)) %>%
+  mutate(Plot = substr(Plot,1,1),
+         Plot = case_when(Plot == "C" ~ "Control",
+                          Plot == "F" ~ "Freshwater",
+                          Plot == "S" ~ "Saltwater", ))-> ec_15
+ 
+
+more_tmp_data <- 
+  left_join(tmp_data, ec_15, by = c("Plot", "TIMESTAMP"))  
 
 #Now use gcrew data 
 #Note: only freshwater (wetland) will have these variables, but we can extrapolate to other plots
@@ -211,17 +252,12 @@ gcw_full %>%
 gcw %>%
   filter(research_name == "wx_par_den15") %>%
   mutate(PAR = Value) %>% 
-  select(TIMESTAMP, PAR) -> par
+  select(TIMESTAMP, PAR, Plot) -> par
 
 gcw %>%
   filter(research_name == "wx_tempavg15") %>%
   mutate(TEMP = Value) %>% 
   select(TIMESTAMP, TEMP) -> temp
-
-gcw %>%
-  filter(research_name == "soil_EC_15cm") %>%
-  mutate(EC = Value) %>%
-  select(TIMESTAMP, EC) -> ec
 
 full_data <- 
   merge(tmp_data, par, by.x = c("TIMESTAMP"), 
@@ -231,12 +267,8 @@ full_data <-
   merge(full_data, temp, by.x = c("TIMESTAMP"), 
         by.y = c("TIMESTAMP"), all.x = TRUE) 
 
-full_data <- 
-  merge(full_data, ec, by.x = c("TIMESTAMP"), 
-        by.y = c("TIMESTAMP"), all.x = TRUE) 
-
 #Now we have a full time series for 2021-2024!
 
-saveRDS(full_data,"Full_21_24.rds")
+saveRDS(full_data,"Full_21_24_updated.rds")
 
 
