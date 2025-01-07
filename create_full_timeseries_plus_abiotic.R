@@ -41,7 +41,7 @@ tmp_full %>%
   mutate(Sensor_ID = ifelse(Sensor_ID == "F19D", "F19", Sensor_ID)) -> tmp_full
 
 saveRDS(tmp_full, "tmp_full.rds")
-tmp_full <- readRDS("tmp_full.rds")
+#tmp_full <- readRDS("tmp_full.rds")
 
 #GCREW data from 2021-24
 #Note: vappress is all 0 for now until we get that sorted out
@@ -115,7 +115,7 @@ sapflow_sp %>%
             dTmax_time = TIMESTAMP[which.max(Value)])-> sapflow_dtmax
 
 #Calculate Fd
-# convert the probe raw values (in mV) to sap flux velocity (cm/s)
+# convert the probe raw values (in mV) to sap flux velocity (cm/cm^2/s)
 # Granier equation is Fd = (k * (deltaTmax - deltaT))^1.231
 # k = 0.011899
 
@@ -129,7 +129,7 @@ tree_dat %>%
 
 
 #Using allometric equations, scale Fd measurements
-#DBH measurements are in cm; scaled to m 
+#DBH measurements are in cm 
 
 SA <- function(Species, DBH) {
   case_when(
@@ -157,9 +157,10 @@ mutate(sfd_data, Year = year(TIMESTAMP)) -> sfd_data
 
 scaled <- merge(sfd_data, sa_long, by.x = c("ID", "Year", "Species"), 
                 by.y = c("Sapflux_ID", "Year", "Species"), all.x = TRUE)
-#m^2 x (m/2) = (m^3)/s
+
+#final units are cubic centimeters per second
 scaled %>%
-  select(ID, Year, Species, Plot, TIMESTAMP, Fd, SA) %>%
+  dplyr::select(ID, Year, Species, Plot, TIMESTAMP, Fd, SA) %>%
   mutate(F = SA * Fd) -> sf_scaled
 
 #Now let's make some plots to double check 
