@@ -1,6 +1,11 @@
-#This code compiles a complete time series of sapflow data and GcREW data from 2021-2024
-#Sapflow, soil vwc at 15 cm, average air temp over 15 mins, photosynthetically active radiation
-#Note: only sapflow and soilvwc data are available for 2021
+
+# This code compiles a complete time series
+# of sapflow and related abiotic data from TEMPEST for 2021-2024
+# Sapflow, soil EC & vwc at 15 cm, average air temp, & PAR
+
+# To run, user must download ad unzip sources files from COMPASS-FME Level 1 data
+# For sapflow, soil VWC, & EC: doi:10.15485/2479200
+# For Tair & PAR: doi:10.15485/2439400
 
 library(readr)
 library(stringr)
@@ -27,6 +32,8 @@ f <- function(f) {
   message("Reading ", basename(f))
   x <- read_csv(f, col_types = "ccTccccdccii")
   x[x$research_name %in% variables | x$Sensor_ID == "F19D",]
+  #Unknown is F19D present in current v1-1 data
+  #keeping this to be conservative
 }
 
 #Bind together all files 
@@ -74,7 +81,7 @@ saveRDS(gcw_full, "gcw_full.rds")
 #gcw_full <- readRDS("gcw_full.rds")
 
 #Combining it all: editing dataframes for variables to match 
-tree_dat <- readRDS("dbh.rds")
+tree_dat <- readRDS("inventory.rds")
 
 tmp_full %>%
   mutate(Plot = substr(Plot,1,1),
@@ -182,7 +189,7 @@ ggplot(sf_plot_avg) +
 #ggsave("Full_sapflow.jpeg")
 
 #Option to save just the sapflow data as an RDS
-#saveRDS(scaled, "Sapflow_21_24.rds")
+#saveRDS(sf_scaled, "Sapflow_21_24.rds")
 
 #Now we add in our abiotic data
   #Create soil vwc dataframe
@@ -199,7 +206,7 @@ tmp_data <-
 
 #same for ec
 ec_15 <- tmp_full %>%
-  filter(research_name == "soil_ec_15cm") %>%
+  filter(research_name == "soil_EC_15cm") %>%
   group_by(TIMESTAMP, Plot) %>%
   drop_na(Value) %>%
   summarize(soil_ec_15cm = mean(Value)) 
@@ -207,33 +214,33 @@ ec_15 <- tmp_full %>%
 final_tmp_data <- 
   left_join(tmp_data, ec_15, by = c("Plot", "TIMESTAMP"))  
 
-#Now use gcrew data 
+#Now the gcrew data 
 #Note: only freshwater (wetland) will have these variables,
 #but we can extrapolate to other plots
-#Note: first few months of 2022 don't have PAR or temp values, look into this later 
+#Note: first few months of 2022 don't have PAR or temp values
 
 gcw_full %>%
   mutate(Plot = substr(Plot,1,2),
          Plot = case_when(Plot == "W" ~ "Freshwater",)) %>%
-  select(Plot, TIMESTAMP, Value, research_name) -> gcw
+  dplyr::select(Plot, TIMESTAMP, Value, research_name) -> gcw
 
 
 gcw %>%
   filter(research_name == "wx_par_den15") %>%
   mutate(PAR = Value) %>% 
-  select(TIMESTAMP, PAR, Plot) -> par
+  dplyr::select(TIMESTAMP, PAR) -> par
 
 gcw %>%
   filter(research_name == "wx_tempavg15") %>%
   mutate(TEMP = Value) %>% 
-  select(TIMESTAMP, TEMP) -> temp
+  dplyr::select(TIMESTAMP, TEMP) -> temp
 
-near_final_data <- 
-  merge(final_tmp_data, par, by.x = c("TIMESTAMP"), 
+abiotic_data <- 
+  merge(temp, par, by.x = c("TIMESTAMP"), 
         by.y = c("TIMESTAMP"), all = TRUE)
 
 final_data <- 
-  merge(near_final_data, temp, by.x = c("TIMESTAMP"), 
+  merge(final_tmp_data, abiotic_data, by.x = c("TIMESTAMP"), 
         by.y = c("TIMESTAMP"), all.x = TRUE) 
 
 #Now we have a full time series for 2021-2024!
