@@ -7,8 +7,8 @@ library(dplyr)
 library(stringr)
 
 #Load dataframes
-sapflow_inventory <- read.csv("C:/Users/srin662/OneDrive - PNNL/Documents/R/TEMPEST-SULI-2024/sapflow_inventory.csv")
-dbh_inventory <- read.csv("C:/Users/srin662/OneDrive - PNNL/Documents/R/inventory.csv")
+sapflow_inventory <- read.csv("Data/sapflow_inventory.csv")
+dbh_inventory <- read.csv("Data/inventory.csv")
 
 #Edit format to match dataframes
 #Remove trailing white spaces 
