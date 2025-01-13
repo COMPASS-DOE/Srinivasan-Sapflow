@@ -1,0 +1,280 @@
+---
+title: "Srinivasan_Sapflow"
+author: "Radha V. Srinivasan & Kendalynn A. Morris"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true 
+    toc_float: true 
+    code_folding: hide    
+---
+
+```{r Load Packages, message = FALSE, warning = FALSE}
+
+.packages = c("tidyr", "ggplot2", "dplyr", "lme4",
+              "AICcmodavg", "MuMIn", "pbkrtest", "readr",
+              "lubridate", "car", "parallel", "data.table",
+              "blmeco", "lsmeans", "patchwork", "viridis",
+              "forcats", "ggpmisc", "stringr", "e1071")
+#Install CRAN packages (if not already installed)
+.inst <- .packages %in% installed.packages()
+if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst])
+
+#Attach packages
+sapply(.packages, require, character.only=TRUE)
+```
+
+```{r Load Data, message = FALSE}
+#This will only work once raw data is downloaded and unzipped from ESS-DIVE
+#urls to come
+#Following unzip, source files create_inventory.R and create_full_timeseries_plus_abiotic.R
+#these files calculate sapflux density and allometrically scale it
+
+#This only needs to be done once
+
+data <- readRDS("Sapflow_BACI.rds")
+
+```
+
+```{r Sapflow Visual, message = TRUE}
+
+#something like this
+data %>% 
+  mutate(Hour = hour(TIMESTAMP)) %>%
+  mutate(Date = date(TIMESTAMP)) %>%
+  mutate(monthyr = floor_date(TIMESTAMP, unit = "week")) %>%
+  filter(Hour >= 11, Hour <= 12) %>% 
+  filter(`F` <= 2, `F` >= 0) %>%
+  group_by(Plot, Species, Date) %>% 
+  summarise(F_avg = mean(`F`, na.rm = TRUE)) -> sf_plot_avg
+
+ggplot(sf_plot_avg) + 
+  geom_point(aes (x = Date, y = F_avg, color = Species)) + 
+  facet_wrap(~Plot, ncol = 1, scales = "fixed") + 
+  labs(y = "Avg Sap Flux Density", x = "Date",
+       title = "Sap Flux Density Averaged Daily, 11 AM - 12 PM")
+
+```
+
+```{r TEMPEST Events, message = TRUE}
+#TEMPEST EVENTS
+tempest_events <- bind_rows(
+  tibble( Year = 2021, flood_start = "2021-06-12", flood_end = "2021-06-12"), #average date = June 12
+  tibble( Year = 2022, flood_start = "2022-06-22", flood_end = "2022-06-22"), #June 22
+  tibble( Year = 2023, flood_start = "2023-06-06", flood_end = "2023-06-07"), #June 6, 7
+  tibble( Year = 2024, flood_start = "2024-06-11", flood_end = "2024-06-13")) #June 11, 12, 13
+
+tempest_events %>%
+  mutate(flood_start = ymd(flood_start),
+         flood_end = ymd(flood_end)) -> events
+
+#window of data to look at for BACI analysis
+window <- days(15)
+
+```
+
+```{r Select LITU and SW plot data, message = TRUE}
+#currently this occurs in the 3 chunks
+#may be possible to streamline
+data %>%
+  dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`,
+                soil_vwc_15cm, soil_ec_15cm) %>%
+  mutate(Date = as_date(date(TIMESTAMP)),
+         Hour = hour(TIMESTAMP)) %>%
+  left_join(events) %>%
+  group_by(Year) %>%
+  mutate(data_start = flood_start - window,
+         data_end = flood_end + window) %>%
+  filter(Date > data_start & Date < flood_start |
+         Date < data_end & Date > flood_end,
+         Hour < 14, Hour >= 11, 
+         Plot != "Freshwater",
+         Species == "Tulip Poplar") %>%
+  ungroup() -> tulip_salt
+
+tulip_salt %>%
+  group_by(Year) %>%
+  mutate(BA = ifelse(Date > flood_end, "After", "Before"),
+         Year = as.factor(Year),
+         ID = as.factor(ID),
+         BA = as.factor(BA),
+         Plot = as.factor(Plot)) %>%
+  filter(`F` < 3) %>% #remove outliers, ggplot below for confirmation
+  group_by(Date, Plot, ID, Year, BA, flood_start, flood_end) %>%
+  summarise(F_avg = mean(`F`, na.rm = TRUE),
+            soil_ec_avg = mean(soil_ec_15cm), 
+            soil_vwc_avg = mean(soil_vwc_15cm),
+            n = n()) %>%
+  ungroup() -> tsb_1
+
+tsb_1 %>%
+  group_by(Year) %>%
+  mutate(Day = ifelse(BA == "Before",
+                      - as.numeric(flood_start - Date),
+                      as.numeric(Date - flood_end))) %>%
+  mutate(BA = as.character(BA)) %>%
+  mutate(BA = ifelse(Year == 2021, "Before", BA)) -> tsb_2
+
+ggplot(tsb_2, aes(Day, F_avg, color = ID, shape = BA)) +
+  geom_point(size = 2.5) + facet_grid(Plot~Year, scales = "free")
+```
+
+```{r Normality, message = TRUE}
+#here we check if our response variable (sapflow), is normally distributed
+current_skewness <- skewness(tsb_2$F_avg)
+print(paste("Current Skewness:", current_skewness))
+
+# Logarithmic Transformation
+log_transformed_response <- log(tsb_2$F_avg + 1)
+
+# Square Root Transformation
+sqrt_transformed_response <- sqrt(tsb_2$F_avg)
+
+# Inverse Transformation
+inv_transformed_response <- 1 / tsb_2$F_avg
+
+log_skewness <- skewness(log_transformed_response)
+sqrt_skewness <- skewness(sqrt_transformed_response)
+inv_skewness <- skewness(inv_transformed_response)
+
+print(paste("Log Transformation Skewness:", log_skewness))
+print(paste("Square Root Transformation Skewness:", sqrt_skewness))
+print(paste("Inverse Transformation Skewness:", inv_skewness))
+
+ggplot(tsb_2, aes(F_avg)) + geom_histogram(fill = '#31688EFF') +
+  facet_grid(Plot~.) +
+  labs(y = NULL, x = "Average Sapflow", title = "Untransformed Data")
+  
+
+ggplot(tsb_2, aes(sqrt(F_avg))) + geom_histogram(fill = '#31688EFF') +
+  facet_grid(Plot~.) + 
+  labs(y = NULL, x = "Avergae Sapflow", title = "Square Root \n Transformed Data")
+
+```
+
+#Progressive analysis via Pardini et al
+
+We want to use the following linear mixed model:
+
+sqrt(F_avg) \~ BA + Plot + BA\*Plot + (1\|ID) + (1\|Year) + (1\|ID:Year)
+
+In which 'Plot' is the control/impact treatment effect, 'BA' is the pre/post flood treatment effect, and tree ID and Year are random effects.
+
+\*Note that although, flooding intensity increases each year, we ignore this effect for now.
+
+First, test for the statistical significance of the final term (1\|ID:Year), the interaction of the ID and Year random effects, using an AIC comparison.
+
+```{r Pardini et al 2018, warning = FALSE}
+Cand.set <- list()
+
+Cand.set[[1]] <- lmer(sqrt(F_avg) ~ BA + Plot  + BA*Plot +
+                         (1|ID) + (1|Year),
+                       data = tsb_2)
+model.noint <- Cand.set[[1]]
+
+Cand.set[[2]] <- lmer(sqrt(F_avg) ~ BA + Plot + BA*Plot +
+                         (1|ID) + (1|Year) +
+                         (1|ID:Year),
+                       data = tsb_2)
+model.int <- Cand.set[[2]]
+
+AIC.res.table <- aictab(cand.set = list(Cand.set[[1]], Cand.set[[2]]), 
+                        modnames = paste0("Cand.set_", c(1,2)), 
+                        second.ord = TRUE)
+AIC.res.table
+```
+
+Choose the model with the lowest AICc value (i.e. largest negative value); this suggests that the second model, which includes the random effects interaction term, is a better fit for our data.
+
+#Create and test BACI model(s)
+
+Our existing model- square root transformed sapflow, only including Plot and BA as fixed effects: 
+```{r message = FALSE, warning = FALSE}
+model.int.og <- lmer(sqrt(F_avg) ~ BA*Plot +
+                        (1|ID) + (1|Year) + (1|ID:Year),
+                      data = tsb_2)
+
+model.noint.og <- lmer(sqrt(F_avg) ~ BA + Plot +
+                          (1|ID) + (1|Year) + (1|ID:Year),
+                        data = tsb_2)
+
+og.refdist <- PBrefdist(largeModel = model.int.og, 
+                        smallModel = model.noint.og, 
+                        nsim = 100)
+
+og.compar <- PBmodcomp(largeModel = model.int.og, 
+                       smallModel = model.noint.og,
+                       ref = og.refdist)
+
+og.compar
+Anova(model.int.og, type = "III")
+```
+
+Neither the likelihood ratio test nor the parametric bootstrap test show significance for the BACI interaction term.
+
+Inclusion of soil electrical conductivity into the model: 
+
+```{r BACI plus EC, message = FALSE, warning = FALSE}
+model.int.ec <- lmer(sqrt(F_avg) ~ BA*Plot + soil_ec_avg +
+                      (1|ID) + (1|Year) + (1|ID:Year),
+                      data = tsb_2)
+
+model.noint.ec <- lmer(sqrt(F_avg) ~ BA + Plot + soil_ec_avg +
+                        (1|ID) + (1|Year) + (1|ID:Year),
+                        data = tsb_2)
+
+ec.refdist <- PBrefdist(largeModel = model.int.ec, 
+                        smallModel = model.noint.ec, 
+                        nsim = 100)
+
+ec.compar <- PBmodcomp(largeModel = model.int.ec, 
+                       smallModel = model.noint.ec,
+                       ref = ec.refdist)
+ec.compar
+Anova(model.int.ec, type = "III")
+```
+
+We now see significance for the BACI interaction term and soil ec fixed effect with both the likelihood ratio and parametric bootstrap 
+
+AIC comparison to visually observe differences in how well each model fits the data: 
+
+```{r message = FALSE, warning = FALSE}
+
+model.noint.random <- lmer(sqrt(F_avg) ~ BA*Plot + (1|ID) + (1|Year),
+                           data = tsb_2)
+
+model.random.int <- lmer(sqrt(F_avg) ~ BA*Plot + (1|ID) + (1|Year) +
+                           (1|ID:Year),
+                         data = tsb_2)
+
+
+AIC(model.noint.random) -> AIC_initial
+AIC(model.random.int) -> AIC_randominteraction
+AIC(model.int.ec) -> AIC_int_ec #BACI interaction plus SEC
+AIC(model.noint.ec) -> AIC_noint_ec #just SEC, no BACI
+
+
+variable <- c("Model A", "Model B", "Model C", "Model D")
+AIC <- c(AIC_initial, AIC_randominteraction,
+         AIC_int_ec, AIC_noint_ec)
+candidate <- c("without interaction in random effects",
+               "with interaction in random effects", 
+               "with Soil EC", "just Soil EC")
+
+AIC <- data.frame(variable, AIC)
+
+AIC %>%
+  mutate(`Model Specification` = candidate) %>%
+  ggplot(aes(variable, AIC, fill = `Model Specification`)) +
+  geom_col() +
+  scale_y_continuous(expand = c(0, 0)) + # Starts x axis at true zero
+  expand_limits(y = c(-750, 0)) +
+  scale_fill_viridis_d(begin = 0.75, end = 0.3) +
+  labs( title = 'AIC Model Comparison', x = 'Variable', y = 'AIC Value') +
+  #guides(fill = FALSE) + 
+  theme_light() 
+```
+
+```{r message = FALSE, warning = FALSE}
+#Figures for the manuscript
+```
