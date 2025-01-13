@@ -1,3 +1,4 @@
+
 *.html
 *.rds
 *.csv
@@ -7,3 +8,4 @@
 *.png
 .Rproj.user
 BACI_GLMM/
+Data/
