@@ -231,7 +231,7 @@ ec.compar <- PBmodcomp(largeModel = model.int.ec,
                        smallModel = model.noint.ec,
                        ref = ec.refdist)
 ec.compar
-Anova(model.int.ec, type = "III")
+Anova(model.noint.ec, type = "III")
 ```
 
 We now see significance for the BACI interaction term and soil ec fixed effect with both the likelihood ratio and parametric bootstrap 
@@ -247,29 +247,36 @@ model.random.int <- lmer(sqrt(F_avg) ~ BA*Plot + (1|ID) + (1|Year) +
                            (1|ID:Year),
                          data = tsb_2)
 
+model.ec.only <- lmer(sqrt(F_avg) ~ soil_ec_avg +
+                        (1|ID) + (1|Year) + (1|ID:Year),
+                         data = tsb_2)
+
 
 AIC(model.noint.random) -> AIC_initial
 AIC(model.random.int) -> AIC_randominteraction
 AIC(model.int.ec) -> AIC_int_ec #BACI interaction plus SEC
-AIC(model.noint.ec) -> AIC_noint_ec #just SEC, no BACI
+AIC(model.noint.ec) -> AIC_noint_ec #BA + CI plus SEC
+AIC(model.ec.only) -> AIC_ec_only
 
 
-variable <- c("Model A", "Model B", "Model C", "Model D")
+variable <- c("Model A", "Model B", "Model C", "Model D", "Model E")
 AIC <- c(AIC_initial, AIC_randominteraction,
-         AIC_int_ec, AIC_noint_ec)
+         AIC_int_ec, AIC_noint_ec, AIC_ec_only)
 candidate <- c("without interaction in random effects",
                "with interaction in random effects", 
-               "with Soil EC", "just Soil EC")
+               "with Soil EC",
+               "no BACI interaction with Soil EC",
+               "just Soil EC")
 
-AIC <- data.frame(variable, AIC)
+AIC <- data.frame(variable, AIC, candidate)
 
 AIC %>%
   mutate(`Model Specification` = candidate) %>%
   ggplot(aes(variable, AIC, fill = `Model Specification`)) +
   geom_col() +
   scale_y_continuous(expand = c(0, 0)) + # Starts x axis at true zero
-  expand_limits(y = c(-750, 0)) +
-  scale_fill_viridis_d(begin = 0.75, end = 0.3) +
+  expand_limits(y = c(-775, 0)) +
+  scale_fill_viridis_d() + geom_hline(yintercept = -720) +
   labs( title = 'AIC Model Comparison', x = 'Variable', y = 'AIC Value') +
   #guides(fill = FALSE) + 
   theme_light() 
