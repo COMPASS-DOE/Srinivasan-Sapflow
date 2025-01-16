@@ -235,8 +235,9 @@ tsb_2 %>%
  geom_point() + 
  scale_color_viridis_d(begin = 0.8, end = 0.2) +
  scale_fill_viridis_d(begin = 0.8, end = 0.2) +
- labs(y = "Average Soil Electrical Conductivity", y = "Day",
-      title = "Soil EC pre and post flooding treatments")
+ labs(y = expression(paste("Avg Soil EC, ", mu, "S/cm")), y = "Day",
+      title = "Soil EC pre and post flooding treatments") + 
+  theme_light()
   
   
 

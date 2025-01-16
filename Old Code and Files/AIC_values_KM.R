@@ -97,15 +97,18 @@ mod4 <- AIC(model.sqrt.ec.nobaci)
 
 
 mod_names <- c("BACI only", "BACI + EC", "BACI + EC + VWC", "EC only")
+mod_names <- factor(mod_names, levels = c("EC only", "BACI only", "BACI + EC",
+                                          "BACI + EC + VWC"))
 mods <- c(mod1, mod2, mod3, mod4)
 
 mod_data <- tibble(mods, mod_names)
 
 library(ggplot2)
 
-ggplot(mod_data, aes(mod_names, mods + 17920,
+ggplot(mod_data, aes(mod_names, mods + 17500,
                      fill = mod_names)) +
   geom_bar(stat = "identity") +
-  scale_fill_viridis_d() +
+  scale_fill_viridis_d(begin = 0.75, end = 0.3) +
   theme_light() +
-  theme(axis.text.x = element_text(angle = 30, vjust = 1, hjust=1))
+  #theme(axis.text.x = element_text(angle = 30, vjust = 1, hjust=1))+
+  labs(x = "Variable", y = "AIC", title = "AIC Model Comparison",  fill = NULL)

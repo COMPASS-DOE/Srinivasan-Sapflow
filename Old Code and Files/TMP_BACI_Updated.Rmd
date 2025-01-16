@@ -120,7 +120,9 @@ ggplot(sf_plot_avg) +
   geom_point(aes (x = Date, y = F_avg, color = Species)) + 
   scale_color_viridis_d(begin = 0.20, end = 0.85) +
   facet_wrap(~Plot, ncol = 1, scales = "fixed") +
-  labs(y = "Avg Sap Flux Density", x = "Date", title = "Sap Flux Density Averaged Daily, 11 AM - 2 PM")
+  labs(y = expression ("Avg Sap Flux Density, m" ^3* "/s"), x = "Date", title = "Sap Flux Density Averaged Daily, 11 AM - 2 PM") +
+  theme_light() +
+  theme(legend.position="bottom")
 ```
 
 
@@ -289,8 +291,8 @@ full_data %>%
  group_by(Year) %>%
  mutate(data_start = flood_start - window,
         data_end = flood_end + window) %>%
- filter(Date > data_start & Date < flood_start |
-        Date < data_end & Date > flood_end,
+ filter(#Date > data_start & Date < flood_start |
+        #Date < data_end & Date > flood_end,
         #Plot == "Control",
         Species == "Tulip Poplar",
         `F` < 2e-06,
@@ -326,23 +328,30 @@ dat1 %>%
   group_by(Year) %>%
   mutate(BA = ifelse(Date > flood_end, "After", "Before")) %>% 
   mutate(BA = ifelse(Year == 2021, "Before", BA)) %>%
-  mutate(Day = ifelse(BA == "Before",
-                      - as.numeric(flood_start - Date),
-                      as.numeric(Date - flood_end))) %>% 
+  #mutate(Day = ifelse(BA == "Before",
+   #                  - as.numeric(flood_start - Date),
+      #               as.numeric(Date - flood_end))) %>% 
   ungroup() %>%
-  mutate(day_hr = Day * 24 + Hour) %>%
-  group_by(Plot, BA, Date, Year) %>%
+ #mutate(day_hr = Day * 24 + Hour) %>%
+  group_by(Date, Plot, BA, Year) %>%
   summarise(swc_avg = mean(SWC),
             sec_avg = mean(SEC)) %>%
   ungroup()-> dat3
-  
+
+dat3$BA <- factor(dat3$BA, levels = c("Before", "After"))
+
 dat3 %>%
-  filter(Plot != "Freshwater", 
-         Year != "2021") %>%
-  ggplot(aes(x = sec_avg, y = swc_avg, group = BA)) +
-  geom_point(aes(color = Year, shape = BA)) +
-  stat_smooth(method = 'lm') +
-  facet_wrap(~Plot, scales = 'free')
+  filter(Plot != "Freshwater") %>%
+  filter(!(BA == "Before" & sec_avg >= 500),
+         !(BA == "After" & sec_avg >= 1000)) %>%
+  ggplot(aes(x = sec_avg, y = swc_avg)) +
+  geom_point(aes(color = factor(Year))) +
+  stat_smooth(method = 'lm', color = 'darkblue') +
+  facet_wrap(Plot~ BA, scales = 'free') +
+  scale_color_viridis_d(begin = 0.9, end = 0.1) +
+  labs(x = expression(paste("Avg Soil EC, ", mu, "S/cm")), y = expression("Avg Soil VWC, m" ^3* "/m" ^3),
+       title = "Soil Volumetric Water Content vs Electrical Conductivity", color = "Year") +
+  theme_light()
 ```
 
 
@@ -447,7 +456,7 @@ tulip_all %>%
   ungroup() -> tsb_4
 
 tsb_4 %>%
-  mutate(BA = fct_relevel(BA, "Before", "After")) -> tsb_4
+  mutate(BA = relevel(BA, "Before", "After")) -> tsb_4
 ```
 
 
@@ -466,9 +475,10 @@ tsb_4 %>%
               size = 1) +
   stat_cor(label.y = 2.2e-06) +
   stat_regline_equation(label.y = 2.0e-06) +
-  facet_wrap(~ BA, scales = "free", ncol = 2) +
+  facet_wrap(~ BA, scales = "free_x",  ncol = 2) +
   theme_light() +
-  labs(title = "Sap Flow vs Soil EC in Saltwater Plot")
+  labs(title = "Sap Flux Density vs Soil EC, Saltwater Plot",
+       y = expression ("Avg Sap Flux Density, m" ^3* "/s"), x =        expression(paste("Avg Soil EC, ", mu, "S/cm")))
 ```
 ```{r}
 
@@ -479,7 +489,7 @@ tsb_4 %>%
   scale_fill_viridis_d(begin = 0.9, end = 0.2) +
   geom_boxplot() +
   #ggtitle("Plot Sapflow") +
-  labs(fill = "BACI", y = "Sap Flux Density", x = "Year", 
+  labs(fill = "BACI", y = expression("Avg Sap Flux Density, m" ^3* "/s"), x = "Year", 
        title = "Comparison of Sap Flow in BACI Model") +
   theme_light()
 

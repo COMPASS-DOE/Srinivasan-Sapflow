@@ -73,18 +73,27 @@ ggplot(aes(soil_ec_avg, soil_vwc_avg,
 
 #Before and After data for 2024
 tsb_5 %>%
-  filter(Year == 2024,
-         Plot != "Freshwater") %>%
-  ggplot(aes(soil_ec_avg, soil_vwc_avg,
-             color = Date, group = BA)) +
-  geom_point(aes(shape = BA), size = 3) +
+  filter(Plot != "Freshwater") %>%
+  ggplot(aes(soil_ec_avg, soil_vwc_avg)) +
+  geom_point(aes(color = BA)) +
   stat_smooth(method='lm', color = 'black') + 
-  facet_wrap(Plot~Year, scales = "free") +
+  facet_wrap(Year~Plot, scales = "free") +
   theme_light()
+
+
+ctrl_plot <- tsb_5 %>%
+  filter(Plot != 'Freshwater') %>%
+  ggplot(aes(x = soil_ec_avg, y = soil_vwc_avg, group = BA)) +
+  geom_point(aes(color = Year)) +
+  stat_smooth(method = 'lm', color = 'darkblue') +
+  facet_wrap(~Plot, scales = 'free')
+  
+ctrl_plot
 
 #keeping this one because it's so pretty
 tsb_4 %>%
   filter(Year == 2021) %>%
+  group_by(Year, BA, Plot)
 ggplot(aes(soil_ec_avg, F_avg)) +
   geom_point(aes(color = soil_vwc_avg, shape = Plot)) + scale_color_viridis_c() +
   stat_smooth(method = 'lm', color = 'black',

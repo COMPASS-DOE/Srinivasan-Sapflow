@@ -123,7 +123,7 @@ ggsave("PAR.jpeg", width = 11.5, height = 7.5)
 #Average soil volumetric water content vs average sap flux density
 #Years 2021-24, Weeks Pre and Post TEMPEST, hrs 11-12
 
-full_data %>% 
+data %>% 
   mutate(Hour = hour(TIMESTAMP)) %>%
   mutate(Date = date(TIMESTAMP)) %>%
   filter(Plot == "Control") %>%
