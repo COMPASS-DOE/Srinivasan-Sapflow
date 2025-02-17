@@ -231,7 +231,7 @@ ec.compar <- PBmodcomp(largeModel = model.int.ec,
                        smallModel = model.noint.ec,
                        ref = ec.refdist)
 ec.compar
-Anova(model.noint.ec, type = "III")
+Anova(model.int.ec, type = "III")
 ```
 
 We now see significance for the BACI interaction term and soil ec fixed effect with both the likelihood ratio and parametric bootstrap 
@@ -255,6 +255,11 @@ model.ec.only <- lmer(sqrt(F_avg) ~ soil_ec_avg +
 AIC(model.noint.random) -> AIC_initial
 AIC(model.random.int) -> AIC_randominteraction
 AIC(model.int.ec) -> AIC_int_ec #BACI interaction plus SEC
+
+model.int.ec <- lmer(sqrt(F_avg) ~ BA*Plot + soil_ec_avg +
+                      (1|ID) + (1|Year) + (1|ID:Year),
+                      data = tsb_2)
+
 AIC(model.noint.ec) -> AIC_noint_ec #BA + CI plus SEC
 AIC(model.ec.only) -> AIC_ec_only
 
