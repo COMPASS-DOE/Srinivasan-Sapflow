@@ -15,7 +15,7 @@ output:
               "AICcmodavg", "MuMIn", "pbkrtest", "readr",
               "lubridate", "car", "parallel", "data.table",
               "blmeco", "lsmeans", "patchwork", "viridis",
-              "forcats", "ggpmisc", "stringr", "e1071")
+              "forcats", "ggpmisc", "stringr", "e1071", "ggpubr")
 #Install CRAN packages (if not already installed)
 .inst <- .packages %in% installed.packages()
 if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst])
@@ -43,14 +43,15 @@ data %>%
   mutate(Hour = hour(TIMESTAMP)) %>%
   mutate(Date = date(TIMESTAMP)) %>%
   mutate(monthyr = floor_date(TIMESTAMP, unit = "week")) %>%
-  filter(Hour >= 11, Hour <= 12) %>% 
-  filter(`F` <= 2, `F` >= 0) %>%
+  filter(Hour < 14, Hour >= 11,
+         `F` <= 3, `F` >= 0) %>%
   group_by(Plot, Species, Date) %>% 
   summarise(F_avg = mean(`F`, na.rm = TRUE)) -> sf_plot_avg
 
 ggplot(sf_plot_avg) + 
   geom_point(aes (x = Date, y = F_avg, color = Species)) + 
   facet_wrap(~Plot, ncol = 1, scales = "fixed") + 
+  scale_color_viridis_d(option = 'D', begin = .25, end = .8) + 
   labs(y = "Avg Sap Flux Density", x = "Date",
        title = "Sap Flux Density Averaged Daily, 11 AM - 12 PM")
 
@@ -87,7 +88,8 @@ data %>%
          data_end = flood_end + window) %>%
   filter(Date > data_start & Date < flood_start |
          Date < data_end & Date > flood_end,
-         Hour < 14, Hour >= 11, 
+         Hour < 14, Hour >= 11,
+         `F` <= 3, `F` >= 0,
          Plot != "Freshwater",
          Species == "Tulip Poplar") %>%
   ungroup() -> tulip_salt
@@ -99,7 +101,6 @@ tulip_salt %>%
          ID = as.factor(ID),
          BA = as.factor(BA),
          Plot = as.factor(Plot)) %>%
-  filter(`F` < 3) %>% #remove outliers, ggplot below for confirmation
   group_by(Date, Plot, ID, Year, BA, flood_start, flood_end) %>%
   summarise(F_avg = mean(`F`, na.rm = TRUE),
             soil_ec_avg = mean(soil_ec_15cm), 
@@ -238,7 +239,7 @@ We now see significance for the BACI interaction term and soil ec fixed effect w
 
 AIC comparison to visually observe differences in how well each model fits the data: 
 
-```{r message = FALSE, warning = FALSE}
+```{r AIC, message = FALSE, warning = FALSE}
 
 model.noint.random <- lmer(sqrt(F_avg) ~ BA*Plot + (1|ID) + (1|Year),
                            data = tsb_2)
@@ -283,6 +284,34 @@ AIC %>%
   theme_light() 
 ```
 
-```{r message = FALSE, warning = FALSE}
-#Figures for the manuscript
+```{r Figures for the manuscript, message = FALSE, warning = FALSE}
+#plot seperately then recombine
+tsb_2 %>%
+  mutate(BA = factor(BA, levels = c("Before", "After"))) %>%
+  ggplot(aes(x = soil_ec_avg, y = soil_vwc_avg)) +
+  geom_point(aes(color = factor(Year))) +
+  stat_smooth(method = 'lm',
+              aes(group = factor(Year),
+                  color = factor(Year))) +
+  facet_wrap(Plot~ BA, scales = 'free') +
+  scale_color_viridis_d(begin = 0.9, end = 0.1) +
+  labs(x = expression(paste("Avg Soil EC, ", mu, "S/cm")), y = expression("Avg Soil VWC, m" ^3* "/m" ^3),
+       title = "Soil Volumetric Water Content vs Electrical Conductivity", color = "Year") +
+  theme_light()
+
+
+tsb_2 %>%
+  mutate(BA = factor(BA, levels = c("Before", "After"))) %>%
+  ggplot(aes(soil_ec_avg, F_avg)) +
+  geom_point(aes(color = factor(Year))) + 
+  scale_color_viridis_d(begin = 0.9, end = 0.2) +
+  stat_smooth(aes(group = BA), method = 'lm', color = 'black',
+              size = 1) +
+  stat_cor(label.y = 2.2) +
+  stat_regline_equation(label.y = 2.0) +
+  facet_wrap(~ BA, scales = "free_x",  ncol = 2) +
+  theme_light() +
+  labs(title = "Sap Flux Density vs Soil EC, Saltwater Plot",
+       y = expression ("Avg Sap Flux Density, m" ^3* "/s"), x =        expression(paste("Avg Soil EC, ", mu, "S/cm")))
+
 ```
