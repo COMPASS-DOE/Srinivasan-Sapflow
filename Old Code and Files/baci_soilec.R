@@ -239,7 +239,65 @@ tsb_2 %>%
       title = "Soil EC pre and post flooding treatments") + 
   theme_light()
   
-  
+ggplot(sf_plot_avg) + 
+  geom_point(aes (x = Date, y = F_avg, color = Species)) + 
+  facet_wrap(~Plot, ncol = 1, scales = "fixed") + 
+  scale_color_viridis_d(begin = 0.9, end = 0.1) +
+  labs(y = "Avg Sap Flux Density", x = "Date",
+       title = "Sap Flux Density Averaged Daily, 11 AM - 12 PM") +
+  theme_light()
+
+dat3 %>%
+  filter(Plot != "Freshwater") %>%
+  filter(!(BA == "Before" & sec_avg >= 500),
+         !(BA == "After" & sec_avg >= 1000)) %>%
+  ggplot(aes(x = sec_avg, y = swc_avg)) +
+  geom_point(aes(color = factor(Year))) +
+  stat_smooth(method = 'lm', color = 'darkblue') +
+  facet_wrap(Plot~ BA, scales = 'free') +
+  scale_color_viridis_d(begin = 0.9, end = 0.1) +
+  labs(x = expression(paste("Avg Soil EC, ", mu, "S/cm")), y = expression("Avg Soil VWC, m" ^3* "/m" ^3),
+       title = "Soil Volumetric Water Content vs Electrical Conductivity", color = "Year") +
+  theme_light()
+
+data %>%
+  group_by(TIMESTAMP) %>%
+  mutate(PAR = ifelse(is.na(PAR), PAR[Plot == "Freshwater"], PAR)) %>%
+  ungroup() %>%
+  mutate(SWC = soil_vwc_15cm) %>%
+  mutate(SEC = soil_ec_15cm) %>%
+  dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`, PAR, SWC, SEC) %>%
+  mutate(Date = as_date(date(TIMESTAMP)),
+         Hour = hour(TIMESTAMP)) %>%
+  left_join(events) %>%
+  group_by(Year) %>%
+  mutate(data_start = flood_start - window,
+         data_end = flood_end + window) %>%
+  filter(Species == "Tulip Poplar",
+         `F` < 3,
+         SWC > 0.25) %>%
+  ungroup() -> dat1
 
 
+tsb_1 %>%
+  group_by(Year) %>%
+  mutate(BA = ifelse(Date > flood_end, "After", "Before")) %>% 
+  mutate(BA = ifelse(Year == 2021, "Before", BA)) %>%
+  ungroup() %>%
+  group_by(Date, Plot, BA, Year) %>%
+  summarise(swc_avg = mean(SWC),
+            sec_avg = mean(SEC)) %>%
+  ungroup()-> dat3
 
+dat3 %>%
+  filter(Plot != "Freshwater") %>%
+  #filter(!(BA == "Before" & sec_avg >= 500),
+  #       !(BA == "After" & sec_avg >= 1000)) %>%
+  ggplot(aes(x = sec_avg, y = swc_avg)) +
+  geom_point(aes(color = factor(Year))) +
+  stat_smooth(method = 'lm', color = 'darkblue') +
+  facet_wrap(Plot~ BA, scales = 'free') +
+  scale_color_viridis_d(begin = 0.9, end = 0.1) +
+  labs(x = expression(paste("Avg Soil EC, ", mu, "S/cm")), y = expression("Avg Soil VWC, m" ^3* "/m" ^3),
+       title = "Soil Volumetric Water Content vs Electrical Conductivity", color = "Year") +
+  theme_light()

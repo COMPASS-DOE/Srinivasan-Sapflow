@@ -278,7 +278,7 @@ Creating a full plot of diurnal sapflow and abiotic variables before and after f
 Filter and summarize data for all variables: 
 ```{r message = FALSE, warning = FALSE}
 
-full_data %>%
+data %>%
  group_by(TIMESTAMP) %>%
  mutate(PAR = ifelse(is.na(PAR), PAR[Plot == "Freshwater"], PAR)) %>%
  ungroup() %>%
@@ -291,11 +291,8 @@ full_data %>%
  group_by(Year) %>%
  mutate(data_start = flood_start - window,
         data_end = flood_end + window) %>%
- filter(#Date > data_start & Date < flood_start |
-        #Date < data_end & Date > flood_end,
-        #Plot == "Control",
-        Species == "Tulip Poplar",
-        `F` < 2e-06,
+ filter(Species == "Tulip Poplar",
+        `F` < 3,
         SWC > 0.25) %>%
  ungroup() -> dat1
 
