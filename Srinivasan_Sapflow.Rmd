@@ -44,7 +44,7 @@ data %>%
   mutate(Date = date(TIMESTAMP)) %>%
   mutate(monthyr = floor_date(TIMESTAMP, unit = "week")) %>%
   filter(Hour < 14, Hour >= 11,
-         `F` <= 3, `F` >= 0) %>%
+         `F` <= 8, `F` >= 0) %>%
   group_by(Plot, Species, Date) %>% 
   summarise(F_avg = mean(`F`, na.rm = TRUE)) -> sf_plot_avg
 
@@ -89,7 +89,7 @@ data %>%
   filter(Date > data_start & Date < flood_start |
          Date < data_end & Date > flood_end,
          Hour < 14, Hour >= 11,
-         `F` <= 3, `F` >= 0,
+         `F` <= 8, `F` >= 0,
          Plot != "Freshwater",
          Species == "Tulip Poplar") %>%
   ungroup() -> tulip_salt
@@ -275,9 +275,9 @@ AIC %>%
   mutate(`Model Specification` = candidate) %>%
   ggplot(aes(variable, AIC, fill = `Model Specification`)) +
   geom_col() +
-  geom_hline(yintercept = -700, linetype = "dashed") +
+  geom_hline(yintercept = 1100, linetype = "dashed") +
   scale_y_continuous(expand = c(0, 0)) + # Starts x axis at true zero
-  expand_limits(y = c(-775, 0)) +
+  expand_limits(y = c(0, 1500)) +
   scale_fill_viridis_d() +
   labs( title = 'AIC Model Comparison', x = 'Variable', y = 'AIC Value') +
   guides(fill = FALSE) + 
