@@ -124,11 +124,11 @@ sapflow_sp %>%
 #Calculate Fd
 # convert the probe raw values (in mV) to sap flux velocity (cm/cm^2/s)
 # Granier equation is Fd = (k * (deltaTmax - deltaT))^1.231
-# k = 0.011899
+# k = 119 x 10^-6
 
 sapflow_sp %>% 
   left_join(sapflow_dtmax, by = c("Plot", "Species", "ID", "Date")) %>% 
-  mutate(Fd = ((0.011899 * (((dTmax / Value) - 1)))^1.231))  -> sfd_data
+  mutate(Fd = 0.00011899 * ((dTmax / Value) - 1)^1.231) -> sfd_data
 
 tree_dat %>%
   dplyr::select(Tree_ID, Sapflux_ID, spp,
@@ -140,9 +140,9 @@ tree_dat %>%
 
 SA <- function(Species, DBH) {
   case_when(
-    Species == "Red Maple" ~ (0.5973*(DBH)^2.0743),
-    Species == "Tulip Poplar" ~ (0.8086*(DBH)^1.8331),
-    Species == "Beech" ~ (0.8198*(DBH)^1.8635))
+    Species == "Red Maple" ~ (0.5973*(DBH/100)^2.0743),
+    Species == "Tulip Poplar" ~ (0.8086*(DBH/100)^1.8331),
+    Species == "Beech" ~ (0.8198*(DBH/100)^1.8635))
 }
 
 dbh %>%
@@ -168,7 +168,7 @@ scaled <- merge(sfd_data, sa_long, by.x = c("ID", "Year", "Species"),
 #final units are cubic centimeters per second
 scaled %>%
   dplyr::select(ID, Year, Species, Plot, TIMESTAMP, Fd, SA) %>%
-  mutate(F = SA * Fd) -> sf_scaled
+  mutate(F = SA * Fd * 10^6) -> sf_scaled #cubic meters to cubic centimeters
 
 #Now let's make some plots to double check 
 
@@ -177,7 +177,7 @@ sf_scaled %>%
   mutate(Date = date(TIMESTAMP)) %>%
   mutate(monthyr = floor_date(TIMESTAMP, unit = "week")) %>%
   filter(Hour >= 11, Hour <= 12) %>% 
-  filter(F <= 2, F >= 0) %>%
+  filter(F <= 8, F >= 0) %>%
   group_by(Plot, Species, Date) %>% 
   summarise(F_avg = mean(F, na.rm = TRUE)) -> sf_plot_avg
 
