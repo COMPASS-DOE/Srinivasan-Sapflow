@@ -51,7 +51,8 @@ data %>%
 ggplot(sf_plot_avg) + 
   geom_point(aes (x = Date, y = F_avg, color = Species)) + 
   facet_wrap(~Plot, ncol = 1, scales = "fixed") + 
-  scale_color_viridis_d(option = 'D', begin = .25, end = .8) + 
+  scale_color_viridis_d(option = 'D', begin = .25, end = .8) +
+  theme_light() +
   labs(y = "Avg Sap Flux Density", x = "Date",
        title = "Sap Flux Density Averaged Daily, 11 AM - 12 PM")
 
@@ -301,18 +302,44 @@ tsb_2 %>%
        x = expression(paste("Soil EC, ", mu, "S cm"^-1)),
        color = " ")
 
-#plot seperately then recombine
-tsb_2 %>%
-  mutate(BA = factor(BA, levels = c("Before", "After"))) %>%
-  ggplot(aes(x = soil_ec_avg, y = soil_vwc_avg)) +
-  geom_point(aes(color = factor(Year))) +
-  stat_smooth(method = 'lm',
-              aes(group = factor(Year),
-                  color = factor(Year))) +
-  facet_wrap(Plot~ BA, scales = 'free') +
-  scale_color_viridis_d(begin = 0.9, end = 0.1) +
-  labs(x = expression(paste("Avg Soil EC, ", mu, "S/cm")), y = expression("Avg Soil VWC, m" ^3* "/m" ^3),
-       title = "Soil Volumetric Water Content vs Electrical Conductivity", color = "Year") +
-  theme_light()
-
+data %>%
+  dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`,
+                soil_vwc_15cm, soil_ec_15cm) %>%
+  mutate(Date = as_date(date(TIMESTAMP)),
+         Hour = hour(TIMESTAMP)) %>%
+  left_join(events) %>%
+  group_by(Year) %>%
+  mutate(BA = ifelse(Date > flood_end, "After", "Before"),
+         Year = as.factor(Year),
+         ID = as.factor(ID),
+         BA = as.factor(BA),
+         Plot = as.factor(Plot)) %>%
+  ungroup() %>%
+  filter(#Hour < 14, Hour >= 11,
+    soil_vwc_15cm > 0,
+    soil_vwc_15cm < 50,
+         `F` <= 8, `F` >= 0,
+         Plot != "Freshwater",
+         Species == "Tulip Poplar") %>%
+  group_by(Date, Plot, ID, Year, BA) %>%
+  summarise(F_avg = mean(`F`, na.rm = TRUE),
+            soil_ec_avg = mean(soil_ec_15cm), 
+            soil_vwc_avg = mean(soil_vwc_15cm),
+            n = n()) %>%
+  filter(BA == "Before" & soil_ec_avg < 250 |
+           BA == "After" & soil_ec_avg < 1250) %>%
+  mutate(BA = case_when(Year == 2021 ~ "Before",
+                        .default = BA),
+         BA = factor(BA, levels = c("Before", "After"))) %>%
+  ggplot(aes(soil_ec_avg, soil_vwc_avg)) +
+  geom_point(aes(color = as.factor(Year))) +
+  scale_color_viridis_d(begin = 0.9, end = 0.2) +
+  stat_smooth(aes(group = BA), method = 'lm',
+              color = 'black', size = 1) +
+  stat_cor(label.y = 0.50) +
+  facet_wrap(Plot ~ BA, scales = "free_x") +
+  theme_light() +
+  labs(y = expression ("Soil VWC, m" ^3* " m"^-3),
+       x = expression(paste("Soil EC, ", mu, "S cm"^-1)),
+       color = " ")
 ```
