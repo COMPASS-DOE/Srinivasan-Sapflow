@@ -302,6 +302,55 @@ tsb_2 %>%
        x = expression(paste("Soil EC, ", mu, "S cm"^-1)),
        color = " ")
 
+## Andrew trying something
+
+tsb_2_summary = tsb_2 %>%
+  filter(soil_ec_avg < 1250) %>%
+  group_by(Year,BA,Plot) %>%
+  summarise(mean_annual_F = mean(F_avg),
+            sd_annual_F = sd(F_avg),
+            mean_annual_EC = mean(soil_ec_avg),
+            sd_annual_EC = sd(soil_ec_avg),
+            n = n())
+
+tsb_2 = tsb_2 %>%
+  mutate(BA = factor(BA, levels = c("Before", "After"))) %>%
+  filter(soil_ec_avg < 1250)
+
+tsb_2_summary %>%
+  mutate(BA = factor(BA, levels = c("Before", "After"))) %>%
+  ggplot() +
+  geom_point(aes(mean_annual_EC, mean_annual_F,
+                 color = as.factor(Year)), size = 3) +
+  geom_errorbar(aes(x = mean_annual_EC,
+                    ymin = mean_annual_F - sd_annual_F,
+                    ymax = mean_annual_F + sd_annual_F,
+                    color = Year),
+                size = 1) +
+  geom_errorbarh(aes(xmin = mean_annual_EC - sd_annual_EC,
+                    xmax = mean_annual_EC + sd_annual_EC,
+                    y = mean_annual_F,
+                    color = Year),
+                  size = 1) +
+  stat_smooth(aes(x = soil_ec_avg,
+                  y = F_avg,
+                  group = BA), method = 'lm',
+              color = 'black', size = 1,
+              data = tsb_2) +
+  geom_point(aes(x = soil_ec_avg,
+                 y = F_avg,
+                 color = as.factor(Year)),
+             data = tsb_2,
+             alpha = 0.2) +
+  scale_color_viridis_d(begin = 0.9, end = 0.2) +
+  facet_wrap(Plot ~ BA, scales = "free_x") +
+  theme_light() +
+  labs(y = expression ("Mean Sap Flux Density, m" ^3* " s"^-1),
+       x = expression(paste("Mean Soil EC, ", mu, "S cm"^-1)),
+       color = " ")
+
+##
+
 data %>%
   dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`,
                 soil_vwc_15cm, soil_ec_15cm) %>%
