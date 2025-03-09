@@ -285,6 +285,22 @@ AIC %>%
 ```
 
 ```{r Figures for the manuscript, message = FALSE, warning = FALSE}
+
+tsb_2 %>%
+  mutate(BA = factor(BA, levels = c("Before", "After"))) %>%
+  filter(soil_ec_avg < 1250) %>%
+  ggplot(aes(soil_ec_avg, F_avg)) +
+  geom_point(aes(color = as.factor(Year))) +
+  scale_color_viridis_d(begin = 0.9, end = 0.2) +
+  stat_smooth(aes(group = BA), method = 'lm',
+              color = 'black', size = 1) +
+  stat_cor(label.y = 8.25) +
+  facet_wrap(Plot ~ BA, scales = "free_x") +
+  theme_light() +
+  labs(y = expression ("Sap Flux Density, m" ^3* " s"^-1),
+       x = expression(paste("Soil EC, ", mu, "S cm"^-1)),
+       color = " ")
+
 #plot seperately then recombine
 tsb_2 %>%
   mutate(BA = factor(BA, levels = c("Before", "After"))) %>%
@@ -298,20 +314,5 @@ tsb_2 %>%
   labs(x = expression(paste("Avg Soil EC, ", mu, "S/cm")), y = expression("Avg Soil VWC, m" ^3* "/m" ^3),
        title = "Soil Volumetric Water Content vs Electrical Conductivity", color = "Year") +
   theme_light()
-
-
-tsb_2 %>%
-  mutate(BA = factor(BA, levels = c("Before", "After"))) %>%
-  ggplot(aes(soil_ec_avg, F_avg)) +
-  geom_point(aes(color = factor(Year))) + 
-  scale_color_viridis_d(begin = 0.9, end = 0.2) +
-  stat_smooth(aes(group = BA), method = 'lm', color = 'black',
-              size = 1) +
-  stat_cor(label.y = 2.2) +
-  stat_regline_equation(label.y = 2.0) +
-  facet_wrap(~ BA, scales = "free_x",  ncol = 2) +
-  theme_light() +
-  labs(title = "Sap Flux Density vs Soil EC, Saltwater Plot",
-       y = expression ("Avg Sap Flux Density, m" ^3* "/s"), x =        expression(paste("Avg Soil EC, ", mu, "S/cm")))
 
 ```

@@ -1,3 +1,5 @@
+*.RDataTmp
+*.RDataTmp1
 *.html
 *.rds
 *.csv
