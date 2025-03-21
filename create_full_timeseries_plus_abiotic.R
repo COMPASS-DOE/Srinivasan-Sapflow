@@ -103,10 +103,12 @@ tree_dat %>%
 #First, isolate sapflow data
 sapflow <- tmp_full %>% 
   filter(Instrument == "Sapflow",
-         Value >= 0.01, Value <=0.7) %>%
+         Value >= 0.01, Value <=0.7,
+         F_OOB == 0,
+         F_OOS == 0) %>%
   dplyr::select(Plot, TIMESTAMP, Sensor_ID, Value) %>%
-  mutate(sapflow_2.5cm = Value) %>% 
-  mutate(Date = date(TIMESTAMP))
+  mutate(sapflow_2.5cm = Value,
+         Date = date(TIMESTAMP))
 
 #Merge sapflow and species dataframe
 sapflow %>% 
@@ -122,20 +124,20 @@ sapflow_sp %>%
             dTmax_time = TIMESTAMP[which.max(Value)])-> sapflow_dtmax
 
 #Calculate Fd
-# convert the probe raw values (in mV) to sap flux velocity (cm/cm^2/s)
-# Granier equation is Fd = (k * (deltaTmax - deltaT))^1.231
+# convert the probe raw values (in mV) to sap flux velocity (cm3/s)
+# Granier equation is F = (k * (deltaTmax - deltaT))^1.231
 # k = 119 x 10^-6
 
 sapflow_sp %>% 
   left_join(sapflow_dtmax, by = c("Plot", "Species", "ID", "Date")) %>% 
-  mutate(Fd = 0.00011899 * ((dTmax / Value) - 1)^1.231) -> sfd_data
+  mutate(F = 0.00011899 * ((dTmax / Value) - 1)^1.231) -> sfd_data
 
 tree_dat %>%
   dplyr::select(Tree_ID, Sapflux_ID, spp,
                 DBH_2024, DBH_2023, DBH_2022, DBH_2021) -> dbh
 
 
-#Using allometric equations, scale Fd measurements
+#Using allometric equations, scale sap flux velocity measurements
 #DBH measurements are in cm 
 
 SA <- function(Species, DBH) {
@@ -165,10 +167,10 @@ mutate(sfd_data, Year = year(TIMESTAMP)) -> sfd_data
 scaled <- merge(sfd_data, sa_long, by.x = c("ID", "Year", "Species"), 
                 by.y = c("Sapflux_ID", "Year", "Species"), all.x = TRUE)
 
-#final units are cubic centimeters per second
+#final units are cubic centimeters per centimeters squared per second
 scaled %>%
-  dplyr::select(ID, Year, Species, Plot, TIMESTAMP, Fd, SA) %>%
-  mutate(F = SA * Fd * 10^6) -> sf_scaled #cubic meters to cubic centimeters
+  dplyr::select(ID, Year, Species, Plot, TIMESTAMP, F, SA) %>%
+  mutate(Fd = SA * F * 10^6) -> sf_scaled #cubic meters to cubic centimeters
 
 #Now let's make some plots to double check 
 
@@ -177,13 +179,13 @@ sf_scaled %>%
   mutate(Date = date(TIMESTAMP)) %>%
   mutate(monthyr = floor_date(TIMESTAMP, unit = "week")) %>%
   filter(Hour >= 11, Hour <= 12) %>% 
-  filter(F <= 8, F >= 0) %>%
+  filter(Fd <= 8, Fd >= 0) %>%
   group_by(Plot, Species, Date) %>% 
-  summarise(F_avg = mean(F, na.rm = TRUE)) -> sf_plot_avg
+  summarise(F_avg = mean(Fd, na.rm = TRUE)) -> sf_plot_avg
 
 ggplot(sf_plot_avg) + 
   geom_point(aes (x = Date, y = F_avg, color = Species)) + 
-  facet_wrap(~Plot, ncol = 1, scales = "fixed") + 
+  facet_wrap(.~Plot, ncol = 1, scales = "fixed") + 
   labs(y = "Avg Sap Flux Density", x = "Date", title = "Sap Flux Density Averaged Daily, 11 AM - 12 PM")
   
 #ggsave("Full_sapflow.jpeg")
@@ -196,20 +198,33 @@ ggplot(sf_plot_avg) +
   #Take average value of all soil vwc measurements in each plot
 
 swc_15 <- tmp_full %>%
-    filter(research_name == "soil_vwc_15cm") %>%
-    group_by(TIMESTAMP, Plot) %>%
+    filter(research_name == "soil_vwc_15cm",
+           F_OOB == 0,
+           F_OOS == 0) %>%
     drop_na(Value) %>%
-    summarize(soil_vwc_15cm = mean(Value)) 
+    group_by(TIMESTAMP, Plot, Location) %>%
+    summarize(n = n(),
+              soil_vwc_15cm = mean(Value),
+              vwc_error = sd(Value)) 
+
+ec_15 <- tmp_full %>%
+  filter(research_name == "soil_EC_15cm",
+         F_OOB == 0,
+         F_OOS == 0) %>%
+  drop_na(Value) %>%
+  group_by(TIMESTAMP, Plot, Location) %>%
+  summarize(n = n(),
+            soil_ec_15cm = mean(Value),
+          ec_error = sd(Value))
+
+ggplot(ec_15, aes(TIMESTAMP, soil_ec_15cm, color = Location)) +
+  geom_point() +
+  facet_wrap(.~year(TIMESTAMP))
+
+
 
 tmp_data <- 
   left_join(sf_scaled, swc_15, by = c("Plot", "TIMESTAMP"))  
-
-#same for ec
-ec_15 <- tmp_full %>%
-  filter(research_name == "soil_EC_15cm") %>%
-  group_by(TIMESTAMP, Plot) %>%
-  drop_na(Value) %>%
-  summarize(soil_ec_15cm = mean(Value)) 
 
 final_tmp_data <- 
   left_join(tmp_data, ec_15, by = c("Plot", "TIMESTAMP"))  
@@ -246,5 +261,5 @@ final_data <-
 #Now we have a full time series for 2021-2024!
 
 saveRDS(final_data,"Sapflow_BACI.rds")
-
+#final_data <- readRDS("Sapflow_BACI.rds")
 
