@@ -179,7 +179,7 @@ sf_scaled %>%
   mutate(Date = date(TIMESTAMP)) %>%
   mutate(monthyr = floor_date(TIMESTAMP, unit = "week")) %>%
   filter(Hour >= 11, Hour <= 12) %>% 
-  filter(Fd <= 8, Fd >= 0) %>%
+  filter(Fd <= 20, Fd >= 0) %>%
   group_by(Plot, Species, Date) %>% 
   summarise(F_avg = mean(Fd, na.rm = TRUE)) -> sf_plot_avg
 
