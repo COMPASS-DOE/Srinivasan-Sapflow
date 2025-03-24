@@ -124,7 +124,7 @@ sapflow_sp %>%
             dTmax_time = TIMESTAMP[which.max(Value)])-> sapflow_dtmax
 
 #Calculate Fd
-# convert the probe raw values (in mV) to sap flux velocity (cm3/s)
+# convert the probe raw values (in mV) to sap flux velocity (m/s)
 # Granier equation is F = (k * (deltaTmax - deltaT))^1.231
 # k = 119 x 10^-6
 
@@ -138,7 +138,7 @@ tree_dat %>%
 
 
 #Using allometric equations, scale sap flux velocity measurements
-#DBH measurements are in cm 
+#DBH measurements are in cm, converted to m by dividing by 100 
 
 SA <- function(Species, DBH) {
   case_when(
@@ -170,7 +170,7 @@ scaled <- merge(sfd_data, sa_long, by.x = c("ID", "Year", "Species"),
 #final units are cubic centimeters per centimeters squared per second
 scaled %>%
   dplyr::select(ID, Year, Species, Plot, TIMESTAMP, F, SA) %>%
-  mutate(Fd = SA * F * 10^6) -> sf_scaled #cubic meters to cubic centimeters
+  mutate(Fd = SA * F * 100) -> sf_scaled #cubic meters to cubic centimeters
 
 #Now let's make some plots to double check 
 
