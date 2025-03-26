@@ -179,7 +179,7 @@ sf_scaled %>%
   mutate(Date = date(TIMESTAMP)) %>%
   mutate(monthyr = floor_date(TIMESTAMP, unit = "week")) %>%
   filter(Hour >= 11, Hour <= 12) %>% 
-  filter(Fd <= 20, Fd >= 0) %>%
+  filter(Fd <= 0.002, Fd >= 0) %>%
   group_by(Plot, Species, Date) %>% 
   summarise(F_avg = mean(Fd, na.rm = TRUE)) -> sf_plot_avg
 
@@ -197,31 +197,52 @@ ggplot(sf_plot_avg) +
   #Create soil vwc dataframe
   #Take average value of all soil vwc measurements in each plot
 
-swc_15 <- tmp_full %>%
-    filter(research_name == "soil_vwc_15cm",
-           F_OOB == 0,
-           F_OOS == 0) %>%
+swc_15raw <- tmp_full %>%
+    filter(research_name == "soil_vwc_15cm")
+
+swc_15 <- swc_15raw %>%
+  filter(F_OOB == 0,
+         F_OOS == 0) %>%
     drop_na(Value) %>%
-    group_by(TIMESTAMP, Plot, Location) %>%
+    group_by(TIMESTAMP, Plot) %>%
     summarize(n = n(),
               soil_vwc_15cm = mean(Value),
-              vwc_error = sd(Value)) 
+              vwc_min = min(Value),
+              vwc_max = max(Value)) 
 
-ec_15 <- tmp_full %>%
-  filter(research_name == "soil_EC_15cm",
-         F_OOB == 0,
+write.csv(swc_15, "soil_vwc.csv")
+
+ec_15raw <- tmp_full %>%
+  filter(research_name == "soil_EC_15cm")
+
+ec_15 <- ec_15raw %>%
+  filter(F_OOB == 0,
          F_OOS == 0) %>%
   drop_na(Value) %>%
-  group_by(TIMESTAMP, Plot, Location) %>%
+  group_by(TIMESTAMP, Plot) %>%
   summarize(n = n(),
             soil_ec_15cm = mean(Value),
-          ec_error = sd(Value))
+            ec_min = min(Value),
+            ec_max = max(Value))
+
+write.csv(ec_15, "soil_ec.csv")
 
 ggplot(ec_15, aes(TIMESTAMP, soil_ec_15cm, color = Location)) +
   geom_point() +
   facet_wrap(.~year(TIMESTAMP))
 
-
+tmp_full %>%
+  filter(research_name == "soil_vwc_15cm",
+         F_OOB == 0,
+         F_OOS == 0) %>%
+  drop_na(Value) %>%
+  ggplot() +
+  geom_histogram(aes(Value)) +
+  facet_grid(Location~Plot)
+  
+ggplot(ec_15, aes(TIMESTAMP, soil_ec_15cm, color = Location)) +
+  geom_point() +
+  facet_wrap(.~year(TIMESTAMP))
 
 tmp_data <- 
   left_join(sf_scaled, swc_15, by = c("Plot", "TIMESTAMP"))  

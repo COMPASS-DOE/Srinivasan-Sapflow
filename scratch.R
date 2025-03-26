@@ -1,35 +1,72 @@
 
-ggplot(sf_plot_avg) + 
-  geom_point(aes (x = Date, y = F_avg, color = species)) + 
-  facet_wrap(~plot, ncol = 1, scales = "fixed") + 
-  labs(y = "Avg Sap Flux Density", x = "Date", title = "Sap Flux Density Averaged Daily, 11 AM - 12 PM")
+tulips <- data %>%
+  mutate(Date = date(TIMESTAMP),
+         Hour = hour(TIMESTAMP)) %>%
+  filter(Species == "Tulip Poplar")
 
-sf_plot_clean <- sf_plot_avg %>% 
-  filter(Date %in% dates_with_good_weather$date)
+tulips23 <- tulips %>% 
+  filter(Year == 2023) 
 
-roll_length = 10
+values <- seq(0,28,2)
 
-sf_rollmean <- sf_plot_clean %>% 
-  clean_names() %>% 
-  ungroup() %>% 
-  group_by(plot, species) %>% 
-  #filter(species == "Be") %>% 
-  mutate(f_roll = zoo::rollmean(f_avg, roll_length, fill = NA)) %>% 
-  mutate(doy = yday(date),
-         year = year(date)) 
+tulips23 %>%
+  filter(Fd < 30) %>%
+ggplot() +
+  geom_point(aes(x = Date, y = Fd, , color = ID), alpha = 0.2) +
+  geom_hline(yintercept = values) +
+  scale_x_date(date_breaks = "1 week", date_labels = "%W") +
+  facet_wrap(Plot~., 
+             scales = "free_x", ncol = 1) + theme_classic()
 
-sf_rollmean %>%
-  ggplot(aes(x = doy, color = as.factor(year))) +
-  geom_point(aes(y = f_avg), alpha = 0.2) + 
-  geom_line(aes(y = f_roll)) + 
-  facet_wrap(species~plot, 
-             scales = "free_y", 
-             nrow = 3)
+winter <- tulips %>%
+  filter(week(Date) < 11 & Fd < 2 | week(Date) > 46 & Fd < 2)
+shoulder <- tulips %>%
+  filter(week(Date) %in% c(11, 12, 13, 14, 15) & Fd < 8 |
+         week(Date) %in% c(46, 45, 44, 43) & Fd < 12)
+growing <- tulips %>%
+  filter(week(Date) > 15 & week(Date) < 46 & Fd < 24)
 
-sf_filtered <- sf_rollmean %>% 
-  filter(year == 2023) 
+tulips_filtered <- bind_rows(winter, shoulder, growing)
 
-write_csv(sf_filtered, "data/250310_2023_sapflow.csv")
+roll_length = 28
+
+sf_rollmean <- tulips_filtered %>%
+  group_by(ID, Date) %>%
+  filter(Hour == 13) %>%
+  mutate(Year = as.factor(Year)) %>%
+  ungroup() %>%
+  group_by(Year, Plot, ID) %>%
+  arrange(Date) %>%
+  mutate(f_roll = zoo::rollmean(Fd, roll_length,
+                                align = "center",
+                                fill = NA))
+
+tulips_midday <- tulips_filtered %>%
+  ungroup() %>%
+  mutate(doy = yday(Date),
+         Year = as.factor(Year)) %>%
+  filter(Hour == 13.0) %>%
+  group_by(Year, Date, doy, Plot, ID, Hour) %>%
+  summarize(midday = mean(Fd, na.rm = TRUE))
+
+ggplot() +
+  geom_jitter(data = tulips_midday,
+            aes(x = doy, y = midday, , color = Year), alpha = 0.25) +
+  geom_line(data = sf_rollmean,
+            aes(x = yday(Date), y = f_roll, color = Year)) +
+  facet_wrap(Plot~ID, 
+             scales = "free_x", ncol = 6) + theme_classic()
+
+tulips_midday %>%
+  left_join(sf_rollmean) %>%
+  filter(ID %in% c("C1", "C3", "F3", "F4", "S2", "S3")) %>%
+ggplot() +
+  geom_jitter(aes(x = doy, y = midday, , color = Year), alpha = 0.25) +
+  geom_line(aes(x = doy, y = f_roll, color = Year)) +
+  facet_wrap(Plot~ID, 
+             scales = "free_x", ncol = 2) + theme_classic()
+
+
 
 sf_filtered %>% 
   ggplot(aes(date, color = plot)) + 
