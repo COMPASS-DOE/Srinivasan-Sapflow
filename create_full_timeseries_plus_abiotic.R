@@ -103,15 +103,15 @@ tree_dat %>%
 #First, isolate sapflow data
 sapflow <- tmp_full %>% 
   filter(Instrument == "Sapflow",
-         Value >= 0.01, Value <=0.7,
          F_OOB == 0,
-         F_OOS == 0) %>%
+         F_OOS == 0,
+         Value >= 0.02) %>%
   dplyr::select(Plot, TIMESTAMP, Sensor_ID, Value) %>%
   mutate(sapflow_2.5cm = Value,
          Date = date(TIMESTAMP))
 
 #Merge sapflow and species dataframe
-sapflow %>% 
+sapflow %>%
   merge(species, ., by.x = c("Sapflux_ID", "Plot"), by.y = c("Sensor_ID", "Plot"),
         all.x = TRUE, all.y = TRUE) %>%
   mutate(ID = Sapflux_ID) -> sapflow_sp
@@ -119,18 +119,21 @@ sapflow %>%
 #Calculate dTmax
 sapflow_sp %>% 
   mutate(Date = date(TIMESTAMP)) %>%
+  mutate(Hour = hour(TIMESTAMP)) %>%
+  filter(Hour >= 0, Hour <= 5) %>%
   group_by(Date, Plot, Species, ID) %>% 
   summarise(dTmax = max(Value, na.rm = TRUE), 
             dTmax_time = TIMESTAMP[which.max(Value)])-> sapflow_dtmax
 
-#Calculate Fd
+## Calculate Fd
+
 # convert the probe raw values (in mV) to sap flux velocity (m/s)
 # Granier equation is F = (k * (deltaTmax - deltaT))^1.231
 # k = 119 x 10^-6
 
 sapflow_sp %>% 
   left_join(sapflow_dtmax, by = c("Plot", "Species", "ID", "Date")) %>% 
-  mutate(F = 0.00011899 * ((dTmax / Value) - 1)^1.231) -> sfd_data
+  mutate(Fd = 0.00011899 * (((dTmax / Value) - 1)^1.231)) -> sfd_data
 
 tree_dat %>%
   dplyr::select(Tree_ID, Sapflux_ID, spp,
@@ -167,28 +170,32 @@ mutate(sfd_data, Year = year(TIMESTAMP)) -> sfd_data
 scaled <- merge(sfd_data, sa_long, by.x = c("ID", "Year", "Species"), 
                 by.y = c("Sapflux_ID", "Year", "Species"), all.x = TRUE)
 
-#final units are cubic centimeters per centimeters squared per second
+#final units are
+# (cubic meters per meters squared per second) * 10^6
+
 scaled %>%
-  dplyr::select(ID, Year, Species, Plot, TIMESTAMP, F, SA) %>%
-  mutate(Fd = SA * F * 100) -> sf_scaled #cubic meters to cubic centimeters
+  dplyr::select(ID, Year, Species, Plot, TIMESTAMP, Fd, SA) %>%
+  mutate(Fd_scaled = SA * Fd * 10^6) -> sf_scaled #cubic meters to cubic centimeters
 
 #Now let's make some plots to double check 
 
 sf_scaled %>% 
   mutate(Hour = hour(TIMESTAMP)) %>%
   mutate(Date = date(TIMESTAMP)) %>%
-  mutate(monthyr = floor_date(TIMESTAMP, unit = "week")) %>%
-  filter(Hour >= 11, Hour <= 12) %>% 
-  filter(Fd <= 0.002, Fd >= 0) %>%
-  group_by(Plot, Species, Date) %>% 
-  summarise(F_avg = mean(Fd, na.rm = TRUE)) -> sf_plot_avg
+  filter(Hour >= 11, Hour < 12) %>% 
+  filter(case_when(Species == "Beech" ~ Fd_scaled < 5,
+                   Species == "Red Maple" ~ Fd_scaled < 2.25,
+                   Species == "Tulip Poplar" ~ Fd_scaled < 8.5)) %>%
+  group_by(Plot, Species, Year, Date) %>% 
+  summarise(Fds_avg = mean(Fd_scaled, na.rm = TRUE)) -> sf_plot_avg
+
 
 ggplot(sf_plot_avg) + 
-  geom_point(aes (x = Date, y = F_avg, color = Species)) + 
-  facet_wrap(.~Plot, ncol = 1, scales = "fixed") + 
+  geom_point(aes (x = Date, y = Fds_avg, color = Plot)) + 
+  facet_wrap(.~Species, ncol = 1, scales = "free") + 
   labs(y = "Avg Sap Flux Density", x = "Date", title = "Sap Flux Density Averaged Daily, 11 AM - 12 PM")
   
-#ggsave("Full_sapflow.jpeg")
+ggsave("Full_sapflow.jpeg")
 
 #Option to save just the sapflow data as an RDS
 #saveRDS(sf_scaled, "Sapflow_21_24.rds")
@@ -210,7 +217,7 @@ swc_15 <- swc_15raw %>%
               vwc_min = min(Value),
               vwc_max = max(Value)) 
 
-write.csv(swc_15, "soil_vwc.csv")
+#write.csv(swc_15, "soil_vwc.csv")
 
 ec_15raw <- tmp_full %>%
   filter(research_name == "soil_EC_15cm")
@@ -225,30 +232,21 @@ ec_15 <- ec_15raw %>%
             ec_min = min(Value),
             ec_max = max(Value))
 
-write.csv(ec_15, "soil_ec.csv")
+#write.csv(ec_15, "soil_ec.csv")
 
-ggplot(ec_15, aes(TIMESTAMP, soil_ec_15cm, color = Location)) +
-  geom_point() +
-  facet_wrap(.~year(TIMESTAMP))
+swc_15clean <- swc_15 %>%
+  mutate(swc_n = n) %>%
+  select(soil_vwc_15cm, swc_n, Plot, TIMESTAMP)
 
-tmp_full %>%
-  filter(research_name == "soil_vwc_15cm",
-         F_OOB == 0,
-         F_OOS == 0) %>%
-  drop_na(Value) %>%
-  ggplot() +
-  geom_histogram(aes(Value)) +
-  facet_grid(Location~Plot)
-  
-ggplot(ec_15, aes(TIMESTAMP, soil_ec_15cm, color = Location)) +
-  geom_point() +
-  facet_wrap(.~year(TIMESTAMP))
+ec_15clean <- ec_15 %>%
+  mutate(ec_n = n) %>%
+  select(soil_ec_15cm, ec_n, Plot, TIMESTAMP)
 
 tmp_data <- 
-  left_join(sf_scaled, swc_15, by = c("Plot", "TIMESTAMP"))  
+  left_join(sf_scaled, swc_15clean, by = c("Plot", "TIMESTAMP"))  
 
 final_tmp_data <- 
-  left_join(tmp_data, ec_15, by = c("Plot", "TIMESTAMP"))  
+  left_join(tmp_data, ec_15clean, by = c("Plot", "TIMESTAMP"))  
 
 #Now the gcrew data 
 #Note: only freshwater (wetland) will have these variables,
