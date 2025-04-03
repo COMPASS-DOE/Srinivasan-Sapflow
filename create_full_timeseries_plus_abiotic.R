@@ -175,7 +175,7 @@ scaled <- merge(sfd_data, sa_long, by.x = c("ID", "Year", "Species"),
 
 scaled %>%
   dplyr::select(ID, Year, Species, Plot, TIMESTAMP, Fd, SA) %>%
-  mutate(Fd_scaled = SA * Fd * 10^6) -> sf_scaled #cubic meters to cubic centimeters
+  mutate(Fd_scaled = SA * Fd * 10^6) -> sf_scaled
 
 #Now let's make some plots to double check 
 
