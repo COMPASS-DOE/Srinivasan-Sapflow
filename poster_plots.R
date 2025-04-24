@@ -10,30 +10,48 @@ midday <- data %>%
          Year = as.factor(Year)) %>%
   filter(Hour == 12) %>%
   group_by(Year, doy, Species, Plot) %>%
-  summarize(midday = mean(Fd_scaled, na.rm = TRUE))
+  summarize(midday = mean(Fd, na.rm = TRUE))
 
 midday <- midday %>%
   ungroup() %>%
   group_by(Year, Plot, Species) %>%
   mutate(f_roll = zoo::rollmean(midday, 28, align = "center", fill = NA))
 
+events$Year <- as.factor(events$Year)
+
+midday <- midday %>%
+  left_join(events, by = "Year") %>%
+  mutate(doy_start = yday(flood_start),
+         doy_end = yday(flood_end))
+
 # Create the ggplot
-ggplot(data = midday, aes(y = midday, x = doy, color = Plot, group = Plot)) +
+midday %>%
+  filter(Species == "Tulip Poplar",
+         Plot != "Freshwater") %>%
+ggplot(aes(y = midday, x = doy, color = Plot, group = Plot)) +
   geom_point(alpha = 0.20) +  # Plot original points
   geom_line(aes(y = f_roll), linewidth = 1.15) +  # Plot the rolling mean
-  facet_wrap(Species ~ Year, scales = "free", ncol = 4) +
+  facet_wrap(. ~ Year, scales = "free", ncol = 4) +
   scale_color_viridis_d(option = 'D', begin = 0.9, end = 0.2) +
   theme_classic() + theme(legend.position="bottom")
 
 
-ggplot(data = midday, aes(y = midday, x = doy, color = Year, group = Year)) +
-  geom_point(alpha = 0.20) +  # Plot original points
+midday %>%
+  filter(Species == "Tulip Poplar",
+         Plot != "Freshwater") %>%
+ggplot(aes(y = midday, x = doy, color = Plot, group = Plot)) +
+  geom_vline(data = midday[midday$Year != "2021",], #Plot event dates
+             aes(xintercept = doy_start,
+                 group = Year), color = 'red') +
   geom_line(aes(y = f_roll), linewidth = 0.95) +  # Plot the rolling mean
-  facet_grid(Species ~ Plot, scales = "free_y") +
-  scale_color_viridis_d(option = 'D', begin = 0.9, end = 0.2) +
+  geom_point(alpha = 0.15) +  # Plot original points
+  facet_wrap(. ~ Year, ncol = 4) +
+  scale_color_viridis_d(option = 'G', begin = 0.7, end = 0.3) +
+  labs(y = expression ("Midday Sap Flow, m"^3* " s"^-1),
+       x = expression(paste("Day of Year"))) +
   theme_bw() + theme(legend.position="bottom", element_text(size = 14))
 
-midday %>%
+mitheme_classic2()midday %>%
   filter(Plot == "Saltwater",
          Species == "Tulip Poplar") %>%
 ggplot(aes(y = midday, x = doy, color = Year, group = Year)) +
@@ -48,7 +66,8 @@ window = 30
 data %>%
   dplyr::select(Year, Species, TIMESTAMP, ID, Plot, Fd_scaled) %>%
   mutate(Date = as_date(date(TIMESTAMP)),
-         Hour = hour(TIMESTAMP)) %>%
+         Hour = hour(TIMESTAMP),
+         Year = as.factor(Year)) %>%
   left_join(events) %>%
   group_by(Year) %>%
   mutate(data_start = flood_start - window,
@@ -67,7 +86,8 @@ data %>%
 data %>%
   dplyr::select(Year, TIMESTAMP, Plot, soil_ec_15cm, soil_vwc_15cm) %>%
   mutate(Date = as_date(date(TIMESTAMP)),
-         Hour = hour(TIMESTAMP)) %>%
+         Hour = hour(TIMESTAMP),
+         Year = as.factor(Year)) %>%
   left_join(events) %>%
   group_by(Year) %>%
   mutate(data_start = flood_start - window,

@@ -324,10 +324,11 @@ tsb_2_summary %>%
   geom_point(aes(x = soil_ec_avg, y = F_avg, color = as.factor(Year)),
              data = tsb_2 %>% filter(soil_ec_avg < 1200), alpha = 0.2) +
   scale_color_viridis_d(begin = 0.9, end = 0.2) +
-  facet_wrap(Plot ~ BA, scales = "free_x") + theme_classic() +
-  labs(y = expression ("Mean Sap Flux Density, m" ^3* " s"^-1),
+  facet_wrap(Plot ~ BA, scales = "free_x") + theme_bw() +
+  labs(y = expression ("Midday Sap Flow, 10"^6*" m"^3* " s"^-1),
        x = expression(paste("Mean Soil EC, ", mu, "S cm"^-1)),
-       color = " ")
+       color = " ") +
+  theme(legend.position="none", element_text(size = 14))
 ```
 
 ```{r VWC vs EC, message = FALSE, warning = FALSE}
