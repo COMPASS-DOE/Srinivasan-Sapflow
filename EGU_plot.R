@@ -19,7 +19,7 @@ midday <- midday %>%
   group_by(Year, Plot, Species) %>%
   mutate(f_roll = zoo::rollmean(midday, 28, align = "center", fill = NA))
 
-#from .Rmd
+#events comes from .Rmd
 events$Year <- as.factor(events$Year)
 
 midday <- midday %>%
