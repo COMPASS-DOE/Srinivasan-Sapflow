@@ -7,11 +7,11 @@ output:
     toc: true
     toc_float: true
     code_folding: hide
-  pdf_document:
-    toc: true
 ---
 
-```{r Load Packages, message = FALSE, warning = FALSE}
+# TEMPEST sap flux density overview
+
+```{r Load Packages, include=FALSE}
 
 .packages = c("tidyr", "ggplot2", "dplyr", "lme4",
               "AICcmodavg", "MuMIn", "pbkrtest", "readr",
@@ -26,11 +26,11 @@ if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst])
 sapply(.packages, require, character.only=TRUE)
 ```
 
-```{r Load Data, message = FALSE}
+```{r Load Data, message = FALSE, warning = FALSE}
 #This will only work once raw data is downloaded and unzipped from ESS-DIVE
 #urls to come
 #Following unzip, source files create_inventory.R and create_full_timeseries_plus_abiotic.R
-#these files calculate sapflux density and allometrically scale it
+#these files calculate sapflux density
 
 #This only needs to be done once
 
@@ -38,14 +38,14 @@ data <- readRDS("Sapflow_BACI.rds")
 
 ```
 
-```{r Sapflow Visual, message = TRUE}
+```{r Sapflow Visual, message = FALSE, , warning = FALSE}
 
 #something like this
 data %>% 
   mutate(Hour = hour(TIMESTAMP)) %>%
   mutate(Date = date(TIMESTAMP)) %>%
   mutate(monthyr = floor_date(TIMESTAMP, unit = "week")) %>%
-  filter(Hour < 14, Hour >= 11,
+  filter(Hour <= 14, Hour >= 11,
          F <= 0.005, F >= 0) %>%
   group_by(Plot, Species, Date) %>% 
   summarise(F_avg = mean(`F`, na.rm = TRUE)) -> sf_plot_avg
@@ -56,7 +56,7 @@ ggplot(sf_plot_avg) +
   scale_color_viridis_d(option = 'D', begin = .25, end = .8) +
   theme_light() +
   labs(y = "Avg Sap Flux Density cm3/cm2/s", x = "Date",
-       title = "Sap Flux Density Averaged Daily, 11 AM - 12 PM")
+       title = "Sap Flux Density Averaged Daily, 11 AM - 2 PM")
 
 ```
 
@@ -77,7 +77,13 @@ window <- days(15)
 
 ```
 
-```{r Select LITU and SW plot data, message = TRUE}
+
+## Two weeks Before/After events
+
+
+
+Selecting data from Tulip poplars and excluding the Freshwater plot, based on a preliminary analysis during Radha's SULI project.
+```{r Select LITU and SW plot data, message = FALSE, warning = FALSE}
 #currently this occurs in the 3 chunks
 #may be possible to streamline
 data %>%
@@ -91,7 +97,7 @@ data %>%
          data_end = flood_end + window) %>%
   filter(Date > data_start & Date < flood_start |
          Date < data_end & Date > flood_end,
-         Hour < 14, Hour >= 11,
+         Hour <= 14, Hour >= 11,
          F <= 0.005, F >= 0,
          Plot != "Freshwater",
          Species == "Tulip Poplar") %>%
@@ -105,7 +111,7 @@ tulip_salt %>%
          BA = as.factor(BA),
          Plot = as.factor(Plot)) %>%
   group_by(Date, Plot, ID, Year, BA, flood_start, flood_end) %>%
-  summarise(F_avg = mean(Fd, na.rm = TRUE),
+  summarise(F_avg = mean(`F`, na.rm = TRUE),
             soil_ec_avg = mean(soil_ec_15cm), 
             soil_vwc_avg = mean(soil_vwc_15cm),
             n = n()) %>%
@@ -123,8 +129,8 @@ ggplot(tsb_2, aes(Day, F_avg, color = ID, shape = BA)) +
   geom_point(size = 2.5) + facet_grid(Plot~Year, scales = "free")
 ```
 
-```{r Normality, message = TRUE}
-#here we check if our response variable (sapflow), is normally distributed
+```{r Normality, message = FALSE}
+#here we check if our response variable (daily averaged midday sap flux density per tree), is normally distributed
 current_skewness <- skewness(tsb_2$F_avg)
 print(paste("Current Skewness:", current_skewness))
 
@@ -156,13 +162,16 @@ ggplot(tsb_2, aes(sqrt(F_avg))) + geom_histogram(fill = '#31688EFF') +
 
 ```
 
-#Progressive analysis via Pardini et al
 
-We want to use the following linear mixed model:
+# Progressive Analysis
+
+
+
+We follow the workflow developed by Pardini et al 2018 [pardini_link](https://doi.org/10.1111/rec.12678)  and start with the following linear mixed model:
 
 sqrt(F_avg) \~ BA + Plot + BA\*Plot + (1\|ID) + (1\|Year) + (1\|ID:Year)
 
-In which 'Plot' is the control/impact treatment effect, 'BA' is the pre/post flood treatment effect, and tree ID and Year are random effects.
+In which 'Plot' is the control/impact treatment effect (the Control and Saltwater plots for TEMPEST), 'BA' is the before and after treatment effect (pre/post flooding events), and tree ID and Year are random effects.
 
 \*Note that although, flooding intensity increases each year, we ignore this effect for now.
 
@@ -190,9 +199,13 @@ AIC.res.table
 
 Choose the model with the lowest AICc value (i.e. largest negative value); this suggests that the second model, which includes the random effects interaction term, is a better fit for our data.
 
-#Create and test BACI model(s)
 
-Our existing model- square root transformed sapflow, only including Plot and BA as fixed effects: 
+# Create and test BACI models
+
+
+
+
+We now test the impact of the BACI term in our existing model by looking at the explanatory power of the model with and without the interaction between BA and CI (plot): 
 ```{r message = FALSE, warning = FALSE}
 model.int.og <- lmer(sqrt(F_avg) ~ BA*Plot +
                         (1|ID) + (1|Year) + (1|ID:Year),
@@ -216,7 +229,7 @@ Anova(model.int.og, type = "III")
 
 Neither the likelihood ratio test nor the parametric bootstrap test show significance for the BACI interaction term.
 
-Inclusion of soil electrical conductivity into the model: 
+As a proxy for the increase in flooding intensity with each year, we include soil electrical conductivity into the model. Note that soil EC is an indicator of salt accumulation in soil from brackish water application: 
 
 ```{r BACI plus EC, message = FALSE, warning = FALSE}
 model.int.ec <- lmer(sqrt(F_avg) ~ BA*Plot + soil_ec_avg +
@@ -238,7 +251,12 @@ ec.compar
 Anova(model.int.ec, type = "III")
 ```
 
-We now see significance for the BACI interaction term and soil ec fixed effect with both the likelihood ratio and parametric bootstrap 
+We now see that the BACI interaction term and soil ec fixed effect have strong explanatory power via the likelihood ratio and parametric bootstrap 
+
+
+# Plots
+
+
 
 AIC comparison to visually observe differences in how well each model fits the data: 
 
@@ -276,13 +294,13 @@ AIC <- data.frame(variable, AIC, candidate)
 
 AIC %>%
   mutate(`Model Specification` = candidate) %>%
-  ggplot(aes(variable, AIC, fill = `Model Specification`)) +
+  ggplot(aes(variable, AIC+5000, fill = `Model Specification`)) +
   geom_col() +
-  #geom_hline(yintercept = 1100, linetype = "dashed") +
-  #scale_y_continuous(expand = c(0, 0)) + # Starts x axis at true zero
-  #expand_limits(y = c(0, 1500)) +
+  geom_hline(yintercept = -2820, linetype = "dashed") +
+  expand_limits(y = c(0, -3000)) +
+  scale_y_continuous(expand = c(0, 0)) + # Starts x axis at true zero
   scale_fill_viridis_d() +
-  labs( title = 'AIC Model Comparison', x = 'Variable', y = 'AIC Value') +
+  labs( title = 'AIC Model Comparison', x = 'Variable', y = 'AIC Value + 5000') +
   guides(fill = FALSE) + 
   theme_light() 
 ```
@@ -290,7 +308,7 @@ AIC %>%
 ```{r Sapflow vs EC, message = FALSE, warning = FALSE}
 tsb_2_summary = tsb_2 %>%
   filter(soil_ec_avg < 1250) %>%
-  mutate(#BA = case_when(Year == 2021 ~ "Before", .default = BA),
+  mutate(BA = case_when(Year == 2021 ~ "Before", .default = BA),
          BA = factor(BA, levels = c("Before", "After")),) %>%
   group_by(Year,BA,Plot) %>%
   summarise(mean_annual_F = mean(F_avg),
@@ -298,10 +316,14 @@ tsb_2_summary = tsb_2 %>%
             mean_annual_EC = mean(soil_ec_avg),
             sd_annual_EC = sd(soil_ec_avg),
             n = n())
+tsb_2 %>%
+  mutate(BA = factor(BA, levels = c("Before", "After"))) -> tsb_2
 
 tsb_2_summary %>%
-  mutate(BA = factor(BA, levels = c("Before", "After"))) %>%
   ggplot() +
+  stat_smooth(aes(x = soil_ec_avg, y = F_avg), method = 'lm',
+              color = 'grey', size = 0.8,
+              data = tsb_2 %>% filter(soil_ec_avg < 1200)) +
   geom_point(aes(mean_annual_EC, mean_annual_F,
                  color = as.factor(Year)), size = 3) +
   geom_errorbar(aes(x = mean_annual_EC,
@@ -309,20 +331,17 @@ tsb_2_summary %>%
                     ymax = mean_annual_F + sd_annual_F,
                     color = Year), size = 1) +
   geom_errorbarh(aes(xmin = mean_annual_EC - sd_annual_EC,
-                    xmax = mean_annual_EC + sd_annual_EC,
-                    y = mean_annual_F,
-                    color = Year), size = 1) +
-  stat_smooth(aes(x = soil_ec_avg, y = F_avg), method = 'lm',
-              color = 'black', size = 1,
-              data = tsb_2 %>% filter(soil_ec_avg < 1200)) +
-  geom_point(aes(x = soil_ec_avg, y = F_avg, color = as.factor(Year)),
-             data = tsb_2 %>% filter(soil_ec_avg < 1200), alpha = 0.2) +
+                     xmax = mean_annual_EC + sd_annual_EC,
+                     y = mean_annual_F,
+                     color = Year), size = 1) +
   scale_color_viridis_d(begin = 0.9, end = 0.2) +
   facet_wrap(Plot ~ BA, scales = "free_x") + theme_bw() +
-  labs(y = expression ("Midday Sap Flux Density, cm"^3*" s"^-1),
+  geom_point(aes(x = soil_ec_avg, y = F_avg, color = as.factor(Year)),
+             data = tsb_2 %>% filter(soil_ec_avg < 1200), alpha = 0.2) +
+  labs(y = expression ("Midday Sap Flux Density, cm"^3*" cm"^-2*" s"^-1),
        x = expression(paste("Mean Soil EC, ", mu, "S cm"^-1)),
        color = " ") +
-  theme(legend.position="none", element_text(size = 14))
+  theme(legend.position="bottom", element_text(size = 14))
 ```
 
 ```{r VWC vs EC, message = FALSE, warning = FALSE}
@@ -340,6 +359,10 @@ tsb_2_summary2 = tsb_2 %>%
 
 tsb_2_summary2 %>%
   ggplot() +
+  # stat_smooth(aes(x = soil_ec_avg, y = soil_vwc_avg, group = BA),
+  #             method = 'lm', se = FALSE,
+  #             color = 'grey', size = 0.8,
+  #             data = tsb_2 %>% filter(soil_ec_avg < 1200)) +
   geom_point(aes(mean_annual_EC, mean_annual_vwc,
                  color = as.factor(Year)), size = 3) +
   geom_errorbar(aes(x = mean_annual_EC,
@@ -350,14 +373,12 @@ tsb_2_summary2 %>%
                      xmax = mean_annual_EC + sd_annual_EC,
                      y = mean_annual_vwc,
                      color = Year), size = 1) +
-  stat_smooth(aes(x = soil_ec_avg, y = soil_vwc_avg, group = BA), method = 'lm',
-              color = 'black', size = 0.81,
-              data = tsb_2 %>% filter(soil_ec_avg < 1200)) +
   geom_point(aes(x = soil_ec_avg, y = soil_vwc_avg, color = as.factor(Year)),
              data = tsb_2 %>% filter(soil_ec_avg < 1200), alpha = 0.2) +
   scale_color_viridis_d(option = 'D', begin = 0.9, end = 0.2) +
   facet_wrap(Plot ~ BA, scales = "free_x") + theme_bw() +
   labs(y = expression ("Mean Soil Volumetric Water Content cm" ^3* " cm"^-3),
        x = expression(paste("Mean Soil EC, ", mu, "S cm"^-1)),
-       color = " ")
+       color = " ") +
+  theme(legend.position="bottom", element_text(size = 14))
 ```

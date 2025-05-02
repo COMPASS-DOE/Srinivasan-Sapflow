@@ -104,8 +104,7 @@ tree_dat %>%
 sapflow <- tmp_full %>% 
   filter(Instrument == "Sapflow",
          F_OOB == 0,
-         F_OOS == 0,
-         Value >= 0.02) %>%
+         F_OOS == 0) %>%
   dplyr::select(Plot, TIMESTAMP, Sensor_ID, Value) %>%
   mutate(sapflow_2.5cm = Value,
          Date = date(TIMESTAMP))
@@ -120,7 +119,7 @@ sapflow %>%
 sapflow_sp %>% 
   mutate(Date = date(TIMESTAMP)) %>%
   mutate(Hour = hour(TIMESTAMP)) %>%
-  filter(Hour >= 0, Hour <= 5) %>%
+  filter(Hour >= 0, Hour <= 4) %>%
   group_by(Date, Plot, Species, ID) %>% 
   summarise(dTmax = max(Value, na.rm = TRUE), 
             dTmax_time = TIMESTAMP[which.max(Value)])-> sapflow_dtmax
