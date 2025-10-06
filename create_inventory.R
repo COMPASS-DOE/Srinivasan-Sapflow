@@ -7,8 +7,8 @@ library(dplyr)
 library(stringr)
 
 #Load dataframes
-sapflow_inventory <- read.csv("Data/sapflow_inventory.csv")
-dbh_inventory <- read.csv("Data/inventory.csv")
+sapflow_inventory <- read.csv("sapflow_inventory.csv")
+dbh_inventory <- read.csv("inventory.csv")
 
 #Edit format to match dataframes
 #Remove trailing white spaces 
@@ -19,7 +19,7 @@ sapflow_inventory %>%
 
 #Merge dataframes and remove deep sapflow sensors
 inventory <- merge(sapflow_inventory, dbh_inventory, 
-                   by.x = c("Tree_ID", "Plot"), by.y = c("Tag", "Plot"), all.x = TRUE)
+                   by.x = c("Tree_ID", "Plot"), by.y = c("Tree_ID", "Plot"), all.x = TRUE)
 inventory %>%
   filter(!grepl("D", Sapflux_ID)) -> inventory
 
