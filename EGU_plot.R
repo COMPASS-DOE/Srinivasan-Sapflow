@@ -17,7 +17,7 @@ midday <- final_data %>%
 midday <- midday %>%
   ungroup() %>%
   group_by(Year, Plot, Species) %>%
-  mutate(f_roll = zoo::rollmean(midday, 28, align = "center", fill = NA))
+  mutate(f_roll = zoo::rollmean(midday, 50, align = "center", fill = NA))
 
 #events comes from .Rmd
 events$Year <- as.factor(events$Year)
@@ -28,17 +28,19 @@ midday <- midday %>%
          doy_end = yday(flood_end))
 
 midday %>%
-  filter(Species == "Tulip Poplar",
-         Plot != "Freshwater",
-         midday < 6) %>%
-  ggplot(aes(y = midday, x = doy, color = Plot, group = Plot)) +
+  filter(#Species == "Tulip Poplar",
+  #        Plot != "Freshwater",
+         midday < 6,
+         doy > 70 & doy < 340) %>%
+  ggplot(aes(y = midday, x = doy, color = Year, group = Year)) +
   geom_vline(data = midday[midday$Year != "2021",], #Plot event dates
              aes(xintercept = doy_start,
-                 group = Year), color = 'red') +
+                 group = Year, color = Year),
+             linewidth = 0.8) +
   geom_line(aes(y = f_roll), linewidth = 0.95) +  # Plot the rolling mean
-  geom_point(alpha = 0.15) +  # Plot original points
-  facet_wrap(. ~ Year, ncol = 4) +
-  scale_color_viridis_d(option = 'G', begin = 0.7, end = 0.3) +
+  geom_point(alpha = 0.15, size = 0.8) +  # Plot original points
+  facet_grid(Species ~ Plot, scales="free") +
+  scale_color_viridis_d(option = 'D', begin = 0.1, end = 0.95) +
   labs(y = expression ("Midday Sap Flow, cm"^3* " s"^-1),
        x = expression(paste("Day of Year"))) +
   theme_bw() + theme(legend.position="bottom", element_text(size = 14))
