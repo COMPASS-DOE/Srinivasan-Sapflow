@@ -1,6 +1,6 @@
 
 # This code compiles a complete time series
-# of sapflow and related abiotic data from TEMPEST for 2021-2024
+# of sapflow and related abiotic data from TEMPEST for 2021-2025
 # Sapflow, soil EC & vwc at 15 cm, average air temp, & PAR
 
 # To run, user must download ad unzip sources files from COMPASS-FME Level 1 data
@@ -14,25 +14,26 @@ library(dplyr)
 library(ggplot2)
 library(lubridate)
 
-#TEMPEST data from 2021-24
+#TEMPEST data from 2021-25
 site <- "TMP"
-variables <- c("sapflow_2.5cm", "soil_vwc_15cm", "soil_EC_15cm")
+variables <- c("sapflow-3.5cm", "soil-vwc-15cm", "soil-EC-15cm")
 
 pat <- paste0("^", site, ".*csv$")
 
 #Lists of data for different years for TEMPEST
+files_T25 <- list.files("Data/Unzipped/TMP_2025/", pattern = pat, recursive = TRUE, full.names = TRUE)
 files_T24 <- list.files("Data/Unzipped/TMP_2024/", pattern = pat, recursive = TRUE, full.names = TRUE)
 files_T23 <- list.files("Data/Unzipped/TMP_2023/", pattern = pat, recursive = TRUE, full.names = TRUE)
 files_T22 <- list.files("Data/Unzipped/TMP_2022/", pattern = pat, recursive = TRUE, full.names = TRUE)
 files_T21 <- list.files("Data/Unzipped/TMP_2021/", pattern = pat, recursive = TRUE, full.names = TRUE)
 
-files_T <- c(files_T24, files_T23, files_T22, files_T21)
+files_T <- c(files_T25, files_T24, files_T23, files_T22, files_T21)
 
 f <- function(f) {
   message("Reading ", basename(f))
   x <- read_csv(f, col_types = "ccTccccdccii")
   x[x$research_name %in% variables | x$Sensor_ID == "F19D",]
-  #Unknown is F19D present in current v1-1 data
+  #Unknown if F19D present in current v2 data
   #keeping this to be conservative
 }
 
@@ -50,7 +51,7 @@ tmp_full %>%
 saveRDS(tmp_full, "tmp_full.rds")
 #tmp_full <- readRDS("tmp_full.rds")
 
-#GCREW data from 2021-24
+#GCREW data from 2021-25
 #Note: vappress is all 0 for now until we get that sorted out
 #Update: vappress doesn't exist in the ESS-DIVE level 1 data
 site <- "GCW"
@@ -59,12 +60,13 @@ variables <- c("wx_tempavg15", "wx_par_den15")
 pat <- paste0("^", site, ".*csv$")
 
 #Lists of data for different years for GCREW
+files_G25 <- list.files("Data/Unzipped/GCW_2025/", pattern = pat, recursive = TRUE, full.names = TRUE)
 files_G24 <- list.files("Data/Unzipped/GCW_2024/", pattern = pat, recursive = TRUE, full.names = TRUE)
 files_G23 <- list.files("Data/Unzipped/GCW_2023/", pattern = pat, recursive = TRUE, full.names = TRUE)
 files_G22 <- list.files("Data/Unzipped/GCW_2022/", pattern = pat, recursive = TRUE, full.names = TRUE)
 files_G21 <- list.files("Data/Unzipped/GCW_2021/", pattern = pat, recursive = TRUE, full.names = TRUE)
 
-files_G <- c(files_G24, files_G23, files_G22, files_G21)
+files_G <- c(files_G25, files_G24, files_G23, files_G22, files_G21)
 
 f <- function(f) {
   message("Reading ", basename(f))
