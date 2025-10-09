@@ -33,8 +33,8 @@ sapply(.packages, require, character.only=TRUE)
 #these files calculate sapflux density
 
 #This only needs to be done once
-
-data <- readRDS("Sapflow_BACI.rds")
+#For some reason, this only works when copy-pasted into the console -R
+data <- readRDS("final_tmp_data.rds")
 
 ```
 
@@ -45,8 +45,8 @@ data %>%
   mutate(Hour = hour(TIMESTAMP)) %>%
   mutate(Date = date(TIMESTAMP)) %>%
   mutate(monthyr = floor_date(TIMESTAMP, unit = "week")) %>%
-  filter(Hour <= 14, Hour >= 11,
-         F <= 0.005, F >= 0) %>%
+  filter(Hour <= 14, Hour >= 11) %>%
+  filter(F <= 0.005, F >= 0) %>%
   group_by(Plot, Species, Date) %>% 
   summarise(F_avg = mean(`F`, na.rm = TRUE)) -> sf_plot_avg
 
@@ -56,7 +56,7 @@ ggplot(sf_plot_avg) +
   scale_color_viridis_d(option = 'D', begin = .25, end = .8) +
   theme_light() +
   labs(y = "Avg Sap Flux Density cm3/cm2/s", x = "Date",
-       title = "Sap Flux Density Averaged Daily, 11 AM - 2 PM")
+       title = "Sap Flux Density Averaged Daily, 11 am - 2 pm")
 
 ```
 
@@ -66,7 +66,8 @@ tempest_events <- bind_rows(
   tibble( Year = 2021, flood_start = "2021-06-12", flood_end = "2021-06-12"), #average date = June 12
   tibble( Year = 2022, flood_start = "2022-06-22", flood_end = "2022-06-22"), #June 22
   tibble( Year = 2023, flood_start = "2023-06-06", flood_end = "2023-06-07"), #June 6, 7
-  tibble( Year = 2024, flood_start = "2024-06-11", flood_end = "2024-06-13")) #June 11, 12, 13
+  tibble( Year = 2024, flood_start = "2024-06-11", flood_end = "2024-06-13"), #June 11, 12, 13
+  tibble( Year = 2025, flood_start = "2025-06-12", flood_end = "2025-06-12")) #No TEMPEST event; averaging
 
 tempest_events %>%
   mutate(flood_start = ymd(flood_start),
@@ -86,6 +87,7 @@ Selecting data from Tulip poplars and excluding the Freshwater plot, based on a 
 ```{r Select LITU and SW plot data, message = FALSE, warning = FALSE}
 #currently this occurs in the 3 chunks
 #may be possible to streamline
+#R edits: comparison to whole day sapflow and whole growing season 
 data %>%
   dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`, Fd,
                 soil_vwc_15cm, soil_ec_15cm) %>%
@@ -97,13 +99,13 @@ data %>%
          data_end = flood_end + window) %>%
   filter(Date > data_start & Date < flood_start |
          Date < data_end & Date > flood_end,
-         Hour <= 14, Hour >= 11,
+         #Hour <= 14, Hour >= 11,
          F <= 0.005, F >= 0,
          Plot != "Freshwater",
          Species == "Tulip Poplar") %>%
-  ungroup() -> tulip_salt
+  ungroup() -> tulip_salt_wholeday
 
-tulip_salt %>%
+tulip_salt_wholeday %>%
   group_by(Year) %>%
   mutate(BA = ifelse(Date > flood_end, "After", "Before"),
          Year = as.factor(Year),
@@ -115,33 +117,33 @@ tulip_salt %>%
             soil_ec_avg = mean(soil_ec_15cm), 
             soil_vwc_avg = mean(soil_vwc_15cm),
             n = n()) %>%
-  ungroup() -> tsb_1
+  ungroup() -> tsb_1_wholeday
 
-tsb_1 %>%
+tsb_1_wholeday %>%
   group_by(Year) %>%
   mutate(Day = ifelse(BA == "Before",
                       - as.numeric(flood_start - Date),
                       as.numeric(Date - flood_end))) %>%
   mutate(BA = as.character(BA)) %>%
-  mutate(BA = ifelse(Year == 2021, "Before", BA)) -> tsb_2
+  mutate(BA = ifelse(Year == 2021, "Before", BA)) -> tsb_2_wholeday
 
-ggplot(tsb_2, aes(Day, F_avg, color = ID, shape = BA)) +
+ggplot(tsb_2_wholeday, aes(Day, F_avg, color = ID, shape = BA)) +
   geom_point(size = 2.5) + facet_grid(Plot~Year, scales = "free")
 ```
 
 ```{r Normality, message = FALSE}
 #here we check if our response variable (daily averaged midday sap flux density per tree), is normally distributed
-current_skewness <- skewness(tsb_2$F_avg)
+current_skewness <- skewness(tsb_2_wholeday$F_avg)
 print(paste("Current Skewness:", current_skewness))
 
 # Logarithmic Transformation
-log_transformed_response <- log(tsb_2$F_avg + 1)
+log_transformed_response <- log(tsb_2_wholeday$F_avg + 1)
 
 # Square Root Transformation
-sqrt_transformed_response <- sqrt(tsb_2$F_avg)
+sqrt_transformed_response <- sqrt(tsb_2_wholeday$F_avg)
 
 # Inverse Transformation
-inv_transformed_response <- 1 / tsb_2$F_avg
+inv_transformed_response <- 1 / tsb_2_wholeday$F_avg
 
 log_skewness <- skewness(log_transformed_response)
 sqrt_skewness <- skewness(sqrt_transformed_response)
@@ -151,12 +153,12 @@ print(paste("Log Transformation Skewness:", log_skewness))
 print(paste("Square Root Transformation Skewness:", sqrt_skewness))
 print(paste("Inverse Transformation Skewness:", inv_skewness))
 
-ggplot(tsb_2, aes(F_avg)) + geom_histogram(fill = '#31688EFF') +
+ggplot(tsb_2_wholeday, aes(F_avg)) + geom_histogram(fill = '#31688EFF') +
   facet_grid(Plot~.) +
   labs(y = NULL, x = "Average Sapflow", title = "Untransformed Data")
   
 
-ggplot(tsb_2, aes(sqrt(F_avg))) + geom_histogram(fill = '#31688EFF') +
+ggplot(tsb_2_wholeday, aes(sqrt(F_avg))) + geom_histogram(fill = '#31688EFF') +
   facet_grid(Plot~.) + 
   labs(y = NULL, x = "Avergae Sapflow", title = "Square Root \n Transformed Data")
 
