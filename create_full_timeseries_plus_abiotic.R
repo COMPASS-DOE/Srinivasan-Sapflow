@@ -48,14 +48,14 @@ tmp_full %>%
   drop_na(Sensor_ID) %>%
   mutate(Sensor_ID = ifelse(Sensor_ID == "F19D", "F19", Sensor_ID)) -> tmp_full
 
-saveRDS(tmp_full, "tmp_full.rds")
+#saveRDS(tmp_full, "tmp_full.rds")
 #tmp_full <- readRDS("tmp_full.rds")
 
 #GCREW data from 2021-25
 #Note: vappress is all 0 for now until we get that sorted out
 #Update: vappress doesn't exist in the ESS-DIVE level 1 data
 site <- "GCW"
-variables <- c("wx_tempavg15", "wx_par_den15")
+variables <- c("wx-tempavg15", "wx-par-den15")
 
 pat <- paste0("^", site, ".*csv$")
 
@@ -89,7 +89,7 @@ tmp_full %>%
   mutate(Plot = substr(Plot,1,1),
          Plot = case_when(Plot == "C" ~ "Control",
                           Plot == "F" ~ "Freshwater",
-                          Plot == "S" ~ "Saltwater", )) -> tmp_full
+                          Plot == "S" ~ "Saltwater", )) -> tmp2_full
 tree_dat %>%
   mutate(Species = substr(spp,1,4),
          Species = case_when(spp == "ACRU" ~ "Red Maple",
@@ -103,12 +103,12 @@ tree_dat %>%
 #Create sapflow-only dataframe with scaled Fd
 
 #First, isolate sapflow data
-sapflow <- tmp_full %>% 
+sapflow <- tmp2_full %>% 
   filter(Instrument == "Sapflow",
          F_OOB == 0,
          F_OOS == 0) %>%
   dplyr::select(Plot, TIMESTAMP, Sensor_ID, Value) %>%
-  mutate(sapflow_2.5cm = Value,
+  mutate(raw = Value,
          Date = date(TIMESTAMP))
 
 #Merge sapflow and species dataframe
@@ -185,25 +185,26 @@ sf_scaled %>%
   filter(Hour >= 11, Hour <= 12) %>% 
   filter(F <= 0.005, F >= 0) %>%
   group_by(Plot, Species, Date) %>% 
-  summarise(F_avg = mean(F*3600, na.rm = TRUE)) -> sf_plot_avg # 3600 s per hr
+  summarise(F_avg = mean(F*3600, na.rm = TRUE)) %>%
+  na.omit() -> sf_plot_avg # 3600 s per hr
 
 #plot hourly midday sapflow
 ggplot(sf_plot_avg) + 
-  geom_point(aes (x = Date, y = F_avg, color = Species)) + 
-  facet_wrap(~Plot, ncol = 1, scales = "fixed") + 
+  geom_point(aes (x = Date, y = F_avg, color = Plot)) + 
+  facet_wrap(~Species, ncol = 1, scales = "fixed") + 
   labs(y = "Avg Sap Flux Density", x = "Date", title = "Sap Flux Density Averaged Daily, 11 AM - 12 PM")
   
 #ggsave("Full_sapflow.jpeg")
 
 #Option to save just the sapflow data as an RDS
-#saveRDS(sf_scaled, "Sapflow_21_24.rds")
+#saveRDS(sf_scaled, "Sapflow_21_25.rds")
 
 #Now we add in our abiotic data
   #Create soil vwc dataframe
   #Take average value of all soil vwc measurements in each plot
 
 swc_15raw <- tmp_full %>%
-  filter(research_name == "soil_vwc_15cm")
+  filter(research_name == "soil-vwc-15cm")
 
 swc_15 <- swc_15raw %>%
   filter(F_OOB == 0,
@@ -211,14 +212,14 @@ swc_15 <- swc_15raw %>%
   drop_na(Value) %>%
   group_by(TIMESTAMP, Plot) %>%
   summarize(n = n(),
-            soil_vwc_15cm = mean(Value),
+            `soil-vwc-15cm` = mean(Value),
             vwc_min = min(Value),
             vwc_max = max(Value)) 
 
 #write.csv(swc_15, "soil_vwc.csv")
 
 ec_15raw <- tmp_full %>%
-  filter(research_name == "soil_EC_15cm")
+  filter(research_name == "soil-EC-15cm")
 
 ec_15 <- ec_15raw %>%
   filter(F_OOB == 0,
@@ -226,7 +227,7 @@ ec_15 <- ec_15raw %>%
   drop_na(Value) %>%
   group_by(TIMESTAMP, Plot) %>%
   summarize(n = n(),
-            soil_ec_15cm = mean(Value),
+            `soil-ec-15cm` = mean(Value),
             ec_min = min(Value),
             ec_max = max(Value))
 
@@ -234,11 +235,11 @@ ec_15 <- ec_15raw %>%
 
 swc_15clean <- swc_15 %>%
   mutate(swc_n = n) %>%
-  select(soil_vwc_15cm, swc_n, Plot, TIMESTAMP)
+  select(`soil-vwc-15cm`, swc_n, Plot, TIMESTAMP)
 
 ec_15clean <- ec_15 %>%
   mutate(ec_n = n) %>%
-  select(soil_ec_15cm, ec_n, Plot, TIMESTAMP)
+  select(`soil-ec-15cm`, ec_n, Plot, TIMESTAMP)
 
 tmp_data <- 
   left_join(sf_scaled, swc_15clean, by = c("Plot", "TIMESTAMP"))  
@@ -263,12 +264,12 @@ gcw_full %>%
 
 
 gcw %>%
-  filter(research_name == "wx_par_den15") %>%
+  filter(research_name == "wx-par-den15") %>%
   mutate(PAR = Value) %>% 
   dplyr::select(TIMESTAMP, PAR) -> par
 
 gcw %>%
-  filter(research_name == "wx_tempavg15") %>%
+  filter(research_name == "wx-tempavg15") %>%
   mutate(TEMP = Value) %>% 
   dplyr::select(TIMESTAMP, TEMP) -> temp
 
@@ -280,7 +281,7 @@ final_data <-
   merge(final_tmp_data, abiotic_data, by.x = c("TIMESTAMP"), 
         by.y = c("TIMESTAMP"), all.x = TRUE) 
 
-#Now we have a full time series for 2021-2024!
+#Now we have a full time series for 2021-2025!
 
 saveRDS(final_data,"Sapflow_BACI.rds")
 
