@@ -66,7 +66,8 @@ tempest_events <- bind_rows(
   tibble( Year = 2021, flood_start = "2021-06-12", flood_end = "2021-06-12"), #average date = June 12
   tibble( Year = 2022, flood_start = "2022-06-22", flood_end = "2022-06-22"), #June 22
   tibble( Year = 2023, flood_start = "2023-06-06", flood_end = "2023-06-07"), #June 6, 7
-  tibble( Year = 2024, flood_start = "2024-06-11", flood_end = "2024-06-13")) #June 11, 12, 13
+  tibble( Year = 2024, flood_start = "2024-06-11", flood_end = "2024-06-13"),
+  tibble( Year = 2025, flood_start = "2025-06-12", flood_end = "2025-06-12"))
 
 tempest_events %>%
   mutate(flood_start = ymd(flood_start),
@@ -88,7 +89,7 @@ Selecting data from Tulip poplars and excluding the Freshwater plot, based on a 
 #may be possible to streamline
 data %>%
   dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`, Fd,
-                soil_vwc_15cm, soil_ec_15cm) %>%
+                `soil-vwc-15cm`, `soil-ec-15cm`) %>%
   mutate(Date = as_date(date(TIMESTAMP)),
          Hour = hour(TIMESTAMP)) %>%
   left_join(events) %>%
@@ -112,8 +113,8 @@ tulip_salt %>%
          Plot = as.factor(Plot)) %>%
   group_by(Date, Plot, ID, Year, BA, flood_start, flood_end) %>%
   summarise(F_avg = mean(`F`, na.rm = TRUE),
-            soil_ec_avg = mean(soil_ec_15cm), 
-            soil_vwc_avg = mean(soil_vwc_15cm),
+            soil_ec_avg = mean(`soil-ec-15cm`), 
+            soil_vwc_avg = mean(`soil-vwc-15cm`),
             n = n()) %>%
   ungroup() -> tsb_1
 
@@ -123,7 +124,8 @@ tsb_1 %>%
                       - as.numeric(flood_start - Date),
                       as.numeric(Date - flood_end))) %>%
   mutate(BA = as.character(BA)) %>%
-  mutate(BA = ifelse(Year == 2021, "Before", BA)) -> tsb_2
+  mutate(BA = ifelse(Year == 2021, "Before", BA),
+         BA = ifelse(Year == 2025, "After", BA)) -> tsb_2
 
 ggplot(tsb_2, aes(Day, F_avg, color = ID, shape = BA)) +
   geom_point(size = 2.5) + facet_grid(Plot~Year, scales = "free")
@@ -135,7 +137,7 @@ current_skewness <- skewness(tsb_2$F_avg)
 print(paste("Current Skewness:", current_skewness))
 
 # Logarithmic Transformation
-log_transformed_response <- log(tsb_2$F_avg + 1)
+log_transformed_response <- log(tsb_2$F_avg)
 
 # Square Root Transformation
 sqrt_transformed_response <- sqrt(tsb_2$F_avg)
@@ -154,11 +156,6 @@ print(paste("Inverse Transformation Skewness:", inv_skewness))
 ggplot(tsb_2, aes(F_avg)) + geom_histogram(fill = '#31688EFF') +
   facet_grid(Plot~.) +
   labs(y = NULL, x = "Average Sapflow", title = "Untransformed Data")
-  
-
-ggplot(tsb_2, aes(sqrt(F_avg))) + geom_histogram(fill = '#31688EFF') +
-  facet_grid(Plot~.) + 
-  labs(y = NULL, x = "Avergae Sapflow", title = "Square Root \n Transformed Data")
 
 ```
 
@@ -180,12 +177,12 @@ First, test for the statistical significance of the final term (1\|ID:Year), the
 ```{r Pardini et al 2018, warning = FALSE}
 Cand.set <- list()
 
-Cand.set[[1]] <- lmer(sqrt(F_avg) ~ BA + Plot  + BA*Plot +
+Cand.set[[1]] <- lmer(F_avg ~ BA + Plot  + BA*Plot +
                          (1|ID) + (1|Year),
                        data = tsb_2)
 model.noint <- Cand.set[[1]]
 
-Cand.set[[2]] <- lmer(sqrt(F_avg) ~ BA + Plot + BA*Plot +
+Cand.set[[2]] <- lmer(F_avg ~ BA + Plot + BA*Plot +
                          (1|ID) + (1|Year) +
                          (1|ID:Year),
                        data = tsb_2)
@@ -207,13 +204,13 @@ Choose the model with the lowest AICc value (i.e. largest negative value); this 
 
 We now test the impact of the BACI term in our existing model by looking at the explanatory power of the model with and without the interaction between BA and CI (plot): 
 ```{r message = FALSE, warning = FALSE}
-model.int.og <- lmer(sqrt(F_avg) ~ BA*Plot +
+model.int.og <- lmer(F_avg ~ BA*Plot +
                         (1|ID) + (1|Year) + (1|ID:Year),
-                      data = tsb_2)
+                      data = tsb_2[tsb_2$Year != 2025,])
 
-model.noint.og <- lmer(sqrt(F_avg) ~ BA + Plot +
+model.noint.og <- lmer(F_avg ~ BA + Plot +
                           (1|ID) + (1|Year) + (1|ID:Year),
-                        data = tsb_2)
+                        data = tsb_2[tsb_2$Year != 2025,])
 
 og.refdist <- PBrefdist(largeModel = model.int.og, 
                         smallModel = model.noint.og, 
@@ -232,11 +229,11 @@ Neither the likelihood ratio test nor the parametric bootstrap test show signifi
 As a proxy for the increase in flooding intensity with each year, we include soil electrical conductivity into the model. Note that soil EC is an indicator of salt accumulation in soil from brackish water application: 
 
 ```{r BACI plus EC, message = FALSE, warning = FALSE}
-model.int.ec <- lmer(sqrt(F_avg) ~ BA*Plot + soil_ec_avg +
+model.int.ec <- lmer(F_avg ~ BA*Plot + soil_ec_avg +
                       (1|ID) + (1|Year) + (1|ID:Year),
                       data = tsb_2)
 
-model.noint.ec <- lmer(sqrt(F_avg) ~ BA + Plot + soil_ec_avg +
+model.noint.ec <- lmer(F_avg ~ BA + Plot + soil_ec_avg +
                         (1|ID) + (1|Year) + (1|ID:Year),
                         data = tsb_2)
 

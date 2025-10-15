@@ -79,7 +79,7 @@ dat <- lapply(files_G,  f)
 dat <- do.call("rbind", dat)
 
 gcw_full <- dat
-saveRDS(gcw_full, "gcw_full.rds")
+#saveRDS(gcw_full, "gcw_full.rds")
 #gcw_full <- readRDS("gcw_full.rds")
 
 #Combining it all: editing dataframes for variables to match 
@@ -203,14 +203,14 @@ ggplot(sf_plot_avg) +
   #Create soil vwc dataframe
   #Take average value of all soil vwc measurements in each plot
 
-swc_15raw <- tmp_full %>%
+swc_15raw <- tmp2_full %>%
   filter(research_name == "soil-vwc-15cm")
 
 swc_15 <- swc_15raw %>%
   filter(F_OOB == 0,
          F_OOS == 0) %>%
   drop_na(Value) %>%
-  group_by(TIMESTAMP, Plot) %>%
+  group_by(TIMESTAMP, Plot, Location) %>%
   summarize(n = n(),
             `soil-vwc-15cm` = mean(Value),
             vwc_min = min(Value),
@@ -218,14 +218,14 @@ swc_15 <- swc_15raw %>%
 
 #write.csv(swc_15, "soil_vwc.csv")
 
-ec_15raw <- tmp_full %>%
+ec_15raw <- tmp2_full %>%
   filter(research_name == "soil-EC-15cm")
 
 ec_15 <- ec_15raw %>%
   filter(F_OOB == 0,
          F_OOS == 0) %>%
   drop_na(Value) %>%
-  group_by(TIMESTAMP, Plot) %>%
+  group_by(TIMESTAMP, Plot, Location) %>%
   summarize(n = n(),
             `soil-ec-15cm` = mean(Value),
             ec_min = min(Value),
