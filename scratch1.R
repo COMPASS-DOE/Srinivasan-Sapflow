@@ -62,9 +62,11 @@ data %>%
   mutate(Date = as_date(date(TIMESTAMP)),
          Hour = hour(TIMESTAMP)) %>%
   filter(Year == 2024,
-         month(Date) == 5,
+         month(Date) == 4,
+         day(Date) >= 15, day(Date) <= 30,  # Last two weeks of April
          Hour <= 14, Hour >= 11,
-         F <= 0.005, F >= 0) %>%
+         F <= 0.005, F >= 0
+         ) %>%
   group_by(Date, Plot, Species, ID) %>%
   summarise(F_avg = mean(`F`, na.rm = TRUE),
             n = n()) %>%
@@ -74,3 +76,54 @@ simple <- aov(F_avg ~ Species*Plot, data = anova)
 emm <- emmeans(simple, ~ Plot|Species)
 pairwise_comparisons <- pairs(emm, adjust = "tukey")
 summary(pairwise_comparisons)
+
+# Extract estimated marginal means
+emm_data <- as.data.frame(emm)
+
+ggplot(emm_data, aes(x = Plot, y = emmean, color = Species, group = Species)) +
+  geom_point(size = 3) +  # Points for estimated marginal means
+  geom_line(linewidth = 1) +   # Lines to connect species across plots
+  geom_errorbar(aes(ymin = emmean - SE, ymax = emmean + SE), width = 0.25) +  # Error bars
+  labs(title = "Historical Recreation of Radha's Initial Anova",
+       x = "Plot",
+       y = "Estimated Marginal Mean of F_avg") +
+  theme_minimal() + scale_color_brewer(palette = "Dark2") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+
+
+
+
+data %>%
+  dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`, Fd,
+                `soil-vwc-15cm`, `soil-ec-15cm`) %>%
+  mutate(Date = as_date(date(TIMESTAMP)),
+         Hour = hour(TIMESTAMP)) %>%
+  filter(Year == 2025,
+         month(Date) == 6,
+         Hour <= 14, Hour >= 11,
+         F <= 0.005, F >= 0
+  ) %>%
+  group_by(Date, Plot, Species, ID) %>%
+  summarise(F_avg = mean(`F`, na.rm = TRUE),
+            n = n()) %>%
+  ungroup() -> anova2
+
+simple2 <- aov(F_avg ~ Species*Plot, data = anova2)
+emm2 <- emmeans(simple2, ~ Plot|Species)
+pairwise_comparisons2 <- pairs(emm2, adjust = "tukey")
+summary(pairwise_comparisons2)
+
+# Extract estimated marginal means
+emm_data2 <- as.data.frame(emm2)
+
+ggplot(emm_data2, aes(x = Plot, y = emmean, color = Species, group = Species)) +
+  geom_point(size = 3) +  # Points for estimated marginal means
+  geom_line(linewidth = 1) +   # Lines to connect species across plots
+  geom_errorbar(aes(ymin = emmean - SE, ymax = emmean + SE), width = 0.25) +  # Error bars
+  labs(title = "Interaction Between Species and Plot",
+       x = "Plot",
+       y = "Estimated Marginal Mean of F_avg") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
