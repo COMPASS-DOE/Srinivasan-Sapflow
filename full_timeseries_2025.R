@@ -67,17 +67,18 @@ readRDS("tmp_full.rds") -> tmp_full
 #Note: vappress is all 0 for now until we get that sorted out
 #Update: vappress doesn't exist in the ESS-DIVE level 1 data
 site <- "GCW"
-variables <- c("wx_tempavg15", "wx_par_den15")
+variables <- c("wx-tempavg15", "wx-par-den15", "wx-vp15")
 
 pat <- paste0("^", site, ".*csv$")
 
 #Lists of data for different years for GCREW
-files_G24 <- list.files("Data/Unzipped/GCW_2024/", pattern = pat, recursive = TRUE, full.names = TRUE)
-files_G23 <- list.files("Data/Unzipped/GCW_2023/", pattern = pat, recursive = TRUE, full.names = TRUE)
-files_G22 <- list.files("Data/Unzipped/GCW_2022/", pattern = pat, recursive = TRUE, full.names = TRUE)
-files_G21 <- list.files("Data/Unzipped/GCW_2021/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_G25 <- list.files("Data/GCW_2025/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_G24 <- list.files("Data/GCW_2024/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_G23 <- list.files("Data/GCW_2023/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_G22 <- list.files("Data/GCW_2022/", pattern = pat, recursive = TRUE, full.names = TRUE)
+files_G21 <- list.files("Data/GCW_2021/", pattern = pat, recursive = TRUE, full.names = TRUE)
 
-files_G <- c(files_G24, files_G23, files_G22, files_G21)
+files_G <- c(files_G25, files_G24, files_G23, files_G22, files_G21)
 
 f <- function(f) {
   message("Reading ", basename(f))
@@ -272,11 +273,6 @@ final_tmp_data <-
 #but we can extrapolate to other plots
 #Note: first few months of 2022 don't have PAR or temp values
 
-#Now the gcrew data 
-#Note: only freshwater (wetland) will have these variables,
-#but we can extrapolate to other plots
-#Note: first few months of 2022 don't have PAR or temp values
-
 gcw_full %>%
   mutate(Plot = substr(Plot,1,2),
          Plot = case_when(Plot == "W" ~ "Freshwater",)) %>%
@@ -284,24 +280,33 @@ gcw_full %>%
 
 
 gcw %>%
-  filter(research_name == "wx_par_den15") %>%
+  filter(research_name == "wx-par-den15") %>%
   mutate(PAR = Value) %>% 
   dplyr::select(TIMESTAMP, PAR) -> par
 
 gcw %>%
-  filter(research_name == "wx_tempavg15") %>%
+  filter(research_name == "wx-vp15") %>%
+  mutate(VP = Value) %>% 
+  dplyr::select(TIMESTAMP, VP) -> vappres
+
+gcw %>%
+  filter(research_name == "wx-tempavg15") %>%
   mutate(TEMP = Value) %>% 
   dplyr::select(TIMESTAMP, TEMP) -> temp
 
-abiotic_data <- 
+
+abiotic_data_temp <- 
   merge(temp, par, by.x = c("TIMESTAMP"), 
         by.y = c("TIMESTAMP"), all = TRUE)
 
+abiotic_data <- 
+  merge(abiotic_data_temp, vappres, by.x = c("TIMESTAMP"), 
+        by.y = c("TIMESTAMP"), all = TRUE)
+
 final_data <- 
-  merge(final_tmp_data, abiotic_data, by.x = c("TIMESTAMP"), 
-        by.y = c("TIMESTAMP"), all.x = TRUE) 
+  left_join(final_tmp_data, abiotic_data, by = "TIMESTAMP") 
 
 #Now we have a full time series for 2021-2024!
 
-saveRDS(final_tmp_data,"final_tmp_data.rds")
+saveRDS(final_data,"final_data.rds")
 

@@ -133,17 +133,17 @@ ggplot(tsb_2_wholeday, aes(Day, F_avg, color = ID, shape = BA)) +
 
 ```{r Normality, message = FALSE}
 #here we check if our response variable (daily averaged midday sap flux density per tree), is normally distributed
-current_skewness <- skewness(tsb_2_wholeday$F_avg)
+current_skewness <- skewness(tsb_2$F_avg)
 print(paste("Current Skewness:", current_skewness))
 
 # Logarithmic Transformation
-log_transformed_response <- log(tsb_2_wholeday$F_avg + 1)
+log_transformed_response <- log(tsb_2$F_avg + 1)
 
 # Square Root Transformation
-sqrt_transformed_response <- sqrt(tsb_2_wholeday$F_avg)
+sqrt_transformed_response <- sqrt(tsb_2$F_avg)
 
 # Inverse Transformation
-inv_transformed_response <- 1 / tsb_2_wholeday$F_avg
+inv_transformed_response <- 1 / tsb_2$F_avg
 
 log_skewness <- skewness(log_transformed_response)
 sqrt_skewness <- skewness(sqrt_transformed_response)
@@ -161,6 +161,9 @@ ggplot(tsb_2_wholeday, aes(F_avg)) + geom_histogram(fill = '#31688EFF') +
 ggplot(tsb_2_wholeday, aes(sqrt(F_avg))) + geom_histogram(fill = '#31688EFF') +
   facet_grid(Plot~.) + 
   labs(y = NULL, x = "Avergae Sapflow", title = "Square Root \n Transformed Data")
+
+#R edits for resubmission: 
+
 
 ```
 
