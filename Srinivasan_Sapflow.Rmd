@@ -34,7 +34,7 @@ sapply(.packages, require, character.only=TRUE)
 
 #This only needs to be done once
 #For some reason, this only works when copy-pasted into the console -R
-data <- readRDS("final_tmp_data.rds")
+final_tmp_data <- readRDS("final_tmp_data.rds")
 
 ```
 

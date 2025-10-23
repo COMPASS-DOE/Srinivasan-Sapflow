@@ -44,3 +44,6 @@ ggplot(hourly_sapflow) +
      title = "Sap Flux Density Averaged Hourly")
   
 ggsave("hourly_sapflow.jpg")
+
+
+
