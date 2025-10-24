@@ -136,6 +136,7 @@ sapflow_sp %>%
   left_join(sapflow_dtmax, by = c("Plot", "Species", "ID", "Date")) %>% 
   mutate(F = 0.011899 * (((dTmax / Value) - 1)^1.231)) -> sf_data
 
+#ToDo update this to include 2025
 tree_dat %>%
   dplyr::select(Tree_ID, Sapflux_ID, spp,
                 DBH_2024, DBH_2023, DBH_2022, DBH_2021) -> dbh
@@ -233,13 +234,12 @@ ec_15 <- ec_15raw %>%
 
 #write.csv(ec_15, "soil_ec.csv")
 
+#TODO pivot wider, both swc and ec
 swc_15clean <- swc_15 %>%
-  mutate(swc_n = n) %>%
-  select(`soil-vwc-15cm`, swc_n, Plot, TIMESTAMP)
+  select(`soil-vwc-15cm`, Location, Plot, TIMESTAMP)
 
 ec_15clean <- ec_15 %>%
-  mutate(ec_n = n) %>%
-  select(`soil-ec-15cm`, ec_n, Plot, TIMESTAMP)
+  select(`soil-ec-15cm`, Location, Plot, TIMESTAMP)
 
 tmp_data <- 
   left_join(sf_scaled, swc_15clean, by = c("Plot", "TIMESTAMP"))  
