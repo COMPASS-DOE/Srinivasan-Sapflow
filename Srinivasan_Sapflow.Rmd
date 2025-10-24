@@ -41,14 +41,14 @@ final_tmp_data <- readRDS("final_tmp_data.rds")
 ```{r Sapflow Visual, message = FALSE, , warning = FALSE}
 
 #something like this
-data %>% 
+final_tmp_data %>% 
   mutate(Hour = hour(TIMESTAMP)) %>%
   mutate(Date = date(TIMESTAMP)) %>%
   mutate(monthyr = floor_date(TIMESTAMP, unit = "week")) %>%
-  filter(Hour <= 14, Hour >= 11) %>%
-  filter(F <= 0.005, F >= 0) %>%
+  filter(Hour <= 19, Hour >= 7) %>%
+  filter(Fd <= 1.5, Fd >= 0) %>%
   group_by(Plot, Species, Date) %>% 
-  summarise(F_avg = mean(`F`, na.rm = TRUE)) -> sf_plot_avg
+  summarise(F_avg = mean(Fd, na.rm = TRUE)) -> sf_plot_avg
 
 ggplot(sf_plot_avg) + 
   geom_point(aes (x = Date, y = F_avg, color = Species)) + 
@@ -56,18 +56,18 @@ ggplot(sf_plot_avg) +
   scale_color_viridis_d(option = 'D', begin = .25, end = .8) +
   theme_light() +
   labs(y = "Avg Sap Flux Density cm3/cm2/s", x = "Date",
-       title = "Sap Flux Density Averaged Daily, 11 am - 2 pm")
+       title = "Sap Flux Density Averaged Daily, 7 am - 7 pm")
 
 ```
 
 ```{r TEMPEST Events, message = TRUE}
 #TEMPEST EVENTS
 tempest_events <- bind_rows(
-  tibble( Year = 2021, flood_start = "2021-06-12", flood_end = "2021-06-12"), #average date = June 12
+  #tibble( Year = 2021, flood_start = "2021-06-12", flood_end = "2021-06-12"), #average date = June 12
   tibble( Year = 2022, flood_start = "2022-06-22", flood_end = "2022-06-22"), #June 22
   tibble( Year = 2023, flood_start = "2023-06-06", flood_end = "2023-06-07"), #June 6, 7
-  tibble( Year = 2024, flood_start = "2024-06-11", flood_end = "2024-06-13"), #June 11, 12, 13
-  tibble( Year = 2025, flood_start = "2025-06-12", flood_end = "2025-06-12")) #No TEMPEST event; averaging
+  tibble( Year = 2024, flood_start = "2024-06-11", flood_end = "2024-06-13")) #June 11, 12, 13
+  #tibble( Year = 2025, flood_start = "2025-06-12", flood_end = "2025-06-12")) #No TEMPEST event; averaging
 
 tempest_events %>%
   mutate(flood_start = ymd(flood_start),
@@ -81,8 +81,6 @@ window <- days(15)
 
 ## Two weeks Before/After events
 
-
-
 Selecting data from Tulip poplars and excluding the Freshwater plot, based on a preliminary analysis during Radha's SULI project.
 ```{r Select LITU and SW plot data, message = FALSE, warning = FALSE}
 #currently this occurs in the 3 chunks
@@ -93,14 +91,14 @@ data %>%
                 soil_vwc_15cm, soil_ec_15cm) %>%
   mutate(Date = as_date(date(TIMESTAMP)),
          Hour = hour(TIMESTAMP)) %>%
-  left_join(events) %>%
+  left_join(events) %>% 
   group_by(Year) %>%
   mutate(data_start = flood_start - window,
          data_end = flood_end + window) %>%
   filter(Date > data_start & Date < flood_start |
          Date < data_end & Date > flood_end,
-         #Hour <= 14, Hour >= 11,
-         F <= 0.005, F >= 0,
+         Hour <= 19, Hour >= 7,
+         Fd <= 1.5, Fd >= 0,
          Plot != "Freshwater",
          Species == "Tulip Poplar") %>%
   ungroup() -> tulip_salt_wholeday
@@ -113,7 +111,7 @@ tulip_salt_wholeday %>%
          BA = as.factor(BA),
          Plot = as.factor(Plot)) %>%
   group_by(Date, Plot, ID, Year, BA, flood_start, flood_end) %>%
-  summarise(F_avg = mean(`F`, na.rm = TRUE),
+  summarise(F_avg = mean(Fd, na.rm = TRUE),
             soil_ec_avg = mean(soil_ec_15cm), 
             soil_vwc_avg = mean(soil_vwc_15cm),
             n = n()) %>%
