@@ -62,8 +62,7 @@ final_tmp_data %>%
   group_by(Year) %>%
   mutate(data_start = flood_start,
          data_end = flood_end + window) %>%
-  filter(Date > data_start & Date < flood_start |
-           Date < data_end & Date > flood_end,
+  filter(Date < data_end & Date > flood_end,
          Hour <= 19, Hour >= 7) %>%
   ungroup() -> postflood
 
@@ -83,13 +82,18 @@ sqrt_skewness <- skewness(sqrt_transformed_response)
 inv_skewness <- skewness(inv_transformed_response)
 
 #Model
-mod <- aov(Fd  ~ Species * Plot,
+mod <- aov(log(Fd +1)  ~ Species * Plot,
            data = postflood)
 
 summary(mod)
 
 ggplot(postflood) +
   aes(x = Species, y = Fd, fill = Plot) +
+  geom_boxplot()
+
+prepostflood %>%
+  filter(BA == "After") %>%
+  ggplot(aes(x = Species, y = Fd, fill = Plot)) +
   geom_boxplot()
 
 final_tmp_data %>%
