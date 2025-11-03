@@ -92,7 +92,7 @@ dat <- do.call("rbind", dat)
 
 gcw_full <- dat
 saveRDS(gcw_full, "gcw_full.rds")
-#gcw_full <- readRDS("gcw_full.rds")
+gcw_full <- readRDS("gcw_full.rds")
 
 #Combining it all: editing dataframes for variables to match 
 tree_dat <- readRDS("dbh.rds")
@@ -188,7 +188,7 @@ scaled <- merge(sf_data, sa_long, by.x = c("ID", "Year", "Species"),
 
 #final units are cubic meters per second
 scaled %>%
-  dplyr::select(ID, Year, Species, Plot, TIMESTAMP, F, SA) %>%
+  dplyr::select(ID, Year, Species, Plot, TIMESTAMP, F, SA, Sapflux_ID) %>%
   mutate(Fd = SA * F) -> sf_scaled
 
 #Now let's make some plots to double check 
@@ -235,7 +235,8 @@ swc_15 <- swc_15raw %>%
   summarize(n = n(),
             soil_vwc_15cm = mean(Value),
             swc_min = min(Value),
-            swc_max = max(Value))
+            swc_max = max(Value),
+            Sensor_ID = Sensor_ID)
 
 #write.csv(swc_15, "soil_vwc.csv")
 
@@ -250,17 +251,18 @@ ec_15 <- ec_15raw %>%
   summarize(n = n(),
             soil_ec_15cm = mean(Value),
             ec_min = min(Value),
-            ec_max = max(Value))
+            ec_max = max(Value),
+            Sensor_ID = Sensor_ID)
 
 #write.csv(ec_15, "soil_ec.csv")
 
 swc_15clean <- swc_15 %>%
   mutate(swc_n = n) %>%
-  dplyr::select(soil_vwc_15cm, swc_n, Plot, TIMESTAMP)
+  dplyr::select(soil_vwc_15cm, swc_n, Plot, TIMESTAMP, Sensor_ID)
 
 ec_15clean <- ec_15 %>%
   mutate(ec_n = n) %>%
-  dplyr::select(soil_ec_15cm, ec_n, Plot, TIMESTAMP)
+  dplyr::select(soil_ec_15cm, ec_n, Plot, TIMESTAMP, Sensor_ID)
 
 tmp_data <- 
   left_join(sf_scaled, swc_15clean, by = c("Plot", "TIMESTAMP"))  
@@ -276,23 +278,23 @@ final_tmp_data <-
 gcw_full %>%
   mutate(Plot = substr(Plot,1,2),
          Plot = case_when(Plot == "W" ~ "Freshwater",)) %>%
-  dplyr::select(Plot, TIMESTAMP, Value, research_name) -> gcw
+  dplyr::select(Plot, TIMESTAMP, Value, research_name, Sensor_ID) -> gcw
 
 
 gcw %>%
   filter(research_name == "wx-par-den15") %>%
   mutate(PAR = Value) %>% 
-  dplyr::select(TIMESTAMP, PAR) -> par
+  dplyr::select(TIMESTAMP, PAR, Sensor_ID) -> par
 
 gcw %>%
   filter(research_name == "wx-vp15") %>%
   mutate(VP = Value) %>% 
-  dplyr::select(TIMESTAMP, VP) -> vappres
+  dplyr::select(TIMESTAMP, VP, Sensor_ID) -> vappres
 
 gcw %>%
   filter(research_name == "wx-tempavg15") %>%
   mutate(TEMP = Value) %>% 
-  dplyr::select(TIMESTAMP, TEMP) -> temp
+  dplyr::select(TIMESTAMP, TEMP, Sensor_ID) -> temp
 
 
 abiotic_data_temp <- 

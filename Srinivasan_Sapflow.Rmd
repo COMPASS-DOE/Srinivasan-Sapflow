@@ -48,7 +48,7 @@ final_tmp_data %>%
   filter(Hour <= 19, Hour >= 7) %>%
   filter(Fd <= 1.5, Fd >= 0) %>%
   group_by(Plot, Species, Date) %>% 
-  summarise(F_avg = mean(Fd, na.rm = TRUE)) -> sf_plot_avg
+  summarise(F_avg = mean(`F`, na.rm = TRUE)) -> sf_plot_avg
 
 ggplot(sf_plot_avg) + 
   geom_point(aes (x = Date, y = F_avg, color = Species)) + 
@@ -111,7 +111,7 @@ tulip_salt %>%
          BA = as.factor(BA),
          Plot = as.factor(Plot)) %>%
   group_by(Date, Plot, ID, Year, BA, flood_start, flood_end) %>%
-  summarise(F_avg = mean(Fd, na.rm = TRUE),
+  summarise(F_avg = mean(`F`, na.rm = TRUE),
             soil_ec_avg = mean(soil_ec_15cm), 
             soil_vwc_avg = mean(soil_vwc_15cm),
             n = n()) %>%
@@ -164,6 +164,15 @@ ggplot(tsb_2, aes(sqrt(F_avg))) + geom_histogram(fill = '#31688EFF') +
 
 #No normalization edits
 ```
+
+```{r}
+final_tmp_data %>%
+  filter(Plot != "Freshwater", 
+         Year == "2021") -> temp2
+ 
+ t.test(soil_ec_15cm ~ Plot, data = temp2)
+```
+
 
 
 # Progressive Analysis
@@ -254,7 +263,6 @@ Anova(model.int.ec, type = "III")
 
 ```
 
-
 ```{r BACI plus EC, message = FALSE, warning = FALSE}
 model.int.ec <- lmer(F_avg ~ BA*Plot + soil_ec_avg +
                       (1|ID) + (1|Year) + (1|ID:Year),
@@ -279,7 +287,6 @@ We now see that the BACI interaction term and soil ec fixed effect have strong e
 
 
 # Plots
-
 
 
 AIC comparison to visually observe differences in how well each model fits the data: 

@@ -1,6 +1,11 @@
 #Creating single-day and growing season plots of sapflow
 #To determine optimal filter times 
 
+final_data%>%
+  dplyr::select(PAR, TIMESTAMP) %>% 
+  mutate(Hour = hour(TIMESTAMP)) %>%
+ 
+
 final_tmp_data %>%
   dplyr::select(ID, Year, Species, Plot, TIMESTAMP, Fd) %>%
   filter(Year == "2023") %>%
