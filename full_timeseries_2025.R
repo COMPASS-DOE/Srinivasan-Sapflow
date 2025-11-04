@@ -223,7 +223,12 @@ readRDS("Sapflow_21_25.rds") -> sf_scaled
 
 #had to break up filtering into several steps for memory reasons
 tmp_full %>%
-  dplyr::select(Plot, TIMESTAMP, Sensor_ID, Location, Value, research_name, F_OOB, F_OOS) -> tmp_temp
+  dplyr::select(Plot, TIMESTAMP, Sensor_ID, Location, Value, research_name, F_OOB, F_OOS) %>%
+  mutate(Plot = substr(Plot,1,2),
+         Plot = case_when(Plot == "C" ~ "Control",
+                          Plot == "S" ~ "Saltwater",
+                          Plot == "F" ~ "Freshwater")) -> tmp_temp
+
 tmp_temp %>%
   filter(research_name == "soil-vwc-15cm") -> swc_15raw
 
@@ -235,12 +240,12 @@ swc_15 <- swc_15raw %>%
   summarize(n = n(),
             soil_vwc_15cm = mean(Value),
             swc_min = min(Value),
-            swc_max = max(Value),
-            Sensor_ID = Sensor_ID)
+            swc_max = max(Value), 
+            swc_sd = sd(Value))
 
 #write.csv(swc_15, "soil_vwc.csv")
 
-ec_15raw <- tmp_full %>%
+ec_15raw <- tmp_temp %>%
   filter(research_name == "soil-EC-15cm")
 
 ec_15 <- ec_15raw %>%
@@ -252,23 +257,31 @@ ec_15 <- ec_15raw %>%
             soil_ec_15cm = mean(Value),
             ec_min = min(Value),
             ec_max = max(Value),
-            Sensor_ID = Sensor_ID)
+            ec_sd = sd(Value))
 
 #write.csv(ec_15, "soil_ec.csv")
 
 swc_15clean <- swc_15 %>%
   mutate(swc_n = n) %>%
-  dplyr::select(soil_vwc_15cm, swc_n, Plot, TIMESTAMP, Sensor_ID)
+  dplyr::select(soil_vwc_15cm, swc_sd, swc_n, Plot, TIMESTAMP)
+
+saveRDS(swc_15clean,"swc_15clean.rds")
+readRDS("swc_15clean.rds") -> swc_15clean
 
 ec_15clean <- ec_15 %>%
   mutate(ec_n = n) %>%
-  dplyr::select(soil_ec_15cm, ec_n, Plot, TIMESTAMP, Sensor_ID)
+  dplyr::select(soil_ec_15cm, ec_sd, ec_n, Plot, TIMESTAMP)
+
+saveRDS(ec_15clean,"ec_15clean.rds")
+readRDS("ec_15clean.rds") -> ec_15clean
 
 tmp_data <- 
   left_join(sf_scaled, swc_15clean, by = c("Plot", "TIMESTAMP"))  
 
 final_tmp_data <- 
   left_join(tmp_data, ec_15clean, by = c("Plot", "TIMESTAMP"))  
+
+saveRDS(final_tmp_data,"final_tmp_data.rds")
 
 #Now the gcrew data 
 #Note: only freshwater (wetland) will have these variables,
@@ -278,23 +291,23 @@ final_tmp_data <-
 gcw_full %>%
   mutate(Plot = substr(Plot,1,2),
          Plot = case_when(Plot == "W" ~ "Freshwater",)) %>%
-  dplyr::select(Plot, TIMESTAMP, Value, research_name, Sensor_ID) -> gcw
+  dplyr::select(Plot, TIMESTAMP, Value, research_name) -> gcw
 
 
 gcw %>%
   filter(research_name == "wx-par-den15") %>%
   mutate(PAR = Value) %>% 
-  dplyr::select(TIMESTAMP, PAR, Sensor_ID) -> par
+  dplyr::select(TIMESTAMP, PAR) -> par
 
 gcw %>%
   filter(research_name == "wx-vp15") %>%
   mutate(VP = Value) %>% 
-  dplyr::select(TIMESTAMP, VP, Sensor_ID) -> vappres
+  dplyr::select(TIMESTAMP, VP) -> vappres
 
 gcw %>%
   filter(research_name == "wx-tempavg15") %>%
   mutate(TEMP = Value) %>% 
-  dplyr::select(TIMESTAMP, TEMP, Sensor_ID) -> temp
+  dplyr::select(TIMESTAMP, TEMP) -> temp
 
 
 abiotic_data_temp <- 

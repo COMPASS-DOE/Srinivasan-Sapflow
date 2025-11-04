@@ -1,9 +1,18 @@
 #Creating single-day and growing season plots of sapflow
 #To determine optimal filter times 
 
-final_data%>%
-  dplyr::select(PAR, TIMESTAMP) %>% 
-  mutate(Hour = hour(TIMESTAMP)) %>%
+#Trying to filter out low PAR values
+par %>%
+  mutate(Hour = hour(TIMESTAMP), 
+         Month = month(TIMESTAMP), 
+         Year = year(TIMESTAMP), 
+         Date = date(TIMESTAMP)) %>%
+  filter(Month >= 5, Month <= 10) %>%
+  group_by (Date) %>%
+  summarize(par_avg = mean(PAR, na.rm = TRUE) , 
+            TIMESTAMP = TIMESTAMP) %>%
+  ggplot(aes(x = TIMESTAMP, y = par_avg)) + 
+  geom_point()
  
 
 final_tmp_data %>%
