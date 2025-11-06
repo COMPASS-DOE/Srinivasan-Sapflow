@@ -32,3 +32,16 @@ sapflow_2_long %>%
        x = "Flood Day (or stand-in) +/- Two Weeks",
        y = "Species Avg, Trt - Control") +  # Labels for the plot
   theme_minimal()  # Minimal theme
+
+ec_15clean %>% 
+  mutate(Hour = hour(TIMESTAMP),
+         Date = date(TIMESTAMP)) %>%
+  filter(Hour >= 11, Hour <= 12) %>% 
+  group_by(Plot, Species, Date) %>% 
+  na.omit() -> ec_plot_avg
+
+ec_plot_avg %>%
+  ggplot(aes(x = Date, y = ec_avg, color = Plot)) +
+  geom_point(size = 2.5) +
+  scale_color_brewer(palette = "Dark2") +
+  theme_minimal()  # Minimal theme
