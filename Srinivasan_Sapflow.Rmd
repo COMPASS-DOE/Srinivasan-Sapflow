@@ -34,6 +34,8 @@ sapply(.packages, require, character.only=TRUE)
 
 #This only needs to be done once
 #For some reason, this only works when copy-pasted into the console -R
+setwd("/Users/radha/Documents/TEMPEST_Sapflow_Analysis")
+
 final_tmp_data <- readRDS("final_tmp_data.rds")
 final_data <- readRDS("final_data.rds")
 
@@ -261,9 +263,9 @@ Neither the likelihood ratio test nor the parametric bootstrap test show signifi
 ```{r}
 #Sensor ID is proving difficult to add in, but could test difference with:
 
-ec.test <- lmer(soil_ec_avg ~ BA*Plot*Year + 
-                  (1:Sensor_ID),
-                data = tsb_2)
+#ec.test <- lmer(soil_ec_avg ~ BA*Plot*Year + 
+                # (1:Sensor_ID),
+               # data = tsb_2)
 ```
 
 
