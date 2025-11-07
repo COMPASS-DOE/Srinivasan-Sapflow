@@ -201,7 +201,7 @@ final_tmp_data %>%
 
 We follow the workflow developed by Pardini et al 2018 [pardini_link](https://doi.org/10.1111/rec.12678)  and start with the following linear mixed model:
 
-sqrt(F_avg) \~ BA + Plot + BA\*Plot + (1\|ID) + (1\|Year) + (1\|ID:Year)
+F_avg \~ BA + Plot + BA\*Plot + (1\|ID) + (1\|Year) + (1\|ID:Year)
 
 In which 'Plot' is the control/impact treatment effect (the Control and Saltwater plots for TEMPEST), 'BA' is the before and after treatment effect (pre/post flooding events), and tree ID and Year are random effects.
 
@@ -212,12 +212,12 @@ First, test for the statistical significance of the final term (1\|ID:Year), the
 ```{r Pardini et al 2018, warning = FALSE}
 Cand.set <- list()
 
-Cand.set[[1]] <- lmer(sqrt(F_avg) ~ BA + Plot  + BA*Plot +
+Cand.set[[1]] <- lmer((F_avg) ~ BA + Plot  + BA*Plot +
                          (1|ID) + (1|Year),
                        data = tsb_2)
 model.noint <- Cand.set[[1]]
 
-Cand.set[[2]] <- lmer(sqrt(F_avg) ~ BA + Plot + BA*Plot +
+Cand.set[[2]] <- lmer((F_avg) ~ BA + Plot + BA*Plot +
                          (1|ID) + (1|Year) +
                          (1|ID:Year),
                        data = tsb_2)
@@ -237,11 +237,11 @@ Choose the model with the lowest AICc value (i.e. largest negative value); this 
 
 We now test the impact of the BACI term in our existing model by looking at the explanatory power of the model with and without the interaction between BA and CI (plot): 
 ```{r message = FALSE, warning = FALSE}
-model.int.og <- lmer(sqrt(F_avg) ~ BA*Plot +
+model.int.og <- lmer((F_avg) ~ BA*Plot +
                         (1|ID) + (1|Year) + (1|ID:Year),
                       data = tsb_2)
 
-model.noint.og <- lmer(sqrt(F_avg) ~ BA + Plot +
+model.noint.og <- lmer((F_avg) ~ BA + Plot +
                           (1|ID) + (1|Year) + (1|ID:Year),
                         data = tsb_2)
 
@@ -325,14 +325,14 @@ AIC comparison to visually observe differences in how well each model fits the d
 
 ```{r AIC, message = FALSE, warning = FALSE}
 
-model.noint.random <- lmer(sqrt(F_avg) ~ BA*Plot + (1|ID) + (1|Year),
+model.noint.random <- lmer((F_avg) ~ BA*Plot + (1|ID) + (1|Year),
                            data = tsb_2)
 
-model.random.int <- lmer(sqrt(F_avg) ~ BA*Plot + (1|ID) + (1|Year) +
+model.random.int <- lmer((F_avg) ~ BA*Plot + (1|ID) + (1|Year) +
                            (1|ID:Year),
                          data = tsb_2)
 
-model.ec.only <- lmer(sqrt(F_avg) ~ soil_ec_avg +
+model.ec.only <- lmer((F_avg) ~ soil_ec_avg +
                         (1|ID) + (1|Year) + (1|ID:Year),
                          data = tsb_2)
 
@@ -357,7 +357,7 @@ AIC <- data.frame(variable, AIC, candidate)
 
 AIC %>%
   mutate(`Model Specification` = candidate) %>%
-  ggplot(aes(variable, AIC+5000, fill = `Model Specification`)) +
+  ggplot(aes(variable, AIC+70000, fill = `Model Specification`)) +
   geom_col() +
   geom_hline(yintercept = -2820, linetype = "dashed") +
   expand_limits(y = c(0, -3000)) +
@@ -380,7 +380,8 @@ tsb_2_summary = tsb_2 %>%
             sd_annual_EC = sd(soil_ec_avg),
             n = n())
 tsb_2 %>%
-  mutate(BA = factor(BA, levels = c("Before", "After"))) -> tsb_2
+  mutate(BA = factor(BA, levels = c("Before", "After"))) %>%
+  filter(!(BA == "Before" & soil_ec_avg > 750)) -> tsb_2
 
 tsb_2_summary %>%
   ggplot() +
