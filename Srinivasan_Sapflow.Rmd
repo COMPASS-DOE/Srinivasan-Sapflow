@@ -28,7 +28,7 @@ sapply(.packages, require, character.only=TRUE)
 
 ```{r Load Data, message = FALSE, warning = FALSE}
 #This will only work once raw data is downloaded and unzipped from ESS-DIVE
-#urls to come
+#doi:10.15485/2588618
 #Following unzip, source files create_inventory.R and create_full_timeseries_plus_abiotic.R
 #these files calculate sapflux density
 
@@ -40,7 +40,9 @@ data <- readRDS("Sapflow_BACI.rds")
 
 ```{r Sapflow Visual, message = FALSE, , warning = FALSE}
 
-#something like this
+#a quick check to make the data are all present and accounted for
+#TODO find source of NAs for species
+#TODO remove dying red maples in Control
 data %>% 
   mutate(Hour = hour(TIMESTAMP),
          Date = date(TIMESTAMP)) %>%
@@ -65,15 +67,15 @@ tempest_events <- bind_rows(
   tibble( Year = 2021, flood_start = "2021-06-12", flood_end = "2021-06-12"), #average date = June 12
   tibble( Year = 2022, flood_start = "2022-06-22", flood_end = "2022-06-22"), #June 22
   tibble( Year = 2023, flood_start = "2023-06-06", flood_end = "2023-06-07"), #June 6, 7
-  tibble( Year = 2024, flood_start = "2024-06-11", flood_end = "2024-06-13"),
-  tibble( Year = 2025, flood_start = "2025-06-12", flood_end = "2025-06-12"))
+  tibble( Year = 2024, flood_start = "2024-06-11", flood_end = "2024-06-13"), #June 11, 12, 13
+  tibble( Year = 2025, flood_start = "2025-06-12", flood_end = "2025-06-12")) #average date = June 12
 
 tempest_events %>%
   mutate(flood_start = ymd(flood_start),
          flood_end = ymd(flood_end)) -> events
 
 #window of data to look at for BACI analysis
-window <- days(15)
+window <- days(25)
 
 ```
 
@@ -121,21 +123,25 @@ tulip_salt %>%
   ungroup() -> tsb_1
 
 tsb_1 %>%
-  filter(! is.na(tsb_1$Species)) %>%
+  filter(! is.na(tsb_1$Species),
+         ! Year %in% c(2021, 2025)) %>%
   group_by(Year) %>%
   mutate(Day = ifelse(BA == "Before",
                       - as.numeric(flood_start - Date),
-                      as.numeric(Date - flood_end))) %>%
-  mutate(BA = as.character(BA),
-         BA = ifelse(Year == 2021, "Before", BA),
-         BA = ifelse(Year == 2025, "After", BA)) -> tsb_2
+                      as.numeric(Date - flood_end))
+  #        ) %>%
+  # mutate(BA = as.character(BA),
+  #        BA = ifelse(Year == 2021, "Before", BA),
+  #        BA = ifelse(Year == 2025, "After", BA)
+         ) -> tsb_2
 
 ggplot(tsb_2, aes(Day, F_avg, color = ID, shape = BA)) +
   geom_point(size = 2.5) + facet_grid(Plot~Year, scales = "free")
 ```
 
 ```{r Normality, message = FALSE}
-#here we check if our response variable (daily averaged midday sap flux density per tree), is normally distributed
+#here we check if our response variable is normally distributed
+#RV = daily averaged midday sap flux density per tree
 current_skewness <- skewness(tsb_2$F_avg)
 print(paste("Current Skewness:", current_skewness))
 
@@ -169,7 +175,7 @@ ggplot(tsb_2, aes(F_avg)) + geom_histogram(fill = '#31688EFF') +
 
 We follow the workflow developed by Pardini et al 2018 [pardini_link](https://doi.org/10.1111/rec.12678)  and start with the following linear mixed model:
 
-sqrt(F_avg) \~ BA + Plot + BA\*Plot + (1\|ID) + (1\|Year) + (1\|ID:Year)
+F_avg \~ BA + Plot + BA\*Plot + (1\|ID) + (1\|Year) + (1\|ID:Year)
 
 In which 'Plot' is the control/impact treatment effect (the Control and Saltwater plots for TEMPEST), 'BA' is the before and after treatment effect (pre/post flooding events), and tree ID and Year are random effects.
 
@@ -296,9 +302,6 @@ AIC %>%
   mutate(`Model Specification` = candidate) %>%
   ggplot(aes(variable, AIC, fill = `Model Specification`)) +
   geom_col() +
-  #geom_hline(yintercept = -2820, linetype = "dashed") +
-  #expand_limits(y = c(0, -3000)) +
-  scale_y_continuous(expand = c(0, 0)) + # Starts x axis at true zero
   scale_fill_viridis_d() +
   labs( title = 'AIC Model Comparison', x = 'Variable', y = 'AIC Value') +
   guides(fill = FALSE) + 
@@ -307,8 +310,7 @@ AIC %>%
 
 ```{r Sapflow vs EC, message = FALSE, warning = FALSE}
 tsb_2_summary = tsb_2 %>%
-  filter(soil_ec_avg < 1250,
-         Year != 2025) %>%
+  filter(soil_ec_avg < 1250) %>%
   mutate(BA = factor(BA, levels = c("Before", "After")),) %>%
   group_by(Year,BA,Plot) %>%
   summarise(mean_annual_F = mean(F_avg),
@@ -323,7 +325,7 @@ tsb_2_summary %>%
   ggplot() +
   stat_smooth(aes(x = soil_ec_avg, y = F_avg), method = 'lm',
               color = 'darkgrey', size = 0.8,
-              data = tsb_2 %>% filter(soil_ec_avg < 1200, Year != 2025)) +
+              data = tsb_2 %>% filter(soil_ec_avg < 1200)) +
   geom_point(aes(mean_annual_EC, mean_annual_F,
                  color = as.factor(Year)), size = 3) +
   geom_errorbar(aes(x = mean_annual_EC,
@@ -337,7 +339,7 @@ tsb_2_summary %>%
   scale_color_viridis_d(begin = 0.9, end = 0.2) +
   facet_wrap(Plot ~ BA, scales = "free", ncol = 2) + theme_bw() +
   geom_point(aes(x = soil_ec_avg, y = F_avg, color = as.factor(Year)),
-             data = tsb_2 %>% filter(soil_ec_avg < 1200, Year != 2025), alpha = 0.2) +
+             data = tsb_2 %>% filter(soil_ec_avg < 1200), alpha = 0.2) +
   labs(y = expression ("Midday Sap Flux Density, cm"^3*" cm"^-2*" s"^-1),
        x = expression(paste("Mean Soil EC, ", mu, "S cm"^-1)),
        color = " ") +
@@ -347,10 +349,7 @@ tsb_2_summary %>%
 ```{r VWC vs EC, message = FALSE, warning = FALSE}
 
 tsb_2_summary2 = tsb_2 %>%
-  filter(soil_ec_avg < 1250,
-         Year != 2025) %>%
-  # mutate(BA = case_when(Year == 2021 ~ "Before", .default = BA),
-  #        BA = factor(BA, levels = c("Before", "After"),ordered = TRUE)) %>%
+  filter(soil_ec_avg < 1250) %>%
   group_by(Year,BA,Plot) %>%
   summarise(mean_annual_vwc = mean(soil_vwc_avg),
             sd_annual_vwc = sd(soil_vwc_avg),
@@ -360,10 +359,6 @@ tsb_2_summary2 = tsb_2 %>%
 
 tsb_2_summary2 %>%
   ggplot() +
-  # stat_smooth(aes(x = soil_ec_avg, y = soil_vwc_avg, group = BA),
-  #             method = 'lm', se = FALSE,
-  #             color = 'grey', size = 0.8,
-  #             data = tsb_2 %>% filter(soil_ec_avg < 1200)) +
   geom_point(aes(mean_annual_EC, mean_annual_vwc,
                  color = as.factor(Year)), size = 3) +
   geom_errorbar(aes(x = mean_annual_EC,
@@ -375,7 +370,7 @@ tsb_2_summary2 %>%
                      y = mean_annual_vwc,
                      color = Year), size = 1) +
   geom_point(aes(x = soil_ec_avg, y = soil_vwc_avg, color = as.factor(Year)),
-             data = tsb_2 %>% filter(soil_ec_avg < 1200, Year != 2025), alpha = 0.2) +
+             data = tsb_2 %>% filter(soil_ec_avg < 1200), alpha = 0.2) +
   scale_color_viridis_d(option = 'D', begin = 0.9, end = 0.2) +
   facet_wrap(Plot ~ BA, scales = "free_x", ncol = 2) + theme_bw() +
   labs(y = expression ("Mean Soil Volumetric Water Content cm" ^3* " cm"^-3),
