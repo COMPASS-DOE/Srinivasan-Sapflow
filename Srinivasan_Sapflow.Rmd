@@ -47,7 +47,7 @@ data %>%
   mutate(Hour = hour(TIMESTAMP),
          Date = date(TIMESTAMP)) %>%
   filter(Hour <= 14, Hour >= 11,
-         F <= 0.005, F >= 0) %>%
+         F <= 0.005, F > 0) %>%
   group_by(Plot, Species, Date) %>% 
   summarise(F_avg = mean(`F`, na.rm = TRUE)) -> sf_plot_avg
 
@@ -129,10 +129,10 @@ tsb_1 %>%
   mutate(Day = ifelse(BA == "Before",
                       - as.numeric(flood_start - Date),
                       as.numeric(Date - flood_end))
-  #        ) %>%
-  # mutate(BA = as.character(BA),
-  #        BA = ifelse(Year == 2021, "Before", BA),
-  #        BA = ifelse(Year == 2025, "After", BA)
+         ) %>%
+  mutate(BA = as.character(BA),
+         # BA = ifelse(Year == 2021, "Before", BA),
+         # BA = ifelse(Year == 2025, "After", BA)
          ) -> tsb_2
 
 ggplot(tsb_2, aes(Day, F_avg, color = ID, shape = BA)) +

@@ -67,3 +67,11 @@ ggplot(emm_3way, aes(x = Year, y = emmean, color = Plot)) +
   theme(
     strip.text = element_text(face = "bold"),
     legend.title = element_text(face = "bold"))
+
+avg_BACI_data %>%
+  filter(Year == 2025,
+         Species == 'Tulip Poplar') -> LITU_data
+
+LITUmodel <- aov(F_avg ~ Plot,
+                   data = LITU_data)
+TukeyHSD(LITUmodel)
