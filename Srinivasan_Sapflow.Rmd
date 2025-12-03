@@ -33,20 +33,24 @@ sapply(.packages, require, character.only=TRUE)
 #these files calculate sapflux density
 
 #This only needs to be done once
+#For some reason, this only works when copy-pasted into the console -R
+setwd("/Users/radha/Documents/TEMPEST_Sapflow_Analysis")
 
-data <- readRDS("Sapflow_BACI.rds")
+final_tmp_data <- readRDS("final_tmp_data.rds")
+final_data <- readRDS("final_data.rds")
 
 ```
 
 ```{r Sapflow Visual, message = FALSE, , warning = FALSE}
 
 #something like this
-data %>% 
+final_data %>% 
   mutate(Hour = hour(TIMESTAMP)) %>%
   mutate(Date = date(TIMESTAMP)) %>%
   mutate(monthyr = floor_date(TIMESTAMP, unit = "week")) %>%
-  filter(Hour <= 14, Hour >= 11,
-         F <= 0.005, F >= 0) %>%
+  filter(Hour <= 19, Hour >= 7) %>%
+  filter(`F` <= 0.005, `F` >= 0, 
+        PAR >= 700) %>%
   group_by(Plot, Species, Date) %>% 
   summarise(F_avg = mean(`F`, na.rm = TRUE)) -> sf_plot_avg
 
@@ -56,7 +60,7 @@ ggplot(sf_plot_avg) +
   scale_color_viridis_d(option = 'D', begin = .25, end = .8) +
   theme_light() +
   labs(y = "Avg Sap Flux Density cm3/cm2/s", x = "Date",
-       title = "Sap Flux Density Averaged Daily, 11 AM - 2 PM")
+       title = "Sap Flux Density Averaged Daily, 7 am - 7 pm")
 
 ```
 
@@ -66,7 +70,23 @@ tempest_events <- bind_rows(
   tibble( Year = 2021, flood_start = "2021-06-12", flood_end = "2021-06-12"), #average date = June 12
   tibble( Year = 2022, flood_start = "2022-06-22", flood_end = "2022-06-22"), #June 22
   tibble( Year = 2023, flood_start = "2023-06-06", flood_end = "2023-06-07"), #June 6, 7
-  tibble( Year = 2024, flood_start = "2024-06-11", flood_end = "2024-06-13")) #June 11, 12, 13
+  tibble( Year = 2024, flood_start = "2024-06-11", flood_end = "2024-06-13"), #June 11, 12, 13
+  tibble( Year = 2025, flood_start = "2025-06-12", flood_end = "2025-06-12")) #No TEMPEST event; averaging
+
+#growing season from May 15th - October 1st
+#I'm sure there's a better way to do this but
+growing_szn <- bind_rows(
+  tibble(Year = 2021, szn_start = "2021-05-15", szn_end = "2021-10-01",flood_start = "2021-06-12", flood_end = "2021-06-12"),
+  tibble(Year = 2022, szn_start = "2022-05-15", szn_end = "2022-10-01", flood_start = "2022-06-22", flood_end = "2022-06-22"),
+  tibble(Year = 2023, szn_start = "2023-05-15", szn_end = "2023-10-01", flood_start = "2023-06-06", flood_end = "2023-06-07"),
+  tibble(Year = 2024, szn_start = "2024-05-15", szn_end = "2024-10-01", flood_start = "2024-06-11", flood_end = "2024-06-13"),
+  tibble(Year = 2025, szn_start = "2025-05-15", szn_end = "2025-10-01", flood_start = "2025-06-12", flood_end = "2025-06-12"))
+
+growing_szn %>%
+  mutate(szn_start = ymd(szn_start),
+         szn_end = ymd(szn_end),
+         flood_start = ymd(flood_start),
+         flood_end = ymd(flood_end)) -> season
 
 tempest_events %>%
   mutate(flood_start = ymd(flood_start),
@@ -80,29 +100,30 @@ window <- days(15)
 
 ## Two weeks Before/After events
 
-
-
 Selecting data from Tulip poplars and excluding the Freshwater plot, based on a preliminary analysis during Radha's SULI project.
 ```{r Select LITU and SW plot data, message = FALSE, warning = FALSE}
 #currently this occurs in the 3 chunks
 #may be possible to streamline
-data %>%
-  dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`, Fd,
-                soil_vwc_15cm, soil_ec_15cm) %>%
+#R edits: changing flood window to whole growing season
+final_data %>%
+  dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`,
+                soil_vwc_15cm, soil_ec_15cm, swc_sd, ec_sd, PAR) %>%
   mutate(Date = as_date(date(TIMESTAMP)),
          Hour = hour(TIMESTAMP)) %>%
-  left_join(events) %>%
+  left_join(season) %>% 
   group_by(Year) %>%
-  mutate(data_start = flood_start - window,
-         data_end = flood_end + window) %>%
-  filter(Date > data_start & Date < flood_start |
-         Date < data_end & Date > flood_end,
-         Hour <= 14, Hour >= 11,
+  #mutate(data_start = flood_start - window,
+  #       data_end = flood_end + window) %>%
+  filter(Date > szn_start & Date < szn_end,
+         Hour <= 19, Hour >= 7,
          F <= 0.005, F >= 0,
+         (PAR >= 700 | is.na(PAR)),
          Plot != "Freshwater",
          Species == "Tulip Poplar") %>%
-  ungroup() -> tulip_salt
+  ungroup() -> tulip_salt  
 
+#sapflow, soil ec, soil vwc grouped by day and averaged
+#should we change this to hourly averages for ec?
 tulip_salt %>%
   group_by(Year) %>%
   mutate(BA = ifelse(Date > flood_end, "After", "Before"),
@@ -110,10 +131,10 @@ tulip_salt %>%
          ID = as.factor(ID),
          BA = as.factor(BA),
          Plot = as.factor(Plot)) %>%
-  group_by(Date, Plot, ID, Year, BA, flood_start, flood_end) %>%
+  group_by(Date, Plot, ID, Year, BA, flood_start, flood_end, szn_start, szn_end) %>%
   summarise(F_avg = mean(`F`, na.rm = TRUE),
-            soil_ec_avg = mean(soil_ec_15cm), 
-            soil_vwc_avg = mean(soil_vwc_15cm),
+            soil_ec_avg = mean(soil_ec_15cm, na.rm = TRUE), 
+            soil_vwc_avg = mean(soil_vwc_15cm, na.rm = TRUE),
             n = n()) %>%
   ungroup() -> tsb_1
 
@@ -123,7 +144,8 @@ tsb_1 %>%
                       - as.numeric(flood_start - Date),
                       as.numeric(Date - flood_end))) %>%
   mutate(BA = as.character(BA)) %>%
-  mutate(BA = ifelse(Year == 2021, "Before", BA)) -> tsb_2
+  mutate(BA = ifelse(Year == 2021, "Before", BA),
+         BA = ifelse(Year == 2025, "Before", BA)) -> tsb_2
 
 ggplot(tsb_2, aes(Day, F_avg, color = ID, shape = BA)) +
   geom_point(size = 2.5) + facet_grid(Plot~Year, scales = "free")
@@ -156,10 +178,20 @@ ggplot(tsb_2, aes(F_avg)) + geom_histogram(fill = '#31688EFF') +
   labs(y = NULL, x = "Average Sapflow", title = "Untransformed Data")
   
 
-ggplot(tsb_2, aes(sqrt(F_avg))) + geom_histogram(fill = '#31688EFF') +
+ggplot(tsb_2, aes(log(F_avg + 1))) + geom_histogram(fill = '#31688EFF') +
   facet_grid(Plot~.) + 
-  labs(y = NULL, x = "Avergae Sapflow", title = "Square Root \n Transformed Data")
+  labs(y = NULL, x = "Avergae Sapflow", title = "Log \n Transformed Data")
 
+#Log transformation is ever so slightly less skewed but looks virtually identical, just keeping it untransformed for now
+```
+
+```{r}
+#quick t-test for ec differences: Control group has significantly higher ec than saltwater pre-flood
+final_tmp_data %>%
+  filter(Plot != "Freshwater", 
+         Year == "2021") -> temp2
+ 
+ t.test(soil_ec_15cm ~ Plot, data = temp2)
 ```
 
 
@@ -169,7 +201,7 @@ ggplot(tsb_2, aes(sqrt(F_avg))) + geom_histogram(fill = '#31688EFF') +
 
 We follow the workflow developed by Pardini et al 2018 [pardini_link](https://doi.org/10.1111/rec.12678)  and start with the following linear mixed model:
 
-sqrt(F_avg) \~ BA + Plot + BA\*Plot + (1\|ID) + (1\|Year) + (1\|ID:Year)
+F_avg \~ BA + Plot + BA\*Plot + (1\|ID) + (1\|Year) + (1\|ID:Year)
 
 In which 'Plot' is the control/impact treatment effect (the Control and Saltwater plots for TEMPEST), 'BA' is the before and after treatment effect (pre/post flooding events), and tree ID and Year are random effects.
 
@@ -180,12 +212,12 @@ First, test for the statistical significance of the final term (1\|ID:Year), the
 ```{r Pardini et al 2018, warning = FALSE}
 Cand.set <- list()
 
-Cand.set[[1]] <- lmer(sqrt(F_avg) ~ BA + Plot  + BA*Plot +
+Cand.set[[1]] <- lmer((F_avg) ~ BA + Plot  + BA*Plot +
                          (1|ID) + (1|Year),
                        data = tsb_2)
 model.noint <- Cand.set[[1]]
 
-Cand.set[[2]] <- lmer(sqrt(F_avg) ~ BA + Plot + BA*Plot +
+Cand.set[[2]] <- lmer((F_avg) ~ BA + Plot + BA*Plot +
                          (1|ID) + (1|Year) +
                          (1|ID:Year),
                        data = tsb_2)
@@ -203,15 +235,13 @@ Choose the model with the lowest AICc value (i.e. largest negative value); this 
 # Create and test BACI models
 
 
-
-
 We now test the impact of the BACI term in our existing model by looking at the explanatory power of the model with and without the interaction between BA and CI (plot): 
 ```{r message = FALSE, warning = FALSE}
-model.int.og <- lmer(sqrt(F_avg) ~ BA*Plot +
+model.int.og <- lmer((F_avg) ~ BA*Plot +
                         (1|ID) + (1|Year) + (1|ID:Year),
                       data = tsb_2)
 
-model.noint.og <- lmer(sqrt(F_avg) ~ BA + Plot +
+model.noint.og <- lmer((F_avg) ~ BA + Plot +
                           (1|ID) + (1|Year) + (1|ID:Year),
                         data = tsb_2)
 
@@ -228,15 +258,47 @@ Anova(model.int.og, type = "III")
 ```
 
 Neither the likelihood ratio test nor the parametric bootstrap test show significance for the BACI interaction term.
+# R edits: with unscaled 2025 data included, it looks like LRT and PB do both show significance for the BACI term this time around!
+
+```{r}
+#Sensor ID is proving difficult to add in, but could test difference with:
+
+#ec.test <- lmer(soil_ec_avg ~ BA*Plot*Year + 
+                # (1:Sensor_ID),
+               # data = tsb_2)
+```
+
 
 As a proxy for the increase in flooding intensity with each year, we include soil electrical conductivity into the model. Note that soil EC is an indicator of salt accumulation in soil from brackish water application: 
 
+```{r}
+#BACI with just soil EC to account for pre-existing differences: 
+model.int.ec <- lmer(soil_ec_avg ~ BA*Plot +
+                      (1|Year),
+                      data = tsb_2)
+
+model.noint.ec <- lmer(soil_ec_avg ~ BA + Plot +
+                      (1|Year),
+                      data = tsb_2)
+
+ec.refdist <- PBrefdist(largeModel = model.int.ec, 
+                        smallModel = model.noint.ec, 
+                        nsim = 100)
+
+ec.compar <- PBmodcomp(largeModel = model.int.ec, 
+                       smallModel = model.noint.ec,
+                       ref = ec.refdist)
+ec.compar
+Anova(model.int.ec, type = "III")
+
+```
+
 ```{r BACI plus EC, message = FALSE, warning = FALSE}
-model.int.ec <- lmer(sqrt(F_avg) ~ BA*Plot + soil_ec_avg +
+model.int.ec <- lmer(F_avg ~ BA*Plot + soil_ec_avg +
                       (1|ID) + (1|Year) + (1|ID:Year),
                       data = tsb_2)
 
-model.noint.ec <- lmer(sqrt(F_avg) ~ BA + Plot + soil_ec_avg +
+model.noint.ec <- lmer(F_avg ~ BA + Plot + soil_ec_avg +
                         (1|ID) + (1|Year) + (1|ID:Year),
                         data = tsb_2)
 
@@ -253,23 +315,24 @@ Anova(model.int.ec, type = "III")
 
 We now see that the BACI interaction term and soil ec fixed effect have strong explanatory power via the likelihood ratio and parametric bootstrap 
 
+#R edits: still statistically signficant, slightly more so than orginal BACI without soil ec
+
 
 # Plots
-
 
 
 AIC comparison to visually observe differences in how well each model fits the data: 
 
 ```{r AIC, message = FALSE, warning = FALSE}
 
-model.noint.random <- lmer(sqrt(F_avg) ~ BA*Plot + (1|ID) + (1|Year),
+model.noint.random <- lmer((F_avg) ~ BA*Plot + (1|ID) + (1|Year),
                            data = tsb_2)
 
-model.random.int <- lmer(sqrt(F_avg) ~ BA*Plot + (1|ID) + (1|Year) +
+model.random.int <- lmer((F_avg) ~ BA*Plot + (1|ID) + (1|Year) +
                            (1|ID:Year),
                          data = tsb_2)
 
-model.ec.only <- lmer(sqrt(F_avg) ~ soil_ec_avg +
+model.ec.only <- lmer((F_avg) ~ soil_ec_avg +
                         (1|ID) + (1|Year) + (1|ID:Year),
                          data = tsb_2)
 
@@ -294,7 +357,7 @@ AIC <- data.frame(variable, AIC, candidate)
 
 AIC %>%
   mutate(`Model Specification` = candidate) %>%
-  ggplot(aes(variable, AIC+5000, fill = `Model Specification`)) +
+  ggplot(aes(variable, AIC+70000, fill = `Model Specification`)) +
   geom_col() +
   geom_hline(yintercept = -2820, linetype = "dashed") +
   expand_limits(y = c(0, -3000)) +
@@ -317,7 +380,8 @@ tsb_2_summary = tsb_2 %>%
             sd_annual_EC = sd(soil_ec_avg),
             n = n())
 tsb_2 %>%
-  mutate(BA = factor(BA, levels = c("Before", "After"))) -> tsb_2
+  mutate(BA = factor(BA, levels = c("Before", "After"))) %>%
+  filter(!(BA == "Before" & soil_ec_avg > 750)) -> tsb_2
 
 tsb_2_summary %>%
   ggplot() +
