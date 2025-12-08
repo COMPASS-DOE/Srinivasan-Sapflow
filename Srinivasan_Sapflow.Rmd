@@ -48,7 +48,7 @@ data %>%
   mutate(Hour = hour(TIMESTAMP),
          Date = date(TIMESTAMP)) %>%
   filter(Hour <= 14, Hour > 11,
-         F <= 0.008, F > 0,
+         F <= 0.005, F > 0,
          ! is.na(Species)) %>%
   group_by(Plot, Species, Date) %>%
   summarise(F_avg = mean(`F`, na.rm = TRUE)) -> sf_plot_avg
@@ -93,10 +93,10 @@ data %>%
          doy = yday(Date),
          Hour = hour(TIMESTAMP)) %>%
   group_by(Year) %>%
-  filter(doy > 80 & doy < 320, #Peter's growing season
+  filter(doy > 99 & doy < 301, #Peter's growing season
          #should add more data once available
          Hour <= 14, Hour > 11, #same window as for main markdown
-         F <= 0.008, F > 0) %>% #same filtering as for main markdown
+         F <= 0.005, F > 0) %>% #same filtering as for main markdown
   ungroup() -> BACI_data
 
 BACI_data %>%
@@ -277,8 +277,8 @@ data %>%
          data_end = flood_end + window) %>%
   filter(Date > data_start & Date < flood_start |
          Date < data_end & Date > flood_end,
-         Hour <= 14, Hour >= 11,
-         F <= 0.008, F > 0,
+         Hour <= 14, Hour > 11,
+         F <= 0.005, F > 0,
          Plot != "Freshwater",
          Species == "Tulip Poplar"
          ) %>%
