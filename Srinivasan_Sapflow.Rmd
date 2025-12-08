@@ -179,11 +179,14 @@ ggplot(emm_3way, aes(x = Year, y = emmean, color = Plot)) +
     aes(group = interaction(Species, Plot)),
     position = position_dodge(width = dodge_width),
     linetype = "dashed") +
+    scale_color_viridis_d(option = "mako",
+                        begin = 0.3,
+                        end = 0.7) + theme_bw() +
   theme_minimal() +
   labs(
-    y = "Estimated Marginal Mean (Response)",
-    x = "June Midday Sapflow",
-    title = "Estimated Marginal Means, 2021 vs 2025 Sapflow") +
+    y = "Estimated Marginal Mean (Sapflow)",
+    x = "Year",
+    title = "Long-Term BACI") +
   theme(
     strip.text = element_text(face = "bold"),
     legend.title = element_text(face = "bold"))
