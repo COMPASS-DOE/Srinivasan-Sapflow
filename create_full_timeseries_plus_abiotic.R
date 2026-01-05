@@ -80,7 +80,7 @@ dat <- do.call("rbind", dat)
 
 gcw_full <- dat
 #saveRDS(gcw_full, "gcw_full.rds")
-#gcw_full <- readRDS("gcw_full.rds")
+gcw_full <- readRDS("gcw_full.rds")
 
 #Combining it all: editing dataframes for variables to match 
 tree_dat <- readRDS("inventory.rds")
@@ -199,6 +199,7 @@ ggplot(sf_plot_avg) +
 
 #Option to save just the sapflow data as an RDS
 #saveRDS(sf_scaled, "Sapflow_21_25.rds")
+read_rds("Sapflow_21_25.rds") -> sf_scaled
 
 #Now we add in our abiotic data
 #Create soil vwc dataframe
@@ -207,45 +208,58 @@ ggplot(sf_plot_avg) +
 swc_15raw <- tmp2_full %>%
   filter(research_name == "soil-vwc-15cm")
 
+# swc_15 <- swc_15raw %>%
+#   filter(F_OOB == 0,
+#          F_OOS == 0) %>%
+#   drop_na(Value) %>%
+#   group_by(TIMESTAMP, Plot, Location) %>%
+#   summarize(`soil-vwc-15cm` = mean(Value))
+# write.csv(swc_15, "soil_vwc.csv")
+
 swc_15 <- swc_15raw %>%
   filter(F_OOB == 0,
          F_OOS == 0) %>%
   drop_na(Value) %>%
-  group_by(TIMESTAMP, Plot, Location) %>%
-  summarize(n = n(),
-            `soil-vwc-15cm` = mean(Value),
-            vwc_min = min(Value),
-            vwc_max = max(Value)) 
-
-#write.csv(swc_15, "soil_vwc.csv")
+  group_by(TIMESTAMP, Plot) %>%
+  mutate(swc_avg = mean(Value),
+         swc_sd = sd(Value)) %>%
+  ungroup() %>%
+  arrange(TIMESTAMP, Plot)
 
 ec_15raw <- tmp2_full %>%
   filter(research_name == "soil-EC-15cm")
+
+# ec_15 <- ec_15raw %>%
+#   filter(F_OOB == 0,
+#          F_OOS == 0) %>%
+#   drop_na(Value) %>%
+#   group_by(TIMESTAMP, Plot, Location) %>%
+#   summarize(`soil-EC-15cm` = mean(Value))
+# write.csv(ec_15, "soil_ec.csv")
 
 ec_15 <- ec_15raw %>%
   filter(F_OOB == 0,
          F_OOS == 0) %>%
   drop_na(Value) %>%
-  group_by(TIMESTAMP, Plot, Location) %>%
-  summarize(n = n(),
-            `soil-ec-15cm` = mean(Value),
-            ec_min = min(Value),
-            ec_max = max(Value))
+  group_by(TIMESTAMP, Plot) %>%
+  mutate(ec_avg = mean(Value), # Calculate the plot average
+         ec_sd = sd(Value)) %>% # Error
+  ungroup() %>%
+  arrange(TIMESTAMP, Plot) 
 
-#write.csv(ec_15, "soil_ec.csv")
-
-#TODO pivot wider, both swc and ec
 swc_15clean <- swc_15 %>%
-  select(`soil-vwc-15cm`, Location, Plot, TIMESTAMP)
+  dplyr::select(swc_avg, swc_sd, Plot, TIMESTAMP) %>%
+  distinct()
 
 ec_15clean <- ec_15 %>%
-  select(`soil-ec-15cm`, Location, Plot, TIMESTAMP)
+  dplyr::select(ec_avg, ec_sd, Plot, TIMESTAMP) %>%
+  distinct()
 
-tmp_data <- 
-  left_join(sf_scaled, swc_15clean, by = c("Plot", "TIMESTAMP"))  
+abiotic_data <- 
+  left_join(ec_15clean, swc_15clean, by = c("Plot", "TIMESTAMP"))  
 
 final_tmp_data <- 
-  left_join(tmp_data, ec_15clean, by = c("Plot", "TIMESTAMP"))  
+  left_join(abiotic_data, sf_scaled, by = c("Plot", "TIMESTAMP"))  
 
 #Now the gcrew data 
 #Note: only freshwater (wetland) will have these variables,
@@ -273,15 +287,14 @@ gcw %>%
   mutate(TEMP = Value) %>% 
   dplyr::select(TIMESTAMP, TEMP) -> temp
 
-abiotic_data <- 
+abiotic_data2 <- 
   merge(temp, par, by.x = c("TIMESTAMP"), 
         by.y = c("TIMESTAMP"), all = TRUE)
 
 final_data <- 
-  merge(final_tmp_data, abiotic_data, by.x = c("TIMESTAMP"), 
+  merge(final_tmp_data, abiotic_data2, by.x = c("TIMESTAMP"), 
         by.y = c("TIMESTAMP"), all.x = TRUE) 
 
 #Now we have a full time series for 2021-2025!
 
 saveRDS(final_data,"Sapflow_BACI.rds")
-
