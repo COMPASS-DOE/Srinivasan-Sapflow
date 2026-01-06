@@ -189,7 +189,8 @@ ggplot(emm_3way, aes(x = Year, y = emmean, color = Plot)) +
     title = "Long-Term BACI") +
   theme(
     strip.text = element_text(face = "bold"),
-    legend.title = element_text(face = "bold"))
+    legend.title = element_text(face = "bold"),
+    text = element_text(size = 18))
 
 ```
 
@@ -305,15 +306,16 @@ tulip_salt %>%
 
 tsb_1 %>%
   filter(! is.na(tsb_1$Species),
-         ! Year %in% c(2021, 2025)) %>%
+         #! Year %in% c(2021, 2025)
+         ) %>%
   group_by(Year) %>%
   mutate(Day = ifelse(BA == "Before",
                       - as.numeric(flood_start - Date),
                       as.numeric(Date - flood_end))
          ) %>%
   mutate(BA = as.character(BA),
-         # BA = ifelse(Year == 2021, "Before", BA),
-         # BA = ifelse(Year == 2025, "After", BA)
+         BA = ifelse(Year == 2021, "Before", BA),
+         BA = ifelse(Year == 2025, "After", BA)
          ) -> tsb_2
 
 ggplot(tsb_2, aes(Day, F_avg, color = ID, shape = BA)) +
