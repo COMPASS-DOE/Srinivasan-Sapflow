@@ -55,7 +55,12 @@ tmp_full %>%
 #Note: vappress is all 0 for now until we get that sorted out
 #Update: vappress doesn't exist in the ESS-DIVE level 1 data
 site <- "GCW"
-variables <- c("wx-tempavg15", "wx-par-den15")
+variables <- c("wx-tempavg15", "wx-par-den15", "wx-rh15",
+               "wx-vpd15", "wx_vpd15", "wx-vp15", "wx_vp15",
+               "wx_gcrew_rain15", "wx-gcrew-rain15", "wx-rain24")
+
+#TODO create an issue that flags the ones that should exsist vs actually exsist (below)
+#[1] "wx-gcrew-rain15" "wx-par-den15"    "wx-rh15"         "wx-tempavg15"    "wx-vp15"  
 
 pat <- paste0("^", site, ".*csv$")
 
@@ -271,6 +276,8 @@ final_tmp_data <-
 #Note: first few months of 2022 don't have PAR or temp values
 
 gcw_full %>%
+  filter(#F_OOB == 0,
+         F_OOS == 0) %>%
   mutate(Plot = substr(Plot,1,2),
          Plot = case_when(Plot == "W" ~ "Freshwater",)) %>%
   dplyr::select(Plot, TIMESTAMP, Value, research_name) -> gcw
@@ -286,9 +293,33 @@ gcw %>%
   mutate(TEMP = Value) %>% 
   dplyr::select(TIMESTAMP, TEMP) -> temp
 
-abiotic_data2 <- 
-  merge(temp, par, by.x = c("TIMESTAMP"), 
-        by.y = c("TIMESTAMP"), all = TRUE)
+gcw %>%
+  filter(research_name == "wx-rh15") %>%
+  mutate(RH = Value) %>% 
+  dplyr::select(TIMESTAMP, RH) -> rh
+
+gcw %>%
+  filter(research_name == "wx-vp15") %>%
+  mutate(VP = Value) %>% 
+  dplyr::select(TIMESTAMP, VP) -> vp
+
+gcw %>%
+  filter(research_name == "wx-gcrew-rain15") %>%
+  mutate(precip = Value) %>%
+  dplyr::select(TIMESTAMP, precip) -> rain
+
+abiotic_data1 <- 
+  full_join(rh, vp, by = "TIMESTAMP")
+
+abiotic_data2.1 <- 
+  full_join(temp, par, by = "TIMESTAMP")
+
+abiotic_data2.2 <-
+  right_join(abiotic_data2.1, rain, by = "TIMESTAMP")
+
+abiotic_final <- full_join(abiotic_data1, abiotic_data2.2)
+
+saveRDS(abiotic_final, "met_station.RDS")
 
 final_data <- 
   merge(final_tmp_data, abiotic_data2, by.x = c("TIMESTAMP"), 
