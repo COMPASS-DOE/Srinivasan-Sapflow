@@ -1,7 +1,8 @@
+#Radha edits: adding in 2025 
 
 # This code compiles a complete time series
 # of sapflow and related abiotic data from TEMPEST for 2021-2025
-# Sapflow, soil EC & vwc at 15 cm, average air temp, & PAR
+# Sapflow, soil EC & vwc at 15 cm
 
 # To run, user must download ad unzip sources files from COMPASS-FME Level 1 data
 # For sapflow, soil VWC, & EC: doi:10.15485/2479200
@@ -29,33 +30,44 @@ files_T21 <- list.files("Data/TMP_2021/", pattern = pat, recursive = TRUE, full.
 
 files_T <- c(files_T25, files_T24, files_T23, files_T22, files_T21)
 
+
 f <- function(f) {
   message("Reading ", basename(f))
   x <- read_csv(f, col_types = "ccTccccdccii")
   x[x$research_name %in% variables | x$Sensor_ID == "F19D",]
-  #Unknown if F19D present in current v2 data
+  #Unknown is F19D present in current v1-1 data
   #keeping this to be conservative
 }
 
+#testdat
+testdat <- lapply(files_T25, f)
+testdat <- bind_rows(testdat)
+testdat %>%
+  drop_na(research_name) -> T25
+
+tmp_full <- rbind(T21, T22, T23, T24, T25)
+
 #Bind together all files 
 dat <- lapply(files_T,  f)
-dat <- do.call("rbind", dat)
+dat <- bind_rows(dat)
+dat %>%
+  drop_na(research_name) -> tmp_full
 
-tmp_full <- dat
+tmp_full <- combined
 
 #Correction for F19 being mislabeled as F19D in L1 data
 tmp_full %>%
   drop_na(Sensor_ID) %>%
   mutate(Sensor_ID = ifelse(Sensor_ID == "F19D", "F19", Sensor_ID)) -> tmp_full
 
-#saveRDS(tmp_full, "tmp_full.rds")
-#tmp_full <- readRDS("tmp_full.rds")
+saveRDS(tmp_full, "tmp_full.rds")
+readRDS("tmp_full.rds") -> tmp_full
 
-#GCREW data from 2021-25
+#GCREW data from 2021-24
 #Note: vappress is all 0 for now until we get that sorted out
 #Update: vappress doesn't exist in the ESS-DIVE level 1 data
 site <- "GCW"
-variables <- c("wx-tempavg15", "wx-par-den15")
+variables <- c("wx-tempavg15", "wx-par-den15", "wx-vp15")
 
 pat <- paste0("^", site, ".*csv$")
 
@@ -79,17 +91,17 @@ dat <- lapply(files_G,  f)
 dat <- do.call("rbind", dat)
 
 gcw_full <- dat
-#saveRDS(gcw_full, "gcw_full.rds")
+saveRDS(gcw_full, "gcw_full.rds")
 gcw_full <- readRDS("gcw_full.rds")
 
 #Combining it all: editing dataframes for variables to match 
-tree_dat <- readRDS("inventory.rds")
+tree_dat <- readRDS("dbh.rds")
 
 tmp_full %>%
   mutate(Plot = substr(Plot,1,1),
          Plot = case_when(Plot == "C" ~ "Control",
                           Plot == "F" ~ "Freshwater",
-                          Plot == "S" ~ "Saltwater", )) -> tmp2_full
+                          Plot == "S" ~ "Saltwater", )) -> tmp_full
 tree_dat %>%
   mutate(Species = substr(spp,1,4),
          Species = case_when(spp == "ACRU" ~ "Red Maple",
@@ -103,12 +115,12 @@ tree_dat %>%
 #Create sapflow-only dataframe with scaled Fd
 
 #First, isolate sapflow data
-sapflow <- tmp2_full %>% 
+sapflow <- tmp_full %>% 
   filter(Instrument == "Sapflow",
          F_OOB == 0,
          F_OOS == 0) %>%
   dplyr::select(Plot, TIMESTAMP, Sensor_ID, Value) %>%
-  mutate(raw = Value,
+  mutate(sapflow_2.5cm = Value,
          Date = date(TIMESTAMP))
 
 #Merge sapflow and species dataframe
@@ -116,6 +128,9 @@ sapflow %>%
   merge(species, ., by.x = c("Sapflux_ID", "Plot"), by.y = c("Sensor_ID", "Plot"),
         all.x = TRUE, all.y = TRUE) %>%
   mutate(ID = Sapflux_ID) -> sapflow_sp
+
+#for insurance
+sapflow_dat <- sapflow_sp
 
 #Calculate dTmax
 sapflow_sp %>% 
@@ -136,10 +151,9 @@ sapflow_sp %>%
   left_join(sapflow_dtmax, by = c("Plot", "Species", "ID", "Date")) %>% 
   mutate(F = 0.011899 * (((dTmax / Value) - 1)^1.231)) -> sf_data
 
-#ToDo update this to include 2025
 tree_dat %>%
   dplyr::select(Tree_ID, Sapflux_ID, spp,
-                DBH_2024, DBH_2023, DBH_2022, DBH_2021) -> dbh
+                DBH_2025, DBH_2024, DBH_2023, DBH_2022, DBH_2021) -> dbh
 
 
 #Using allometric equations, scale F measurements
@@ -174,97 +188,100 @@ scaled <- merge(sf_data, sa_long, by.x = c("ID", "Year", "Species"),
 
 #final units are cubic meters per second
 scaled %>%
-  dplyr::select(ID, Year, Species, Plot, TIMESTAMP, F, SA) %>%
+  dplyr::select(ID, Year, Species, Plot, TIMESTAMP, F, SA, Sapflux_ID) %>%
   mutate(Fd = SA * F) -> sf_scaled
 
 #Now let's make some plots to double check 
+#R edits: Not filtering for midday
 
 sf_scaled %>% 
   mutate(Hour = hour(TIMESTAMP)) %>%
   mutate(Date = date(TIMESTAMP)) %>%
   mutate(monthyr = floor_date(TIMESTAMP, unit = "week")) %>%
-  filter(Hour >= 11, Hour <= 12) %>% 
-  filter(F <= 0.005, F >= 0) %>%
+  #filter(Hour >= 11, Hour <= 12) %>% 
+  filter(F <= 0.0045, F >= 0) %>%
+  filter(ID != 'C20') %>%
   group_by(Plot, Species, Date) %>% 
-  summarise(F_avg = mean(F*3600, na.rm = TRUE)) %>%
-  na.omit() -> sf_plot_avg # 3600 s per hr
+  summarise(F_avg = mean(F*3600, na.rm = TRUE)) -> sf_plot_avg # 3600 s per hr
 
 #plot hourly midday sapflow
 ggplot(sf_plot_avg) + 
-  geom_point(aes (x = Date, y = F_avg, color = Plot)) + 
-  facet_wrap(~Species, ncol = 1, scales = "fixed") + 
-  labs(y = "Avg Sap Flux Density", x = "Date", title = "Sap Flux Density Averaged Daily, 11 AM - 12 PM")
+  geom_point(aes (x = Date, y = F_avg, color = Species)) + 
+  facet_wrap(~Plot, ncol = 1, scales = "fixed") + 
+  labs(y = "Avg Sap Flux Density", x = "Date", title = "Sap Flux Density Averaged Daily")
 
-#ggsave("Full_sapflow.jpeg")
+ggsave("Fd_avg_all_years.jpeg")
 
 #Option to save just the sapflow data as an RDS
-#saveRDS(sf_scaled, "Sapflow_21_25.rds")
-read_rds("Sapflow_21_25.rds") -> sf_scaled
+saveRDS(sf_scaled, "Sapflow_21_25.rds")
+
+readRDS("Sapflow_21_25.rds") -> sf_scaled
 
 #Now we add in our abiotic data
 #Create soil vwc dataframe
 #Take average value of all soil vwc measurements in each plot
 
-swc_15raw <- tmp2_full %>%
-  filter(research_name == "soil-vwc-15cm")
+#had to break up filtering into several steps for memory reasons
+tmp_full %>%
+  dplyr::select(Plot, TIMESTAMP, Sensor_ID, Location, Value, research_name, F_OOB, F_OOS) %>%
+  mutate(Plot = substr(Plot,1,2),
+         Plot = case_when(Plot == "C" ~ "Control",
+                          Plot == "S" ~ "Saltwater",
+                          Plot == "F" ~ "Freshwater")) -> tmp_temp
 
-# swc_15 <- swc_15raw %>%
-#   filter(F_OOB == 0,
-#          F_OOS == 0) %>%
-#   drop_na(Value) %>%
-#   group_by(TIMESTAMP, Plot, Location) %>%
-#   summarize(`soil-vwc-15cm` = mean(Value))
-# write.csv(swc_15, "soil_vwc.csv")
+tmp_temp %>%
+  filter(research_name == "soil-vwc-15cm") -> swc_15raw
 
 swc_15 <- swc_15raw %>%
   filter(F_OOB == 0,
          F_OOS == 0) %>%
   drop_na(Value) %>%
   group_by(TIMESTAMP, Plot) %>%
-  mutate(swc_avg = mean(Value),
-         swc_sd = sd(Value)) %>%
-  ungroup() %>%
-  arrange(TIMESTAMP, Plot)
+  summarize(n = n(),
+            soil_vwc_15cm = mean(Value),
+            swc_min = min(Value),
+            swc_max = max(Value), 
+            swc_sd = sd(Value))
 
-ec_15raw <- tmp2_full %>%
+#write.csv(swc_15, "soil_vwc.csv")
+
+ec_15raw <- tmp_temp %>%
   filter(research_name == "soil-EC-15cm")
-
-# ec_15 <- ec_15raw %>%
-#   filter(F_OOB == 0,
-#          F_OOS == 0) %>%
-#   drop_na(Value) %>%
-#   group_by(TIMESTAMP, Plot, Location) %>%
-#   summarize(`soil-EC-15cm` = mean(Value))
-# write.csv(ec_15, "soil_ec.csv")
 
 ec_15 <- ec_15raw %>%
   filter(F_OOB == 0,
          F_OOS == 0) %>%
   drop_na(Value) %>%
   group_by(TIMESTAMP, Plot) %>%
-  mutate(ec_avg = mean(Value), # Calculate the plot average
-         ec_sd = sd(Value)) %>% # Error
-  ungroup() %>%
-  arrange(TIMESTAMP, Plot) 
+  summarize(n = n(),
+            soil_ec_15cm = mean(Value),
+            ec_min = min(Value),
+            ec_max = max(Value),
+            ec_sd = sd(Value))
+
+#write.csv(ec_15, "soil_ec.csv")
 
 swc_15clean <- swc_15 %>%
-  dplyr::select(swc_avg, swc_sd, Plot, TIMESTAMP) %>%
-  distinct()
+  mutate(swc_n = n) %>%
+  dplyr::select(soil_vwc_15cm, swc_sd, swc_n, Plot, TIMESTAMP)
+
+saveRDS(swc_15clean,"swc_15clean.rds")
+readRDS("swc_15clean.rds") -> swc_15clean
 
 ec_15clean <- ec_15 %>%
-  dplyr::select(ec_avg, ec_sd, Plot, TIMESTAMP) %>%
-  distinct()
+  mutate(ec_n = n) %>%
+  dplyr::select(soil_ec_15cm, ec_sd, ec_n, Plot, TIMESTAMP)
 
-abiotic_data <- 
-  left_join(ec_15clean, swc_15clean, by = c("Plot", "TIMESTAMP"))  
+saveRDS(ec_15clean,"ec_15clean.rds")
+readRDS("ec_15clean.rds") -> ec_15clean
+
+tmp_data <- 
+  left_join(sf_scaled, swc_15clean, by = c("Plot", "TIMESTAMP"))  
 
 final_tmp_data <- 
-  left_join(abiotic_data, sf_scaled, by = c("Plot", "TIMESTAMP"))  
+  left_join(tmp_data, ec_15clean, by = c("Plot", "TIMESTAMP"))  
 
-#Now the gcrew data 
-#Note: only freshwater (wetland) will have these variables,
-#but we can extrapolate to other plots
-#Note: first few months of 2022 don't have PAR or temp values
+saveRDS(final_tmp_data,"final_tmp_data.rds")
 
 #Now the gcrew data 
 #Note: only freshwater (wetland) will have these variables,
@@ -283,18 +300,28 @@ gcw %>%
   dplyr::select(TIMESTAMP, PAR) -> par
 
 gcw %>%
+  filter(research_name == "wx-vp15") %>%
+  mutate(VP = Value) %>% 
+  dplyr::select(TIMESTAMP, VP) -> vappres
+
+gcw %>%
   filter(research_name == "wx-tempavg15") %>%
   mutate(TEMP = Value) %>% 
   dplyr::select(TIMESTAMP, TEMP) -> temp
 
-abiotic_data2 <- 
+
+abiotic_data_temp <- 
   merge(temp, par, by.x = c("TIMESTAMP"), 
         by.y = c("TIMESTAMP"), all = TRUE)
 
+abiotic_data <- 
+  merge(abiotic_data_temp, vappres, by.x = c("TIMESTAMP"), 
+        by.y = c("TIMESTAMP"), all = TRUE)
+
 final_data <- 
-  merge(final_tmp_data, abiotic_data2, by.x = c("TIMESTAMP"), 
-        by.y = c("TIMESTAMP"), all.x = TRUE) 
+  left_join(final_tmp_data, abiotic_data, by = "TIMESTAMP") 
 
-#Now we have a full time series for 2021-2025!
+#Now we have a full time series for 2021-2024!
 
-saveRDS(final_data,"Sapflow_BACI.rds")
+saveRDS(final_data,"final_data.rds")
+

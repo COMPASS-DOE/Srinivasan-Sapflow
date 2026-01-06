@@ -1,0 +1,398 @@
+---
+title: "Supplementary Data"
+author: "RVS & KAM"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+---
+
+
+```{r Load Packages, include=FALSE}
+
+.packages = c("tidyr", "ggplot2", "dplyr", "lme4",
+              "AICcmodavg", "MuMIn", "pbkrtest", "readr",
+              "lubridate", "car", "parallel", "data.table",
+              "blmeco", "lsmeans", "patchwork", "viridis",
+              "forcats", "ggpmisc", "stringr", "e1071", "ggpubr")
+
+.inst <- .packages %in% installed.packages()
+if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst])
+
+#Attach packages
+sapply(.packages, require, character.only=TRUE)
+```
+
+```{r}
+setwd("/Users/radha/Documents/TEMPEST_Sapflow_Analysis")
+
+#final_tmp_data <- readRDS("final_tmp_data.rds")
+final_data <- readRDS("/Users/radha/Documents/TEMPEST_Sapflow_Analysis/final_data.rds")
+data <- readRDS("/Users/radha/Documents/TEMPEST_Sapflow_Analysis/Sapflow_BACI.rds")
+
+```
+
+
+EC Plots & BACI analysis
+
+All species, all plots- EC comparison between plots from 2021-2025, midday sapflow
+Pairwise comparison for 2021 and 2025 demonstrating statistically significant differences for all except post-treatment control-saltwater
+BACI plot demonstrating much larger EMM increase in soil EC for saltwater plot
+```{r}
+# packages from main Rmd already loaded
+library(zoo)
+
+# isolate soil data and summarise
+data %>%
+  dplyr::select(Year, TIMESTAMP, Plot,
+                ec_avg, ec_sd,
+                swc_avg) %>%
+  mutate(Date = as_date(date(TIMESTAMP)),
+         Hour = hour(TIMESTAMP)) %>%
+  filter(Hour <= 14, Hour >= 11) %>%
+  na.omit() %>%
+  group_by(Year, Date, Plot) %>%
+  summarise(soil_ec_avg = mean(ec_avg),
+            ec_error = sd(ec_avg),
+            soil_vwc_avg = mean(swc_avg)) %>%
+  ungroup() -> soil_data
+
+# created rolled mean of EC for plotting
+soil_data %>%
+  dplyr::select(Year, Plot, Date, soil_ec_avg) %>%
+  group_by(Plot) %>%
+  arrange(Date) %>%
+  mutate(ec_rolled = rollmean(soil_ec_avg,
+                              k = 3,
+                              align = "center",
+                              fill = NA)) -> ec_rolled
+# pretty plot of EC data
+soil_data %>%
+  filter(Date > "2021-04-01") %>%
+  #optional, gets ride of little squiggle at the begining of '21
+ggplot(aes(Date, soil_ec_avg, color = Plot)) +
+  geom_point(alpha=0.5) +
+  geom_errorbar(aes(ymin = soil_ec_avg - ec_error,
+                    ymax = soil_ec_avg + ec_error)) +
+  geom_line(data = ec_rolled %>%
+              filter(Date > "2021-04-01"),
+            aes(Date, ec_rolled)) +
+  scale_color_viridis_d(option = "mako",
+                        begin = 0.3,
+                        end = 0.7) + theme_bw() +
+  theme(legend.position = "bottom") +
+  ylab("Soil Electrical Conductivity (\u03bcS cm\u207b\u00b9)")
+
+# analyze long-term BACI impact on EC and VWC
+soil_data %>%
+  filter(! Year %in% c(2022, 2023, 2024),
+         month(Date) == 6) -> soil_BACI_data
+
+# here Year is acting as "BA"
+ec_2way <- aov(soil_ec_avg ~ Year*Plot,
+                   data = soil_BACI_data)
+#calculate estimated marginal means
+ec_emm <- emmeans(ec_2way, ~ Plot|Year)
+emm_2wayA <- as.data.frame(ec_emm)
+#shows pairwise tests of 2021 vs 2025
+contrasts <- contrast(ec_emm, interaction = "pairwise")
+summary(contrasts)
+
+#setting a width for offsets below
+dodge_width <- 0.25
+
+#plot of 21 vs 25 EMM with 95% CI for soil EC
+ggplot(emm_2wayA, aes(x = Year, y = emmean, color = Plot)) +
+  geom_point(size = 3, position = position_dodge(width = dodge_width)) +
+  geom_errorbar(
+    aes(ymin = lower.CL, ymax = upper.CL),
+    width = 0.25,  
+    position = position_dodge(width = dodge_width)) +
+  geom_line(
+    aes(group = Plot),
+    position = position_dodge(width = dodge_width),
+    linetype = "dashed") +
+  scale_color_viridis_d(option = "mako",
+                        begin = 0.3,
+                        end = 0.7) +
+  theme_minimal() +
+  labs(
+    y = "EMM",
+    x = "Year",
+    title = "Long-Term BACI for Soil EC") +
+  theme(
+    strip.text = element_text(face = "bold"),
+    legend.title = element_text(face = "bold"))
+
+```
+
+VWC Plots & BACI analysis
+All species, all plots- VWC comparison between plots from 2021-2025, midday sapflow
+Pairwise comparison for 2021 and 2025; freshwater-saltwater VWC difference is not statistically significant for either year. 
+BACI plot demonstrating increase in soil VWC EMM for all treatments. 
+```{r}
+# same for moisture content
+vwc_2way <- aov(soil_vwc_avg ~ Year*Plot,
+               data = soil_BACI_data)
+
+vwc_emm <- emmeans(vwc_2way, ~ Plot|Year)
+emm_2wayB <- as.data.frame(vwc_emm)
+
+contrasts <- contrast(vwc_emm, interaction = "pairwise")
+summary(contrasts)
+
+# VWC plot
+ggplot(emm_2wayB, aes(x = Year, y = emmean, color = Plot)) +
+  geom_point(size = 3, position = position_dodge(width = dodge_width)) +
+  geom_errorbar(
+    aes(ymin = lower.CL, ymax = upper.CL),
+    width = 0.25,  
+    position = position_dodge(width = dodge_width)) +
+  geom_line(
+    aes(group = Plot),
+    position = position_dodge(width = dodge_width),
+    linetype = "dashed") +
+  scale_color_viridis_d(option = "mako",
+                        begin = 0.3,
+                        end = 0.7) +
+  theme_minimal() +
+  labs(
+    y = "EMM",
+    x = "Year",
+    title = "Long-Term BACI for Soil VWC") +
+  theme(
+    strip.text = element_text(face = "bold"),
+    legend.title = element_text(face = "bold"))                                                                                                                                                                                         
+```
+
+PAR
+(rough plots, can edit as needed)
+All species, all plots, all-day sapflow, PAR >= 500
+Days 100-300, 2021 vs 2025
+Linear regression between sapflow and PAR
+```{r}
+#days 100-300, 500 cutoff
+
+# Hourly plot sapflow averages for each species
+data %>%
+  mutate(Date = date(TIMESTAMP),
+         Hour = hour(TIMESTAMP), 
+         Day = yday(TIMESTAMP)) %>%
+  filter(between(yday(TIMESTAMP), 100, 300)) %>%
+  group_by(Date, Hour, Plot, Species, Year, Day) %>%
+  summarise(F_avg = mean(`F`, na.rm = TRUE)) %>%
+  filter(F_avg <= 0.01) -> F_avg
+
+# Hourly PAR average for each day
+data %>%
+  mutate(Date = date(TIMESTAMP),
+         Hour = hour(TIMESTAMP), 
+         Day = yday(TIMESTAMP)) %>%
+  filter(between(yday(TIMESTAMP), 100, 300)) %>%
+  group_by(Date, Hour, Year, Day) %>%
+  summarise(par_avg = mean(PAR), na.rm = TRUE) %>%
+  filter(par_avg >=500) -> par_avg
+
+# combine
+combined <- full_join(par_avg, F_avg)
+
+# Regression plot
+combined %>%
+  drop_na(Species) %>%
+  ggplot(aes(x = par_avg, y = F_avg, color = as.factor(Year))) +
+  #geom_point(alpha = 0.2) +
+  geom_smooth(method = "lm", se = FALSE, aes(group = interaction(Species, Plot, Year))) +
+  facet_wrap(~ Species + Plot, scales = "free") +  # Facet by Species and Plot
+  scale_color_brewer(palette = "Set2") +
+  labs(
+    title = "Linear Regression Between Sapflow (F) and PAR Mean",
+    x = "Photosynthetically Active Radiation (PARMean)",
+    y = "Sapflow (F)",
+    color = "Year"
+  ) +
+  theme_minimal() +
+  theme(
+    strip.text = element_text(face = "bold"),
+    legend.title = element_text(face = "bold"))
+```
+ 
+Tulip Poplar BACI Analysis
+Whole growing season, saltwater and control plots, 7 am- 7pm 
+BACI models and AIC comparison table 
+```{r}
+
+#growing season from May 15th - October 1st
+#I'm sure there's a better way to do this but
+growing_szn <- bind_rows(
+  tibble(Year = 2021, szn_start = "2021-05-15", szn_end = "2021-10-01",flood_start = "2021-06-12", flood_end = "2021-06-12"),
+  tibble(Year = 2022, szn_start = "2022-05-15", szn_end = "2022-10-01", flood_start = "2022-06-22", flood_end = "2022-06-22"),
+  tibble(Year = 2023, szn_start = "2023-05-15", szn_end = "2023-10-01", flood_start = "2023-06-06", flood_end = "2023-06-07"),
+  tibble(Year = 2024, szn_start = "2024-05-15", szn_end = "2024-10-01", flood_start = "2024-06-11", flood_end = "2024-06-13"),
+  tibble(Year = 2025, szn_start = "2025-05-15", szn_end = "2025-10-01", flood_start = "2025-06-12", flood_end = "2025-06-12"))
+
+growing_szn %>%
+  mutate(szn_start = ymd(szn_start),
+         szn_end = ymd(szn_end),
+         flood_start = ymd(flood_start),
+         flood_end = ymd(flood_end)) -> season
+
+final_data %>%
+  dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`,
+                soil_vwc_15cm, soil_ec_15cm, swc_sd, ec_sd, PAR) %>%
+  mutate(Date = as_date(date(TIMESTAMP)),
+         Hour = hour(TIMESTAMP)) %>%
+  left_join(season) %>% 
+  group_by(Year) %>%
+  #mutate(data_start = flood_start - window,
+  #       data_end = flood_end + window) %>%
+  filter(Date > szn_start & Date < szn_end,
+         Hour <= 19, Hour >= 7,
+         F <= 0.005, F >= 0,
+         (PAR >= 500 | is.na(PAR)),
+         Plot != "Freshwater",
+         Species == "Tulip Poplar") %>%
+  ungroup() -> tulip_salt  
+
+#sapflow, soil ec, soil vwc grouped by day and averaged
+#should we change this to hourly averages for ec?
+tulip_salt %>%
+  group_by(Year) %>%
+  mutate(BA = ifelse(Date > flood_end, "After", "Before"),
+         Year = as.factor(Year),
+         ID = as.factor(ID),
+         BA = as.factor(BA),
+         Plot = as.factor(Plot)) %>%
+  group_by(Date, Plot, ID, Year, BA, flood_start, flood_end, szn_start, szn_end) %>%
+  summarise(F_avg = mean(`F`, na.rm = TRUE),
+            soil_ec_avg = mean(soil_ec_15cm, na.rm = TRUE), 
+            soil_vwc_avg = mean(soil_vwc_15cm, na.rm = TRUE),
+            n = n()) %>%
+  ungroup() -> tsb_1
+
+tsb_1 %>%
+  group_by(Year) %>%
+  mutate(Day = ifelse(BA == "Before",
+                      - as.numeric(flood_start - Date),
+                      as.numeric(Date - flood_end))) %>%
+  mutate(BA = as.character(BA)) %>%
+  mutate(BA = ifelse(Year == 2021, "Before", BA),
+         BA = ifelse(Year == 2025, "Before", BA)) -> tsb_2
+```
+
+
+
+```{r}
+
+model.int.og <- lmer(F_avg ~ BA*Plot +
+                        (1|ID) + (1|Year) + (1|ID:Year),
+                      data = tsb_2)
+
+model.noint.og <- lmer(F_avg ~ BA + Plot +
+                          (1|ID) + (1|Year) + (1|ID:Year),
+                        data = tsb_2)
+
+og.refdist <- PBrefdist(largeModel = model.int.og, 
+                        smallModel = model.noint.og, 
+                        nsim = 100)
+
+og.compar <- PBmodcomp(largeModel = model.int.og, 
+                       smallModel = model.noint.og,
+                       ref = og.refdist)
+
+og.compar
+Anova(model.int.og, type = "III")
+```
+
+Both the likelihood ratio test nor the parametric bootstrap test show significance for the BACI interaction term.
+
+As a proxy for the increase in flooding intensity with each year, we include soil electrical conductivity into the model. Note that soil EC is an indicator of salt accumulation in soil from brackish water application: 
+
+```{r}
+#BACI with just soil EC to account for pre-existing differences: 
+model.int.ec <- lmer(soil_ec_avg ~ BA*Plot +
+                      (1|Year),
+                      data = tsb_2)
+
+model.noint.ec <- lmer(soil_ec_avg ~ BA + Plot +
+                      (1|Year),
+                      data = tsb_2)
+
+ec.refdist <- PBrefdist(largeModel = model.int.ec, 
+                        smallModel = model.noint.ec, 
+                        nsim = 100)
+
+ec.compar <- PBmodcomp(largeModel = model.int.ec, 
+                       smallModel = model.noint.ec,
+                       ref = ec.refdist)
+ec.compar
+Anova(model.int.ec, type = "III")
+
+```
+
+```{r BACI plus EC, message = FALSE, warning = FALSE}
+model.int.ec <- lmer(F_avg ~ BA*Plot + soil_ec_avg +
+                      (1|ID) + (1|Year) + (1|ID:Year),
+                      data = tsb_2)
+
+model.noint.ec <- lmer(F_avg ~ BA + Plot + soil_ec_avg +
+                        (1|ID) + (1|Year) + (1|ID:Year),
+                        data = tsb_2)
+
+ec.refdist <- PBrefdist(largeModel = model.int.ec, 
+                        smallModel = model.noint.ec, 
+                        nsim = 100)
+
+ec.compar <- PBmodcomp(largeModel = model.int.ec, 
+                       smallModel = model.noint.ec,
+                       ref = ec.refdist)
+ec.compar
+Anova(model.int.ec, type = "III")
+```
+```{r}
+model.noint.random <- lmer((F_avg) ~ BA*Plot + (1|ID) + (1|Year),
+                           data = tsb_2)
+
+model.random.int <- lmer((F_avg) ~ BA*Plot + (1|ID) + (1|Year) +
+                           (1|ID:Year),
+                         data = tsb_2)
+
+model.ec.only <- lmer((F_avg) ~ soil_ec_avg +
+                        (1|ID) + (1|Year) + (1|ID:Year),
+                         data = tsb_2)
+
+
+AIC(model.noint.random) -> AIC_initial
+AIC(model.random.int) -> AIC_randominteraction
+AIC(model.int.ec) -> AIC_int_ec #BACI interaction plus SEC
+AIC(model.noint.ec) -> AIC_noint_ec #BA + CI plus SEC
+AIC(model.ec.only) -> AIC_ec_only
+
+
+variable <- c("Model A", "Model B", "Model C", "Model D", "Model E")
+AIC <- c(AIC_initial, AIC_randominteraction,
+         AIC_int_ec, AIC_noint_ec, AIC_ec_only)
+candidate <- c("without interaction in random effects",
+               "with interaction in random effects", 
+               "with Soil EC",
+               "no BACI interaction with Soil EC",
+               "just Soil EC")
+
+AIC <- data.frame(variable, AIC, candidate)
+
+AIC %>%
+  mutate(`Model Specification` = candidate) %>%
+  ggplot(aes(variable, AIC+70000, fill = `Model Specification`)) +
+  geom_col() +
+  geom_hline(yintercept = -2820, linetype = "dashed") +
+  expand_limits(y = c(0, -3000)) +
+  scale_y_continuous(expand = c(0, 0)) + # Starts x axis at true zero
+  scale_fill_viridis_d() +
+  labs( title = 'AIC Model Comparison', x = 'Variable', y = 'AIC Value + 5000') +
+  guides(fill = FALSE) + 
+  theme_light() 
+```
+ 
+
+
