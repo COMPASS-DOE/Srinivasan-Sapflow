@@ -453,3 +453,75 @@ tsb_2_summary2 %>%
        color = " ") +
   theme(legend.position="bottom", element_text(size = 14))
 ```
+
+^Keeping original analysis & plots above for reference, but can remove/modify later. 
+
+2021 vs 2025 BACI Analysis: 
+
+```{r}
+final_data %>%
+  dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`,
+                swc_avg, ec_avg, swc_sd, ec_sd, PAR) %>%
+  mutate(Date = as_date(date(TIMESTAMP)),
+         Hour = hour(TIMESTAMP)) %>%
+  left_join(season) %>% 
+  group_by(Year) %>%
+  #mutate(data_start = flood_start - window,
+  #       data_end = flood_end + window) %>%
+  filter(Date > szn_start & Date < szn_end,
+         Hour <= 19, Hour >= 7,
+         F <= 0.005, F > 0,
+         (PAR >= 700 | is.na(PAR)),
+         Year %in% c(2021, 2025)) %>%
+         #Plot != "Freshwater",
+        # Species == "Tulip Poplar") %>%
+  ungroup() -> allyearsplots
+
+#sapflow, soil ec, soil vwc grouped by day and averaged
+#should we change this to hourly averages for ec?
+allyearsplots %>%
+  group_by(Year) %>%
+  mutate(BA = ifelse(Date > flood_end, "After", "Before"),
+         Year = as.factor(Year),
+         ID = as.factor(ID),
+         BA = as.factor(BA),
+         Plot = as.factor(Plot)) %>%
+  group_by(Date, Plot, ID, Year, BA, flood_start, flood_end, szn_start, szn_end) %>%
+  summarise(F_avg = mean(`F`, na.rm = TRUE),
+            soil_ec_avg = mean(ec_avg, na.rm = TRUE), 
+            soil_vwc_avg = mean(swc_avg, na.rm = TRUE),
+            n = n()) %>%
+  ungroup() -> all_1
+
+all_1 %>%
+  group_by(Year) %>%
+  mutate(Day = ifelse(BA == "Before",
+                      - as.numeric(flood_start - Date),
+                      as.numeric(Date - flood_end))) %>%
+  mutate(BA = as.character(BA),
+         BA = ifelse(Year == 2021, "Before", BA),
+         BA = ifelse(Year == 2025, "After", BA),
+         BA = as.factor(BA)) -> all_2
+```
+
+```{r}
+model.int.all <- lmer(F_avg ~ BA*Plot +
+                        (1|ID) + (1|Year) + (1|ID:Year),
+                      data = all_2)
+
+model.noint.all <- lmer(F_avg ~ BA + Plot +
+                          (1|ID) + (1|Year) + (1|ID:Year),
+                        data = all_2)
+
+all.refdist <- PBrefdist(largeModel = model.int.og, 
+                        smallModel = model.noint.og, 
+                        nsim = 100)
+
+all.compar <- PBmodcomp(largeModel = model.int.og, 
+                       smallModel = model.noint.og,
+                       ref = og.refdist)
+
+og.compar
+Anova(model.int.og, type = "III")
+```
+Interaction term is significant. 
