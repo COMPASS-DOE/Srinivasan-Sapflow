@@ -35,9 +35,9 @@ data <- readRDS("/Users/radha/Documents/TEMPEST_Sapflow_Analysis/Sapflow_BACI.rd
 ```
 
 
-##EC Plots & BACI analysis
+# EC Plots & BACI analysis
 
-#All species, all plots- EC comparison between plots from 2021-2025, midday sapflow
+## All species, all plots- EC comparison between plots from 2021-2025, midday sapflow
 
 ```{r EC Plots, message = FALSE, warning = FALSE}
 # packages from main Rmd already loaded
@@ -126,12 +126,12 @@ ggplot(emm_2wayA, aes(x = Year, y = emmean, color = Plot)) +
     legend.title = element_text(face = "bold"))
 
 ```
-#EMM Pairwise comparisons for 2021 and 2025 demonstrate statistically significant differences for all except post-treatment control-saltwater comparison.
-#BACI plot demonstrates much larger EMM increase in soil EC for saltwater plot
+## EMM Pairwise comparisons for 2021 and 2025 demonstrate statistically significant differences for all except post-treatment control-saltwater comparison.
+## BACI plot demonstrates much larger EMM increase in soil EC for saltwater plot
 
-##VWC Plots & BACI analysis
+# VWC Plots & BACI analysis
 
-#All species, all plots- VWC comparison between plots from 2021-2025, midday sapflow
+## All species, all plots- VWC comparison between plots from 2021-2025, midday sapflow
 
 ```{r VWC Plots, message = FALSE, warning = FALSE}
 # same for moisture content
@@ -167,12 +167,12 @@ ggplot(emm_2wayB, aes(x = Year, y = emmean, color = Plot)) +
     strip.text = element_text(face = "bold"),
     legend.title = element_text(face = "bold"))                                                                                                                                                                                         
 ```
-#Pairwise comparison for 2021 and 2025; freshwater-saltwater VWC difference is not statistically significant for either year. 
-#BACI plot demonstrating increase in soil VWC EMM for all treatments. 
+## Pairwise comparison for 2021 and 2025; freshwater-saltwater VWC difference is not statistically significant for either year. 
+## BACI plot demonstrating increase in soil VWC EMM for all treatments. 
 
-##PAR plots
+# PAR plots
 
-#PAR averaged hourly for 2 weeks pre and post-flood. 
+## PAR averaged hourly for 2 weeks pre and post-flood. 
 
 ```{r List of TEMPEST Events, message = FALSE, warning = FALSE}
 #TEMPEST EVENTS
@@ -226,13 +226,14 @@ par_1 %>%
          BA = as.factor(BA)) -> par_2
 
 ggplot(par_2, aes(Day, par_avg, shape = BA)) +
-  geom_point(size = 2.5) + facet_grid("Year", scales = "free")
+  geom_point(size = 2.5) + facet_grid("Year", scales = "free") +
+  scale_fill_viridis_d() 
 ```
 
-##Tulip Poplar BACI Analysis
+# Tulip Poplar BACI Analysis
 
-#Whole growing season, saltwater and control plots, 7 am- 7pm 
-#BACI models and AIC comparison table 
+## Whole growing season, saltwater and control plots, 7 am- 7pm 
+## BACI models and AIC comparison table 
 ```{r, message = FALSE, warning = FALSE}
 
 #growing season from May 15th - October 1st
