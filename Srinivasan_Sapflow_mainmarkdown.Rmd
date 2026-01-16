@@ -43,13 +43,28 @@ data <- readRDS("Sapflow_BACI.rds")
 
 #a quick check to make the data are all present and accounted for
 #TODO find source of NAs for species
-#TODO remove dying red maples in Control
-data %>% 
-  mutate(Hour = hour(TIMESTAMP),
-         Date = date(TIMESTAMP)) %>%
-  filter(Hour <= 14, Hour > 11,
-         F <= 0.005, F > 0,
-         ! is.na(Species)) %>%
+
+data %>% #first we remove outlier values
+mutate(Hour = hour(TIMESTAMP),
+       Date = date(TIMESTAMP),
+       doy = yday(Date)) %>%
+  filter(doy > 99 & doy < 301, #growing season
+         Hour <= 14, Hour > 11, #midday
+         F > 0, ! is.na(Species)) -> target_data #remove obviously unusuable data
+
+# Calculating thresholds for sapflow outliers.
+thresholds <- target_data %>% 
+  group_by(Species, Plot, Year) %>% #allows for annual, plot, and species specific values
+  summarize(upper_threshold = quantile(`F`, 0.95))
+
+# Remove values above that threshold
+filtered_data <- target_data %>%
+  left_join(thresholds, by = c("Species", "Plot", "Year")) %>%
+  mutate(Outlier_F = ifelse(F > upper_threshold, "Outlier", "Non-Outlier")) %>%
+  filter(Outlier_F == "Non-Outlier")
+
+#summarize for plotting
+filtered_data %>%
   group_by(Plot, Species, Date) %>%
   summarise(F_avg = mean(`F`, na.rm = TRUE)) -> sf_plot_avg
 
@@ -86,17 +101,14 @@ window <- days(15)
 Sapflow sensors were installed in 2020 and collected data throughout the growing season of 2021, creating a full year of pre-treatment (Before) data. No TEMPEST treament occuredin 2025, creating a full growing season of post-treatment (After) data, allowing us to test the effect of three consecutive years of progressively intensive inundation events.
 
 ```{r Long-Term BACI, include = FALSE}
-data %>%
+
+#making out data frame just a little smaller
+filtered_data %>%
   dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`,
                 ec_avg, swc_avg, TEMP, PAR) %>%
   mutate(Date = as_date(date(TIMESTAMP)),
          doy = yday(Date),
          Hour = hour(TIMESTAMP)) %>%
-  group_by(Year) %>%
-  filter(doy > 99 & doy < 301, #Peter's growing season
-         #should add more data once available
-         Hour <= 14, Hour > 11, #same window as for main markdown
-         F <= 0.006, F > 0) %>% #same filtering as for main markdown
   ungroup() -> BACI_data
 
 BACI_data %>%
@@ -104,15 +116,15 @@ BACI_data %>%
          ID = as.factor(ID),
          Plot = as.factor(Plot)) %>%
   group_by(doy, Date, Plot, Species, ID, Year) %>%
+  #filter(max(PAR) > 500) %>%
+  #ideally we would remove cloudy days, but currently don't have PAR data for 2021
   summarise(F_avg = mean(`F`, na.rm = TRUE),
             soil_ec_avg = mean(ec_avg), 
             soil_vwc_avg = mean(swc_avg),
             par_avg = mean(PAR),
             temp_avg = mean(TEMP),
             n = n()) %>%
-  ungroup() %>%
-  filter(#! Year %in% c(2022, 2023, 2024),
-         Species %in% c("Beech", "Tulip Poplar", "Red Maple")) -> avg_BACI_data
+  ungroup() -> avg_BACI_data
 
 
 # List of species and plots
@@ -269,7 +281,7 @@ Selecting data from Tulip poplars and excluding the Freshwater plot, based on a 
 ```{r Select LITU and SW plot data, message = FALSE, warning = FALSE}
 #currently this occurs in the 3 chunks
 #may be possible to streamline
-data %>%
+filtered_data %>%
   dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`,
                 ec_avg, swc_avg, TEMP, PAR) %>%
   mutate(Date = as_date(date(TIMESTAMP)),
@@ -280,8 +292,6 @@ data %>%
          data_end = flood_end + window) %>%
   filter(Date > data_start & Date < flood_start |
          Date < data_end & Date > flood_end,
-         Hour <= 14, Hour > 11,
-         F <= 0.005, F > 0,
          Plot != "Freshwater",
          Species == "Tulip Poplar"
          ) %>%
