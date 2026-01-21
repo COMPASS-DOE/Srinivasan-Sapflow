@@ -9,6 +9,7 @@ output:
     code_folding: hide
 ---
 
+# Soil EC and VWC tests
 
 ```{r Load Packages, message = FALSE, warning = FALSE}
 
@@ -32,9 +33,9 @@ data <- readRDS("Sapflow_BACI.rds")
 
 ```
 
-# EC Plot & BACI
+## EC Plot & BACI
 
-All species, all plots- EC comparison between plots from 2021-2025, midday sapflow
+Soil electrical conductivity at 15 cm depth comparison across plots from 2021-2025
 
 ```{r EC, message = FALSE, warning = FALSE}
 
@@ -96,12 +97,11 @@ ggplot(emm_2wayA, aes(x = Year, y = emmean, color = Plot)) +
 
 ```
 
-EMM Pairwise comparisons for 2021 and 2025 demonstrate statistically significant differences for all except post-treatment control-saltwater comparison.
-BACI plot demonstrates much larger EMM increase in soil EC for saltwater plot
+EMM Pairwise comparisons for 2021 and 2025 demonstrates statistically significant differences between all plots, except post-treatment control vs saltwater comparison. Plot demonstrates large increase in soil EC for saltwater plot over time.
 
-# VWC Plot & BACI
+## VWC Plot & BACI
 
-All species, all plots- VWC comparison between plots from 2021-2025, midday sapflow
+Soil volumetric water content at 15 cm depth comparison across plots from 2021-2025
 
 ```{r VWC, message = FALSE, warning = FALSE}
 
@@ -142,7 +142,9 @@ ggplot(emm_2wayB, aes(x = Year, y = emmean, color = Plot)) +
 Pairwise comparison for 2021 and 2025; freshwater-saltwater VWC difference is not statistically significant for either year. 
 BACI plot demonstrating increase in soil VWC EMM for all treatments. 
 
-# PAR plot & BACI 
+# And PAR?
+
+## PAR plot & BACI
 
 PAR averaged hourly for 2 weeks pre and post-flood. We do this at a finer temporal resolution to check that short-term changes in PAR are not a concern for our sapflow analysis.
 
@@ -204,7 +206,7 @@ summary(par_contrasts)
 
 # Tulip Poplar BACI Analysis
 
-## Whole growing season, saltwater and control plots, 7 am- 7pm 
+## Whole growing season test
 
 Are the time windows we've selected in the main analysis impacting our results? To test this we expand the time window for LITU BACI to the full growing season and full daylight hours of sapflow data.
 
