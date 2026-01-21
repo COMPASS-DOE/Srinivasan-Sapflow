@@ -18,7 +18,7 @@ output:
               "lubridate", "car", "parallel", "data.table",
               "blmeco", "lsmeans", "patchwork", "viridis",
               "forcats", "ggpmisc", "stringr", "e1071",
-              "ggpubr", "ggstance", "zoo")
+              "ggpubr", "ggstance", "zoo", "ggpattern")
 #Install CRAN packages (if not already installed)
 .inst <- .packages %in% installed.packages()
 if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst])
