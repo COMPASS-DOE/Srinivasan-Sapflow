@@ -18,7 +18,7 @@ output:
               "lubridate", "car", "parallel", "data.table",
               "blmeco", "lsmeans", "patchwork", "viridis",
               "forcats", "ggpmisc", "stringr", "e1071",
-              "ggpubr", "ggstance")
+              "ggpubr", "ggstance", "zoo")
 #Install CRAN packages (if not already installed)
 .inst <- .packages %in% installed.packages()
 if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst])
@@ -162,6 +162,10 @@ avg_BACI_data %>%
          ! ID %in% c("C8", "C19"),
          month(Date) == 6) -> final_BACI_data #more data would be advantageous, but
 #currently June is the latest growing-season month we have '25 data for
+
+final_BACI_data$Species <- factor(final_BACI_data$Species, 
+                           levels = c("Red Maple", "Beech", "Tulip Poplar"),
+                           labels = c("ACRU", "FAGR", "LITU"))
 
 #base model, here Year is acting as "BA"
 #and we're allowing all levels of plot and species to interact
@@ -370,7 +374,7 @@ ggplot(tsb_2, aes(F_avg)) + geom_histogram(fill = '#31688EFF') +
 ```
 
 
-# Progressive Analysis
+## Progressive Analysis
 
 
 
@@ -407,7 +411,7 @@ AIC.res.table
 Choose the model with the lowest AICc value (i.e. largest negative value); this suggests that the second model, which includes the random effects interaction term, is a better fit for our data.
 
 
-# Create and test BACI models
+## Create and test BACI models
 
 
 
@@ -463,4 +467,102 @@ We now see that the BACI interaction term and soil ec fixed effect have strong e
 
 # Plots
 
+```{r EC Plot, message = FALSE, warning = FALSE}
+# isolate soil data and summarize
+data %>%
+  dplyr::select(Year, TIMESTAMP, Plot,
+                ec_avg, ec_sd,
+                swc_avg) %>%
+  mutate(Date = as_date(date(TIMESTAMP)),
+         Hour = hour(TIMESTAMP)) %>%
+  filter(Hour <= 14, Hour > 11) %>%
+  na.omit() %>%
+  group_by(Year, Date, Plot) %>%
+  summarise(soil_ec_avg = mean(ec_avg),
+            ec_error = sd(ec_avg),
+            soil_vwc_avg = mean(swc_avg)) %>%
+  ungroup() -> soil_data
 
+# created rolled mean of EC for plotting
+soil_data %>%
+  dplyr::select(Year, Plot, Date, soil_ec_avg) %>%
+  group_by(Plot) %>%
+  arrange(Date) %>%
+  mutate(ec_rolled = rollmean(soil_ec_avg,
+                              k = 3,
+                              align = "center",
+                              fill = NA)) -> ec_rolled
+# pretty plot of EC data
+soil_data %>%
+  filter(Date > "2021-04-01") %>%
+  #optional, gets rid of little squiggle at the beginning of '21
+ggplot(aes(Date, soil_ec_avg, color = Plot)) +
+  geom_point(alpha=0.5) +
+  geom_errorbar(aes(ymin = soil_ec_avg - ec_error,
+                    ymax = soil_ec_avg + ec_error)) +
+  geom_line(data = ec_rolled %>%
+              filter(Date > "2021-04-01"),
+            aes(Date, ec_rolled)) +
+  scale_color_viridis_d(option = "mako",
+                        begin = 0.3,
+                        end = 0.7) + theme_bw() +
+  theme(legend.position = "bottom") +
+  ylab("Soil Electrical Conductivity (\u03bcS cm\u207b\u00b9)")
+
+```
+
+```{r LITU BACI boxplot}
+
+tsb_2 %>%
+  mutate(BA = factor(BA, levels = c("Before", "After"))) %>%
+ggplot(aes(y=F_avg)) +
+  geom_boxplot_pattern(aes(pattern = BA, fill = Plot), alpha = 0.8 ) +
+  facet_wrap(Year~.) + scale_fill_viridis_d(begin = 0.15, end = 0.8) +
+  labs(y = "Midday Sap Flow (cm³ cm⁻² s⁻¹)") +
+  theme_bw() + theme(axis.ticks.x.bottom = element_blank(),
+                     axis.text.x.bottom = element_blank()) +
+    guides(fill = guide_legend(title = "Plot"),
+           pattern = guide_legend(title = "Before-After"))
+  
+
+```
+
+```{r overlay plot}
+
+filtered_data %>%
+  ungroup() %>%
+  mutate(Year = as.factor(Year)) %>%
+  filter(
+    Year == "2021" & (Species != "Tulip poplar" | (Species == "Tulip poplar" & `F` < 0.002))
+  ) %>%
+  group_by(Plot, Species, ID, Date, Year) %>%
+  summarise(F_avg = mean(`F`, na.rm = TRUE)) %>%
+  ungroup() -> y21
+
+filtered_data %>%
+  ungroup() %>%
+  mutate(Year = as.factor(Year)) %>%
+  group_by(Year, Date) %>%
+  filter(max(PAR) > 500) %>%
+  group_by(Plot, Species, ID, Date, Year) %>%
+  summarise(F_avg = mean(`F`, na.rm = TRUE)) %>% 
+  ungroup() %>%
+  bind_rows(y21) -> plot_data
+  
+plot_data %>%
+  group_by(Year, Plot, Species) %>%
+  arrange(Date) %>%
+  mutate(f_roll = zoo::rollmean(F_avg, 100, na.rm = TRUE,
+                                align = "center", fill = NA)) -> rolled_data
+
+ggplot() +
+  geom_line(data = rolled_data, aes(y = f_roll, x = yday(Date), color = Year, group = Year),
+            linewidth = 1.5) +
+  geom_jitter(data = plot_data, aes(y = F_avg, x = yday(Date), color = Year, group = Year), alpha = 0.1, size = 0.8) +
+  facet_grid(Species ~ Plot, scales="free") +
+  scale_color_viridis_d(option = 'D', begin = 0.1, end = 0.9) +
+  labs(y = expression ("Midday Sap Flow, cm"^3* " s"^-1),
+       x = expression(paste("Day of Year"))) +
+  theme_bw() + theme(legend.position="bottom", element_text(size = 14))
+
+```
