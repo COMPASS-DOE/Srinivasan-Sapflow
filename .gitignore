@@ -2,13 +2,13 @@
 *.RDataTmp1
 *.html
 *.rds
-*.csv
 *.Rproj.user
 *.Rhistory
 *.jpeg
 *.png
+
 .Rproj.user
-BACI_GLMM/
-/Data
+
+/Data/Unzipped
 /par_data
 /filesToStack00024
