@@ -17,7 +17,8 @@ output:
               "AICcmodavg", "MuMIn", "pbkrtest", "readr",
               "lubridate", "car", "parallel", "data.table",
               "blmeco", "lsmeans", "patchwork", "viridis",
-              "forcats", "ggpmisc", "stringr", "e1071", "ggpubr")
+              "forcats", "ggpmisc", "stringr", "e1071",
+              "ggpubr", "ggstance")
 #Install CRAN packages (if not already installed)
 .inst <- .packages %in% installed.packages()
 if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst])
@@ -28,32 +29,44 @@ sapply(.packages, require, character.only=TRUE)
 
 ```{r Load Data, message = FALSE, warning = FALSE}
 #This will only work once raw data is downloaded and unzipped from ESS-DIVE
-#urls to come
+#doi:10.15485/2588618
 #Following unzip, source files create_inventory.R and create_full_timeseries_plus_abiotic.R
 #these files calculate sapflux density
 
 #This only needs to be done once
 
-#For some reason, this only works when copy-pasted into the console -R
-# setwd("/Users/radha/Documents/TEMPEST_Sapflow_Analysis")
-# final_tmp_data <- readRDS("final_tmp_data.rds")
-# final_data <- readRDS("final_data.rds")
-
-final_data <- readRDS("Sapflow_BACI.rds")
+data <- readRDS("Sapflow_BACI.rds")
 
 ```
 
 ```{r Sapflow Visual, message = FALSE, , warning = FALSE}
 
-#something like this
-final_data %>% 
-  mutate(Hour = hour(TIMESTAMP)) %>%
-  mutate(Date = date(TIMESTAMP)) %>%
-  mutate(monthyr = floor_date(TIMESTAMP, unit = "week")) %>%
-  filter(Hour <= 19, Hour >= 7) %>%
-  filter(`F` <= 0.005, `F` >= 0, 
-        PAR >= 700) %>%
-  group_by(Plot, Species, Date) %>% 
+#a quick check to make sure the data are all present and accounted for
+#TODO find source of NAs for species
+#TODO bring in second half of 2025 sapflow data
+
+data %>% #first we remove outlier values
+mutate(Hour = hour(TIMESTAMP),
+       Date = date(TIMESTAMP),
+       doy = yday(Date)) %>%
+  filter(doy > 99 & doy < 301, #growing season
+         Hour <= 14, Hour > 11, #midday
+         F > 0, ! is.na(Species)) -> target_data #remove obviously unusuable data
+
+# Calculating thresholds for sapflow outliers.
+thresholds <- target_data %>% 
+  group_by(Species, Plot, Year) %>% #allows for annual, plot, and species specific values
+  summarize(upper_threshold = quantile(`F`, 0.95))
+
+# Remove values above that threshold
+filtered_data <- target_data %>%
+  left_join(thresholds, by = c("Species", "Plot", "Year")) %>%
+  mutate(Outlier_F = ifelse(F > upper_threshold, "Outlier", "Non-Outlier")) %>%
+  filter(Outlier_F == "Non-Outlier")
+
+#summarize for plotting
+filtered_data %>%
+  group_by(Plot, Species, Date) %>%
   summarise(F_avg = mean(`F`, na.rm = TRUE)) -> sf_plot_avg
 
 ggplot(sf_plot_avg) + 
@@ -62,33 +75,20 @@ ggplot(sf_plot_avg) +
   scale_color_viridis_d(option = 'D', begin = .25, end = .8) +
   theme_light() +
   labs(y = "Avg Sap Flux Density cm3/cm2/s", x = "Date",
-       title = "Sap Flux Density Averaged Daily, 7 am - 7 pm")
+       title = "Sap Flux Density Averaged Daily, 11 AM - 2 PM")
 
 ```
 
 ```{r TEMPEST Events, message = TRUE}
 #TEMPEST EVENTS
 tempest_events <- bind_rows(
-  tibble( Year = 2021, flood_start = "2021-06-12", flood_end = "2021-06-12"), #average date = June 12
+  tibble( Year = 2021, flood_start = "2021-06-12", flood_end = "2021-06-12"),
+  #average date = June 12
   tibble( Year = 2022, flood_start = "2022-06-22", flood_end = "2022-06-22"), #June 22
   tibble( Year = 2023, flood_start = "2023-06-06", flood_end = "2023-06-07"), #June 6, 7
   tibble( Year = 2024, flood_start = "2024-06-11", flood_end = "2024-06-13"), #June 11, 12, 13
-  tibble( Year = 2025, flood_start = "2025-06-12", flood_end = "2025-06-12")) #No TEMPEST event; averaging
-
-#growing season from May 15th - October 1st
-#I'm sure there's a better way to do this but
-growing_szn <- bind_rows(
-  tibble(Year = 2021, szn_start = "2021-05-15", szn_end = "2021-10-01",flood_start = "2021-06-12", flood_end = "2021-06-12"),
-  tibble(Year = 2022, szn_start = "2022-05-15", szn_end = "2022-10-01", flood_start = "2022-06-22", flood_end = "2022-06-22"),
-  tibble(Year = 2023, szn_start = "2023-05-15", szn_end = "2023-10-01", flood_start = "2023-06-06", flood_end = "2023-06-07"),
-  tibble(Year = 2024, szn_start = "2024-05-15", szn_end = "2024-10-01", flood_start = "2024-06-11", flood_end = "2024-06-13"),
-  tibble(Year = 2025, szn_start = "2025-05-15", szn_end = "2025-10-01", flood_start = "2025-06-12", flood_end = "2025-06-12"))
-
-growing_szn %>%
-  mutate(szn_start = ymd(szn_start),
-         szn_end = ymd(szn_end),
-         flood_start = ymd(flood_start),
-         flood_end = ymd(flood_end)) -> season
+  tibble( Year = 2025, flood_start = "2025-06-12", flood_end = "2025-06-12"))
+#average date = June 12
 
 tempest_events %>%
   mutate(flood_start = ymd(flood_start),
@@ -99,33 +99,214 @@ window <- days(15)
 
 ```
 
+# Long-Term BACI Test
+
+Sapflow sensors were installed in 2020 and collected data throughout the growing season of 2021, creating a full year of pre-treatment (Before) data. No TEMPEST treatment occured in 2025, creating a full growing season of post-treatment (After) data, allowing us to test the effect of three consecutive years of progressively intensive inundation events.
+
+```{r Long-Term BACI, include = FALSE}
+
+#making our data frame just a little smaller
+filtered_data %>%
+  dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`,
+                ec_avg, swc_avg, TEMP, PAR) %>%
+  mutate(Date = as_date(date(TIMESTAMP)),
+         doy = yday(Date),
+         Hour = hour(TIMESTAMP)) %>%
+  ungroup() -> BACI_data
+
+BACI_data %>%
+  mutate(Year = as.factor(Year),
+         ID = as.factor(ID),
+         Plot = as.factor(Plot)) %>%
+  group_by(doy, Date, Plot, Species, ID, Year) %>%
+  #filter(max(PAR) > 500) %>%
+  #ideally we would remove cloudy days, but currently don't have PAR data for 2021
+  summarise(F_avg = mean(`F`, na.rm = TRUE),
+            soil_ec_avg = mean(ec_avg), 
+            soil_vwc_avg = mean(swc_avg),
+            par_avg = mean(PAR),
+            temp_avg = mean(TEMP),
+            n = n()) %>%
+  ungroup() -> avg_BACI_data
+
+
+# List of species and plots
+species_list <- c("Red Maple", "Tulip Poplar", "Beech")
+plot_list <- c("Control", "Freshwater", "Saltwater")
+
+# Loop through each species and plot combination to generate plots
+for (species in species_list) {
+  for (plot in plot_list) {
+    avg_BACI_data %>%
+      filter(Plot == plot, Species == species) %>%
+      ggplot(aes(x = doy, y = F_avg, color = Year)) +
+      geom_point() +
+      facet_wrap(. ~ ID, ncol = 3, scales = "fixed") +
+      scale_color_viridis_d(option = 'D', begin = .25, end = .8) +
+      theme_light() +
+      labs(
+        y = "Midday Sap Flux Density cm3/cm2/s",
+        x = "Day of Year",
+        title = paste(" Averaged Sap Flux Density,", species, "-", plot)
+      ) -> p
+    
+    print(p)
+  }
+}
+
+#based on these plots excluding the following trees:
+# C8, C19
+
+avg_BACI_data %>%
+  filter(! Year %in% c(2022, 2023, 2024),
+         ! ID %in% c("C8", "C19"),
+         month(Date) == 6) -> final_BACI_data #more data would be advantageous, but
+#currently June is the latest growing-season month we have '25 data for
+
+#base model, here Year is acting as "BA"
+#and we're allowing all levels of plot and species to interact
+#random effect of ID allows for different trees to have different intercepts
+model_3way <- lmer(F_avg ~ Year*Plot*Species + (1|ID),
+                   data = final_BACI_data)
+#calculate estimated marginal means
+model_emm <- emmeans(model_3way, ~ Species|Plot*Year)
+emm_3way <- as.data.frame(model_emm)
+#shows pairwise tests of 2021 vs 2025 data for each species x plot group
+contrasts <- contrast(model_emm, interaction = "pairwise", by = c("Species", "Plot"))
+
+#setting a width for offsets below
+dodge_width <- 0.25
+
+```
+
+```{r plot Long-Term BACI}
+
+#species by plot contrasts
+summary(contrasts)
+
+#plot of 21 vs 25 EMM with 95% CI
+ggplot(emm_3way, aes(x = Year, y = emmean, color = Plot)) +
+  facet_grid(~ Species) +
+  geom_point(size = 3, position = position_dodge(width = dodge_width)) +
+  geom_errorbar(
+    aes(ymin = lower.CL, ymax = upper.CL),
+    width = 0.25,  
+    position = position_dodge(width = dodge_width)) +
+  geom_line(
+    aes(group = interaction(Species, Plot)),
+    position = position_dodge(width = dodge_width),
+    linetype = "dashed") +
+    scale_color_viridis_d(option = "mako",
+                        begin = 0.3,
+                        end = 0.7) + theme_bw() +
+  theme_minimal() +
+  labs(
+    y = "Estimated Marginal Mean (Sapflow)",
+    x = "Year",
+    title = "Long-Term BACI") +
+  theme(
+    strip.text = element_text(face = "bold"),
+    legend.title = element_text(face = "bold"))
+
+```
+
+## Interpreting long-term contrasts
+
+Tulip poplar noticeably increases in all plots over time, but SW plot lags behind FW and control.
+Red maple shows little change over time, with trend in FW (slight decrease) differing from that in SW (slight increase, both NS).
+Beech increases strongly in FW over time, and declines strongly in control.
+
+Below we dig into trends in Beech and Tulip poplar in greater detail.
+
+```{r dig into FAGR responses}
+
+avg_BACI_data %>%
+  filter(Year == 2025,
+         month(Date) == 6,
+         Species == 'Beech') -> FAGR_data1
+
+FAGRmodel1 <- lmer(F_avg ~ Plot + (1|ID),
+     data = FAGR_data1)
+FAGR_emm1 <- emmeans(FAGRmodel1, ~ Plot)
+contrast(FAGR_emm1, interaction = "pairwise")
+
+avg_BACI_data %>%
+  filter(Species == "Beech",
+         Plot == "Control",
+         month(Date) == 6) %>%
+  mutate(Year = factor(Year,
+                       levels = c("2025", "2024", "2023", "2022", "2021")
+                       ))-> FAGR_data2
+
+FAGRmodel2 <- lmer(F_avg ~ Year + (1|ID),
+     data = FAGR_data2)
+FAGR_emm2 <- emmeans(FAGRmodel2, ~ Year)
+contrast(FAGR_emm2, interaction = "pairwise")
+
+```
+
+Beech trees are clearly increasing sapflow in response to FW treatments, but the strong treatment effects are also due to low sapflow in the Control plot. Notably Control-Beech sapflow in 2025 is lower than any other data collection year. It is unknown at this time why Beech trees in the Control plot had such low sapflow in 2025.
+
+```{r dig into LITU responses}
+
+avg_BACI_data %>%
+  filter(Year == 2025,
+         month(Date) == 6,
+         Species == 'Tulip Poplar') -> LITU_data1
+
+LITUmodel1 <- lmer(F_avg ~ Plot + (1|ID),
+     data = LITU_data1)
+LITU_emm1 <- emmeans(LITUmodel1, ~ Plot)
+contrast(LITU_emm1 , interaction = "pairwise")
+
+avg_BACI_data %>%
+  filter(Species == "Tulip Poplar",
+         Plot == "Control",
+         month(Date) == 6) %>%
+  mutate(Year = factor(Year,
+                       levels = c("2025", "2024", "2023", "2022", "2021")
+                       ))-> LITU_data2
+
+LITUmodel2 <- lmer(F_avg ~ Year + (1|ID),
+     data = LITU_data2)
+LITU_emm2 <- emmeans(LITUmodel2, ~ Year)
+contrast(LITU_emm2, interaction = "pairwise")
+
+```
+
+Tulip poplar has a much clearer pattern with the Control and SW plot differing from each other after 3 years of inundation treatments and steady increase in sapflow over the measurement period. From here on we focus on Tulip poplar (LITU) and the impact of saltwater on its sapflow.
+
+# LITU BACI
+
 
 ## Two weeks Before/After events
 
-Selecting data from Tulip poplars and excluding the Freshwater plot, based on a preliminary analysis during Radha's SULI project.
+
+Selecting data from Tulip poplars in treatment years and excluding the Freshwater plot.
+
 ```{r Select LITU and SW plot data, message = FALSE, warning = FALSE}
 #currently this occurs in the 3 chunks
 #may be possible to streamline
-#R edits: changing flood window to whole growing season
-final_data %>%
+filtered_data %>%
   dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`,
-                swc_avg, ec_avg, swc_sd, ec_sd, PAR) %>%
+                ec_avg, swc_avg, TEMP, PAR) %>%
   mutate(Date = as_date(date(TIMESTAMP)),
          Hour = hour(TIMESTAMP)) %>%
-  left_join(season) %>% 
+  group_by(Date, Year) %>%
+  filter(max(PAR) > 500) %>%
+  ungroup() %>%
+  left_join(events) %>%
   group_by(Year) %>%
-  #mutate(data_start = flood_start - window,
-  #       data_end = flood_end + window) %>%
-  filter(Date > szn_start & Date < szn_end,
-         Hour <= 19, Hour >= 7,
-         F <= 0.005, F > 0,
-         (PAR >= 700 | is.na(PAR)),
+  mutate(data_start = flood_start - window,
+         data_end = flood_end + window) %>%
+  filter(Date > data_start & Date < flood_start |
+         Date < data_end & Date > flood_end,
          Plot != "Freshwater",
-         Species == "Tulip Poplar") %>%
-  ungroup() -> tulip_salt  
+         Species == "Tulip Poplar",
+         
+         ) %>%
+  ungroup() -> tulip_salt
 
-#sapflow, soil ec, soil vwc grouped by day and averaged
-#should we change this to hourly averages for ec?
 tulip_salt %>%
   group_by(Year) %>%
   mutate(BA = ifelse(Date > flood_end, "After", "Before"),
@@ -133,34 +314,40 @@ tulip_salt %>%
          ID = as.factor(ID),
          BA = as.factor(BA),
          Plot = as.factor(Plot)) %>%
-  group_by(Date, Plot, ID, Year, BA, flood_start, flood_end, szn_start, szn_end) %>%
+  group_by(Date, Plot, Species, ID, Year, BA, flood_start, flood_end) %>%
   summarise(F_avg = mean(`F`, na.rm = TRUE),
-            soil_ec_avg = mean(ec_avg, na.rm = TRUE), 
-            soil_vwc_avg = mean(swc_avg, na.rm = TRUE),
+            soil_ec_avg = mean(ec_avg), 
+            soil_vwc_avg = mean(swc_avg),
+            par_avg = mean(PAR),
+            temp_avg = mean(TEMP),
             n = n()) %>%
   ungroup() -> tsb_1
 
 tsb_1 %>%
+  filter(! is.na(tsb_1$Species),
+         ! Year %in% c(2021, 2025)) %>%
   group_by(Year) %>%
   mutate(Day = ifelse(BA == "Before",
                       - as.numeric(flood_start - Date),
-                      as.numeric(Date - flood_end))) %>%
+                      as.numeric(Date - flood_end))
+         ) %>%
   mutate(BA = as.character(BA),
-         BA = ifelse(Year == 2021, "Before", BA),
-         BA = ifelse(Year == 2025, "After", BA),
-         BA = as.factor(BA)) -> tsb_2
+         # BA = ifelse(Year == 2021, "Before", BA),
+         # BA = ifelse(Year == 2025, "After", BA)
+         ) -> tsb_2
 
 ggplot(tsb_2, aes(Day, F_avg, color = ID, shape = BA)) +
   geom_point(size = 2.5) + facet_grid(Plot~Year, scales = "free")
 ```
 
 ```{r Normality, message = FALSE}
-#here we check if our response variable (daily averaged midday sap flux density per tree), is normally distributed
+#here we check if our response variable is normally distributed
+#RV = daily averaged midday sap flux density per tree
 current_skewness <- skewness(tsb_2$F_avg)
 print(paste("Current Skewness:", current_skewness))
 
 # Logarithmic Transformation
-log_transformed_response <- log(tsb_2$F_avg + 1)
+log_transformed_response <- log(tsb_2$F_avg)
 
 # Square Root Transformation
 sqrt_transformed_response <- sqrt(tsb_2$F_avg)
@@ -179,22 +366,7 @@ print(paste("Inverse Transformation Skewness:", inv_skewness))
 ggplot(tsb_2, aes(F_avg)) + geom_histogram(fill = '#31688EFF') +
   facet_grid(Plot~.) +
   labs(y = NULL, x = "Average Sapflow", title = "Untransformed Data")
-  
 
-ggplot(tsb_2, aes(log(F_avg + 1))) + geom_histogram(fill = '#31688EFF') +
-  facet_grid(Plot~.) + 
-  labs(y = NULL, x = "Avergae Sapflow", title = "Log \n Transformed Data")
-
-#Log transformation is ever so slightly less skewed but looks virtually identical, just keeping it untransformed for now
-```
-
-```{r}
-#quick t-test for ec differences: Control group has significantly higher ec than saltwater pre-flood
-final_data %>%
-  filter(Plot != "Freshwater", 
-         Year == "2021") -> temp2
- 
- t.test(ec_avg ~ Plot, data = temp2)
 ```
 
 
@@ -215,15 +387,15 @@ First, test for the statistical significance of the final term (1\|ID:Year), the
 ```{r Pardini et al 2018, warning = FALSE}
 Cand.set <- list()
 
-Cand.set[[1]] <- lmer((F_avg) ~ BA + Plot  + BA*Plot +
+Cand.set[[1]] <- lmer(F_avg ~ BA + Plot  + BA*Plot +
                          (1|ID) + (1|Year),
-                       data = tsb_2)
+                       data = tsb_2 )
 model.noint <- Cand.set[[1]]
 
-Cand.set[[2]] <- lmer((F_avg) ~ BA + Plot + BA*Plot +
+Cand.set[[2]] <- lmer(F_avg ~ BA + Plot + BA*Plot +
                          (1|ID) + (1|Year) +
                          (1|ID:Year),
-                       data = tsb_2)
+                       data = tsb_2 )
 model.int <- Cand.set[[2]]
 
 AIC.res.table <- aictab(cand.set = list(Cand.set[[1]], Cand.set[[2]]), 
@@ -238,15 +410,17 @@ Choose the model with the lowest AICc value (i.e. largest negative value); this 
 # Create and test BACI models
 
 
+
+
 We now test the impact of the BACI term in our existing model by looking at the explanatory power of the model with and without the interaction between BA and CI (plot): 
 ```{r message = FALSE, warning = FALSE}
 model.int.og <- lmer(F_avg ~ BA*Plot +
                         (1|ID) + (1|Year) + (1|ID:Year),
-                      data = tsb_2)
+                      data = tsb_2 )
 
 model.noint.og <- lmer(F_avg ~ BA + Plot +
                           (1|ID) + (1|Year) + (1|ID:Year),
-                        data = tsb_2)
+                        data = tsb_2 )
 
 og.refdist <- PBrefdist(largeModel = model.int.og, 
                         smallModel = model.noint.og, 
@@ -260,50 +434,18 @@ og.compar
 Anova(model.int.og, type = "III")
 ```
 
-Neither the likelihood ratio test nor the parametric bootstrap test show significance for the BACI interaction term.
-# R edits: with unscaled 2025 data included, it looks like LRT and PB do both show significance for the BACI term this time around!
-
-```{r}
-#Sensor ID is proving difficult to add in, but could test difference with:
-
-#ec.test <- lmer(soil_ec_avg ~ BA*Plot*Year + 
-                # (1:Sensor_ID),
-               # data = tsb_2)
-```
-
+The likelihood ratio test indicates a weak effect of the BACI interaction term.
 
 As a proxy for the increase in flooding intensity with each year, we include soil electrical conductivity into the model. Note that soil EC is an indicator of salt accumulation in soil from brackish water application: 
-
-```{r}
-#BACI with just soil EC to account for pre-existing differences: 
-model.int.ec <- lmer(soil_ec_avg ~ BA*Plot +
-                      (1|Year),
-                      data = tsb_2)
-
-model.noint.ec <- lmer(soil_ec_avg ~ BA + Plot +
-                      (1|Year),
-                      data = tsb_2)
-
-ec.refdist <- PBrefdist(largeModel = model.int.ec, 
-                        smallModel = model.noint.ec, 
-                        nsim = 100)
-
-ec.compar <- PBmodcomp(largeModel = model.int.ec, 
-                       smallModel = model.noint.ec,
-                       ref = ec.refdist)
-ec.compar
-Anova(model.int.ec, type = "III")
-
-```
 
 ```{r BACI plus EC, message = FALSE, warning = FALSE}
 model.int.ec <- lmer(F_avg ~ BA*Plot + soil_ec_avg +
                       (1|ID) + (1|Year) + (1|ID:Year),
-                      data = tsb_2)
+                      data = tsb_2 )
 
 model.noint.ec <- lmer(F_avg ~ BA + Plot + soil_ec_avg +
                         (1|ID) + (1|Year) + (1|ID:Year),
-                        data = tsb_2)
+                        data = tsb_2 )
 
 ec.refdist <- PBrefdist(largeModel = model.int.ec, 
                         smallModel = model.noint.ec, 
@@ -316,212 +458,9 @@ ec.compar
 Anova(model.int.ec, type = "III")
 ```
 
-We now see that the BACI interaction term and soil ec fixed effect have strong explanatory power via the likelihood ratio and parametric bootstrap 
-
-#R edits: still statistically signficant, slightly more so than orginal BACI without soil ec
+We now see that the BACI interaction term and soil ec fixed effect have strong explanatory power via the likelihood ratio and parametric bootstrap. 
 
 
 # Plots
 
 
-AIC comparison to visually observe differences in how well each model fits the data: 
-
-```{r AIC, message = FALSE, warning = FALSE}
-
-model.noint.random <- lmer((F_avg) ~ BA*Plot + (1|ID) + (1|Year),
-                           data = tsb_2)
-
-model.random.int <- lmer((F_avg) ~ BA*Plot + (1|ID) + (1|Year) +
-                           (1|ID:Year),
-                         data = tsb_2)
-
-model.ec.only <- lmer((F_avg) ~ soil_ec_avg +
-                        (1|ID) + (1|Year) + (1|ID:Year),
-                         data = tsb_2)
-
-
-AIC(model.noint.random) -> AIC_initial
-AIC(model.random.int) -> AIC_randominteraction
-AIC(model.int.ec) -> AIC_int_ec #BACI interaction plus SEC
-AIC(model.noint.ec) -> AIC_noint_ec #BA + CI plus SEC
-AIC(model.ec.only) -> AIC_ec_only
-
-
-variable <- c("Model A", "Model B", "Model C", "Model D", "Model E")
-AIC <- c(AIC_initial, AIC_randominteraction,
-         AIC_int_ec, AIC_noint_ec, AIC_ec_only)
-candidate <- c("without interaction in random effects",
-               "with interaction in random effects", 
-               "with Soil EC",
-               "no BACI interaction with Soil EC",
-               "just Soil EC")
-
-AIC <- data.frame(variable, AIC, candidate)
-
-AIC %>%
-  mutate(`Model Specification` = candidate) %>%
-  ggplot(aes(variable, AIC+70000, fill = `Model Specification`)) +
-  geom_col() +
-  geom_hline(yintercept = -2820, linetype = "dashed") +
-  expand_limits(y = c(0, -3000)) +
-  scale_y_continuous(expand = c(0, 0)) + # Starts x axis at true zero
-  scale_fill_viridis_d() +
-  labs( title = 'AIC Model Comparison', x = 'Variable', y = 'AIC Value + 5000') +
-  guides(fill = FALSE) + 
-  theme_light() 
-```
-
-```{r Sapflow vs EC, message = FALSE, warning = FALSE}
-tsb_2_summary = tsb_2 %>%
-  filter(ifelse(BA == "Before", soil_ec_avg < 250, soil_ec_avg < 1000)) %>%
-  group_by(Year,BA,Plot) %>%
-  summarise(mean_annual_F = mean(F_avg),
-            sd_annual_F = sd(F_avg),
-            mean_annual_EC = mean(soil_ec_avg),
-            sd_annual_EC = sd(soil_ec_avg),
-            n = n())
-#tsb_2 %>%
-#  filter(!(BA == "Before" & soil_ec_avg > 750)) -> tsb_2
-
-tsb_2_summary %>%
-  ggplot() +
-  geom_point(aes(mean_annual_EC, mean_annual_F,
-                 color = as.factor(Year)), size = 3) +
-  geom_errorbar(aes(x = mean_annual_EC,
-                    ymin = mean_annual_F - sd_annual_F,
-                    ymax = mean_annual_F + sd_annual_F,
-                    color = Year), size = 1) +
-  geom_errorbarh(aes(xmin = mean_annual_EC - sd_annual_EC,
-                     xmax = mean_annual_EC + sd_annual_EC,
-                     y = mean_annual_F,
-                     color = Year), size = 1) +
-  scale_color_viridis_d(begin = 0.9, end = 0.2) +
-  facet_wrap(Plot ~ BA, scales = "free_x") + theme_bw() +
-  geom_point(aes(x = soil_ec_avg, y = F_avg, color = as.factor(Year)),
-             data = tsb_2 %>%
-             filter(ifelse(BA == "Before", soil_ec_avg < 250, soil_ec_avg < 1000)),
-             alpha = 0.2) +
-  stat_smooth(aes(x = soil_ec_avg, y = F_avg), method = 'lm',
-              color = 'grey', size = 0.8,
-              data = tsb_2 %>%
-              filter(ifelse(BA == "Before", soil_ec_avg < 250, soil_ec_avg < 1000))) +
-  labs(y = expression ("Midday Sap Flux Density, cm"^3*" cm"^-2*" s"^-1),
-       x = expression(paste("Mean Soil EC, ", mu, "S cm"^-1)),
-       color = " ") +
-  theme(legend.position="bottom", element_text(size = 14))
-```
-
-```{r VWC vs EC, message = FALSE, warning = FALSE}
-
-tsb_2_summary2 = tsb_2 %>%
-  filter(ifelse(BA == "Before", soil_ec_avg < 250, soil_ec_avg < 1000),
-         soil_vwc_avg < 0.6) %>%
-  group_by(Year,BA,Plot) %>%
-  summarise(mean_annual_vwc = mean(soil_vwc_avg),
-            sd_annual_vwc = sd(soil_vwc_avg),
-            mean_annual_EC = mean(soil_ec_avg),
-            sd_annual_EC = sd(soil_ec_avg),
-            n = n())
-
-tsb_2_summary2 %>%
-  ggplot() +
-  geom_point(aes(mean_annual_EC, mean_annual_vwc,
-                 color = as.factor(Year)), size = 3) +
-  geom_errorbar(aes(x = mean_annual_EC,
-                    ymin = mean_annual_vwc - sd_annual_vwc,
-                    ymax = mean_annual_vwc + sd_annual_vwc,
-                    color = Year), size = 1) +
-  geom_errorbarh(aes(xmin = mean_annual_EC - sd_annual_EC,
-                     xmax = mean_annual_EC + sd_annual_EC,
-                     y = mean_annual_vwc,
-                     color = Year), size = 1) +
-  geom_point(aes(x = soil_ec_avg, y = soil_vwc_avg, color = as.factor(Year)),
-             data = tsb_2 %>%
-               filter(ifelse(BA == "Before", soil_ec_avg < 250, soil_ec_avg < 1000),
-                      soil_vwc_avg < 0.6),
-             alpha = 0.2) +
-  stat_smooth(aes(x = soil_ec_avg, y = soil_vwc_avg, group = BA),
-              method = 'lm', se = FALSE,
-              color = 'grey', size = 0.8,
-              data = tsb_2 %>%
-                filter(ifelse(BA == "Before", soil_ec_avg < 250, soil_ec_avg < 1000),
-                       soil_vwc_avg < 0.6)) +
-  scale_color_viridis_d(option = 'D', begin = 0.9, end = 0.2) +
-  facet_wrap(Plot ~ BA, scales = "free_x") + theme_bw() +
-  labs(y = expression ("Mean Soil Volumetric Water Content cm" ^3* " cm"^-3),
-       x = expression(paste("Mean Soil EC, ", mu, "S cm"^-1)),
-       color = " ") +
-  theme(legend.position="bottom", element_text(size = 14))
-```
-
-^Keeping original analysis & plots above for reference, but can remove/modify later. 
-
-2021 vs 2025 BACI Analysis: 
-
-```{r}
-final_data %>%
-  dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F`,
-                swc_avg, ec_avg, swc_sd, ec_sd, PAR) %>%
-  mutate(Date = as_date(date(TIMESTAMP)),
-         Hour = hour(TIMESTAMP)) %>%
-  left_join(season) %>% 
-  group_by(Year) %>%
-  #mutate(data_start = flood_start - window,
-  #       data_end = flood_end + window) %>%
-  filter(Date > szn_start & Date < szn_end,
-         Hour <= 19, Hour >= 7,
-         F <= 0.005, F > 0,
-         (PAR >= 700 | is.na(PAR)),
-         Year %in% c(2021, 2025)) %>%
-         #Plot != "Freshwater",
-        # Species == "Tulip Poplar") %>%
-  ungroup() -> allyearsplots
-
-#sapflow, soil ec, soil vwc grouped by day and averaged
-#should we change this to hourly averages for ec?
-allyearsplots %>%
-  group_by(Year) %>%
-  mutate(BA = ifelse(Date > flood_end, "After", "Before"),
-         Year = as.factor(Year),
-         ID = as.factor(ID),
-         BA = as.factor(BA),
-         Plot = as.factor(Plot)) %>%
-  group_by(Date, Plot, ID, Year, BA, flood_start, flood_end, szn_start, szn_end) %>%
-  summarise(F_avg = mean(`F`, na.rm = TRUE),
-            soil_ec_avg = mean(ec_avg, na.rm = TRUE), 
-            soil_vwc_avg = mean(swc_avg, na.rm = TRUE),
-            n = n()) %>%
-  ungroup() -> all_1
-
-all_1 %>%
-  group_by(Year) %>%
-  mutate(Day = ifelse(BA == "Before",
-                      - as.numeric(flood_start - Date),
-                      as.numeric(Date - flood_end))) %>%
-  mutate(BA = as.character(BA),
-         BA = ifelse(Year == 2021, "Before", BA),
-         BA = ifelse(Year == 2025, "After", BA),
-         BA = as.factor(BA)) -> all_2
-```
-
-```{r}
-model.int.all <- lmer(F_avg ~ BA*Plot +
-                        (1|ID) + (1|Year) + (1|ID:Year),
-                      data = all_2)
-
-model.noint.all <- lmer(F_avg ~ BA + Plot +
-                          (1|ID) + (1|Year) + (1|ID:Year),
-                        data = all_2)
-
-all.refdist <- PBrefdist(largeModel = model.int.og, 
-                        smallModel = model.noint.og, 
-                        nsim = 100)
-
-all.compar <- PBmodcomp(largeModel = model.int.og, 
-                       smallModel = model.noint.og,
-                       ref = og.refdist)
-
-og.compar
-Anova(model.int.og, type = "III")
-```
-Interaction term is significant. 
