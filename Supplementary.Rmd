@@ -26,11 +26,8 @@ sapply(.packages, require, character.only=TRUE)
 ```
 
 ```{r, message = FALSE, warning = FALSE}
-setwd("/Users/radha/Documents/TEMPEST_Sapflow_Analysis")
 
-#final_tmp_data <- readRDS("final_tmp_data.rds")
-final_data <- readRDS("/Users/radha/Documents/TEMPEST_Sapflow_Analysis/final_data.rds")
-data <- readRDS("/Users/radha/Documents/TEMPEST_Sapflow_Analysis/Sapflow_BACI.rds")
+data <- readRDS("Sapflow_BACI.rds")
 
 ```
 
@@ -138,6 +135,7 @@ All species, all plots- VWC comparison between plots from 2021-2025, midday sapf
 # same for moisture content
 vwc_2way <- aov(soil_vwc_avg ~ Year*Plot,
                data = soil_BACI_data)
+
 
 vwc_emm <- emmeans(vwc_2way, ~ Plot|Year)
 emm_2wayB <- as.data.frame(vwc_emm)
@@ -254,7 +252,6 @@ growing_szn %>%
 
 #add in filtering step so that growing-season BACI has the same input data
 
-filtered_data %>% #first we remove outlier values
 mutate(Hour = hour(TIMESTAMP),
        Date = date(TIMESTAMP),
        doy = yday(Date)) %>%
@@ -304,7 +301,7 @@ tulip_salt %>%
   group_by(Date, Plot, ID, Year, BA, flood_start, flood_end, szn_start, szn_end) %>%
   summarise(F_avg = mean(`F` , na.rm = TRUE),
             soil_ec_avg = mean(soil_ec_15cm, na.rm = TRUE), 
-            soil_vwc_avg = mean(soil_vwc_15cm, na.rm = TRUE),
+            swc_avg = mean(swc_avg, na.rm = TRUE),
             n = n()) %>%
   ungroup() -> tsb_1
 
