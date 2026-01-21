@@ -252,6 +252,7 @@ growing_szn %>%
 
 #add in filtering step so that growing-season BACI has the same input data
 
+data %>% #first we remove outlier values
 mutate(Hour = hour(TIMESTAMP),
        Date = date(TIMESTAMP),
        doy = yday(Date)) %>%
@@ -270,11 +271,9 @@ filtered_data <- target_data %>%
   mutate(Outlier_F = ifelse(F > upper_threshold, "Outlier", "Non-Outlier")) %>%
   filter(Outlier_F == "Non-Outlier")
 
-
-
 filtered_data %>%
   dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F` ,
-                soil_vwc_15cm, soil_ec_15cm, swc_sd, ec_sd, PAR) %>%
+                swc_avg, ec_avg, swc_sd, ec_sd, PAR) %>%
   mutate(Date = as_date(date(TIMESTAMP)),
          Hour = hour(TIMESTAMP)) %>%
   left_join(season) %>% 
@@ -300,7 +299,7 @@ tulip_salt %>%
          Plot = as.factor(Plot)) %>%
   group_by(Date, Plot, ID, Year, BA, flood_start, flood_end, szn_start, szn_end) %>%
   summarise(F_avg = mean(`F` , na.rm = TRUE),
-            soil_ec_avg = mean(soil_ec_15cm, na.rm = TRUE), 
+            ec_avg = mean(ec_avg, na.rm = TRUE), 
             swc_avg = mean(swc_avg, na.rm = TRUE),
             n = n()) %>%
   ungroup() -> tsb_1
@@ -345,11 +344,11 @@ As a proxy for the increase in flooding intensity with each year, we include soi
 
 ```{r Soil EC BACI, message = FALSE, warning = FALSE}
 #BACI with just soil EC to account for pre-existing differences: 
-model.int.ec <- lmer(soil_ec_avg ~ BA*Plot +
+model.int.ec <- lmer(ec_avg ~ BA*Plot +
                       (1|Year),
                       data = tsb_2)
 
-model.noint.ec <- lmer(soil_ec_avg ~ BA + Plot +
+model.noint.ec <- lmer(ec_avg ~ BA + Plot +
                       (1|Year),
                       data = tsb_2)
 
@@ -367,11 +366,11 @@ Anova(model.int.ec, type = "III")
 Both the liklihood ratio test and parametric bootstrap test show statistical significance for the effect of the BACI interaction on observed differences in EC. 
 
 ```{r BACI plus EC, message = FALSE, warning = FALSE}
-model.int.ec <- lmer(F_avg ~ BA*Plot + soil_ec_avg +
+model.int.ec <- lmer(F_avg ~ BA*Plot + ec_avg +
                       (1|ID) + (1|Year) + (1|ID:Year),
                       data = tsb_2)
 
-model.noint.ec <- lmer(F_avg ~ BA + Plot + soil_ec_avg +
+model.noint.ec <- lmer(F_avg ~ BA + Plot + ec_avg +
                         (1|ID) + (1|Year) + (1|ID:Year),
                         data = tsb_2)
 
@@ -386,4 +385,5 @@ ec.compar
 Anova(model.int.ec, type = "III")
 ```
 Both the liklihood ratio test and the parametric boostrap test show that soil ec and the BACI interaction term have statistically significant effects on the observed differences in sapflow. When soil ec is accounted for in the model, the BACI interaction term is more significant than when only the interaction term is included. 
+
 
