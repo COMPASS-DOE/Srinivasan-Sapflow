@@ -9,6 +9,7 @@ output:
     code_folding: hide
 ---
 
+# Soil EC and VWC tests
 
 ```{r Load Packages, message = FALSE, warning = FALSE}
 
@@ -16,7 +17,8 @@ output:
               "AICcmodavg", "MuMIn", "pbkrtest", "readr",
               "lubridate", "car", "parallel", "data.table",
               "blmeco", "lsmeans", "patchwork", "viridis",
-              "forcats", "ggpmisc", "stringr", "e1071", "ggpubr")
+              "forcats", "ggpmisc", "stringr", "e1071",
+              "ggpubr", "zoo")
 
 .inst <- .packages %in% installed.packages()
 if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst])
@@ -31,23 +33,20 @@ data <- readRDS("Sapflow_BACI.rds")
 
 ```
 
-# EC Plots & BACI analysis
+## EC Plot & BACI
 
-All species, all plots- EC comparison between plots from 2021-2025, midday sapflow
+Soil electrical conductivity at 15 cm depth comparison across plots from 2021-2025
 
-```{r EC Plots, message = FALSE, warning = FALSE}
+```{r EC, message = FALSE, warning = FALSE}
 
-# packages from main Rmd already loaded
-library(zoo)
-
-# isolate soil data and summarise
+# isolate soil data and summarize
 data %>%
   dplyr::select(Year, TIMESTAMP, Plot,
                 ec_avg, ec_sd,
                 swc_avg) %>%
   mutate(Date = as_date(date(TIMESTAMP)),
          Hour = hour(TIMESTAMP)) %>%
-  filter(Hour <= 14, Hour >= 11) %>%
+  filter(Hour <= 14, Hour > 11) %>%
   na.omit() %>%
   group_by(Year, Date, Plot) %>%
   summarise(soil_ec_avg = mean(ec_avg),
@@ -55,33 +54,7 @@ data %>%
             soil_vwc_avg = mean(swc_avg)) %>%
   ungroup() -> soil_data
 
-# created rolled mean of EC for plotting
-soil_data %>%
-  dplyr::select(Year, Plot, Date, soil_ec_avg) %>%
-  group_by(Plot) %>%
-  arrange(Date) %>%
-  mutate(ec_rolled = rollmean(soil_ec_avg,
-                              k = 3,
-                              align = "center",
-                              fill = NA)) -> ec_rolled
-# pretty plot of EC data
-soil_data %>%
-  filter(Date > "2021-04-01") %>%
-  #optional, gets ride of little squiggle at the begining of '21
-ggplot(aes(Date, soil_ec_avg, color = Plot)) +
-  geom_point(alpha=0.5) +
-  geom_errorbar(aes(ymin = soil_ec_avg - ec_error,
-                    ymax = soil_ec_avg + ec_error)) +
-  geom_line(data = ec_rolled %>%
-              filter(Date > "2021-04-01"),
-            aes(Date, ec_rolled)) +
-  scale_color_viridis_d(option = "mako",
-                        begin = 0.3,
-                        end = 0.7) + theme_bw() +
-  theme(legend.position = "bottom") +
-  ylab("Soil Electrical Conductivity (\u03bcS cm\u207b\u00b9)")
-
-# analyze long-term BACI impact on EC and VWC
+# analyze long-term BACI impact on EC
 soil_data %>%
   filter(! Year %in% c(2022, 2023, 2024),
          month(Date) == 6) -> soil_BACI_data
@@ -124,18 +97,17 @@ ggplot(emm_2wayA, aes(x = Year, y = emmean, color = Plot)) +
 
 ```
 
-EMM Pairwise comparisons for 2021 and 2025 demonstrate statistically significant differences for all except post-treatment control-saltwater comparison.
-BACI plot demonstrates much larger EMM increase in soil EC for saltwater plot
+EMM Pairwise comparisons for 2021 and 2025 demonstrates statistically significant differences between all plots, except post-treatment control vs saltwater comparison. Plot demonstrates large increase in soil EC for saltwater plot over time.
 
-# VWC Plots & BACI analysis
+## VWC Plot & BACI
 
-All species, all plots- VWC comparison between plots from 2021-2025, midday sapflow
+Soil volumetric water content at 15 cm depth comparison across plots from 2021-2025
 
-```{r VWC Plots, message = FALSE, warning = FALSE}
+```{r VWC, message = FALSE, warning = FALSE}
+
 # same for moisture content
 vwc_2way <- aov(soil_vwc_avg ~ Year*Plot,
                data = soil_BACI_data)
-
 
 vwc_emm <- emmeans(vwc_2way, ~ Plot|Year)
 emm_2wayB <- as.data.frame(vwc_emm)
@@ -164,24 +136,26 @@ ggplot(emm_2wayB, aes(x = Year, y = emmean, color = Plot)) +
     title = "Long-Term BACI for Soil VWC") +
   theme(
     strip.text = element_text(face = "bold"),
-    legend.title = element_text(face = "bold"))                                                                                                                                                                                         
+    legend.title = element_text(face = "bold"))
 ```
 
 Pairwise comparison for 2021 and 2025; freshwater-saltwater VWC difference is not statistically significant for either year. 
 BACI plot demonstrating increase in soil VWC EMM for all treatments. 
 
-# PAR plots
+# And PAR?
 
-PAR averaged hourly for 2 weeks pre and post-flood. 
+## PAR plot & BACI
+
+PAR averaged hourly for 2 weeks pre and post-flood. We do this at a finer temporal resolution to check that short-term changes in PAR are not a concern for our sapflow analysis.
 
 ```{r List of TEMPEST Events, message = FALSE, warning = FALSE}
 #TEMPEST EVENTS
 tempest_events <- bind_rows(
-  tibble( Year = 2021, flood_start = "2021-06-12", flood_end = "2021-06-12"), #average date = June 12
+  tibble( Year = 2021, flood_start = "2021-06-12", flood_end = "2021-06-12"), #avg date = June 12
   tibble( Year = 2022, flood_start = "2022-06-22", flood_end = "2022-06-22"), #June 22
   tibble( Year = 2023, flood_start = "2023-06-06", flood_end = "2023-06-07"), #June 6, 7
   tibble( Year = 2024, flood_start = "2024-06-11", flood_end = "2024-06-13"), #June 11, 12, 13
-  tibble( Year = 2025, flood_start = "2025-06-12", flood_end = "2025-06-12")) #No TEMPEST event; averaging
+  tibble( Year = 2025, flood_start = "2025-06-12", flood_end = "2025-06-12")) #same as 2021, no event
 
 tempest_events %>%
   mutate(flood_start = ymd(flood_start),
@@ -192,12 +166,16 @@ tempest_events %>%
 window <- days(15)
 ```
 
-```{r PAR Plot, message = FALSE, warning = FALSE}
+```{r PAR, message = FALSE, warning = FALSE}
 
+#select PAR data
 data %>%
   mutate(Date = as.Date(TIMESTAMP),
          Hour = hour(TIMESTAMP), 
-         Year = as.factor(Year)) %>% 
+         Year = as.factor(Year)) %>%
+  group_by(Date, Year) %>%
+  filter(max(PAR) > 500,
+    Hour <= 14, Hour > 11) %>% #midday
   dplyr::select(PAR, Date, Hour, Year) -> par
 
 par %>%
@@ -211,29 +189,28 @@ par %>%
          BA = as.factor(BA)) %>%
   group_by(Hour, Date, Year, BA, flood_start, flood_end) %>%
   summarise(par_avg = mean(PAR)) %>%
-  filter(par_avg >=500) %>%
-  drop_na(par_avg) %>%
   ungroup() -> par_1
 
-par_1 %>%
-  group_by(Year) %>%
-  mutate(Day = ifelse(BA == "Before",
-                      - as.numeric(flood_start - Date),
-                      as.numeric(Date - flood_end))) %>%
-  mutate(BA = as.character(BA),
-         BA = ifelse(Year == 2021, "Before", BA),
-         BA = ifelse(Year == 2025, "After", BA),
-         BA = as.factor(BA)) -> par_2
-
-ggplot(par_2, aes(Day, par_avg, shape = BA)) +
+#plot
+ggplot(par_1, aes(day(Date), par_avg, shape = BA)) +
   geom_point(size = 2.5, color = "darkgreen") + facet_grid("Year", scales = "free")
+
+#test
+par_test <- aov(par_avg ~ BA*Year,
+                   data = par_1)
+
+par_emm <- emmeans(par_test, ~ BA|Year)
+par_contrasts <- contrast(par_emm, interaction = "pairwise")
+summary(par_contrasts)
 ```
 
 # Tulip Poplar BACI Analysis
 
-## Whole growing season, saltwater and control plots, 7 am- 7pm 
-## BACI models and AIC comparison table 
-```{r, message = FALSE, warning = FALSE}
+## Whole growing season test
+
+Are the time windows we've selected in the main analysis impacting our results? To test this we expand the time window for LITU BACI to the full growing season and full daylight hours of sapflow data.
+
+```{r Whole Growing Season, message = FALSE, warning = FALSE}
 
 #growing season from May 15th - October 1st
 #I'm sure there's a better way to do this but
@@ -256,9 +233,9 @@ data %>% #first we remove outlier values
 mutate(Hour = hour(TIMESTAMP),
        Date = date(TIMESTAMP),
        doy = yday(Date)) %>%
-  filter(doy > 99 & doy < 301, #growing season
-         Hour <= 14, Hour > 11, #midday
-         `F` > 0, ! is.na(Species)) -> target_data #remove obviously unusuable data
+  filter(doy > 99 & doy < 301, #wider growging than our test window
+          Hour <= 19, Hour >= 7, #full day data
+         `F` > 0, ! is.na(Species)) -> target_data #remove obviously unusable data
 
 # Calculating thresholds for sapflow outliers.
 thresholds <- target_data %>% 
@@ -272,18 +249,13 @@ filtered_data <- target_data %>%
   filter(Outlier_F == "Non-Outlier")
 
 filtered_data %>%
-  dplyr::select(Year, Species, ID, TIMESTAMP, Plot, `F` ,
+  ungroup() %>%
+  dplyr::select(Date, Year, Species, ID, Hour, Plot, `F` ,
                 swc_avg, ec_avg, swc_sd, ec_sd, PAR) %>%
-  mutate(Date = as_date(date(TIMESTAMP)),
-         Hour = hour(TIMESTAMP)) %>%
-  left_join(season) %>% 
-  group_by(Year) %>%
-  #mutate(data_start = flood_start - window,
-  #       data_end = flood_end + window) %>%
-  filter(Date > szn_start & Date < szn_end,
-         Hour <= 19, Hour >= 7,
-         F <= 0.005, F >= 0,
-         (PAR >= 500 | is.na(PAR)),
+  left_join(season) %>%
+  group_by(Date, Year) %>%
+  filter(max(PAR) > 500,
+         Date > szn_start & Date < szn_end,
          Plot != "Freshwater",
          Species == "Tulip Poplar") %>%
   ungroup() -> tulip_salt  
@@ -291,13 +263,12 @@ filtered_data %>%
 #sapflow, soil ec, soil vwc grouped by day and averaged
 #should we change this to hourly averages for ec?
 tulip_salt %>%
-  group_by(Year) %>%
   mutate(BA = ifelse(Date > flood_end, "After", "Before"),
          Year = as.factor(Year),
          ID = as.factor(ID),
          BA = as.factor(BA),
          Plot = as.factor(Plot)) %>%
-  group_by(Date, Plot, ID, Year, BA, flood_start, flood_end, szn_start, szn_end) %>%
+  group_by(Hour, Date, Plot, ID, Year, BA, flood_start, flood_end, szn_start, szn_end) %>%
   summarise(F_avg = mean(`F` , na.rm = TRUE),
             ec_avg = mean(ec_avg, na.rm = TRUE), 
             swc_avg = mean(swc_avg, na.rm = TRUE),
@@ -313,8 +284,6 @@ tsb_1 %>%
   mutate(BA = ifelse(Year == 2021, "Before", BA),
          BA = ifelse(Year == 2025, "Before", BA)) -> tsb_2
 ```
-
-
 
 ```{r BACI Model, message = FALSE, warning = FALSE}
 
@@ -338,32 +307,9 @@ og.compar
 Anova(model.int.og, type = "III")
 ```
 
-Both the likelihood ratio test and the parametric bootstrap test show statistical significance for the effect of BACI interaction term on observed differences in sapflow.
+Both the likelihood ratio test and the parametric bootstrap test show strong statistical significance for the effect of BACI interaction term on observed differences in sapflow.
 
 As a proxy for the increase in flooding intensity with each year, we include soil electrical conductivity into the model. Note that soil EC is an indicator of salt accumulation in soil from brackish water application. 
-
-```{r Soil EC BACI, message = FALSE, warning = FALSE}
-#BACI with just soil EC to account for pre-existing differences: 
-model.int.ec <- lmer(ec_avg ~ BA*Plot +
-                      (1|Year),
-                      data = tsb_2)
-
-model.noint.ec <- lmer(ec_avg ~ BA + Plot +
-                      (1|Year),
-                      data = tsb_2)
-
-ec.refdist <- PBrefdist(largeModel = model.int.ec, 
-                        smallModel = model.noint.ec, 
-                        nsim = 100)
-
-ec.compar <- PBmodcomp(largeModel = model.int.ec, 
-                       smallModel = model.noint.ec,
-                       ref = ec.refdist)
-ec.compar
-Anova(model.int.ec, type = "III")
-
-```
-Both the liklihood ratio test and parametric bootstrap test show statistical significance for the effect of the BACI interaction on observed differences in EC. 
 
 ```{r BACI plus EC, message = FALSE, warning = FALSE}
 model.int.ec <- lmer(F_avg ~ BA*Plot + ec_avg +
@@ -384,6 +330,7 @@ ec.compar <- PBmodcomp(largeModel = model.int.ec,
 ec.compar
 Anova(model.int.ec, type = "III")
 ```
+
 Both the liklihood ratio test and the parametric boostrap test show that soil ec and the BACI interaction term have statistically significant effects on the observed differences in sapflow. When soil ec is accounted for in the model, the BACI interaction term is more significant than when only the interaction term is included. 
 
 
