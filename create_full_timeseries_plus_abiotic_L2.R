@@ -14,7 +14,7 @@ library(lubridate)
 library(arrow)
 
 # Change for your setup
-L2_DATA_LOCATION <- "/Users/d3x290/Code/data-workflows/pipeline/data/L2"
+L2_DATA_LOCATION <- "~/sensor_data/Level2/v2-1/"
 
 read_site_variable <- function(site, variable, where = L2_DATA_LOCATION) {
   files <- list.files(path = where,
