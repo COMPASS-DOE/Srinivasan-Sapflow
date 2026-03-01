@@ -18,7 +18,7 @@ output:
               "lubridate", "car", "parallel", "data.table",
               "blmeco", "lsmeans", "patchwork", "viridis",
               "forcats", "ggpmisc", "stringr", "e1071",
-              "ggpubr", "ggstance")
+              "ggpubr", "ggstance", "multcomp")
 #Install CRAN packages (if not already installed)
 .inst <- .packages %in% installed.packages()
 if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst])
@@ -55,12 +55,15 @@ mutate(Hour = hour(TIMESTAMP),
 # Calculating thresholds for sapflow outliers.
 thresholds <- target_data %>% 
   group_by(Species, Plot, Year) %>% #allows for annual, plot, and species specific values
-  summarize(upper_threshold = quantile(`F`, 0.95))
+  summarize(Q3 = quantile(`F`, 0.75),
+            Q1 = quantile(`F`, 0.25),
+            IQR = Q3 - Q1)
 
 # Remove values above that threshold
 filtered_data <- target_data %>%
   left_join(thresholds, by = c("Species", "Plot", "Year")) %>%
-  mutate(Outlier_F = ifelse(F > upper_threshold, "Outlier", "Non-Outlier")) %>%
+  mutate(Outlier_F = ifelse(F > (Q3 + 1.5 * IQR) | F < (Q1 - 1.5 * IQR),
+                            "Outlier", "Non-Outlier")) %>%
   filter(Outlier_F == "Non-Outlier")
 
 #summarize for plotting
@@ -165,9 +168,8 @@ model_3way <- lmer(F_avg ~ Year*Plot*Species + (1|ID),
                    data = final_BACI_data)
 #calculate estimated marginal means
 model_emm <- emmeans(model_3way, ~ Species|Plot*Year)
-emm_3way <- as.data.frame(model_emm)
-#shows pairwise tests of 2021 vs 2025 data for each species x plot group
-contrasts <- contrast(model_emm, interaction = "pairwise", by = c("Species", "Plot"))
+#calculates tests of 2021 vs 2025 data for each species x plot group
+contrasts <- contrast(model_emm, interaction = "pairwise", by = c("Species", "Plot"), adjust = "holm")
 
 #setting a width for offsets below
 dodge_width <- 0.25
@@ -178,6 +180,17 @@ dodge_width <- 0.25
 
 #species by plot contrasts
 summary(contrasts)
+
+#letters for plot
+cld_species <- cld(
+  model_emm,
+  alpha  = 0.05,
+  adjust = "holm",
+  by     = c("Plot", "Year"),
+  Letters = letters
+)
+
+emm_3way <- as.data.frame(cld_species)
 
 #plot of 21 vs 25 EMM with 95% CI
 ggplot(emm_3way, aes(x = Year, y = emmean, color = Plot)) +
@@ -191,19 +204,21 @@ ggplot(emm_3way, aes(x = Year, y = emmean, color = Plot)) +
     aes(group = interaction(Species, Plot)),
     position = position_dodge(width = dodge_width),
     linetype = "dashed") +
+  geom_text(aes(label = .group),
+            position = position_dodge(width = 0.4), vjust = -0.9, size = 5) +
     scale_color_viridis_d(option = "mako",
                         begin = 0.3,
                         end = 0.7) + theme_bw() +
   theme_minimal() +
   labs(
-    y = "Estimated Marginal Mean (Sapflow)",
+    y = "Estimated Marginal Mean (Sap Flux)",
     x = "Year",
     title = "Long-Term BACI") +
   theme(
     strip.text = element_text(face = "bold"),
     legend.title = element_text(face = "bold"))
 
-```
+l```
 
 ## Interpreting long-term contrasts
 
