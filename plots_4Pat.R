@@ -36,7 +36,7 @@ ggplot() +
             linewidth = 1.5) +
   facet_grid(Species ~ Plot, scales="free") +
   scale_color_viridis_d(option = 'D', begin = 0.1, end = 0.975) +
-  labs(y = expression ("Midday Sap Flow, cm"^3* " s"^-1),
+  labs(y = "Midday Sap Flux (cm³ cm⁻² s⁻¹)",
        x = expression(paste("Day of Year"))) +
   theme_bw() + theme(legend.position="bottom", element_text(size = 14))
 
@@ -51,6 +51,6 @@ ggplot() +
             linewidth = 1.75) +
   #facet_grid(Species ~ Plot, scales="free") +
   scale_color_viridis_d(option = 'D', begin = 0.1, end = 0.975) +
-  labs(y = expression ("Midday Sap Flow, cm"^3* " s"^-1),
+  labs(y = "Midday Sap Flux (cm³ cm⁻² s⁻¹)",
        x = expression(paste("Day of Year"))) +
   theme_bw() + theme(legend.position="bottom", element_text(size = 14))
