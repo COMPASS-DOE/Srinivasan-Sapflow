@@ -116,7 +116,7 @@ contrasts <- contrast(vwc_emm, interaction = "pairwise")
 summary(contrasts)
 
 # VWC plot
-ggplot(emm_2wayB, aes(x = Year, y = emmean, color = Plot)) +
+ggplot(emm_2wayB, aes(x = as.factor(Year), y = emmean, color = Plot)) +
   geom_point(size = 3, position = position_dodge(width = dodge_width)) +
   geom_errorbar(
     aes(ymin = lower.CL, ymax = upper.CL),
