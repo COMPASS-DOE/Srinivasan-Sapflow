@@ -56,7 +56,7 @@ data %>%
 
 # analyze long-term BACI impact on EC
 soil_data %>%
-  filter(! Year %in% c(2022, 2023, 2024),
+  filter(! Year %in% c(2020, 2022, 2023, 2024),
          month(Date) == 6) -> soil_BACI_data
 
 # here Year is acting as "BA"
@@ -73,7 +73,7 @@ summary(contrasts)
 dodge_width <- 0.25
 
 #plot of 21 vs 25 EMM with 95% CI for soil EC
-ggplot(emm_2wayA, aes(x = Year, y = emmean, color = Plot)) +
+ggplot(emm_2wayA, aes(x = as.factor(Year), y = emmean, color = Plot)) +
   geom_point(size = 3, position = position_dodge(width = dodge_width)) +
   geom_errorbar(
     aes(ymin = lower.CL, ymax = upper.CL),
@@ -88,7 +88,7 @@ ggplot(emm_2wayA, aes(x = Year, y = emmean, color = Plot)) +
                         end = 0.7) +
   theme_minimal() +
   labs(
-    y = "EMM",
+    y = "EMM, Soil Electrical Conductivity (\u03bcS cm\u207b\u00b9)",
     x = "Year",
     title = "Long-Term BACI for Soil EC") +
   theme(
