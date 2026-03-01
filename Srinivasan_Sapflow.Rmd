@@ -18,7 +18,8 @@ output:
               "lubridate", "car", "parallel", "data.table",
               "blmeco", "lsmeans", "patchwork", "viridis",
               "forcats", "ggpmisc", "stringr", "e1071",
-              "ggpubr", "ggstance", "zoo", "ggpattern")
+              "ggpubr", "ggstance", "zoo", "ggpattern",
+              "multcomp")
 #Install CRAN packages (if not already installed)
 .inst <- .packages %in% installed.packages()
 if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst])
@@ -30,7 +31,7 @@ sapply(.packages, require, character.only=TRUE)
 ```{r Load Data, message = FALSE, warning = FALSE}
 #This will only work once raw data is downloaded and unzipped from ESS-DIVE
 #doi:10.15485/2588618
-#Following unzip, source files create_inventory.R and create_full_timeseries_plus_abiotic.R
+#Following unzip, source files create_inventory.R and frankenstein.R
 #these files calculate sapflux density
 
 #This only needs to be done once
@@ -51,17 +52,21 @@ mutate(Hour = hour(TIMESTAMP),
        doy = yday(Date)) %>%
   filter(doy > 99 & doy < 301, #growing season
          Hour <= 14, Hour > 11, #midday
+         Year >= 2021,
          F > 0, ! is.na(Species)) -> target_data #remove obviously unusuable data
 
 # Calculating thresholds for sapflow outliers.
 thresholds <- target_data %>% 
   group_by(Species, Plot, Year) %>% #allows for annual, plot, and species specific values
-  summarize(upper_threshold = quantile(`F`, 0.95))
+  summarize(Q3 = quantile(`F`, 0.75),
+            Q1 = quantile(`F`, 0.25),
+            IQR = Q3 - Q1)
 
 # Remove values above that threshold
 filtered_data <- target_data %>%
   left_join(thresholds, by = c("Species", "Plot", "Year")) %>%
-  mutate(Outlier_F = ifelse(F > upper_threshold, "Outlier", "Non-Outlier")) %>%
+  mutate(Outlier_F = ifelse(F > (Q3 + 1.5 * IQR) | F < (Q1 - 1.5 * IQR),
+                            "Outlier", "Non-Outlier")) %>%
   filter(Outlier_F == "Non-Outlier")
 
 #summarize for plotting
@@ -134,6 +139,7 @@ BACI_data %>%
 species_list <- c("Red Maple", "Tulip Poplar", "Beech")
 plot_list <- c("Control", "Freshwater", "Saltwater")
 
+overview_plots <- file.path(getwd(), "output")
 # Loop through each species and plot combination to generate plots
 for (species in species_list) {
   for (plot in plot_list) {
@@ -145,12 +151,22 @@ for (species in species_list) {
       scale_color_viridis_d(option = 'D', begin = .25, end = .8) +
       theme_light() +
       labs(
-        y = "Midday Sap Flux Density cm3/cm2/s",
+        y = "Midday Sap Flux cm3/cm2/s",
         x = "Day of Year",
         title = paste(" Averaged Sap Flux Density,", species, "-", plot)
       ) -> p
     
     print(p)
+    
+ # ---- NEW: save with a descriptive filename ----
+    # (no extra packages; just base R string fixes)
+    species_safe <- gsub("[^A-Za-z0-9_-]", "_", species)
+    plot_safe    <- gsub("[^A-Za-z0-9_-]", "_", plot)
+    ts           <- format(Sys.time(), "%Y%m%d_%H%M%S")  # optional timestamp
+
+    fname_png <- file.path(overview_plots, paste0("BACI_", species_safe, "_", plot_safe, "_", ts, ".png"))
+    ggsave(filename = fname_png, plot = p, width = 10, height = 6, dpi = 300)
+    # ----------------------------------------------
   }
 }
 
@@ -178,39 +194,56 @@ emm_3way <- as.data.frame(model_emm)
 #shows pairwise tests of 2021 vs 2025 data for each species x plot group
 contrasts <- contrast(model_emm, interaction = "pairwise", by = c("Species", "Plot"))
 
-#setting a width for offsets below
-dodge_width <- 0.25
-
 ```
 
 ```{r plot Long-Term BACI}
 
-#species by plot contrasts
-summary(contrasts)
+#letters for plot
+cld_species <- cld(
+  model_emm,
+  alpha  = 0.05,
+  adjust = "holm",
+  by     = c("Plot", "Year"),
+  Letters = letters
+)
+
+emm_3way <- as.data.frame(cld_species)
+
+# for dodging letters below
+emm_3way <- emm_3way %>%
+  mutate(
+    Year_num = as.numeric(as.character(Year)),
+    dodge = ifelse(Year == levels(Year)[1], -0.35, 0.2)
+  )
 
 #plot of 21 vs 25 EMM with 95% CI
-ggplot(emm_3way, aes(x = Year, y = emmean, color = Plot)) +
+ggplot(emm_3way, aes(x = Year_num, y = emmean, color = Plot)) +
   facet_grid(~ Species) +
-  geom_point(size = 3, position = position_dodge(width = dodge_width)) +
+  geom_point(size = 3) +
   geom_errorbar(
     aes(ymin = lower.CL, ymax = upper.CL),
-    width = 0.25,  
-    position = position_dodge(width = dodge_width)) +
-  geom_line(
-    aes(group = interaction(Species, Plot)),
-    position = position_dodge(width = dodge_width),
-    linetype = "dashed") +
-    scale_color_viridis_d(option = "mako",
-                        begin = 0.3,
-                        end = 0.7) + theme_bw() +
+    width = 0.35
+  ) +
+  geom_line(aes(group = interaction(Species, Plot)),
+            linetype = "dashed") +
+  geom_text(aes(label = .group, x = Year_num + dodge),
+            vjust = -0.15, size = 3) +
+  scale_x_continuous(
+    breaks = sort(unique(emm_3way$Year_num)),
+    labels = sort(unique(emm_3way$Year))
+  ) +
+  scale_color_viridis_d(option = "mako", begin = 0.3, end = 0.7) +
   theme_minimal() +
   labs(
-    y = "Estimated Marginal Mean (Sapflow)",
+    y = "EMM Sap Flux (cm³ cm⁻² s⁻¹)",
     x = "Year",
-    title = "Long-Term BACI") +
+    title = "Long-Term BACI"
+  ) +
   theme(
+    plot.margin = margin(t = 10, r = 30, b = 20, l = 30),
     strip.text = element_text(face = "bold"),
-    legend.title = element_text(face = "bold"))
+    legend.title = element_text(face = "bold")
+  )
 
 ```
 
@@ -513,21 +546,39 @@ ggplot(aes(Date, soil_ec_avg, color = Plot)) +
 
 ```{r LITU BACI boxplot}
 
+
 tsb_2 %>%
-  mutate(BA = factor(BA, levels = c("Before", "After"))) %>%
-ggplot(aes(y=F_avg)) +
-  geom_boxplot_pattern(aes(pattern = BA, fill = Plot), alpha = 0.8 ) +
-  facet_wrap(Year~.) + scale_fill_viridis_d(begin = 0.15, end = 0.8) +
-  labs(y = "Midday Sap Flow (cm³ cm⁻² s⁻¹)") +
-  theme_bw() + theme(axis.ticks.x.bottom = element_blank(),
-                     axis.text.x.bottom = element_blank()) +
-    guides(fill = guide_legend(title = "Plot"),
-           pattern = guide_legend(title = "Before-After"))
-  
+  mutate(
+    BA = factor(BA, levels = c("Before", "After")),
+    Plot_BA = interaction(Plot, BA, drop = TRUE)  # 4 unique combos
+  ) %>%
+  ggplot(aes(x = Plot, y = F_avg, fill = Plot_BA)) +
+  geom_boxplot() +
+  facet_wrap(Year ~ .) +
+  scale_fill_viridis_d(begin = 0.1, end = 0.9) +
+  labs(y = "Midday Sap Flow (cm³ cm⁻² s⁻¹)", x = NULL) +
+  theme_bw() +
+  theme(
+    axis.ticks.x.bottom = element_blank(),
+    axis.text.x.bottom  = element_blank(),
+    axis.title.y = element_text(
+      margin = margin(r = 10),
+      face = "bold"
+    ),
+    plot.margin = margin(10, 20, 20, 30)
+  ) +
+  guides(
+    color   = guide_legend(title = "Plot × BA"),  # 4-color legend
+    pattern = guide_legend(title = "Before–After")
+  )
 
 ```
 
 ```{r overlay plot}
+
+filtered_data$Species <- factor(filtered_data$Species, 
+                           levels = c("Red Maple", "Beech", "Tulip Poplar"),
+                           labels = c("ACRU", "FAGR", "LITU"))
 
 filtered_data %>%
   ungroup() %>%
@@ -560,8 +611,21 @@ ggplot() +
             linewidth = 1.5) +
   geom_jitter(data = plot_data, aes(y = F_avg, x = yday(Date), color = Year, group = Year), alpha = 0.1, size = 0.8) +
   facet_grid(Species ~ Plot, scales="free") +
-  scale_color_viridis_d(option = 'D', begin = 0.1, end = 0.9) +
-  labs(y = expression ("Midday Sap Flow, cm"^3* " s"^-1),
+  scale_color_viridis_d(option = 'D', begin = 0.05, end = 0.95) +
+  labs(y = "Midday Sap Flux (cm³ cm⁻² s⁻¹)",
+       x = expression(paste("Day of Year"))) +
+  theme_bw() + theme(legend.position="bottom", element_text(size = 14))
+
+ggplot() +
+  geom_jitter(data = plot_data, aes(y = F_avg, x = yday(Date),
+                                    color = Year, group = Year),
+              alpha = 0.1, size = 0.8) +
+  geom_line(data = rolled_data, aes(y = f_roll, x = yday(Date),
+                                    color = Year, group = Year),
+            linewidth = 1.5) +
+  facet_grid(Species ~ Plot, scales="free") +
+  scale_color_viridis_d(option = 'D', begin = 0.1, end = 0.975) +
+  labs(y = "Midday Sap Flux (cm³ cm⁻² s⁻¹)",
        x = expression(paste("Day of Year"))) +
   theme_bw() + theme(legend.position="bottom", element_text(size = 14))
 
