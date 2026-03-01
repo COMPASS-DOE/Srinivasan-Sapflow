@@ -10,7 +10,7 @@ library(arrow)
 # library(compasstools)  # optional, if you want nearest_neighbor_TMP(), not used below
 
 # ---- Paths ----
-L2_DATA_LOCATION <- file.path(getwd(), "Data", "Level2_SensorData", "v2-1")
+L2_DATA_LOCATION <- file.path(getwd(), "Data", "Level2")
 stopifnot(dir.exists(L2_DATA_LOCATION))
 
 # ---- Robust reader with schema bridge ----
