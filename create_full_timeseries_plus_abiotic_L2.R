@@ -13,8 +13,14 @@ library(ggplot2)
 library(lubridate)
 library(arrow)
 
-# Change for your setup
-L2_DATA_LOCATION <- "~/sensor_data/Level2/v2-1/"
+# set data location
+
+L2_DATA_LOCATION <- file.path(
+  getwd(),
+  "Data",
+  "Level2_SensorData",
+  "v2-1"
+)
 
 read_site_variable <- function(site, variable, where = L2_DATA_LOCATION) {
   files <- list.files(path = where,
@@ -28,7 +34,7 @@ read_site_variable <- function(site, variable, where = L2_DATA_LOCATION) {
   }) %>% bind_rows() 
 }
 
-# TEMPEST data from 2021-25
+# TEMPEST sapflow data from 2021-25
 read_site_variable("TMP", "sapflow-3.5cm") %>% 
   select(-research_name, -Instrument, -Value_MAC, -Instrument_ID) %>%
   rename(sapflow = Value) %>% 
@@ -37,7 +43,7 @@ read_site_variable("TMP", "sapflow-3.5cm") %>%
   mutate(Sensor_ID = if_else(Sensor_ID == "F19D", "F19", Sensor_ID)) -> 
   sapflow
 
-# Soil data
+# TEMPEST soil data from 2021-25
 vwc <- read_site_variable("TMP", "soil-vwc-15cm")
 ec <- read_site_variable("TMP", "soil-EC-15cm")
 
