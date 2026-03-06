@@ -54,3 +54,35 @@ ggplot() +
   labs(y = "Midday Sap Flux (cm³ cm⁻² s⁻¹)",
        x = expression(paste("Day of Year"))) +
   theme_bw() + theme(legend.position="bottom", element_text(size = 14))
+
+ggplot() +
+  geom_jitter(data = plot_data %>% filter(Plot == "Saltwater",
+                                          Species == "Beech"), aes(y = F_avg, x = yday(Date),
+                                                                          color = Year, group = Year),
+              alpha = 0.2, size = 0.8) +
+  geom_line(data = rolled_data %>% filter(Plot == "Saltwater",
+                                          Species == "Beech"), aes(y = f_roll, x = yday(Date),
+                                                                          color = Year, group = Year),
+            linewidth = 1.75) +
+  #facet_grid(Species ~ Plot, scales="free") +
+  scale_color_viridis_d(option = 'D', begin = 0.1, end = 0.975) +
+  labs(y = "Midday Sap Flux (cm³ cm⁻² s⁻¹)",
+       x = expression(paste("Day of Year"))) +
+  theme_bw() + theme(legend.position="bottom", element_text(size = 14))
+
+
+ggplot() +
+  geom_jitter(data = plot_data %>% filter(Plot == "Control",
+                                          Species == "Red Maple"), aes(y = F_avg, x = yday(Date),
+                                                                   color = Year, group = Year),
+              alpha = 0.2, size = 0.8) +
+  geom_line(data = rolled_data %>% filter(Plot == "Control",
+                                          Species == "Red Maple"), aes(y = f_roll, x = yday(Date),
+                                                                   color = Year, group = Year),
+            linewidth = 1.75) +
+  #facet_grid(Species ~ Plot, scales="free") +
+  scale_color_viridis_d(option = 'D', begin = 0.1, end = 0.975) +
+  labs(y = "Midday Sap Flux (cm³ cm⁻² s⁻¹)",
+       x = expression(paste("Day of Year"))) +
+  theme_bw() + theme(legend.position="bottom", element_text(size = 14))
+
