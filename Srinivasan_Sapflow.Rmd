@@ -44,7 +44,6 @@ data <- readRDS("Sapflow_BACI.rds")
 
 #a quick check to make sure the data are all present and accounted for
 #TODO find source of NAs for species
-#TODO bring in second half of 2025 sapflow data
 
 data %>% #first we remove outlier values
 mutate(Hour = hour(TIMESTAMP),
@@ -134,12 +133,15 @@ BACI_data %>%
             n = n()) %>%
   ungroup() -> avg_BACI_data
 
+```
 
+```{r Overview Plots of All Data}
 # List of species and plots
 species_list <- c("Red Maple", "Tulip Poplar", "Beech")
 plot_list <- c("Control", "Freshwater", "Saltwater")
 
 overview_plots <- file.path(getwd(), "output")
+
 # Loop through each species and plot combination to generate plots
 for (species in species_list) {
   for (plot in plot_list) {
@@ -158,20 +160,22 @@ for (species in species_list) {
     
     print(p)
     
- # ---- NEW: save with a descriptive filename ----
-    # (no extra packages; just base R string fixes)
+ #save each plot with descriptive file name
     species_safe <- gsub("[^A-Za-z0-9_-]", "_", species)
     plot_safe    <- gsub("[^A-Za-z0-9_-]", "_", plot)
     ts           <- format(Sys.time(), "%Y%m%d_%H%M%S")  # optional timestamp
 
-    fname_png <- file.path(overview_plots, paste0("BACI_", species_safe, "_", plot_safe, "_", ts, ".png"))
+    fname_png <- file.path(overview_plots,
+                           paste0("BACI_",
+                                  species_safe, "_",
+                                  plot_safe, "_", ts,
+                                  ".png"))
     ggsave(filename = fname_png, plot = p, width = 10, height = 6, dpi = 300)
-    # ----------------------------------------------
   }
 }
 
 #based on these plots excluding the following trees:
-# C8, C19
+# C8, C19 (died during the experiment)
 
 avg_BACI_data %>%
   filter(! Year %in% c(2022, 2023, 2024),
@@ -213,34 +217,35 @@ emm_3way <- as.data.frame(cld_species)
 emm_3way <- emm_3way %>%
   mutate(
     Year_num = as.numeric(as.character(Year)),
-    dodge = ifelse(Year == levels(Year)[1], -0.35, 0.2)
+    dodge = ifelse(Year == levels(Year)[1], -0.5, 0.5)
   )
 
 #plot of 21 vs 25 EMM with 95% CI
 ggplot(emm_3way, aes(x = Year_num, y = emmean, color = Plot)) +
   facet_grid(~ Species) +
-  geom_point(size = 3) +
+  geom_point(size = 3, position = position_dodge(width = 0.5)) +
   geom_errorbar(
     aes(ymin = lower.CL, ymax = upper.CL),
-    width = 0.35
+    width = 0.4,
+    position = position_dodge(width = 0.5)
   ) +
   geom_line(aes(group = interaction(Species, Plot)),
             linetype = "dashed") +
   geom_text(aes(label = .group, x = Year_num + dodge),
-            vjust = -0.15, size = 3) +
+            vjust = -0.5, size = 4) +
   scale_x_continuous(
     breaks = sort(unique(emm_3way$Year_num)),
     labels = sort(unique(emm_3way$Year))
   ) +
   scale_color_viridis_d(option = "mako", begin = 0.3, end = 0.7) +
-  theme_minimal() +
   labs(
     y = "EMM Sap Flux (cm³ cm⁻² s⁻¹)",
     x = "Year",
-    title = "Long-Term BACI"
+    title = ""#"Long-Term BACI"
   ) +
+  theme_minimal() +
   theme(
-    plot.margin = margin(t = 10, r = 30, b = 20, l = 30),
+    plot.margin = margin(t = 10, r = 80, b = 20, l = 100),
     strip.text = element_text(face = "bold"),
     legend.title = element_text(face = "bold")
   )
