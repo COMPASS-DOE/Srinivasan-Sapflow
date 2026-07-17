@@ -19,7 +19,7 @@ output:
               "blmeco", "lsmeans", "patchwork", "viridis",
               "forcats", "ggpmisc", "stringr", "e1071",
               "ggpubr", "ggstance", "zoo", "ggpattern",
-              "multcomp")
+              "multcomp", "performance", "see")
 #Install CRAN packages (if not already installed)
 .inst <- .packages %in% installed.packages()
 if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst])
@@ -107,7 +107,7 @@ window <- days(15)
 
 Sapflow sensors were installed in 2020 and collected data throughout the growing season of 2021, creating a full year of pre-treatment (Before) data. No TEMPEST treatment occured in 2025, creating a full growing season of post-treatment (After) data, allowing us to test the effect of three consecutive years of progressively intensive inundation events.
 
-```{r Long-Term BACI, include = FALSE}
+```{r Pull & Average Data, include = FALSE}
 
 #making our data frame just a little smaller
 filtered_data %>%
@@ -134,8 +134,8 @@ BACI_data %>%
   ungroup() -> avg_BACI_data
 
 ```
-
-```{r Overview Plots of All Data}
+ 
+```{r Overview Plots of All Data, include = FALSE, cache = TRUE}
 # List of species and plots
 species_list <- c("Red Maple", "Tulip Poplar", "Beech")
 plot_list <- c("Control", "Freshwater", "Saltwater")
@@ -176,7 +176,9 @@ for (species in species_list) {
 
 #based on these plots excluding the following trees:
 # C8, C19 (died during the experiment)
+```
 
+```{r Long-Term BACI}
 avg_BACI_data %>%
   filter(! Year %in% c(2022, 2023, 2024),
          ! ID %in% c("C8", "C19"),
@@ -192,6 +194,26 @@ final_BACI_data$Species <- factor(final_BACI_data$Species,
 #random effect of ID allows for different trees to have different intercepts
 model_3way <- lmer(F_avg ~ Year*Plot*Species + (1|ID),
                    data = final_BACI_data)
+
+#test appropriateness of model assumptions
+vif <- check_model(model_3way, check = "vif")
+plot(vif) + theme(axis.text.x = element_text(angle = 45, hjust = 0.75))
+
+linearity <- check_model(model_3way, check = "linearity")
+plot(linearity)
+
+outliers <- check_model(model_3way, check = "outliers")
+plot(outliers)
+
+pp_check <- check_model(model_3way, check = "pp_check")
+plot(pp_check)
+
+homogeneity <- check_model(model_3way, check = "homogeneity")
+plot(homogeneity)
+
+reqq <- check_model(model_3way, check = "reqq")
+plot(reqq)
+
 #calculate estimated marginal means
 model_emm <- emmeans(model_3way, ~ Species|Plot*Year)
 emm_3way <- as.data.frame(model_emm)
@@ -303,7 +325,7 @@ contrast(LITU_emm1 , interaction = "pairwise")
 
 avg_BACI_data %>%
   filter(Species == "Tulip Poplar",
-         Plot == "Control",
+         Plot == "Saltwater",
          month(Date) == 6) %>%
   mutate(Year = factor(Year,
                        levels = c("2025", "2024", "2023", "2022", "2021")
@@ -382,39 +404,8 @@ ggplot(tsb_2, aes(Day, F_avg, color = ID, shape = BA)) +
   geom_point(size = 2.5) + facet_grid(Plot~Year, scales = "free")
 ```
 
-```{r Normality, message = FALSE}
-#here we check if our response variable is normally distributed
-#RV = daily averaged midday sap flux density per tree
-current_skewness <- skewness(tsb_2$F_avg)
-print(paste("Current Skewness:", current_skewness))
-
-# Logarithmic Transformation
-log_transformed_response <- log(tsb_2$F_avg)
-
-# Square Root Transformation
-sqrt_transformed_response <- sqrt(tsb_2$F_avg)
-
-# Inverse Transformation
-inv_transformed_response <- 1 / tsb_2$F_avg
-
-log_skewness <- skewness(log_transformed_response)
-sqrt_skewness <- skewness(sqrt_transformed_response)
-inv_skewness <- skewness(inv_transformed_response)
-
-print(paste("Log Transformation Skewness:", log_skewness))
-print(paste("Square Root Transformation Skewness:", sqrt_skewness))
-print(paste("Inverse Transformation Skewness:", inv_skewness))
-
-ggplot(tsb_2, aes(F_avg)) + geom_histogram(fill = '#31688EFF') +
-  facet_grid(Plot~.) +
-  labs(y = NULL, x = "Average Sapflow", title = "Untransformed Data")
-
-```
-
 
 ## Progressive Analysis
-
-
 
 We follow the workflow developed by Pardini et al 2018 [pardini_link](https://doi.org/10.1111/rec.12678)  and start with the following linear mixed model:
 
@@ -450,8 +441,6 @@ Choose the model with the lowest AICc value (i.e. largest negative value); this 
 
 
 ## Create and test BACI models
-
-
 
 
 We now test the impact of the BACI term in our existing model by looking at the explanatory power of the model with and without the interaction between BA and CI (plot): 
@@ -634,4 +623,13 @@ ggplot() +
        x = expression(paste("Day of Year"))) +
   theme_bw() + theme(legend.position="bottom", element_text(size = 14))
 
+```
+
+```{r F statistics}
+library(afex)
+
+try <- mixed(F_avg ~ Year*Plot*Species + (1|ID), data = final_BACI_data)
+try
+try2 <- mixed(F_avg ~ BA*Plot + soil_ec_avg + (1|ID) + (1|Year) + (1|ID:Year), data = tsb_2)
+try2
 ```
