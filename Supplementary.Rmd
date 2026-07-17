@@ -282,14 +282,14 @@ par %>%
   mutate(BA = ifelse(Date > flood_end, "After", "Before"),
     BA = factor(BA, levels = c("Before", "After")),
     Hour = factor(Hour)) %>%
-  group_by(Hour, Date, Year, flood_start, flood_end) %>%
+  group_by(Hour, Date, Year, flood_start, flood_end, BA) %>%
   summarise(avgPAR = mean(PAR)) %>%
   ungroup() -> par_1
 
 #plot individually and combine
 par22 <- par_1 %>%
   filter(Year == 2022) %>%
-  ggplot(aes(Date, par_avg)) +
+  ggplot(aes(Date, avgPAR)) +
   geom_point(aes(color = Hour), size = 2) +
   ylim(0, 1500) + ggtitle("2022") +
   geom_vline(aes(xintercept = flood_start)) +
@@ -298,7 +298,7 @@ par22 <- par_1 %>%
 
 par23 <- par_1 %>%
   filter(Year == 2023) %>%
-  ggplot(aes(Date, par_avg)) +
+  ggplot(aes(Date, avgPAR)) +
   geom_point(aes(color = Hour), size = 2) + 
   ylim(0, 1500) + ggtitle("2023") +
   geom_vline(aes(xintercept = flood_start)) +
@@ -307,7 +307,7 @@ par23 <- par_1 %>%
 
 par24 <- par_1 %>%
   filter(Year == 2024) %>%
-  ggplot(aes(Date, par_avg)) +
+  ggplot(aes(Date, avgPAR)) +
   geom_point(aes(color = Hour), size = 2) +
   ylim(0, 1500) + ggtitle("2024") +
   geom_vline(aes(xintercept = flood_start)) +
@@ -316,7 +316,7 @@ par24 <- par_1 %>%
 
 par25 <- par_1 %>%
   filter(Year == 2025) %>%
-  ggplot(aes(Date, par_avg)) +
+  ggplot(aes(Date, avgPAR)) +
   geom_point(aes(color = Hour), size = 2) +
   ylim(0, 1500) + ggtitle("2025") +
   geom_vline(aes(xintercept = flood_start)) +
@@ -326,7 +326,7 @@ par25 <- par_1 %>%
 ggarrange(par22, par23, par24, par25, common.legend = TRUE, legend = "bottom")
 
 #test
-par_test <- aov(par_avg ~ BA*Year,
+par_test <- aov(avgPAR ~ BA*Year,
                    data = par_1)
 
 par_emm <- emmeans(par_test, ~ BA|Year)
