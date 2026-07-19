@@ -235,7 +235,7 @@ ggplot(emm_3way, aes(x = Year_num, y = emmean, color = Plot, shape = Plot)) +
   geom_line(aes(group = interaction(Species, Plot)),
             linetype = "dashed", linewidth = 1,
             position = position_dodge(width = 0.5)) +
-  geom_text_repel(aes(label = .group, x = Year_num + dodge),
+  geom_text(aes(label = .group, x = Year_num + dodge),
             vjust = -0.5, size = 6, show.legend =FALSE) +
   scale_x_continuous(
     breaks = sort(unique(emm_3way$Year_num)),
@@ -252,8 +252,7 @@ ggplot(emm_3way, aes(x = Year_num, y = emmean, color = Plot, shape = Plot)) +
     text = element_text(size = 22),
     strip.text = element_text(face = "bold"),
     legend.title = element_text(face = "bold")
-  ) -> test
-
+  )
 ```
 
 ## Interpreting long-term contrasts
@@ -594,7 +593,7 @@ ggplot() +
   scale_x_date(date_labels = "%m-%d", date_breaks = "3 weeks") +
   labs(y = "Midday Sap Flux (cm³ cm⁻² s⁻¹)",
        x = expression(paste("Date (MM-DD)"))) +
-  theme_bw() + theme(legend.position="bottom", element_text(size = 14),
+  theme_bw() + theme(legend.position="bottom", text = element_text(size = 18),
                      axis.text.x = element_text(angle = 45, hjust = 0.75))
 
 ```
