@@ -18,8 +18,7 @@ library(arrow)
 L2_DATA_LOCATION <- file.path(
   getwd(),
   "Data",
-  "Level2_SensorData",
-  "v2-1"
+  "Level2"
 )
 
 read_site_variable <- function(site, variable, where = L2_DATA_LOCATION) {
@@ -36,7 +35,7 @@ read_site_variable <- function(site, variable, where = L2_DATA_LOCATION) {
 
 # TEMPEST sapflow data from 2021-25
 read_site_variable("TMP", "sapflow-3.5cm") %>% 
-  select(-research_name, -Instrument, -Value_MAC, -Instrument_ID) %>%
+  dplyr::select(-research_name, -Instrument, -Value_MAC, -Instrument_ID) %>%
   rename(sapflow = Value) %>% 
   # Correction for F19 being mislabeled as F19D in L1 data
   drop_na(Sensor_ID) %>%
@@ -52,6 +51,8 @@ wx_temp <- read_site_variable("GCW", "wx-tempavg15") %>%
   select(TIMESTAMP, TEMP = Value)
 wx_par <- read_site_variable("GCW", "wx-par-den15") %>% 
   select(TIMESTAMP, PAR = Value)
+wx_precip <- read_site_variable("GCW", "wx-gcrew-rain15") %>% 
+  dplyr::select(TIMESTAMP, precip = Value)
 
 # Join weather with sapflow
 message("Joining weather and sapflow data")
