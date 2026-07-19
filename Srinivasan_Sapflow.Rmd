@@ -210,7 +210,7 @@ cld_species <- cld(
   model_emm,
   alpha  = 0.05,
   adjust = "holm",
-  by     = c("Plot", "Year"),
+  by     = c("Species", "Year"),
   Letters = letters
 )
 
@@ -306,7 +306,7 @@ contrast(LITU_emm1 , interaction = "pairwise")
 
 avg_BACI_data %>%
   filter(Species == "Tulip Poplar",
-         Plot == "Saltwater",
+         Plot == "Control",
          month(Date) == 6) %>%
   mutate(Year = factor(Year,
                        levels = c("2025", "2024", "2023", "2022", "2021")
@@ -583,18 +583,18 @@ plot_data %>%
 
 ggplot() +
   geom_jitter(data = plot_data, aes(y = F_avg, x = yday(Date),
-                                    color = Year, group = Year),
+                                    color = Plot, group = Plot),
               alpha = 0.1, size = 0.8) +
   geom_line(data = rolled_data, aes(y = f_roll, x = yday(Date),
-                                    color = Year, group = Year),
+                                    color = Plot, group = Plot),
             linewidth = 1.5) +
-  facet_grid(Species ~ Plot, scales="free") +
-  scale_color_viridis_d(option = 'D', begin = 0.1, end = 0.975) +
-  scale_x_date(date_labels = "%m-%d", date_breaks = "3 weeks") +
+  facet_grid(Species ~ Year, scales="free") +
+  scale_color_viridis_d(option = 'mako', begin = 0.3, end = 0.8) +
+  scale_x_date(date_labels = "%b-%d", date_breaks = "4 weeks") +
   labs(y = "Midday Sap Flux (cm³ cm⁻² s⁻¹)",
-       x = expression(paste("Date (MM-DD)"))) +
+       x = expression(paste("Date"))) +
   theme_bw() + theme(legend.position="bottom", text = element_text(size = 18),
-                     axis.text.x = element_text(angle = 45, hjust = 0.75))
+                     axis.text.x = element_text(angle = 45, hjust = 0.9))
 
 ```
 
