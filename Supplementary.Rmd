@@ -202,7 +202,7 @@ ggplot(emm_2wayA, aes(x = as.factor(Year), y = emmean, color = Plot)) +
     linetype = "dashed") +
   scale_color_viridis_d(option = "mako",
                         begin = 0.3,
-                        end = 0.7) +
+                        end = 0.8) +
   theme_minimal() +
   labs(
     y = "EMM, Soil Electrical Conductivity (\u03bcS cm\u207b\u00b9)",
@@ -245,7 +245,7 @@ ggplot(emm_2wayB, aes(x = as.factor(Year), y = emmean, color = Plot)) +
     linetype = "dashed") +
   scale_color_viridis_d(option = "mako",
                         begin = 0.3,
-                        end = 0.7) +
+                        end = 0.8) +
   theme_minimal() +
   labs(
     y = "EMM",
@@ -435,7 +435,7 @@ model.int.ec <- lmer(F_avg ~ BA*Plot + soil_ec_avg +
 
 #test appropriateness of model assumptions
 vif2 <- check_model(model.int.ec, check = "vif")
-plot(vif2) + theme(axis.text.x = element_text(angle = 45, hjust = 0.75))
+invisible(plot(vif2)) + theme(axis.text.x = element_text(angle = 45, hjust = 0.75))
 
 linearity2 <- check_model(model.int.ec, check = "linearity")
 plot(linearity2)
