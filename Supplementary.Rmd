@@ -125,7 +125,8 @@ model_3way <- lmer(F_avg ~ Year*Plot*Species + (1|ID),
 
 #test appropriateness of model assumptions
 vif <- check_model(model_3way, check = "vif")
-plot(vif) + theme(axis.text.x = element_text(angle = 45, hjust = 0.75))
+p <- plot(vif)
+invisible(p) + theme(axis.text.x = element_text(angle = 45, hjust = 0.75))
 
 linearity <- check_model(model_3way, check = "linearity")
 plot(linearity)
@@ -141,6 +142,10 @@ plot(homogeneity)
 
 reqq <- check_model(model_3way, check = "reqq")
 plot(reqq)
+
+for_Fstats1 <- lmerTest::lmer(F_avg ~ Year*Plot*Species + (1|ID),
+                   data = final_BACI_data)
+anova(for_Fstats1)
 ```
 
 # Soil EC and VWC tests
@@ -447,6 +452,10 @@ plot(homogeneity2)
 reqq2 <- check_model(model.int.ec, check = "reqq")
 plot(reqq2)
 
+for_Fstats2 <- lmerTest::lmer(F_avg ~ BA*Plot + soil_ec_avg +
+                      (1|ID) + (1|Year) + (1|ID:Year),
+                      data = tsb_2)
+anova(for_Fstats2)
 ```
 
 
@@ -472,26 +481,6 @@ growing_szn %>%
          flood_end = ymd(flood_end)) -> season
 
 #add in filtering step so that growing-season BACI has the same input data
-
-data %>% #first we remove outlier values
-mutate(Hour = hour(TIMESTAMP),
-       Date = date(TIMESTAMP),
-       doy = yday(Date)) %>%
-  filter(doy > 99 & doy < 301, #wider growging than our test window
-          Hour <= 19, Hour >= 7, #full day data
-         `F` > 0, ! is.na(Species)) -> target_data #remove obviously unusable data
-
-# Calculating thresholds for sapflow outliers.
-thresholds <- target_data %>% 
-  group_by(Species, Plot, Year) %>% #allows for annual, plot, and species specific values
-  summarize(upper_threshold = quantile(`F` , 0.95))
-
-# Remove values above that threshold
-filtered_data <- target_data %>%
-  left_join(thresholds, by = c("Species", "Plot", "Year")) %>%
-  mutate(Outlier_F = ifelse(F > upper_threshold, "Outlier", "Non-Outlier")) %>%
-  filter(Outlier_F == "Non-Outlier")
-
 filtered_data %>%
   ungroup() %>%
   dplyr::select(Date, Year, Species, ID, Hour, Plot, `F` ,
@@ -502,11 +491,11 @@ filtered_data %>%
          Date > szn_start & Date < szn_end,
          Plot != "Freshwater",
          Species == "Tulip Poplar") %>%
-  ungroup() -> tulip_salt  
+  ungroup() -> tulip_salt2  
 
 #sapflow, soil ec, soil vwc grouped by day and averaged
 #should we change this to hourly averages for ec?
-tulip_salt %>%
+tulip_salt2 %>%
   mutate(BA = ifelse(Date > flood_end, "After", "Before"),
          Year = as.factor(Year),
          ID = as.factor(ID),
@@ -517,38 +506,38 @@ tulip_salt %>%
             ec_avg = mean(ec_avg, na.rm = TRUE), 
             swc_avg = mean(swc_avg, na.rm = TRUE),
             n = n()) %>%
-  ungroup() -> tsb_1
+  ungroup() -> tsb_1.2
 
-tsb_1 %>%
+tsb_1.2 %>%
   group_by(Year) %>%
   mutate(Day = ifelse(BA == "Before",
                       - as.numeric(flood_start - Date),
                       as.numeric(Date - flood_end))) %>%
   mutate(BA = as.character(BA)) %>%
   mutate(BA = ifelse(Year == 2021, "Before", BA),
-         BA = ifelse(Year == 2025, "Before", BA)) -> tsb_2
+         BA = ifelse(Year == 2025, "Before", BA)) -> tsb_2.2
 ```
 
 ```{r BACI Model, message = FALSE, warning = FALSE}
 
-model.int.og <- lme4::lmer(F_avg ~ BA*Plot +
+model.int.og2 <- lme4::lmer(F_avg ~ BA*Plot +
                         (1|ID) + (1|Year) + (1|ID:Year),
-                      data = tsb_2)
+                      data = tsb_2.2)
 
-model.noint.og <- lme4::lmer(F_avg ~ BA + Plot +
+model.noint.og2 <- lme4::lmer(F_avg ~ BA + Plot +
                           (1|ID) + (1|Year) + (1|ID:Year),
-                        data = tsb_2)
+                        data = tsb_2.2)
 
-og.refdist <- PBrefdist(largeModel = model.int.og, 
-                        smallModel = model.noint.og, 
+og.refdist2 <- PBrefdist(largeModel = model.int.og2, 
+                        smallModel = model.noint.og2, 
                         nsim = 100)
 
-og.compar <- PBmodcomp(largeModel = model.int.og, 
-                       smallModel = model.noint.og,
-                       ref = og.refdist)
+og.compar2 <- PBmodcomp(largeModel = model.int.og2, 
+                       smallModel = model.noint.og2,
+                       ref = og.refdist2)
 
-og.compar
-Anova(model.int.og, type = "III")
+og.compar2
+Anova(model.int.og2, type = "III")
 ```
 
 Both the likelihood ratio test and the parametric bootstrap test show strong statistical significance for the effect of BACI interaction term on observed differences in sapflow.
@@ -556,23 +545,23 @@ Both the likelihood ratio test and the parametric bootstrap test show strong sta
 As a proxy for the increase in flooding intensity with each year, we include soil electrical conductivity into the model. Note that soil EC is an indicator of salt accumulation in soil from brackish water application. 
 
 ```{r BACI plus EC, message = FALSE, warning = FALSE}
-model.int.ec <- lme4::lmer(F_avg ~ BA*Plot + ec_avg +
+model.int.ec2 <- lme4::lmer(F_avg ~ BA*Plot + ec_avg +
                       (1|ID) + (1|Year) + (1|ID:Year),
-                      data = tsb_2)
+                      data = tsb_2.2)
 
-model.noint.ec <- lme4::lmer(F_avg ~ BA + Plot + ec_avg +
+model.noint.ec2 <- lme4::lmer(F_avg ~ BA + Plot + ec_avg +
                         (1|ID) + (1|Year) + (1|ID:Year),
-                        data = tsb_2)
+                        data = tsb_2.2)
 
-ec.refdist <- PBrefdist(largeModel = model.int.ec, 
-                        smallModel = model.noint.ec, 
+ec.refdist2 <- PBrefdist(largeModel = model.int.ec2, 
+                        smallModel = model.noint.ec2, 
                         nsim = 100)
 
-ec.compar <- PBmodcomp(largeModel = model.int.ec, 
-                       smallModel = model.noint.ec,
-                       ref = ec.refdist)
-ec.compar
-Anova(model.int.ec, type = "III")
+ec.compar2 <- PBmodcomp(largeModel = model.int.ec2, 
+                       smallModel = model.noint.ec2,
+                       ref = ec.refdist2)
+ec.compar2
+Anova(model.int.ec2, type = "III")
 ```
 
 Both the liklihood ratio test and the parametric boostrap test show that soil ec and the BACI interaction term have statistically significant effects on the observed differences in sapflow. When soil ec is accounted for in the model, the BACI interaction term is more significant than when only the interaction term is included. 
