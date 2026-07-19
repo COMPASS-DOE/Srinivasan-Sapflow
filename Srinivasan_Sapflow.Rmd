@@ -214,6 +214,8 @@ cld_species <- cld(
   Letters = letters
 )
 
+cld_species 
+
 emm_3way <- as.data.frame(cld_species)
 
 # for dodging letters below
