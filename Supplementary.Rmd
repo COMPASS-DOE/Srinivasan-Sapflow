@@ -466,7 +466,6 @@ Are the time windows we've selected in the main analysis impacting our results? 
 ```{r Whole Growing Season, message = FALSE, warning = FALSE}
 
 #growing season from May 15th - October 1st
-#I'm sure there's a better way to do this but
 growing_szn <- bind_rows(
   tibble(Year = 2021, szn_start = "2021-05-15", szn_end = "2021-10-01",flood_start = "2021-06-12", flood_end = "2021-06-12"),
   tibble(Year = 2022, szn_start = "2022-05-15", szn_end = "2022-10-01", flood_start = "2022-06-22", flood_end = "2022-06-22"),
