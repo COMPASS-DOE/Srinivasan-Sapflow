@@ -423,7 +423,7 @@ print(paste("Inverse Transformation Skewness:", inv_skewness))
 
 ggplot(tsb_2, aes(F_avg)) + geom_histogram(fill = '#31688EFF') +
   facet_grid(Plot~.) +
-  labs(y = NULL, x = "Average Sapflow", title = "Untransformed Data")
+  labs(y = NULL, x = "Average SFD", title = "Untransformed Data")
 
 ```
 
@@ -493,7 +493,6 @@ filtered_data %>%
   ungroup() -> tulip_salt2  
 
 #sapflow, soil ec, soil vwc grouped by day and averaged
-#should we change this to hourly averages for ec?
 tulip_salt2 %>%
   mutate(BA = ifelse(Date > flood_end, "After", "Before"),
          Year = as.factor(Year),
@@ -514,7 +513,7 @@ tsb_1.2 %>%
                       as.numeric(Date - flood_end))) %>%
   mutate(BA = as.character(BA)) %>%
   mutate(BA = ifelse(Year == 2021, "Before", BA),
-         BA = ifelse(Year == 2025, "Before", BA)) -> tsb_2.2
+         BA = ifelse(Year == 2025, "After", BA)) -> tsb_2.2
 ```
 
 ```{r BACI Model, message = FALSE, warning = FALSE}

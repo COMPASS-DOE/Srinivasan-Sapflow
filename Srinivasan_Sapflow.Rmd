@@ -153,7 +153,7 @@ for (species in species_list) {
       scale_color_viridis_d(option = 'D', begin = .25, end = .8) +
       theme_light() +
       labs(
-        y = "Midday Sap Flux cm3/cm2/s",
+        y = "Midday Sap Flux Density cm3/cm2/s",
         x = "Day of Year",
         title = paste(" Averaged Sap Flux Density,", species, "-", plot)
       ) -> p
@@ -245,7 +245,7 @@ ggplot(emm_3way, aes(x = Year_num, y = emmean, color = Plot, shape = Plot)) +
   ) +
   scale_color_viridis_d(option = "mako", begin = 0.3, end = 0.8) +
   labs(
-    y = "EMM Sap Flux (cm³ cm⁻² s⁻¹)",
+    y = "EMM Sap Flux Density (cm³ cm⁻² s⁻¹)",
     x = "Year",
     title = ""#"Long-Term BACI"
   ) +
@@ -516,38 +516,32 @@ ggplot(aes(Date, soil_ec_avg, color = Plot)) +
   scale_color_viridis_d(option = "mako",
                         begin = 0.3,
                         end = 0.8) + theme_bw() +
-  theme(legend.position = "bottom") +
+  theme(text = element_text(size = 16),legend.position = "bottom") +
   ylab("Soil Electrical Conductivity (\u03bcS cm\u207b\u00b9)")
 
 ```
 
 ```{r LITU BACI boxplot}
 
-
 tsb_2 %>%
   mutate(
-    BA = factor(BA, levels = c("Before", "After")),
-    Plot_BA = interaction(Plot, BA, drop = TRUE)  # 4 unique combos
-  ) %>%
+     Plot_BA = factor(paste(Plot, BA, sep = " - ")),
+     Plot_BA = factor(Plot_BA, levels = c("Control - Before", "Control - After",
+                                          "Saltwater - Before", "Saltwater - After"))
+     ) %>%
   ggplot(aes(x = Plot, y = F_avg, fill = Plot_BA)) +
   geom_boxplot() +
   facet_wrap(Year ~ .) +
   scale_fill_viridis_d(begin = 0.1, end = 0.9) +
-  labs(y = "Midday Sap Flow (cm³ cm⁻² s⁻¹)", x = NULL) +
+  labs(y = "Midday Sap Flux Density (cm³ cm⁻² s⁻¹)\n", x = NULL) +
   theme_bw() +
   theme(
+    text = element_text(size = 16),
     axis.ticks.x.bottom = element_blank(),
     axis.text.x.bottom  = element_blank(),
-    axis.title.y = element_text(
-      margin = margin(r = 10),
-      face = "bold"
-    ),
     plot.margin = margin(10, 20, 20, 30)
   ) +
-  guides(
-    color   = guide_legend(title = "Plot × BA"),  # 4-color legend
-    pattern = guide_legend(title = "Before–After")
-  )
+  guides(fill = guide_legend(title = "Plot \u00D7 BA"))
 
 ```
 
@@ -581,7 +575,8 @@ plot_data %>%
   ungroup() %>%
   group_by(Year, Plot, Species) %>%
   arrange(Date) %>%
-  mutate(f_roll = zoo::rollmean(F_avg, 100, na.pad = TRUE,                                align = "center")) -> rolled_data
+  mutate(f_roll = zoo::rollmean(F_avg, 100, na.pad = TRUE,
+                                align = "center")) -> rolled_data
 
 ggplot() +
   geom_jitter(data = plot_data, aes(y = F_avg, x = yday(Date),
@@ -593,7 +588,7 @@ ggplot() +
   facet_grid(Species ~ Year, scales="free") +
   scale_color_viridis_d(option = 'mako', begin = 0.3, end = 0.8) +
   scale_x_date(date_labels = "%b-%d", date_breaks = "4 weeks") +
-  labs(y = "Midday Sap Flux (cm³ cm⁻² s⁻¹)",
+  labs(y = "Midday Sap Flux Density (cm³ cm⁻² s⁻¹)",
        x = expression(paste("Date"))) +
   theme_bw() + theme(legend.position="bottom", text = element_text(size = 18),
                      axis.text.x = element_text(angle = 45, hjust = 0.9))
