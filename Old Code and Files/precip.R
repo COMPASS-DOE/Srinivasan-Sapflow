@@ -19,11 +19,10 @@ monthly_cum <- monthly %>%
   group_by(Year) %>%
   mutate(cum_precip = cumsum(monthly_precip))
 
-ggplot(monthly_cum, aes(x = Month, y = cum_precip, color = factor(Year))) +
+ggplot(monthly_cum, aes(x = Month, y = cum_precip*10, color = factor(Year))) +
   geom_line(size = 1.1) +
   geom_point() +
   labs(
-    title = "Cumulative Monthly Precipitation",
     x = "Month",
     y = "Cumulative Precipitation (mm)",
     color = "Year"
